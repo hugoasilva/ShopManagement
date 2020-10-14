@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" stylesheets="@../../css/styles.css"
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.java.shop.management.ui.add.invoice.InvoiceAddController">
+    <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="376.0" prefWidth="490.0" styleClass="custom-pane"
+                stylesheets="@../../css/styles.css">
+        <VBox prefHeight="256.0" prefWidth="404.0" spacing="10.0" styleClass="detailsVBox"
+              AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0"
+              AnchorPane.topAnchor="100.0">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            </padding>
+            <JFXTextField fx:id="customer" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="ID Cliente:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="employee" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="ID Empregado:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <JFXDatePicker fx:id="date" defaultColor="#ffff8d" maxWidth="500" promptText="Data:"
+                           style="-fx-control-inner-background: derive(#2A2E37, 10%)">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXDatePicker>
+            <JFXTextField fx:id="products" labelFloat="true" layoutX="10.0" layoutY="62.0" promptText="Produtos:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="404.0" spacing="30.0" styleClass="invoiceButton">
+                <JFXButton fx:id="pdf" alignment="CENTER" onAction="#chooseInvoice" text="Abrir Fatura">
+                </JFXButton>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="404.0" spacing="30.0">
+                <VBox.margin>
+                    <Insets bottom="-20.0" top="5.0"/>
+                </VBox.margin>
+                <padding>
+                    <Insets bottom="20.0"/>
+                </padding>
+                <JFXButton fx:id="saveButton" onAction="#addInvoice" prefHeight="66.0" prefWidth="100.0"
+                           text="Guardar"/>
+                <JFXButton fx:id="cancelButton" layoutX="10.0" layoutY="10.0" onAction="#cancel" prefHeight="66.0"
+                           prefWidth="100.0" text="Cancelar"/>
+            </HBox>
+        </VBox>
+        <FontIcon iconLiteral="fa-file-text" iconSize="60" layoutX="210.0" layoutY="57.0" styleClass="font-icon"
+                  AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="20.0"/>
+    </AnchorPane>
+</StackPane>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="300.0"
+           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1">
+    <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="150.0" prefWidth="490.0" styleClass="custom-pane"
+                stylesheets="@../../css/styles.css">
+        <VBox prefHeight="153.0" prefWidth="404.0" spacing="10.0" styleClass="detailsVBox"
+              AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0"
+              AnchorPane.topAnchor="100.0">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            </padding>
+            <JFXTextField fx:id="message" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Descrição:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="404.0" spacing="30.0">
+                <VBox.margin>
+                    <Insets top="20.0"/>
+                </VBox.margin>
+                <JFXButton minHeight="-Infinity" onAction="#addNote" prefHeight="40.0" prefWidth="100.0"
+                           text="Guardar"/>
+                <JFXButton layoutX="10.0" layoutY="10.0" minHeight="-Infinity" onAction="#cancel" prefHeight="40.0"
+                           prefWidth="100.0" text="Cancelar"/>
+            </HBox>
+        </VBox>
+        <FontIcon iconLiteral="fa-sticky-note" iconSize="65" layoutX="210.0" layoutY="57.0" styleClass="font-icon"
+                  AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="20.0"/>
+    </AnchorPane>
+</StackPane>

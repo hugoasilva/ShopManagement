@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>-->
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+           xmlns="http://javafx.com/javafx/8.0.141">
+    <AnchorPane id="AnchorPane" prefHeight="376.0" prefWidth="490.0" styleClass="custom-pane"
+                stylesheets="@../../css/styles.css">
+        <VBox prefHeight="153.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            </padding>
+            <Label fx:id="name" layoutX="150.0" layoutY="250.0" minHeight="40" minWidth="69" styleClass="customerLabel">
+                <VBox.margin>
+                    <Insets left="150.0" top="75.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="id" layoutX="150.0" layoutY="150.0" minHeight="40" minWidth="69" prefHeight="40.0"
+                   prefWidth="127.0" styleClass="customerLabel">
+                <VBox.margin>
+                    <Insets left="150.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="address" layoutX="150.0" layoutY="350.0" minHeight="40" minWidth="69"
+                   styleClass="customerLabel">
+                <VBox.margin>
+                    <Insets left="150.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="phone" layoutX="150.0" layoutY="450.0" minHeight="40" minWidth="69"
+                   styleClass="customerLabel">
+                <VBox.margin>
+                    <Insets left="150.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="email" layoutX="150.0" layoutY="550.0" minHeight="40" minWidth="69"
+                   styleClass="customerLabel">
+                <VBox.margin>
+                    <Insets left="150.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="nif" layoutX="150.0" layoutY="650.0" minHeight="40" minWidth="69" styleClass="customerLabel">
+                <VBox.margin>
+                    <Insets left="150.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="notes">
+                <VBox.margin>
+                    <Insets left="150.0"/>
+                </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="404.0" spacing="30.0">
+
+                <!--            <JFXButton onAction="#addCustomer" prefHeight="66.0" prefWidth="100.0" text="Guardar"/>-->
+                <!--            <JFXButton layoutX="10.0" layoutY="10.0" onAction="#cancel"-->
+                <!--                       prefHeight="66.0" prefWidth="100.0" text="Cancelar"/>-->
+            </HBox>
+        </VBox>
+        <!--        <FontAwesomeIconView glyphName="USER" layoutX="250.0" layoutY="75.0" size="40"/>-->
+    </AnchorPane>
+</StackPane>

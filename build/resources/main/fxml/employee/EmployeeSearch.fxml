@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane"
+           stylesheets="@../../css/styles.css"
+           xmlns="http://javafx.com/javafx/8.0.141">
+    <AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="456.0" prefWidth="1000.0"
+                stylesheets="@../../css/styles.css">
+        <TableView fx:id="tableView" prefHeight="400.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+            <columns>
+                <TableColumn fx:id="idCol" maxWidth="120.0" prefWidth="75.0" text="ID"/>
+                <TableColumn fx:id="nameCol" prefWidth="150.0" text="Nome"/>
+                <TableColumn fx:id="addressCol" prefWidth="150.0" text="Morada"/>
+                <TableColumn fx:id="phoneCol" prefWidth="100.0" text="Contacto"/>
+                <TableColumn fx:id="emailCol" prefWidth="300.0" text="Email"/>
+                <TableColumn fx:id="nifCol" prefWidth="100.0" text="NIF"/>
+                <TableColumn fx:id="notesCol" prefWidth="100.0" text="Notas"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+            <contextMenu>
+                <ContextMenu>
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleEmployeeEdit" text="Editar"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleEmployeeDelete" text="Apagar"/>
+                    </items>
+                    <styleClass>
+                        <String fx:value="table-context"/>
+                        <String fx:value="colored-context-menu"/>
+                    </styleClass>
+                </ContextMenu>
+            </contextMenu>
+        </TableView>
+        <MenuBar prefHeight="32.0" prefWidth="722.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                 AnchorPane.topAnchor="0.0">
+            <Menu mnemonicParsing="false" text="Ficheiro">
+                <MenuItem mnemonicParsing="false" text="Exportar para PDF"/>
+                <MenuItem mnemonicParsing="false" onAction="#closeStage" text="Fechar"/>
+            </Menu>
+        </MenuBar>
+    </AnchorPane>
+</StackPane>

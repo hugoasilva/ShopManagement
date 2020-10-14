@@ -1,0 +1,624 @@
+2020-10-14 00:39:56.034 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 12:39:56 da manhã
+2020-10-14 00:40:30.519 [JavaFX Application Thread] INFO  shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 00:46:43.966 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 12:46:43 da manhã
+2020-10-14 00:46:48.259 [JavaFX Application Thread] INFO  shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 00:52:50.130 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 12:52:50 da manhã
+2020-10-14 00:52:55.557 [JavaFX Application Thread] INFO  shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 00:55:27.311 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 12:55:27 da manhã
+2020-10-14 00:55:30.543 [JavaFX Application Thread] INFO  shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 01:29:14.297 [Thread-5] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 14-10-2020 12:55:27 da manhã. Usado por 1602635354295 ms
+2020-10-14 01:35:09.335 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 01:35:09 da manhã
+2020-10-14 01:35:13.257 [JavaFX Application Thread] INFO  shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 01:37:42.763 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 01:37:42 da manhã
+2020-10-14 01:37:45.880 [JavaFX Application Thread] INFO  shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 02:19:14.058 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:19:14 da manhã
+2020-10-14 02:23:41.279 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:23:41 da manhã
+2020-10-14 02:24:48.856 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:24:48 da manhã
+2020-10-14 02:28:14.499 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:28:14 da manhã
+2020-10-14 02:28:55.515 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:28:55 da manhã
+2020-10-14 02:29:05.762 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:29:05 da manhã
+2020-10-14 02:29:09.799 [JavaFX Application Thread] ERROR shop.management.exceptions.DefaultExceptionHandler - Exception occurred {}
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1787) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1670) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Node.fireEvent(Node.java:8879) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextFieldBehavior.fire(TextFieldBehavior.java:184) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.lambda$keyMapping$62(TextInputControlBehavior.java:330) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:4058) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$KeyHandler.access$1500(Scene.java:4004) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.processKeyEvent(Scene.java:2121) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2595) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149) ~[javafx.graphics.jar:?]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$1(GlassViewEventHandler.java:248) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:390) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:547) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.notifyKey(View.java:971) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method) [javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174) [javafx.graphics.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+Caused by: java.lang.reflect.InvocationTargetException
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx.fxml.jar:?]
+	... 47 more
+Caused by: java.lang.IllegalAccessError: class com.jfoenix.skins.JFXTabPaneSkin (in unnamed module @0x6b91c4de) cannot access class com.sun.javafx.scene.control.behavior.TabPaneBehavior (in module javafx.controls) because module javafx.controls does not export com.sun.javafx.scene.control.behavior to unnamed module @0x6b91c4de
+	at com.jfoenix.skins.JFXTabPaneSkin.<init>(JFXTabPaneSkin.java:86) ~[jfoenix-9.0.10.jar:9.0.10]
+	at com.jfoenix.controls.JFXTabPane.createDefaultSkin(JFXTabPane.java:67) ~[jfoenix-9.0.10.jar:9.0.10]
+	at javafx.scene.control.Control.doProcessCSS(Control.java:897) ~[javafx.controls.jar:?]
+	at javafx.scene.control.Control.access$000(Control.java:83) ~[javafx.controls.jar:?]
+	at javafx.scene.control.Control$1.doProcessCSS(Control.java:89) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.ControlHelper.processCSSImpl(ControlHelper.java:67) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.NodeHelper.processCSS(NodeHelper.java:145) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.doProcessCSS(Parent.java:1397) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.access$400(Parent.java:79) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent$1.doProcessCSS(Parent.java:125) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.ParentHelper.processCSSImpl(ParentHelper.java:98) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.NodeHelper.processCSS(NodeHelper.java:145) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.doProcessCSS(Parent.java:1397) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.access$400(Parent.java:79) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent$1.doProcessCSS(Parent.java:125) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.ParentHelper.processCSSImpl(ParentHelper.java:98) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.NodeHelper.processCSS(NodeHelper.java:145) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.doProcessCSS(Parent.java:1397) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.access$400(Parent.java:79) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent$1.doProcessCSS(Parent.java:125) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.ParentHelper.processCSSImpl(ParentHelper.java:98) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.NodeHelper.processCSS(NodeHelper.java:145) ~[javafx.graphics.jar:?]
+	at javafx.scene.Node.processCSS(Node.java:9529) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.doCSSPass(Scene.java:569) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.preferredSize(Scene.java:1745) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$2.preferredSize(Scene.java:393) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.SceneHelper.preferredSize(SceneHelper.java:66) ~[javafx.graphics.jar:?]
+	at javafx.stage.Window$12.invalidated(Window.java:1086) ~[javafx.graphics.jar:?]
+	at javafx.beans.property.BooleanPropertyBase.markInvalid(BooleanPropertyBase.java:110) ~[javafx.base.jar:?]
+	at javafx.beans.property.BooleanPropertyBase.set(BooleanPropertyBase.java:145) ~[javafx.base.jar:?]
+	at javafx.stage.Window.setShowing(Window.java:1174) ~[javafx.graphics.jar:?]
+	at javafx.stage.Window.show(Window.java:1189) ~[javafx.graphics.jar:?]
+	at javafx.stage.Stage.show(Stage.java:273) ~[javafx.graphics.jar:?]
+	at shop.management.ui.login.LoginController.loadMain(LoginController.java:127) ~[classes/:?]
+	at shop.management.ui.login.LoginController.handleLoginButtonAction(LoginController.java:69) ~[classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx.fxml.jar:?]
+	... 47 more
+2020-10-14 02:29:09.828 [Thread-5] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 14-10-2020 02:29:05 da manhã. Usado por 1602638949828 ms
+2020-10-14 02:29:30.524 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:29:30 da manhã
+2020-10-14 02:29:34.822 [JavaFX Application Thread] ERROR shop.management.exceptions.DefaultExceptionHandler - Exception occurred {}
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1787) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1670) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Node.fireEvent(Node.java:8879) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextFieldBehavior.fire(TextFieldBehavior.java:184) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.lambda$keyMapping$62(TextInputControlBehavior.java:330) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:4058) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$KeyHandler.access$1500(Scene.java:4004) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.processKeyEvent(Scene.java:2121) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2595) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149) ~[javafx.graphics.jar:?]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$1(GlassViewEventHandler.java:248) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:390) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:547) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.notifyKey(View.java:971) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method) [javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174) [javafx.graphics.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+Caused by: java.lang.reflect.InvocationTargetException
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx.fxml.jar:?]
+	... 47 more
+Caused by: java.lang.IllegalAccessError: class com.jfoenix.skins.JFXTabPaneSkin (in unnamed module @0x3298b9b0) cannot access class com.sun.javafx.scene.control.behavior.TabPaneBehavior (in module javafx.controls) because module javafx.controls does not export com.sun.javafx.scene.control.behavior to unnamed module @0x3298b9b0
+	at com.jfoenix.skins.JFXTabPaneSkin.<init>(JFXTabPaneSkin.java:86) ~[jfoenix-9.0.10.jar:9.0.10]
+	at com.jfoenix.controls.JFXTabPane.createDefaultSkin(JFXTabPane.java:67) ~[jfoenix-9.0.10.jar:9.0.10]
+	at javafx.scene.control.Control.doProcessCSS(Control.java:897) ~[javafx.controls.jar:?]
+	at javafx.scene.control.Control.access$000(Control.java:83) ~[javafx.controls.jar:?]
+	at javafx.scene.control.Control$1.doProcessCSS(Control.java:89) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.ControlHelper.processCSSImpl(ControlHelper.java:67) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.NodeHelper.processCSS(NodeHelper.java:145) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.doProcessCSS(Parent.java:1397) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.access$400(Parent.java:79) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent$1.doProcessCSS(Parent.java:125) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.ParentHelper.processCSSImpl(ParentHelper.java:98) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.NodeHelper.processCSS(NodeHelper.java:145) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.doProcessCSS(Parent.java:1397) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.access$400(Parent.java:79) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent$1.doProcessCSS(Parent.java:125) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.ParentHelper.processCSSImpl(ParentHelper.java:98) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.NodeHelper.processCSS(NodeHelper.java:145) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.doProcessCSS(Parent.java:1397) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent.access$400(Parent.java:79) ~[javafx.graphics.jar:?]
+	at javafx.scene.Parent$1.doProcessCSS(Parent.java:125) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.ParentHelper.processCSSImpl(ParentHelper.java:98) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.NodeHelper.processCSS(NodeHelper.java:145) ~[javafx.graphics.jar:?]
+	at javafx.scene.Node.processCSS(Node.java:9529) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.doCSSPass(Scene.java:569) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.preferredSize(Scene.java:1745) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$2.preferredSize(Scene.java:393) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.SceneHelper.preferredSize(SceneHelper.java:66) ~[javafx.graphics.jar:?]
+	at javafx.stage.Window$12.invalidated(Window.java:1086) ~[javafx.graphics.jar:?]
+	at javafx.beans.property.BooleanPropertyBase.markInvalid(BooleanPropertyBase.java:110) ~[javafx.base.jar:?]
+	at javafx.beans.property.BooleanPropertyBase.set(BooleanPropertyBase.java:145) ~[javafx.base.jar:?]
+	at javafx.stage.Window.setShowing(Window.java:1174) ~[javafx.graphics.jar:?]
+	at javafx.stage.Window.show(Window.java:1189) ~[javafx.graphics.jar:?]
+	at javafx.stage.Stage.show(Stage.java:273) ~[javafx.graphics.jar:?]
+	at shop.management.ui.login.LoginController.loadMain(LoginController.java:127) ~[classes/:?]
+	at shop.management.ui.login.LoginController.handleLoginButtonAction(LoginController.java:69) ~[classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx.fxml.jar:?]
+	... 47 more
+2020-10-14 02:29:34.855 [Thread-5] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 14-10-2020 02:29:30 da manhã. Usado por 1602638974855 ms
+2020-10-14 02:30:08.961 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:30:08 da manhã
+2020-10-14 02:30:41.888 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 02:30:41 da manhã
+2020-10-14 02:30:45.554 [JavaFX Application Thread] INFO  shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 03:02:58.104 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 03:02:58 da manhã
+2020-10-14 03:03:03.605 [Thread-5] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 14-10-2020 03:02:58 da manhã. Usado por 1602640983603 ms
+2020-10-14 03:07:51.312 [main] INFO  shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 03:07:51 da manhã
+2020-10-14 03:07:57.740 [JavaFX Application Thread] INFO  shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 04:22:00.417 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:22:00 da manh�
+2020-10-14 04:24:13.872 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:24:13 da manh�
+2020-10-14 04:24:31.937 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:24:31 da manh�
+2020-10-14 04:25:03.623 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:25:03 da manh�
+2020-10-14 04:25:35.009 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:25:35 da manh�
+2020-10-14 04:25:35.778 [Thread-4] INFO  ExceptionUtil - java.sql.SQLException: No suitable driver found for jdbc:mysql://projecthub.hopto.org:3306/gestao?useTimezone=true&serverTimezone=UTC
+2020-10-14 04:25:35.780 [Thread-4] INFO  ExceptionUtil - 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:702)
+2020-10-14 04:25:35.780 [Thread-4] INFO  ExceptionUtil - 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:228)
+2020-10-14 04:25:35.780 [Thread-4] INFO  ExceptionUtil - 	at DatabaseHandler.createConnection(DatabaseHandler.java:88)
+2020-10-14 04:25:35.780 [Thread-4] INFO  ExceptionUtil - 	at DatabaseHandler.<clinit>(DatabaseHandler.java:70)
+2020-10-14 04:25:35.781 [Thread-4] INFO  ExceptionUtil - 	at Main.lambda$start$0(Main.java:63)
+2020-10-14 04:25:35.781 [Thread-4] INFO  ExceptionUtil - 	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-10-14 04:25:35.782 [Thread-4] ERROR DatabaseHandler - SQLState: 08001
+2020-10-14 04:25:35.782 [Thread-4] ERROR DatabaseHandler - Error Code: 0
+2020-10-14 04:25:35.782 [Thread-4] ERROR DatabaseHandler - Message: No suitable driver found for jdbc:mysql://projecthub.hopto.org:3306/gestao?useTimezone=true&serverTimezone=UTC
+2020-10-14 04:27:23.714 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:27:23 da manh�
+2020-10-14 04:27:24.483 [Thread-4] INFO  ExceptionUtil - java.sql.SQLException: No suitable driver found for jdbc:mysql://projecthub.hopto.org:3306/gestao?useTimezone=true&serverTimezone=UTC
+2020-10-14 04:27:24.484 [Thread-4] INFO  ExceptionUtil - 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:702)
+2020-10-14 04:27:24.485 [Thread-4] INFO  ExceptionUtil - 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:228)
+2020-10-14 04:27:24.485 [Thread-4] INFO  ExceptionUtil - 	at DatabaseHandler.createConnection(DatabaseHandler.java:88)
+2020-10-14 04:27:24.485 [Thread-4] INFO  ExceptionUtil - 	at DatabaseHandler.<clinit>(DatabaseHandler.java:70)
+2020-10-14 04:27:24.485 [Thread-4] INFO  ExceptionUtil - 	at Main.lambda$start$0(Main.java:63)
+2020-10-14 04:27:24.486 [Thread-4] INFO  ExceptionUtil - 	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-10-14 04:27:24.486 [Thread-4] ERROR DatabaseHandler - SQLState: 08001
+2020-10-14 04:27:24.487 [Thread-4] ERROR DatabaseHandler - Error Code: 0
+2020-10-14 04:27:24.487 [Thread-4] ERROR DatabaseHandler - Message: No suitable driver found for jdbc:mysql://projecthub.hopto.org:3306/gestao?useTimezone=true&serverTimezone=UTC
+2020-10-14 04:28:04.067 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:28:04 da manh�
+2020-10-14 04:28:04.823 [Thread-4] INFO  ExceptionUtil - java.sql.SQLException: No suitable driver found for jdbc:mysql://projecthub.hopto.org:3306/gestao?useTimezone=true&serverTimezone=UTC
+2020-10-14 04:28:04.824 [Thread-4] INFO  ExceptionUtil - 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:702)
+2020-10-14 04:28:04.824 [Thread-4] INFO  ExceptionUtil - 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:228)
+2020-10-14 04:28:04.825 [Thread-4] INFO  ExceptionUtil - 	at DatabaseHandler.createConnection(DatabaseHandler.java:88)
+2020-10-14 04:28:04.825 [Thread-4] INFO  ExceptionUtil - 	at DatabaseHandler.<clinit>(DatabaseHandler.java:70)
+2020-10-14 04:28:04.825 [Thread-4] INFO  ExceptionUtil - 	at Main.lambda$start$0(Main.java:63)
+2020-10-14 04:28:04.825 [Thread-4] INFO  ExceptionUtil - 	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-10-14 04:28:04.825 [Thread-4] ERROR DatabaseHandler - SQLState: 08001
+2020-10-14 04:28:04.826 [Thread-4] ERROR DatabaseHandler - Error Code: 0
+2020-10-14 04:28:04.826 [Thread-4] ERROR DatabaseHandler - Message: No suitable driver found for jdbc:mysql://projecthub.hopto.org:3306/gestao?useTimezone=true&serverTimezone=UTC
+2020-10-14 04:29:32.601 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:29:32 da manh�
+2020-10-14 04:29:39.002 [JavaFX Application Thread] ERROR LoginController - {}
+javafx.fxml.LoadException: 
+/C:/Users/Hugo/Documents/safe/Shop-Management-JDK11/build/resources/main/fxml/main/Main.fxml:10
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2625) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.access$700(FXMLLoader.java:105) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processAttribute(FXMLLoader.java:930) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$InstanceDeclarationElement.processAttribute(FXMLLoader.java:980) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processStartElement(FXMLLoader.java:227) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processStartElement(FXMLLoader.java:752) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.processStartElement(FXMLLoader.java:2722) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2552) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2466) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3237) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3194) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3163) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3136) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3113) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:3106) ~[javafx.fxml.jar:?]
+	at LoginController.loadMain(LoginController.java:123) ~[main/:?]
+	at LoginController.handleLoginButtonAction(LoginController.java:69) ~[main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1670) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Node.fireEvent(Node.java:8879) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextFieldBehavior.fire(TextFieldBehavior.java:184) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.lambda$keyMapping$62(TextInputControlBehavior.java:330) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:4058) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$KeyHandler.access$1500(Scene.java:4004) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.processKeyEvent(Scene.java:2121) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2595) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149) ~[javafx.graphics.jar:?]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$1(GlassViewEventHandler.java:248) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:390) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:547) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.notifyKey(View.java:971) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174) ~[javafx.graphics.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+Caused by: java.lang.ClassNotFoundException: shop.management.ui.main.MainController
+	at jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581) ~[?:?]
+	at jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178) ~[?:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[?:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processAttribute(FXMLLoader.java:928) ~[javafx.fxml.jar:?]
+	... 72 more
+2020-10-14 04:29:39.017 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 04:29:39.035 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 04:29:32 da manh�. Usado por 1602646179035 ms
+2020-10-14 04:30:15.815 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:30:15 da manh�
+2020-10-14 04:30:20.526 [JavaFX Application Thread] ERROR LoginController - {}
+javafx.fxml.LoadException: 
+/C:/Users/Hugo/Documents/safe/Shop-Management-JDK11/build/resources/main/fxml/main/Main.fxml:10
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2625) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.access$700(FXMLLoader.java:105) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processAttribute(FXMLLoader.java:930) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$InstanceDeclarationElement.processAttribute(FXMLLoader.java:980) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processStartElement(FXMLLoader.java:227) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processStartElement(FXMLLoader.java:752) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.processStartElement(FXMLLoader.java:2722) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2552) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2466) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3237) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3194) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3163) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3136) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3113) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:3106) ~[javafx.fxml.jar:?]
+	at LoginController.loadMain(LoginController.java:123) ~[main/:?]
+	at LoginController.handleLoginButtonAction(LoginController.java:69) ~[main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1670) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Node.fireEvent(Node.java:8879) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextFieldBehavior.fire(TextFieldBehavior.java:184) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.lambda$keyMapping$62(TextInputControlBehavior.java:330) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:4058) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$KeyHandler.access$1500(Scene.java:4004) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.processKeyEvent(Scene.java:2121) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2595) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149) ~[javafx.graphics.jar:?]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$1(GlassViewEventHandler.java:248) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:390) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:547) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.notifyKey(View.java:971) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174) ~[javafx.graphics.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+Caused by: java.lang.ClassNotFoundException: shop.management.ui.main.MainController
+	at jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581) ~[?:?]
+	at jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178) ~[?:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[?:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processAttribute(FXMLLoader.java:928) ~[javafx.fxml.jar:?]
+	... 72 more
+2020-10-14 04:30:20.555 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 04:30:20.566 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 04:30:15 da manh�. Usado por 1602646220565 ms
+2020-10-14 04:35:13.124 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:35:13 da manh�
+2020-10-14 04:35:16.274 [JavaFX Application Thread] ERROR LoginController - {}
+javafx.fxml.LoadException: 
+/C:/Users/Hugo/Documents/safe/Shop-Management-JDK11/build/resources/main/fxml/main/Main.fxml:33
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2625) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2603) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2466) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3237) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3194) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3163) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3136) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3113) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:3106) ~[javafx.fxml.jar:?]
+	at LoginController.loadMain(LoginController.java:123) ~[main/:?]
+	at LoginController.handleLoginButtonAction(LoginController.java:69) ~[main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1670) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Node.fireEvent(Node.java:8879) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextFieldBehavior.fire(TextFieldBehavior.java:184) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.lambda$keyMapping$62(TextInputControlBehavior.java:330) ~[javafx.controls.jar:?]
+	at com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx.base.jar:?]
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:4058) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$KeyHandler.access$1500(Scene.java:4004) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene.processKeyEvent(Scene.java:2121) ~[javafx.graphics.jar:?]
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2595) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149) ~[javafx.graphics.jar:?]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$1(GlassViewEventHandler.java:248) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:390) ~[javafx.graphics.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:547) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.View.notifyKey(View.java:971) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174) ~[javafx.graphics.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+Caused by: java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at com.sun.javafx.fxml.BeanAdapter.put(BeanAdapter.java:262) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.fxml.BeanAdapter.put(BeanAdapter.java:54) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.applyProperty(FXMLLoader.java:520) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processValue(FXMLLoader.java:370) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processPropertyAttribute(FXMLLoader.java:332) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processInstancePropertyAttributes(FXMLLoader.java:242) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processEndElement(FXMLLoader.java:775) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.processEndElement(FXMLLoader.java:2838) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2557) ~[javafx.fxml.jar:?]
+	... 67 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.fxml.ModuleHelper.invoke(ModuleHelper.java:98) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.fxml.BeanAdapter.put(BeanAdapter.java:258) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.fxml.BeanAdapter.put(BeanAdapter.java:54) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.applyProperty(FXMLLoader.java:520) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processValue(FXMLLoader.java:370) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processPropertyAttribute(FXMLLoader.java:332) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processInstancePropertyAttributes(FXMLLoader.java:242) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processEndElement(FXMLLoader.java:775) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.processEndElement(FXMLLoader.java:2838) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2557) ~[javafx.fxml.jar:?]
+	... 67 more
+Caused by: java.lang.UnsupportedOperationException: Cannot resolve 'icm-search'
+	at org.kordamp.ikonli.javafx.IkonResolver.resolveIkonHandler(IkonResolver.java:62) ~[ikonli-javafx-11.5.0.jar:11.5.0]
+	at org.kordamp.ikonli.javafx.FontIcon.setIconLiteral(FontIcon.java:239) ~[ikonli-javafx-11.5.0.jar:11.5.0]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx.base.jar:?]
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx.base.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.fxml.ModuleHelper.invoke(ModuleHelper.java:98) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.fxml.BeanAdapter.put(BeanAdapter.java:258) ~[javafx.fxml.jar:?]
+	at com.sun.javafx.fxml.BeanAdapter.put(BeanAdapter.java:54) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.applyProperty(FXMLLoader.java:520) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processValue(FXMLLoader.java:370) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processPropertyAttribute(FXMLLoader.java:332) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processInstancePropertyAttributes(FXMLLoader.java:242) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processEndElement(FXMLLoader.java:775) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.processEndElement(FXMLLoader.java:2838) ~[javafx.fxml.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2557) ~[javafx.fxml.jar:?]
+	... 67 more
+2020-10-14 04:35:16.288 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 04:35:16.299 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 04:35:13 da manh�. Usado por 1602646516299 ms
+2020-10-14 04:36:00.552 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:36:00 da manh�
+2020-10-14 04:36:04.102 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 04:36:17.589 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 04:36:00 da manh�. Usado por 1602646577589 ms
+2020-10-14 04:37:10.269 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:37:10 da manh�
+2020-10-14 04:37:14.615 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 04:37:42.657 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:37:42 da manh�
+2020-10-14 04:37:47.593 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 04:37:48.669 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 04:37:42 da manh�. Usado por 1602646668668 ms
+2020-10-14 04:37:49.422 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 04:37:10 da manh�. Usado por 1602646669403 ms
+2020-10-14 04:37:51.822 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:37:51 da manh�
+2020-10-14 04:37:54.821 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 04:37:58.953 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 04:37:51 da manh�. Usado por 1602646678950 ms
+2020-10-14 04:39:01.832 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 04:39:01 da manh�
+2020-10-14 04:39:05.964 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 05:03:36.817 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 05:03:36 da manh�
+2020-10-14 05:03:42.368 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 05:04:01.654 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 05:03:36 da manh�. Usado por 1602648241652 ms
+2020-10-14 05:05:23.619 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 05:05:23 da manh�
+2020-10-14 05:05:27.479 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 05:05:23 da manh�. Usado por 1602648327478 ms
+2020-10-14 05:06:13.596 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 05:06:13 da manh�
+2020-10-14 05:08:45.487 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 05:08:45 da manh�
+2020-10-14 05:08:48.339 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 05:08:45 da manh�. Usado por 1602648528338 ms
+2020-10-14 05:16:33.374 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 05:16:33 da manh�
+2020-10-14 05:16:39.977 [JavaFX Application Thread] INFO  LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 05:16:45.356 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 05:16:33 da manh�. Usado por 1602649005354 ms
+2020-10-14 21:03:07.091 [main] INFO  Main - Sistema de Gestão de Loja iniciado às 14-10-2020 09:03:07 da tarde
+2020-10-14 21:03:09.947 [Thread-5] INFO  Main - Sistema de Gestão de Loja fechado às 14-10-2020 09:03:07 da tarde. Usado por 1602705789946 ms

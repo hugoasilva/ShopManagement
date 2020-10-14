@@ -1,0 +1,110 @@
+main/java/pt/shop/management/data/files/FileHandler.java
+ main.java.pt.shop.management.data.files.FileHandler
+main/java/pt/shop/management/ui/list/product/ProductListController.java
+ main.java.pt.shop.management.ui.list.product.ProductListController
+ main.java.pt.shop.management.ui.list.product.ProductListController$1
+ main.java.pt.shop.management.ui.list.product.ProductListController$1$1
+main/java/pt/shop/management/ui/details/customer/CustomerDetailsLoader.java
+ main.java.pt.shop.management.ui.details.customer.CustomerDetailsLoader
+main/java/pt/shop/management/ui/add/note/NoteAddController.java
+ main.java.pt.shop.management.ui.add.note.NoteAddController
+main/java/pt/shop/management/ui/add/note/NoteAddLoader.java
+ main.java.pt.shop.management.ui.add.note.NoteAddLoader
+main/java/pt/shop/management/data/model/Product.java
+ main.java.pt.shop.management.data.model.Product
+main/java/pt/shop/management/ui/main/MainController.java
+ main.java.pt.shop.management.ui.main.MainController
+main/java/pt/shop/management/ui/about/AboutController.java
+ main.java.pt.shop.management.ui.about.AboutController
+main/java/pt/shop/management/ui/add/employee/EmployeeAddLoader.java
+ main.java.pt.shop.management.ui.add.employee.EmployeeAddLoader
+main/java/pt/shop/management/ui/add/product/ProductAddController.java
+ main.java.pt.shop.management.ui.add.product.ProductAddController
+main/java/pt/shop/management/ui/main/Start.java
+ main.java.pt.shop.management.ui.main.Start
+main/java/pt/shop/management/ui/details/product/ProductDetailsLoader.java
+ main.java.pt.shop.management.ui.details.product.ProductDetailsLoader
+main/java/pt/shop/management/ui/list/employee/EmployeeListController.java
+ main.java.pt.shop.management.ui.list.employee.EmployeeListController
+ main.java.pt.shop.management.ui.list.employee.EmployeeListController$1
+ main.java.pt.shop.management.ui.list.employee.EmployeeListController$1$1
+main/java/pt/shop/management/data/model/Employee.java
+ main.java.pt.shop.management.data.model.Employee
+main/java/pt/shop/management/ui/list/invoice/InvoiceListLoader.java
+ main.java.pt.shop.management.ui.list.invoice.InvoiceListLoader
+main/java/pt/shop/management/data/model/Invoice.java
+ main.java.pt.shop.management.data.model.Invoice
+main/java/pt/shop/management/ui/main/toolbar/ToolbarController.java
+ main.java.pt.shop.management.ui.main.toolbar.ToolbarController
+main/java/pt/shop/management/ui/search/employee/EmployeeSearchLoader.java
+ main.java.pt.shop.management.ui.search.employee.EmployeeSearchLoader
+main/java/pt/shop/management/ui/login/LoginController.java
+ main.java.pt.shop.management.ui.login.LoginController
+main/java/pt/shop/management/ui/search/invoice/InvoiceSearchLoader.java
+ main.java.pt.shop.management.ui.search.invoice.InvoiceSearchLoader
+main/java/pt/shop/management/ui/add/invoice/InvoiceAddController.java
+ main.java.pt.shop.management.ui.add.invoice.InvoiceAddController
+main/java/pt/shop/management/ui/search/customer/CustomerSearchLoader.java
+ main.java.pt.shop.management.ui.search.customer.CustomerSearchLoader
+main/java/pt/shop/management/ui/list/invoice/InvoiceListController.java
+ main.java.pt.shop.management.ui.list.invoice.InvoiceListController
+ main.java.pt.shop.management.ui.list.invoice.InvoiceListController$1
+ main.java.pt.shop.management.ui.list.invoice.InvoiceListController$1$1
+main/java/pt/shop/management/util/ShopManagementUtil.java
+ main.java.pt.shop.management.util.ShopManagementUtil
+main/java/pt/shop/management/ui/add/product/ProductAddLoader.java
+ main.java.pt.shop.management.ui.add.product.ProductAddLoader
+main/java/pt/shop/management/ui/details/invoice/InvoiceDetailsController.java
+ main.java.pt.shop.management.ui.details.invoice.InvoiceDetailsController
+main/java/pt/shop/management/ui/add/customer/CustomerAddLoader.java
+ main.java.pt.shop.management.ui.add.customer.CustomerAddLoader
+main/java/pt/shop/management/ui/list/customer/CustomerListLoader.java
+ main.java.pt.shop.management.ui.list.customer.CustomerListLoader
+main/java/pt/shop/management/ui/add/employee/EmployeeAddController.java
+ main.java.pt.shop.management.ui.add.employee.EmployeeAddController
+main/java/pt/shop/management/ui/details/customer/CustomerDetailsController.java
+ main.java.pt.shop.management.ui.details.customer.CustomerDetailsController
+main/java/pt/shop/management/exceptions/DefaultExceptionHandler.java
+ main.java.pt.shop.management.exceptions.DefaultExceptionHandler
+main/java/pt/shop/management/data/model/Customer.java
+ main.java.pt.shop.management.data.model.Customer
+main/java/pt/shop/management/ui/search/customer/CustomerSearchController.java
+ main.java.pt.shop.management.ui.search.customer.CustomerSearchController
+main/java/pt/shop/management/exceptions/ExceptionUtil.java
+ main.java.pt.shop.management.exceptions.ExceptionUtil
+ main.java.pt.shop.management.exceptions.ExceptionUtil$1
+main/java/pt/shop/management/ui/add/invoice/InvoiceAddLoader.java
+ main.java.pt.shop.management.ui.add.invoice.InvoiceAddLoader
+main/java/pt/shop/management/ui/search/invoice/InvoiceSearchController.java
+ main.java.pt.shop.management.ui.search.invoice.InvoiceSearchController
+ main.java.pt.shop.management.ui.search.invoice.InvoiceSearchController$1
+ main.java.pt.shop.management.ui.search.invoice.InvoiceSearchController$1$1
+main/java/pt/shop/management/ui/details/invoice/InvoiceDetailsLoader.java
+ main.java.pt.shop.management.ui.details.invoice.InvoiceDetailsLoader
+main/java/pt/shop/management/ui/list/customer/CustomerListController.java
+ main.java.pt.shop.management.ui.list.customer.CustomerListController
+ main.java.pt.shop.management.ui.list.customer.CustomerListController$1
+ main.java.pt.shop.management.ui.list.customer.CustomerListController$1$1
+main/java/pt/shop/management/ui/main/Main.java
+ main.java.pt.shop.management.ui.main.Main
+ main.java.pt.shop.management.ui.main.Main$1
+main/java/pt/shop/management/ui/details/employee/EmployeeDetailsLoader.java
+ main.java.pt.shop.management.ui.details.employee.EmployeeDetailsLoader
+main/java/pt/shop/management/ui/list/employee/EmployeeListLoader.java
+ main.java.pt.shop.management.ui.list.employee.EmployeeListLoader
+main/java/pt/shop/management/ui/list/product/ProductListLoader.java
+ main.java.pt.shop.management.ui.list.product.ProductListLoader
+main/java/pt/shop/management/ui/details/product/ProductDetailsController.java
+ main.java.pt.shop.management.ui.details.product.ProductDetailsController
+main/java/pt/shop/management/ui/details/employee/EmployeeDetailsController.java
+ main.java.pt.shop.management.ui.details.employee.EmployeeDetailsController
+main/java/pt/shop/management/data/model/Note.java
+ main.java.pt.shop.management.data.model.Note
+main/java/pt/shop/management/ui/alert/AlertMaker.java
+ main.java.pt.shop.management.ui.alert.AlertMaker
+main/java/pt/shop/management/data/database/DatabaseHandler.java
+ main.java.pt.shop.management.data.database.DatabaseHandler
+main/java/pt/shop/management/ui/add/customer/CustomerAddController.java
+ main.java.pt.shop.management.ui.add.customer.CustomerAddController
+main/java/pt/shop/management/ui/search/employee/EmployeeSearchController.java
+ main.java.pt.shop.management.ui.search.employee.EmployeeSearchController

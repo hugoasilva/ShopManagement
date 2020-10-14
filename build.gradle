@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+group 'pt.shop.management'
+version '1.0'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+mainClassName = "main.java.pt.shop.management.ui.main.Start"
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    mergeServiceFiles()
+}
+
+
+javafx {
+    version = "11.0.2"
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web']
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+}
+dependencies {
+    compile 'junit:junit:4.12'
+    compile 'com.jcraft:jsch:0.1.55'
+    compile 'com.jfoenix:jfoenix:9.0.10'
+    compile 'mysql:mysql-connector-java:8.0.21'
+    compile 'org.kordamp.ikonli:ikonli-javafx:11.5.0'
+    compile 'org.kordamp.ikonli:ikonli-icomoon-pack:11.5.0'
+    compile 'org.kordamp.ikonli:ikonli-ionicons-pack:11.5.0'
+    compile 'org.kordamp.ikonli:ikonli-ionicons4-pack:11.5.0'
+    compile 'org.kordamp.ikonli:ikonli-fontawesome-pack:11.5.0'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+}

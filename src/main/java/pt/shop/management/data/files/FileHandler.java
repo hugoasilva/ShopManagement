@@ -1,0 +1,121 @@
+package main.java.pt.shop.management.data.files;
+
+import com.jcraft.jsch.*;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * @author Hugo Silva
+ * @version 2020-10-13
+ */
+
+public class FileHandler {
+
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(FileHandler.class.getName());
+
+    // SFTP server details
+    private static final String SFTP_SERVER_URL = "projecthub.hopto.org";
+    private static final String SFTP_SERVER_USERNAME = "pi";
+    private static final String SFTP_SERVER_PASSWORD = "server";
+
+    // Path constants
+    private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
+    private final static String REMOTE_INVOICE_PATH = "/home/pi/gestao/faturas/";
+
+    /**
+     * Setup SFTP server connection
+     *
+     * @return - SFTPChannel object
+     * @throws JSchException - JSch exception
+     */
+    private static ChannelSftp setupSFTP() throws JSchException {
+        JSch jsch = new JSch();
+        jsch.setConfig("StrictHostKeyChecking", "no");
+        Session jschSession = jsch.getSession(SFTP_SERVER_USERNAME, SFTP_SERVER_URL);
+        jschSession.setPassword(SFTP_SERVER_PASSWORD);
+        jschSession.connect();
+        return (ChannelSftp) jschSession.openChannel("sftp");
+    }
+
+    /**
+     * Log JSch exception
+     *
+     * @param e - JSch exception
+     */
+    private static void printJSchException(JSchException e) {
+        if (e != null) {
+            e.printStackTrace(System.err);
+            LOGGER.log(Level.ERROR, "{}", "JSch Error: " + e.getMessage());
+            Throwable t = e.getCause();
+            while (t != null) {
+                LOGGER.log(Level.ERROR, "{}", "Cause: " + t);
+                t = t.getCause();
+            }
+        }
+    }
+
+    /**
+     * Log SFTP exception
+     *
+     * @param e - SFTP exception
+     */
+    private static void printSFTPException(SftpException e) {
+        if (e != null) {
+            e.printStackTrace(System.err);
+            LOGGER.log(Level.ERROR, "{}", "SFTP Error: " + e.getMessage());
+            Throwable t = e.getCause();
+            while (t != null) {
+                LOGGER.log(Level.ERROR, "{}", "Cause: " + t);
+                t = t.getCause();
+            }
+        }
+    }
+
+    /**
+     * Download file from SFTP Server
+     *
+     * @param path     - remote file path
+     * @param fileName - local file name
+     * @throws JSchException - JSch exception
+     * @throws SftpException - SFTP exception
+     */
+    public static void downloadFile(String path, String fileName) throws JSchException, SftpException {
+        try {
+            ChannelSftp channelSftp = setupSFTP();
+            channelSftp.connect();
+
+            // Download file and close connection
+            channelSftp.get(path, LOCAL_DOWNLOAD_PATH + fileName);
+            channelSftp.exit();
+        } catch (SftpException e) {
+            printSFTPException(e);
+        } catch (JSchException e) {
+            printJSchException(e);
+        }
+    }
+
+    /**
+     * Upload file to SFTP Server
+     *
+     * @param path     - local file path
+     * @param fileName - remote file name
+     * @throws JSchException - JSch exception
+     * @throws SftpException - SFTP exception
+     */
+    public static void uploadFile(String path, String fileName) throws JSchException, SftpException {
+        try {
+            ChannelSftp channelSftp = setupSFTP();
+            channelSftp.connect();
+
+            // Upload file and close connection
+            channelSftp.put(path, REMOTE_INVOICE_PATH + fileName);
+            channelSftp.exit();
+        } catch (SftpException e) {
+            printSFTPException(e);
+        } catch (JSchException e) {
+            printJSchException(e);
+        }
+    }
+}
