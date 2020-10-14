@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" prefHeight="300.0" prefWidth="525.0"
             styleClass="custom-pane" stylesheets="@../../css/styles.css"
-            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="main.java.pt.shop.management.ui.about.AboutController">
+            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="pt.shop.management.ui.about.AboutController">
     <ImageView fitHeight="256.0" fitWidth="256.0" layoutX="140.0" pickOnBounds="true"
                preserveRatio="true">
         <Image url="@../../img/shop.png"/>

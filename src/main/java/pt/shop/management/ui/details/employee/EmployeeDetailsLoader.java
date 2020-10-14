@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.details.employee;
+package pt.shop.management.ui.details.employee;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

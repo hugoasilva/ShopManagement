@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.search.customer;
+package pt.shop.management.ui.search.customer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,11 +17,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.java.pt.shop.management.ui.alert.AlertMaker;
-import main.java.pt.shop.management.data.database.DatabaseHandler;
-import main.java.pt.shop.management.data.model.Customer;
-import main.java.pt.shop.management.ui.add.customer.CustomerAddController;
-import main.java.pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.model.Customer;
+import pt.shop.management.ui.add.customer.CustomerAddController;
+import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;

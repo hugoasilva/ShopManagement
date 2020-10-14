@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.exceptions;
+package pt.shop.management.exceptions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

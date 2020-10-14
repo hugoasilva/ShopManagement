@@ -1,9 +1,9 @@
-package main.java.pt.shop.management.data.database;
+package pt.shop.management.data.database;
 
-import main.java.pt.shop.management.data.model.Customer;
-import main.java.pt.shop.management.data.model.Employee;
-import main.java.pt.shop.management.data.model.Invoice;
-import main.java.pt.shop.management.data.model.Product;
+import pt.shop.management.data.model.Customer;
+import pt.shop.management.data.model.Employee;
+import pt.shop.management.data.model.Invoice;
+import pt.shop.management.data.model.Product;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

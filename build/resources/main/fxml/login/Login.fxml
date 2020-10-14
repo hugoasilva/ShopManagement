@@ -9,7 +9,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" prefHeight="367.0" prefWidth="419.0"
             stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
-            fx:controller="main.java.pt.shop.management.ui.login.LoginController">
+            fx:controller="pt.shop.management.ui.login.LoginController">
     <FontIcon iconLiteral="fa-address-book" iconSize="35" layoutX="70.0" layoutY="175.0" styleClass="font-icon"/>
     <FontIcon iconLiteral="fa-key" iconSize="35" layoutX="70.0" layoutY="240.0" styleClass="font-icon"/>
     <FontIcon iconLiteral="fa-lock" iconSize="63" layoutX="186.0" layoutY="87.0" styleClass="font-icon"

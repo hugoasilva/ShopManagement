@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: main.java.pt.shop.management.ui.main.Start
+Main-Class: pt.shop.management.ui.main.Start
 

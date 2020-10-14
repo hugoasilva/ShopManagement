@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.about;
+package pt.shop.management.ui.about;
 
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -6,7 +6,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import main.java.pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.util.ShopManagementUtil;
 
 import java.awt.*;
 import java.io.IOException;

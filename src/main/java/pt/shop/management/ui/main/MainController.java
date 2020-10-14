@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.main;
+package pt.shop.management.ui.main;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDrawer;
@@ -21,11 +21,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.java.pt.shop.management.ui.search.customer.CustomerSearchController;
-import main.java.pt.shop.management.ui.search.employee.EmployeeSearchController;
-import main.java.pt.shop.management.ui.search.invoice.InvoiceSearchController;
-import main.java.pt.shop.management.util.ShopManagementUtil;
-import main.java.pt.shop.management.ui.main.toolbar.ToolbarController;
+import pt.shop.management.ui.search.customer.CustomerSearchController;
+import pt.shop.management.ui.search.employee.EmployeeSearchController;
+import pt.shop.management.ui.search.invoice.InvoiceSearchController;
+import pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.ui.main.toolbar.ToolbarController;
 
 import java.io.IOException;
 import java.net.URL;

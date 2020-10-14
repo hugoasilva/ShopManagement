@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.util;
+package pt.shop.management.util;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.java.pt.shop.management.ui.main.MainController;
+import pt.shop.management.ui.main.MainController;
 
 import java.awt.*;
 import java.io.File;

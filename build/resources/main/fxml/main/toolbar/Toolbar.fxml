@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.VBox?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import org.kordamp.ikonli.javafx.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="445.0" prefWidth="200.0" stylesheets="@../../../css/styles.css"
-      xmlns="http://javafx.com/javafx/8.0.141" fx:controller="main.java.pt.shop.management.ui.main.toolbar.ToolbarController">
+      xmlns="http://javafx.com/javafx/8.0.141" fx:controller="pt.shop.management.ui.main.toolbar.ToolbarController">
     <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
                onAction="#loadAddCustomer" prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button"
                text="Adicionar Cliente" textAlignment="CENTER">

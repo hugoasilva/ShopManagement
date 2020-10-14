@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.list.employee;
+package pt.shop.management.ui.list.employee;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,13 +15,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import main.java.pt.shop.management.data.database.DatabaseHandler;
-import main.java.pt.shop.management.data.model.Employee;
-import main.java.pt.shop.management.ui.add.employee.EmployeeAddController;
-import main.java.pt.shop.management.ui.alert.AlertMaker;
-import main.java.pt.shop.management.ui.details.employee.EmployeeDetailsController;
-import main.java.pt.shop.management.ui.main.MainController;
-import main.java.pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.model.Employee;
+import pt.shop.management.ui.add.employee.EmployeeAddController;
+import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.details.employee.EmployeeDetailsController;
+import pt.shop.management.ui.main.MainController;
+import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;

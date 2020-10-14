@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.add.note;
+package pt.shop.management.ui.add.note;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -7,9 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import main.java.pt.shop.management.data.database.DatabaseHandler;
-import main.java.pt.shop.management.data.model.Note;
-import main.java.pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.model.Note;
+import pt.shop.management.ui.alert.AlertMaker;
 
 import java.io.File;
 import java.net.URL;

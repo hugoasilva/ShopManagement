@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.alert;
+package pt.shop.management.ui.alert;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -13,7 +13,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import main.java.pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.util.ShopManagementUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

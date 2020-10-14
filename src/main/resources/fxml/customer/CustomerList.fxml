@@ -5,7 +5,7 @@
 <?import java.lang.String?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" stylesheets="@../../css/styles.css"
            xmlns="http://javafx.com/javafx/8.0.141"
-           fx:controller="main.java.pt.shop.management.ui.list.customer.CustomerListController">
+           fx:controller="pt.shop.management.ui.list.customer.CustomerListController">
     <AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="456.0" prefWidth="1030.0"
                 stylesheets="@../../css/styles.css">
         <TableView fx:id="tableView" prefHeight="400.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0"

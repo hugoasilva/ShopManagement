@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.search.invoice;
+package pt.shop.management.ui.search.invoice;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

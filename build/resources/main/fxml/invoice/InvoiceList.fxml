@@ -5,7 +5,7 @@
 <?import java.lang.String?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/8.0.141"
-           fx:controller="main.java.pt.shop.management.ui.list.invoice.InvoiceListController">
+           fx:controller="pt.shop.management.ui.list.invoice.InvoiceListController">
     <AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="525.0" prefWidth="798.0"
                 stylesheets="@../../css/styles.css">
         <TableView fx:id="tableView" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="853.0"
@@ -38,7 +38,7 @@
                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Menu mnemonicParsing="false" text="File">
                 <items>
-                    <MenuItem mnemonicParsing="false" onAction="#exportAsPDF" text="Exportar para PDF"/>
+                    <MenuItem mnemonicParsing="false" text="Exportar para PDF"/>
                     <MenuItem mnemonicParsing="false" onAction="#closeStage" text="Fechar"/>
                 </items>
             </Menu>

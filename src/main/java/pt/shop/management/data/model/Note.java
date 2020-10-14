@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.data.model;
+package pt.shop.management.data.model;
 
 /**
  * Note Class

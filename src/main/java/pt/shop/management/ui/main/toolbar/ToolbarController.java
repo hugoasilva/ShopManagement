@@ -1,9 +1,9 @@
-package main.java.pt.shop.management.ui.main.toolbar;
+package pt.shop.management.ui.main.toolbar;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import main.java.pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.util.ShopManagementUtil;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,8 +30,7 @@ public class ToolbarController implements Initializable {
     @FXML
     private void loadAddCustomer(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/customer/CustomerAdd.fxml"),
-                "Adicionar Cliente", null);
+                "/fxml/customer/CustomerAdd.fxml"), "Adicionar Cliente", null);
     }
 
     /**
@@ -42,8 +41,7 @@ public class ToolbarController implements Initializable {
     @FXML
     private void loadAddInvoice(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/invoice/InvoiceAdd.fxml"),
-                "Adicionar Fatura", null);
+                "/fxml/invoice/InvoiceAdd.fxml"), "Adicionar Fatura", null);
     }
 
     /**
@@ -54,8 +52,7 @@ public class ToolbarController implements Initializable {
     @FXML
     private void loadAddEmployee(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/employee/EmployeeAdd.fxml"),
-                "Adicionar Empregado", null);
+                "/fxml/employee/EmployeeAdd.fxml"), "Adicionar Empregado", null);
     }
 
     /**
@@ -66,8 +63,7 @@ public class ToolbarController implements Initializable {
     @FXML
     private void loadCustomerTable(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/customer/CustomerList.fxml"),
-                "Lista de Clientes", null);
+                "/fxml/customer/CustomerList.fxml"), "Lista de Clientes", null);
     }
 
     /**
@@ -78,8 +74,7 @@ public class ToolbarController implements Initializable {
     @FXML
     private void loadInvoiceTable(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/invoice/InvoiceList.fxml"),
-                "Lista de Faturas", null);
+                "/fxml/invoice/InvoiceList.fxml"), "Lista de Faturas", null);
     }
 
     /**
@@ -90,8 +85,7 @@ public class ToolbarController implements Initializable {
     @FXML
     private void loadEmployeeTable(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/employee/EmployeeList.fxml"),
-                "Lista de Empregados", null);
+                "/fxml/employee/EmployeeList.fxml"), "Lista de Empregados", null);
     }
 
     /**

@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.add.invoice;
+package pt.shop.management.ui.add.invoice;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

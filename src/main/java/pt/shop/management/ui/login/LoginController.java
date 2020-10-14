@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.login;
+package pt.shop.management.ui.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -13,8 +13,8 @@ import javafx.stage.StageStyle;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import main.java.pt.shop.management.data.database.DatabaseHandler;
-import main.java.pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;

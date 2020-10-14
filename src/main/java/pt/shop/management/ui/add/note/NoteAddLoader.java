@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.add.note;
+package pt.shop.management.ui.add.note;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

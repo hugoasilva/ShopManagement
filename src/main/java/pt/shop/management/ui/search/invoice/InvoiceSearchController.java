@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.search.invoice;
+package pt.shop.management.ui.search.invoice;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
@@ -17,13 +17,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import main.java.pt.shop.management.ui.alert.AlertMaker;
-import main.java.pt.shop.management.data.database.DatabaseHandler;
-import main.java.pt.shop.management.data.files.FileHandler;
-import main.java.pt.shop.management.data.model.Invoice;
-import main.java.pt.shop.management.ui.add.invoice.InvoiceAddController;
-import main.java.pt.shop.management.ui.main.MainController;
-import main.java.pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.files.FileHandler;
+import pt.shop.management.data.model.Invoice;
+import pt.shop.management.ui.add.invoice.InvoiceAddController;
+import pt.shop.management.ui.main.MainController;
+import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;

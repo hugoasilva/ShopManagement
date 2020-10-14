@@ -1,16 +1,16 @@
-package main.java.pt.shop.management.ui.main;
+package pt.shop.management.ui.main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.java.pt.shop.management.data.database.DatabaseHandler;
-import main.java.pt.shop.management.exceptions.ExceptionUtil;
-import main.java.pt.shop.management.util.ShopManagementUtil;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.exceptions.ExceptionUtil;
+import pt.shop.management.util.ShopManagementUtil;
 
 /**
  * Main Class

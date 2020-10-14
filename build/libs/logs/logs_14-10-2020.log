@@ -2,3 +2,7 @@
 2020-10-14 21:45:08.144 [main] INFO  main.java.pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 09:45:08 da tarde
 2020-10-14 21:45:12.458 [JavaFX Application Thread] INFO  main.java.pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
 2020-10-14 21:45:18.817 [Thread-5] INFO  main.java.pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 14-10-2020 09:45:08 da tarde. Usado por 1602708318816 ms
+2020-10-14 21:52:18.742 [main] INFO  main.java.pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 09:52:18 da tarde
+2020-10-14 21:52:23.508 [Thread-5] INFO  main.java.pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 14-10-2020 09:52:18 da tarde. Usado por 1602708743508 ms
+2020-10-14 21:52:32.893 [main] INFO  main.java.pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 09:52:32 da tarde
+2020-10-14 21:52:37.511 [JavaFX Application Thread] INFO  main.java.pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin

@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>-->
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXTabPane?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXHamburger?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
            minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0"
            styleClass="custom-pane" stylesheets="@../../css/styles.css"
-           xmlns="http://javafx.com/javafx/8.0.141" fx:controller="main.java.pt.shop.management.ui.main.MainController">
+           xmlns="http://javafx.com/javafx/8.0.141" fx:controller="pt.shop.management.ui.main.MainController">
     <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" resizableOnDrag="true"
                resizeContent="true" styleClass="jfx-drawer"/>
     <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0">

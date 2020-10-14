@@ -16,7 +16,7 @@ repositories {
     jcenter()
 }
 
-mainClassName = "main.java.pt.shop.management.ui.main.Start"
+mainClassName = "pt.shop.management.ui.main.Start"
 
 shadowJar {
     manifest {
@@ -31,13 +31,6 @@ javafx {
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.web']
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src']
-        }
-    }
-}
 dependencies {
     compile 'junit:junit:4.12'
     compile 'com.jcraft:jsch:0.1.55'

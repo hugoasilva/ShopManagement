@@ -1,12 +1,12 @@
-package main.java.pt.shop.management.ui.details.product;
+package pt.shop.management.ui.details.product;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import main.java.pt.shop.management.data.database.DatabaseHandler;
-import main.java.pt.shop.management.data.model.Product;
+import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.model.Product;
 
 import java.net.URL;
 import java.sql.PreparedStatement;

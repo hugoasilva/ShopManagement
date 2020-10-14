@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.add.customer;
+package pt.shop.management.ui.add.customer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

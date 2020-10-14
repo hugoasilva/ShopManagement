@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.data.files;
+package pt.shop.management.data.files;
 
 import com.jcraft.jsch.*;
 import org.apache.logging.log4j.Level;

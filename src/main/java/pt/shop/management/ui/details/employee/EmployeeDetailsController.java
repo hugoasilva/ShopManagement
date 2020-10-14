@@ -1,4 +1,4 @@
-package main.java.pt.shop.management.ui.details.employee;
+package pt.shop.management.ui.details.employee;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,9 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-import main.java.pt.shop.management.data.database.DatabaseHandler;
-import main.java.pt.shop.management.data.model.Customer;
-import main.java.pt.shop.management.data.model.Employee;
+import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.model.Customer;
+import pt.shop.management.data.model.Employee;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
