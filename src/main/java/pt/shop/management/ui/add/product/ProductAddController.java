@@ -12,6 +12,7 @@ import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.alert.AlertMaker;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -124,7 +125,7 @@ public class ProductAddController implements Initializable {
                     "Dados de produto atualizados.");
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Erro",
-                    "Não foi possível atualizar os dados.");
+                    new String("Não foi possível atualizar os dados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
 }

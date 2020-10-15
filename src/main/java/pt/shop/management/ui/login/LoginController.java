@@ -18,6 +18,7 @@ import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -122,7 +123,7 @@ public class LoginController implements Initializable {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("/fxml/main/Main.fxml"));
             Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Sistema de Gestão de Loja");
+            stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
             stage.setScene(new Scene(parent));
             stage.show();
             ShopManagementUtil.setStageIcon(stage);

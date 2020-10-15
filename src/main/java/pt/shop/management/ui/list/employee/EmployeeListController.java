@@ -25,10 +25,12 @@ import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -208,10 +210,12 @@ public class EmployeeListController implements Initializable {
                 list.remove(selectedForDeletion);
             } else {
                 AlertMaker.showSimpleAlert("Erro!",
-                        "Não foi possível apagar o empregado " + selectedForDeletion.getName());
+                        new String("Não foi possível apagar o empregado ".getBytes(), StandardCharsets.UTF_8) +
+                                selectedForDeletion.getName());
             }
         } else {
-            AlertMaker.showSimpleAlert("Cancelado", "Nenhuns dados serão apagados.");
+            AlertMaker.showSimpleAlert("Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
 

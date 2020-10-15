@@ -12,6 +12,7 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.exceptions.ExceptionUtil;
 import pt.shop.management.util.ShopManagementUtil;
 
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 
 /**
@@ -56,7 +57,7 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.show();
-        stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), "UTF-8"));
+        stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
 
         ShopManagementUtil.setStageIcon(stage);
 

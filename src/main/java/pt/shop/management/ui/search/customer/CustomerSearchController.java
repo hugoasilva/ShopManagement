@@ -17,18 +17,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import pt.shop.management.ui.alert.AlertMaker;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.add.customer.CustomerAddController;
+import pt.shop.management.ui.alert.AlertMaker;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -183,10 +185,12 @@ public class CustomerSearchController implements Initializable {
                 list.remove(selectedForDeletion);
             } else {
                 AlertMaker.showSimpleAlert("Erro!",
-                        "Não foi possível apagar o cliente " + selectedForDeletion.getName());
+                        new String("Não foi possível apagar o cliente ".getBytes(), StandardCharsets.UTF_8) +
+                                selectedForDeletion.getName());
             }
         } else {
-            AlertMaker.showSimpleAlert("Cancelado", "Nenhuns dados serão apagados.");
+            AlertMaker.showSimpleAlert("Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
 

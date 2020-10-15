@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.TrayIcon.MessageType;
 import java.awt.image.BufferedImage;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -96,9 +97,10 @@ public class AlertMaker {
         try {
             SystemTray tray = SystemTray.getSystemTray();
             BufferedImage image = ImageIO.read(AlertMaker.class.getResource(ShopManagementUtil.ICON_IMAGE_LOC));
-            TrayIcon trayIcon = new TrayIcon(image, "Sistema de Gestão de Loja");
+            TrayIcon trayIcon = new TrayIcon(image,
+                    new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
             trayIcon.setImageAutoSize(true);
-            trayIcon.setToolTip("Sistema de Gestão de Loja");
+            trayIcon.setToolTip(new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
             tray.add(trayIcon);
             trayIcon.displayMessage(title, message, MessageType.INFO);
             tray.remove(trayIcon);

@@ -27,6 +27,7 @@ import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -198,11 +199,13 @@ public class InvoiceListController implements Initializable {
                         " apagada com sucesso.");
                 list.remove(selectedForDeletion);
             } else {
-                AlertMaker.showSimpleAlert("Erro!", "Não foi possível apagar a fatura nr "
+                AlertMaker.showSimpleAlert("Erro!",
+                        new String("Não foi possível apagar a fatura nr ".getBytes(), StandardCharsets.UTF_8)
                         + selectedForDeletion.getId());
             }
         } else {
-            AlertMaker.showSimpleAlert("Cancelado", "Nenhuns dados serão apagados.");
+            AlertMaker.showSimpleAlert("Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
 

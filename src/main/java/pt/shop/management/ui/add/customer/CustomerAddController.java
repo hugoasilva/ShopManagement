@@ -11,7 +11,9 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.alert.AlertMaker;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -70,7 +72,7 @@ public class CustomerAddController implements Initializable {
      * @throws SQLException - database exception
      */
     @FXML
-    private void addCustomer(ActionEvent event) throws SQLException {
+    private void addCustomer(ActionEvent event) throws SQLException, UnsupportedEncodingException {
 
         String customerId = String.valueOf(DatabaseHandler.getCustomerId());
         this.id = customerId;
@@ -134,7 +136,7 @@ public class CustomerAddController implements Initializable {
     /**
      * Handle customer update
      */
-    private void handleUpdateCustomer() {
+    private void handleUpdateCustomer() throws UnsupportedEncodingException {
         Customer customer = new Customer(id, name.getText(), address.getText(),
                 phone.getText(), email.getText(), nif.getText(), REMOTE_CUSTOMER_PATH + id + ".json");
         if (DatabaseHandler.getInstance().updateCustomer(customer)) {
@@ -142,7 +144,7 @@ public class CustomerAddController implements Initializable {
                     "Dados de cliente atualizados.");
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Erro",
-                    "Não foi possível atualizar os dados.");
+                    new String("Não foi possível atualizar os dados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
 

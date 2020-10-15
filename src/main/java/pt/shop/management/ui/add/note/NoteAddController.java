@@ -13,6 +13,7 @@ import pt.shop.management.ui.alert.AlertMaker;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -82,7 +83,7 @@ public class NoteAddController implements Initializable {
 
         if (message.getText().isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
-                    "Por favor insira uma descrição para a nota.");
+                    new String("Por favor insira uma descrição para a nota.".getBytes(), StandardCharsets.UTF_8));
             return;
         }
 
