@@ -27,7 +27,7 @@ public class Main extends Application {
     private final static Logger LOGGER = LogManager.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
-        ShopManagementUtil.createDownloadsFolder();
+        ShopManagementUtil.createDownloadsUploadsFolder();
         Long startTime = System.currentTimeMillis();
         LOGGER.log(Level.INFO, "Sistema de Gestão de Loja iniciado às {}",
                 ShopManagementUtil.formatDateTimeString(startTime));

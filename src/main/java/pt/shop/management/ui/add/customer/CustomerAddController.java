@@ -1,5 +1,7 @@
 package pt.shop.management.ui.add.customer;
 
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.SftpException;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,9 +10,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.files.FileHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.alert.AlertMaker;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +27,7 @@ import java.util.ResourceBundle;
  * Customer Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-15
  */
 
 public class CustomerAddController implements Initializable {
@@ -47,6 +52,7 @@ public class CustomerAddController implements Initializable {
     @FXML
     private AnchorPane mainContainer;
     private String id;
+    private String notesFile;
     private Boolean isInEditMode = false;
 
     @Override
@@ -81,7 +87,8 @@ public class CustomerAddController implements Initializable {
         String customerPhone = phone.getText();
         String customerEmail = email.getText();
         String customerNif = nif.getText();
-        String customerNotes = REMOTE_CUSTOMER_PATH + customerId + ".json";
+        String customerNotes = REMOTE_CUSTOMER_PATH + this.id + ".json";
+        this.notesFile = customerNotes;
 
         if (customerName.isEmpty() || customerAddress.isEmpty() || customerPhone.isEmpty()
                 || customerEmail.isEmpty() || customerNif.isEmpty()) {
@@ -98,6 +105,7 @@ public class CustomerAddController implements Initializable {
         Customer customer = new Customer(customerId, customerName,
                 customerAddress, customerPhone, customerEmail, customerNif, customerNotes);
         if (DatabaseHandler.insertCustomer(customer)) {
+            this.createNotesJSON();
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Cliente adicionado", customerName + " adicionado com sucesso!");
             clearEntries();
@@ -148,8 +156,19 @@ public class CustomerAddController implements Initializable {
         }
     }
 
+    /**
+     * Create empty notes JSON file
+     */
     private void createNotesJSON() {
-
-
+        try {
+            File file = new File("uploads/" + this.id + ".json");
+            if (file.exists()) {
+                file.delete();
+            }
+            file.createNewFile();
+            FileHandler.uploadFile(file.getPath(), this.notesFile);
+        } catch (IOException | JSchException | SftpException e) {
+            e.printStackTrace();
+        }
     }
 }

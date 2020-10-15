@@ -268,3 +268,22 @@ javafx.fxml.LoadException: Error resolving onAction='#handleMenuSettings', eithe
 2020-10-15 02:46:21.551 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:46:06 da manh�. Usado por 1602726381550 ms
 2020-10-15 02:47:18.272 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:47:18 da manh�
 2020-10-15 02:47:22.080 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:14:24.147 [main] INFO  pt.shop.management.ui.main.Main - Sistema de GestÃ£o de Loja iniciado Ã s 15-10-2020 02:14:24 da manhã
+2020-10-15 02:14:30.125 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - SessÃ£o iniciada com sucesso com o utilizador: admin
+2020-10-15 02:14:43.244 [Thread-6] INFO  pt.shop.management.ui.main.Main - Sistema de GestÃ£o de Loja fechado Ã s 15-10-2020 02:14:24 da manhã. Usado por 1602724483243 ms
+2020-10-15 02:33:09.429 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:33:09 da manh�
+2020-10-15 02:33:19.044 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:33:23.802 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:33:09 da manh�. Usado por 1602725603802 ms
+2020-10-15 02:35:02.795 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:35:02 da manh�
+2020-10-15 02:35:09.778 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:35:14.193 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:35:02 da manh�. Usado por 1602725714193 ms
+2020-10-15 02:38:04.222 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:38:04 da manh�
+2020-10-15 02:38:10.199 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:38:16.363 [JavaFX Application Thread] INFO  pt.shop.management.exceptions.ExceptionUtil - File created: filename.json
+2020-10-15 02:45:49.128 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:45:49 da manh�
+2020-10-15 02:45:53.454 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:50:02.828 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:50:02 da manh�
+2020-10-15 02:50:11.791 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:50:02 da manh�. Usado por 1602726611791 ms
+2020-10-15 02:55:39.737 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:55:39 da manh�
+2020-10-15 02:55:45.502 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:56:48.468 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:56:48 da manh�

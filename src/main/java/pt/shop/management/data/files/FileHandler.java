@@ -99,18 +99,18 @@ public class FileHandler {
     /**
      * Upload file to SFTP Server
      *
-     * @param path     - local file path
-     * @param fileName - remote file name
+     * @param localPath  - local file path
+     * @param remotePath - remote file path
      * @throws JSchException - JSch exception
      * @throws SftpException - SFTP exception
      */
-    public static void uploadFile(String path, String fileName) throws JSchException, SftpException {
+    public static void uploadFile(String localPath, String remotePath) throws JSchException, SftpException {
         try {
             ChannelSftp channelSftp = setupSFTP();
             channelSftp.connect();
 
             // Upload file and close connection
-            channelSftp.put(path, REMOTE_INVOICE_PATH + fileName);
+            channelSftp.put(localPath, remotePath);
             channelSftp.exit();
         } catch (SftpException e) {
             printSFTPException(e);

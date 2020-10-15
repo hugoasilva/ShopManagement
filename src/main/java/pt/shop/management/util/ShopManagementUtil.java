@@ -111,9 +111,9 @@ public class ShopManagementUtil {
     }
 
     /**
-     * Create downloads folder
+     * Create downloads and uploads folder
      */
-    public static void createDownloadsFolder() {
+    public static void createDownloadsUploadsFolder() {
         try {
             Path path = Paths.get("downloads/");
             Files.createDirectories(path);
@@ -121,6 +121,12 @@ public class ShopManagementUtil {
             Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.INFO,
                     "Não foi possível criar a pasta de transferências");
         }
-
+        try {
+            Path path = Paths.get("uploads/");
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.INFO,
+                    "Não foi possível criar a pasta de carregamentos");
+        }
     }
 }

@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Invoice Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-15
  */
 
 public class InvoiceAddController implements Initializable {
@@ -56,6 +56,7 @@ public class InvoiceAddController implements Initializable {
 
     private String id;
     private String invoicePath;
+    private String invoiceFile;
     private Boolean isInEditMode = Boolean.FALSE;
 
     @Override
@@ -88,10 +89,11 @@ public class InvoiceAddController implements Initializable {
         String employeeId = employee.getText();
         String invoiceDate = date.getValue().toString();
         String invoiceProducts = products.getText();
-        String invoicePdf = REMOTE_INVOICE_PATH + DatabaseHandler.getInvoiceId() + ".pdf";
+        String invoicePdf = REMOTE_INVOICE_PATH + this.id + ".pdf";
+        this.invoiceFile = invoicePdf;
 
         if (customerId.isEmpty() || employeeId.isEmpty() || invoiceDate.isEmpty()
-                || invoiceProducts.isEmpty() || invoicePdf.isEmpty()) {
+                || invoiceProducts.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
                     "Por favor insira dados em todos os campos.");
             return;
@@ -104,9 +106,8 @@ public class InvoiceAddController implements Initializable {
 
         Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoiceProducts, invoicePdf);
 
-        FileHandler.uploadFile(this.invoicePath, DatabaseHandler.getInvoiceId() + ".pdf");
-
         if (DatabaseHandler.insertInvoice(invoice)) {
+            FileHandler.uploadFile(this.invoicePath, this.invoiceFile);
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Nova fatura adicionada",
                     "Fatura nr " + invoiceId + " adicionada com sucesso.");
             clearEntries();
