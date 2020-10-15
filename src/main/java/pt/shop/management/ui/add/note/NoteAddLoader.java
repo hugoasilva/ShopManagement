@@ -21,7 +21,7 @@ public class NoteAddLoader extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../../../resources/fxml/note/NoteAdd.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/note/NoteAdd.fxml"));
 
         Scene scene = new Scene(root);
 

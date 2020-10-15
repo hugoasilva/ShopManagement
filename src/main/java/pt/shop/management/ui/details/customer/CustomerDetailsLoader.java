@@ -20,7 +20,7 @@ public class CustomerDetailsLoader extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../../../resources/fxml/customer/CustomerDetails.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/customer/CustomerDetails.fxml"));
 
         Scene scene = new Scene(root);
 

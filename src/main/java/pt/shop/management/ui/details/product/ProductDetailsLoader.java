@@ -20,7 +20,7 @@ public class ProductDetailsLoader extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../../../resources/fxml/product/ProductDetails.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/product/ProductDetails.fxml"));
 
         Scene scene = new Scene(root);
 

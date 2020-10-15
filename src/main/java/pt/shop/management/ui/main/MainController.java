@@ -98,7 +98,7 @@ public class MainController implements Initializable {
     private void initCombos() throws UnsupportedEncodingException {
         // Initialize customer combo box
         customerCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
-                new Label("NIF"), new Label("Contacto", new Label("E-mail")));
+                new Label("NIF"), new Label("Contacto"), new Label("E-mail"));
         customerCombo.setPromptText("Pesquisar por...");
 
         // Initialize employee combo box

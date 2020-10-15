@@ -21,7 +21,7 @@ public class InvoiceListLoader extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../../../resources/fxml/invoice/InvoiceList.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/invoice/InvoiceList.fxml"));
 
         Scene scene = new Scene(root);
 

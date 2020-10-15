@@ -21,7 +21,7 @@ public class EmployeeListLoader extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../../../resources/fxml/employee/EmployeeList.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/employee/EmployeeList.fxml"));
 
         Scene scene = new Scene(root);
 

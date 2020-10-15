@@ -20,9 +20,8 @@ public class FileHandler {
     private static final String SFTP_SERVER_USERNAME = "pi";
     private static final String SFTP_SERVER_PASSWORD = "server";
 
-    // Path constants
+    // Path constant
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
-    private final static String REMOTE_INVOICE_PATH = "/home/pi/gestao/faturas/";
 
     /**
      * Setup SFTP server connection
