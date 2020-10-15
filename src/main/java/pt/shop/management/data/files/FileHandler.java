@@ -32,7 +32,7 @@ public class FileHandler {
      */
     private static ChannelSftp setupSFTP() throws JSchException {
         JSch jsch = new JSch();
-        jsch.setConfig("StrictHostKeyChecking", "no");
+        JSch.setConfig("StrictHostKeyChecking", "no");
         Session jschSession = jsch.getSession(SFTP_SERVER_USERNAME, SFTP_SERVER_URL);
         jschSession.setPassword(SFTP_SERVER_PASSWORD);
         jschSession.connect();

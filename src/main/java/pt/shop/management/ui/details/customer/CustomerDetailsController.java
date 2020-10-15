@@ -20,12 +20,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import pt.shop.management.data.files.FileHandler;
-import pt.shop.management.util.ShopManagementUtil;
 import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.files.FileHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
+import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.io.Reader;

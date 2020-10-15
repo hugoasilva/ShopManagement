@@ -17,11 +17,11 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import pt.shop.management.ui.alert.AlertMaker;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.FileHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.add.invoice.InvoiceAddController;
+import pt.shop.management.ui.alert.AlertMaker;
 import pt.shop.management.ui.main.MainController;
 import pt.shop.management.util.ShopManagementUtil;
 
@@ -31,7 +31,8 @@ import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,8 +55,8 @@ public class InvoiceSearchController implements Initializable {
 
     // Invoice list object
     ObservableList<Invoice> list = FXCollections.observableArrayList();
-    private String type;
-    private String search;
+    private final String type;
+    private final String search;
     // UI Content
     @FXML
     private StackPane rootPane;
@@ -230,7 +231,7 @@ public class InvoiceSearchController implements Initializable {
             } else {
                 AlertMaker.showSimpleAlert("Erro!",
                         new String("Não foi possível apagar a fatura nr ".getBytes(), StandardCharsets.UTF_8)
-                        + selectedForDeletion.getId());
+                                + selectedForDeletion.getId());
             }
         } else {
             AlertMaker.showSimpleAlert("Cancelado",

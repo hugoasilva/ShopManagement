@@ -52,7 +52,7 @@ public class EmployeeSearchController implements Initializable {
     private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM empregados WHERE email=?";
     // Employee list object
     ObservableList<Employee> list = FXCollections.observableArrayList();
-    private String type;
+    private final String type;
     private String search;
     // UI Content
     @FXML

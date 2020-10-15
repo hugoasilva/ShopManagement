@@ -53,7 +53,7 @@ public class CustomerSearchController implements Initializable {
     // Customer list object
     ObservableList<Customer> list = FXCollections.observableArrayList();
 
-    private String type;
+    private final String type;
     private String search;
     // UI Content
     @FXML

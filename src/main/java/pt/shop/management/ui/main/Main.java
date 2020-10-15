@@ -13,7 +13,6 @@ import pt.shop.management.exceptions.ExceptionUtil;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.nio.charset.StandardCharsets;
-import java.text.Normalizer;
 
 /**
  * Main Class
