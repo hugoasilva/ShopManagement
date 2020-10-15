@@ -1,1 +1,2 @@
 2020-10-15 03:28:27.707 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 03:28:27 da manh�
+2020-10-15 03:28:32.088 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
