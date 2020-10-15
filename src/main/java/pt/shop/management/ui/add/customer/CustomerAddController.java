@@ -15,6 +15,7 @@ import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.alert.AlertMaker;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -166,6 +167,9 @@ public class CustomerAddController implements Initializable {
                 file.delete();
             }
             file.createNewFile();
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write("[]");
+            fileWriter.close();
             FileHandler.uploadFile(file.getPath(), this.notesFile);
         } catch (IOException | JSchException | SftpException e) {
             e.printStackTrace();

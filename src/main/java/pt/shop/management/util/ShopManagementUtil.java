@@ -111,7 +111,7 @@ public class ShopManagementUtil {
     }
 
     /**
-     * Create downloads and uploads folder
+     * Create local downloads and uploads folder
      */
     public static void createDownloadsUploadsFolder() {
         try {

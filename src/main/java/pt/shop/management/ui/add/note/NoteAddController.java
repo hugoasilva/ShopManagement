@@ -70,16 +70,8 @@ public class NoteAddController implements Initializable {
     @FXML
     private void addNote(ActionEvent event) {
         System.out.println(message.getText());
-        File notes = new File(this.notesPath);
-        if (!notes.exists()) {
-            // TODO
-            // Create JSON file when it doesn't exist
-            System.out.println("Ficheiro inexistente");
-        } else {
-            System.out.println("Ficheiro já existe");
-            // TODO
-            // Add new note to JSON file
-        }
+        // TODO
+        // Add note to JSON and save
 
         if (message.getText().isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",

@@ -15,12 +15,14 @@ pt/shop/management/ui/search/customer/CustomerSearchLoader.java
  pt.shop.management.ui.search.customer.CustomerSearchLoader
 pt/shop/management/ui/details/product/ProductDetailsController.java
  pt.shop.management.ui.details.product.ProductDetailsController
-pt/shop/management/ui/add/product/ProductAddController.java
- pt.shop.management.ui.add.product.ProductAddController
-pt/shop/management/ui/search/employee/EmployeeSearchController.java
- pt.shop.management.ui.search.employee.EmployeeSearchController
-pt/shop/management/data/model/Invoice.java
- pt.shop.management.data.model.Invoice
+pt/shop/management/ui/search/invoice/InvoiceSearchController.java
+ pt.shop.management.ui.search.invoice.InvoiceSearchController
+ pt.shop.management.ui.search.invoice.InvoiceSearchController$1
+ pt.shop.management.ui.search.invoice.InvoiceSearchController$1$1
+pt/shop/management/ui/add/customer/CustomerAddController.java
+ pt.shop.management.ui.add.customer.CustomerAddController
+pt/shop/management/ui/search/customer/CustomerSearchController.java
+ pt.shop.management.ui.search.customer.CustomerSearchController
 pt/shop/management/exceptions/DefaultExceptionHandler.java
  pt.shop.management.exceptions.DefaultExceptionHandler
 pt/shop/management/ui/search/employee/EmployeeSearchLoader.java
@@ -39,8 +41,8 @@ pt/shop/management/ui/details/employee/EmployeeDetailsLoader.java
  pt.shop.management.ui.details.employee.EmployeeDetailsLoader
 pt/shop/management/ui/add/employee/EmployeeAddLoader.java
  pt.shop.management.ui.add.employee.EmployeeAddLoader
-pt/shop/management/ui/details/employee/EmployeeDetailsController.java
- pt.shop.management.ui.details.employee.EmployeeDetailsController
+pt/shop/management/ui/add/invoice/InvoiceAddController.java
+ pt.shop.management.ui.add.invoice.InvoiceAddController
 pt/shop/management/data/model/Customer.java
  pt.shop.management.data.model.Customer
 pt/shop/management/ui/details/invoice/InvoiceDetailsController.java
@@ -59,8 +61,10 @@ pt/shop/management/ui/list/product/ProductListController.java
  pt.shop.management.ui.list.product.ProductListController$1$1
 pt/shop/management/ui/list/product/ProductListLoader.java
  pt.shop.management.ui.list.product.ProductListLoader
-pt/shop/management/ui/add/invoice/InvoiceAddLoader.java
- pt.shop.management.ui.add.invoice.InvoiceAddLoader
+pt/shop/management/ui/list/invoice/InvoiceListController.java
+ pt.shop.management.ui.list.invoice.InvoiceListController
+ pt.shop.management.ui.list.invoice.InvoiceListController$1
+ pt.shop.management.ui.list.invoice.InvoiceListController$1$1
 pt/shop/management/ui/about/AboutController.java
  pt.shop.management.ui.about.AboutController
 pt/shop/management/data/model/Product.java
@@ -69,8 +73,10 @@ pt/shop/management/ui/add/note/NoteAddLoader.java
  pt.shop.management.ui.add.note.NoteAddLoader
 pt/shop/management/ui/alert/AlertMaker.java
  pt.shop.management.ui.alert.AlertMaker
-pt/shop/management/ui/login/LoginController.java
- pt.shop.management.ui.login.LoginController
+pt/shop/management/ui/list/customer/CustomerListController.java
+ pt.shop.management.ui.list.customer.CustomerListController
+ pt.shop.management.ui.list.customer.CustomerListController$1
+ pt.shop.management.ui.list.customer.CustomerListController$1$1
 pt/shop/management/ui/list/employee/EmployeeListLoader.java
  pt.shop.management.ui.list.employee.EmployeeListLoader
 pt/shop/management/ui/main/MainController.java
@@ -90,21 +96,15 @@ pt/shop/management/exceptions/ExceptionUtil.java
  pt.shop.management.exceptions.ExceptionUtil$1
 pt/shop/management/ui/details/customer/CustomerDetailsLoader.java
  pt.shop.management.ui.details.customer.CustomerDetailsLoader
-pt/shop/management/ui/search/invoice/InvoiceSearchController.java
- pt.shop.management.ui.search.invoice.InvoiceSearchController
- pt.shop.management.ui.search.invoice.InvoiceSearchController$1
- pt.shop.management.ui.search.invoice.InvoiceSearchController$1$1
-pt/shop/management/ui/add/invoice/InvoiceAddController.java
- pt.shop.management.ui.add.invoice.InvoiceAddController
-pt/shop/management/ui/list/customer/CustomerListController.java
- pt.shop.management.ui.list.customer.CustomerListController
- pt.shop.management.ui.list.customer.CustomerListController$1
- pt.shop.management.ui.list.customer.CustomerListController$1$1
-pt/shop/management/ui/add/customer/CustomerAddController.java
- pt.shop.management.ui.add.customer.CustomerAddController
-pt/shop/management/ui/list/invoice/InvoiceListController.java
- pt.shop.management.ui.list.invoice.InvoiceListController
- pt.shop.management.ui.list.invoice.InvoiceListController$1
- pt.shop.management.ui.list.invoice.InvoiceListController$1$1
-pt/shop/management/ui/search/customer/CustomerSearchController.java
- pt.shop.management.ui.search.customer.CustomerSearchController
+pt/shop/management/data/model/Invoice.java
+ pt.shop.management.data.model.Invoice
+pt/shop/management/ui/add/invoice/InvoiceAddLoader.java
+ pt.shop.management.ui.add.invoice.InvoiceAddLoader
+pt/shop/management/ui/search/employee/EmployeeSearchController.java
+ pt.shop.management.ui.search.employee.EmployeeSearchController
+pt/shop/management/ui/login/LoginController.java
+ pt.shop.management.ui.login.LoginController
+pt/shop/management/ui/details/employee/EmployeeDetailsController.java
+ pt.shop.management.ui.details.employee.EmployeeDetailsController
+pt/shop/management/ui/add/product/ProductAddController.java
+ pt.shop.management.ui.add.product.ProductAddController

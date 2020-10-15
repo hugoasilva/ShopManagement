@@ -49,11 +49,9 @@ public class CustomerSearchController implements Initializable {
     private static final String SEARCH_NIF_QUERY = "SELECT * FROM clientes WHERE nif=?";
     private static final String SEARCH_PHONE_QUERY = "SELECT * FROM clientes WHERE contacto=?";
     private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM clientes WHERE email=?";
-
+    private final String type;
     // Customer list object
     ObservableList<Customer> list = FXCollections.observableArrayList();
-
-    private final String type;
     private String search;
     // UI Content
     @FXML

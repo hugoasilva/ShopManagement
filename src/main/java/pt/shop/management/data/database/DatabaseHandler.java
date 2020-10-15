@@ -63,10 +63,9 @@ public final class DatabaseHandler {
     private static final String UPDATE_INVOICE_QUERY = "UPDATE faturas SET id_cliente=?, id_funcionario=?, " +
             "data_fatura=?, " + "produtos=?, pdf=? WHERE id_fatura=?";
     private static final String UPDATE_PRODUCT_QUERY = "UPDATE produtos SET nome=?, quantidade=? WHERE id_produto=?";
-
+    private static final Statement stmt = null;
     private static DatabaseHandler handler = null;
     private static Connection conn = null;
-    private static final Statement stmt = null;
 
     static {
         try {

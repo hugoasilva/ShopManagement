@@ -25,9 +25,9 @@ public class InvoiceDetailsController implements Initializable {
 
     // Database query
     private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM clientes WHERE id_cliente=?";
+    private final String customerID;
     // Database handler instance
     DatabaseHandler databaseHandler;
-    private final String customerID;
     // UI Content
     @FXML
     private Label id;

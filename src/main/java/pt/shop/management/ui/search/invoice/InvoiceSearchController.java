@@ -52,11 +52,10 @@ public class InvoiceSearchController implements Initializable {
     private static final String SEARCH_DATE_QUERY = "SELECT * FROM faturas WHERE data_fatura=?";
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
-
-    // Invoice list object
-    ObservableList<Invoice> list = FXCollections.observableArrayList();
     private final String type;
     private final String search;
+    // Invoice list object
+    ObservableList<Invoice> list = FXCollections.observableArrayList();
     // UI Content
     @FXML
     private StackPane rootPane;

@@ -119,7 +119,7 @@ public class AlertMaker {
         ShopManagementUtil.setStageIcon(stage);
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(AlertMaker.class.getResource("/resources/styles.css").toExternalForm());
+        dialogPane.getStylesheets().add(AlertMaker.class.getResource("/css/styles.css").toExternalForm());
         dialogPane.getStyleClass().add("custom-alert");
     }
 }
