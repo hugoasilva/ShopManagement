@@ -287,3 +287,5 @@ javafx.fxml.LoadException: Error resolving onAction='#handleMenuSettings', eithe
 2020-10-15 02:55:39.737 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:55:39 da manh�
 2020-10-15 02:55:45.502 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
 2020-10-15 02:56:48.468 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:56:48 da manh�
+2020-10-15 02:59:40.803 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:59:40 da manh�
+2020-10-15 02:59:45.192 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:59:40 da manh�. Usado por 1602727185192 ms
