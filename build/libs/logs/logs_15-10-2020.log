@@ -165,3 +165,8 @@
 2020-10-15 02:21:15.943 [JavaFX Application Thread] INFO  pt.shop.management.exceptions.ExceptionUtil - 	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
 2020-10-15 02:21:15.943 [JavaFX Application Thread] INFO  pt.shop.management.exceptions.ExceptionUtil - 	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
 2020-10-15 02:21:15.944 [JavaFX Application Thread] INFO  pt.shop.management.exceptions.ExceptionUtil - 	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-10-15 02:48:59.368 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:48:59 da manh�
+2020-10-15 02:49:03.902 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:49:16.285 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:48:59 da manh�. Usado por 1602726556285 ms
+2020-10-15 02:49:18.965 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:49:18 da manh�
+2020-10-15 02:49:22.424 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:49:18 da manh�. Usado por 1602726562424 ms

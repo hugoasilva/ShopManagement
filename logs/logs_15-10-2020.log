@@ -79,3 +79,192 @@
 2020-10-15 02:23:34.856 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
 2020-10-15 02:24:37.164 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:24:37 da manh�
 2020-10-15 02:24:39.727 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:24:37 da manh�. Usado por 1602725079726 ms
+2020-10-15 02:35:39.287 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:35:39 da manh�
+2020-10-15 02:35:42.927 [JavaFX Application Thread] ERROR pt.shop.management.ui.login.LoginController - {}
+javafx.fxml.LoadException: Error resolving onAction='#handleMenuSettings', either the event handler is not in the Namespace or there is an error in the script.
+/C:/Users/Hugo/Documents/safe/Shop-Management-JDK11/build/resources/main/fxml/main/Main.fxml:138
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2621) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.access$100(FXMLLoader.java:105) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processEventHandlerAttributes(FXMLLoader.java:618) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processEndElement(FXMLLoader.java:778) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.processEndElement(FXMLLoader.java:2838) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2557) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2466) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3237) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3194) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3163) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3136) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3113) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:3106) ~[javafx-fxml-11.0.2-win.jar:?]
+	at pt.shop.management.ui.login.LoginController.loadMain(LoginController.java:124) ~[main/:?]
+	at pt.shop.management.ui.login.LoginController.handleLoginButtonAction(LoginController.java:70) ~[main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx-base-11.0.2-win.jar:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1670) ~[javafx-fxml-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx-base-11.0.2-win.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx-base-11.0.2-win.jar:?]
+	at javafx.scene.Node.fireEvent(Node.java:8879) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextFieldBehavior.fire(TextFieldBehavior.java:184) ~[javafx-controls-11.0.2-win.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.lambda$keyMapping$62(TextInputControlBehavior.java:330) ~[javafx-controls-11.0.2-win.jar:?]
+	at com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx-controls-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx-base-11.0.2-win.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx-base-11.0.2-win.jar:?]
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:4058) ~[javafx-graphics-11.0.2-win.jar:?]
+	at javafx.scene.Scene$KeyHandler.access$1500(Scene.java:4004) ~[javafx-graphics-11.0.2-win.jar:?]
+	at javafx.scene.Scene.processKeyEvent(Scene.java:2121) ~[javafx-graphics-11.0.2-win.jar:?]
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2595) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149) ~[javafx-graphics-11.0.2-win.jar:?]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$1(GlassViewEventHandler.java:248) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:390) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:547) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.glass.ui.View.notifyKey(View.java:971) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174) ~[javafx-graphics-11.0.2-win.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+2020-10-15 02:35:42.941 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:35:42.950 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:35:39 da manh�. Usado por 1602725742949 ms
+2020-10-15 02:36:02.485 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:36:02 da manh�
+2020-10-15 02:36:06.499 [JavaFX Application Thread] ERROR pt.shop.management.ui.login.LoginController - {}
+javafx.fxml.LoadException: Error resolving onAction='#handleMenuSettings', either the event handler is not in the Namespace or there is an error in the script.
+/C:/Users/Hugo/Documents/safe/Shop-Management-JDK11/build/resources/main/fxml/main/Main.fxml:138
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2621) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.access$100(FXMLLoader.java:105) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader$Element.processEventHandlerAttributes(FXMLLoader.java:618) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader$ValueElement.processEndElement(FXMLLoader.java:778) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.processEndElement(FXMLLoader.java:2838) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2557) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2466) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3237) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3194) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3163) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3136) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3113) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:3106) ~[javafx-fxml-11.0.2-win.jar:?]
+	at pt.shop.management.ui.login.LoginController.loadMain(LoginController.java:124) ~[main/:?]
+	at pt.shop.management.ui.login.LoginController.handleLoginButtonAction(LoginController.java:70) ~[main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:76) ~[javafx-base-11.0.2-win.jar:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:273) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:83) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1782) ~[javafx-fxml-11.0.2-win.jar:?]
+	at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1670) ~[javafx-fxml-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx-base-11.0.2-win.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx-base-11.0.2-win.jar:?]
+	at javafx.scene.Node.fireEvent(Node.java:8879) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextFieldBehavior.fire(TextFieldBehavior.java:184) ~[javafx-controls-11.0.2-win.jar:?]
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.lambda$keyMapping$62(TextInputControlBehavior.java:330) ~[javafx-controls-11.0.2-win.jar:?]
+	at com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx-controls-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx-base-11.0.2-win.jar:?]
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx-base-11.0.2-win.jar:?]
+	at javafx.event.Event.fireEvent(Event.java:198) ~[javafx-base-11.0.2-win.jar:?]
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:4058) ~[javafx-graphics-11.0.2-win.jar:?]
+	at javafx.scene.Scene$KeyHandler.access$1500(Scene.java:4004) ~[javafx-graphics-11.0.2-win.jar:?]
+	at javafx.scene.Scene.processKeyEvent(Scene.java:2121) ~[javafx-graphics-11.0.2-win.jar:?]
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2595) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149) ~[javafx-graphics-11.0.2-win.jar:?]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$1(GlassViewEventHandler.java:248) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:390) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:547) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.glass.ui.View.notifyKey(View.java:971) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx-graphics-11.0.2-win.jar:?]
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174) ~[javafx-graphics-11.0.2-win.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+2020-10-15 02:36:06.511 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:36:06.521 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:36:02 da manh�. Usado por 1602725766521 ms
+2020-10-15 02:36:36.038 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:36:36 da manh�
+2020-10-15 02:36:39.929 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:39:38.623 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:39:38 da manh�
+2020-10-15 02:43:25.105 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:43:25 da manh�
+2020-10-15 02:43:29.166 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:43:47.062 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:43:25 da manh�. Usado por 1602726227061 ms
+2020-10-15 02:44:01.380 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:44:01 da manh�
+2020-10-15 02:44:04.895 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:44:14.493 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:44:14 da manh�
+2020-10-15 02:44:18.628 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:44:32.550 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:44:32 da manh�
+2020-10-15 02:44:35.957 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:44:48.008 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:44:48 da manh�
+2020-10-15 02:44:51.596 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:44:58.771 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:44:58 da manh�
+2020-10-15 02:45:02.431 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:45:21.715 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:45:21 da manh�
+2020-10-15 02:45:25.465 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:45:38.418 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:45:38 da manh�
+2020-10-15 02:45:41.987 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:45:55.589 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:45:55 da manh�
+2020-10-15 02:45:59.444 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:46:06.857 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:46:06 da manh�
+2020-10-15 02:46:10.467 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 02:46:21.551 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 02:46:06 da manh�. Usado por 1602726381550 ms
+2020-10-15 02:47:18.272 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 02:47:18 da manh�
+2020-10-15 02:47:22.080 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin

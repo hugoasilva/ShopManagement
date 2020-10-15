@@ -36,7 +36,7 @@
         <MenuBar layoutX="10.0" layoutY="10.0" prefHeight="32.0" prefWidth="722.0" AnchorPane.leftAnchor="0.0"
                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Menu mnemonicParsing="false" text="File">
-                <MenuItem mnemonicParsing="false"  text="Exportar para PDF"/>
+                <MenuItem mnemonicParsing="false" text="Exportar para PDF"/>
                 <MenuItem mnemonicParsing="false" onAction="#closeStage" text="Fechar"/>
             </Menu>
         </MenuBar>

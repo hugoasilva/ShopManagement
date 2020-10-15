@@ -19,7 +19,6 @@ public class ToolbarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     /**
@@ -86,16 +85,5 @@ public class ToolbarController implements Initializable {
     private void loadEmployeeTable(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
                 "/fxml/employee/EmployeeList.fxml"), "Lista de Empregados", null);
-    }
-
-    /**
-     * Load setting window
-     *
-     * @param event - click event
-     */
-    @FXML
-    private void loadSettings(ActionEvent event) {
-        ShopManagementUtil.loadWindow(getClass().getResource(
-                "/shop/management/ui/settings/settings.fxml"), "Definições", null);
     }
 }

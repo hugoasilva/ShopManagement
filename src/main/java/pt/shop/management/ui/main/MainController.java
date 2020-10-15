@@ -186,17 +186,6 @@ public class MainController implements Initializable {
                 "/fxml/about/About.fxml"), "Sobre", null);
     }
 
-    /**
-     * Handle menu settings item
-     *
-     * @param event - click event
-     */
-    @FXML
-    private void handleMenuSettings(ActionEvent event) {
-        ShopManagementUtil.loadWindow(getClass().getResource(
-                "/shop/management/ui/settings/settings.fxml"), "Definições", null);
-    }
-
     @FXML
     private void handleMenuFullScreen(ActionEvent event) {
         Stage stage = getStage();
