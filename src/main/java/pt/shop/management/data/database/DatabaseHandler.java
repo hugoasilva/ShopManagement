@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 
 /**
@@ -67,7 +68,11 @@ public final class DatabaseHandler {
     private static Statement stmt = null;
 
     static {
-        createConnection();
+        try {
+            createConnection();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     private DatabaseHandler() {
@@ -83,12 +88,13 @@ public final class DatabaseHandler {
     /**
      * Create database connection
      */
-    private static void createConnection() {
+    private static void createConnection() throws UnsupportedEncodingException {
         try {
             conn = DriverManager.getConnection(DATABASE_SERVER_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         } catch (SQLException e) {
             printSQLException(e);
-            JOptionPane.showMessageDialog(null, "Não foi possível aceder à base de dados",
+            JOptionPane.showMessageDialog(null,
+                    (new String("Não foi possível aceder à base de dados".getBytes(), "UTF-8")),
                     "Erro de Base de Dados", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }

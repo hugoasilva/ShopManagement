@@ -1,0 +1,68 @@
+2020-10-15 00:39:27.310 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 12:39:27 da manh�
+2020-10-15 00:39:43.580 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 00:40:35.254 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 12:40:35 da manh�
+2020-10-15 00:40:38.952 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 12:40:35 da manh�. Usado por 1602718838952 ms
+2020-10-15 00:41:34.578 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 12:41:34 da manh�
+2020-10-15 00:41:38.780 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 12:41:34 da manh�. Usado por 1602718898779 ms
+2020-10-15 00:41:49.268 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 12:41:49 da manh�
+2020-10-15 00:42:04.316 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 12:42:04 da manh�
+2020-10-15 00:42:05.264 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 12:41:49 da manh�. Usado por 1602718925264 ms
+2020-10-15 00:42:07.352 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 12:42:04 da manh�. Usado por 1602718927351 ms
+2020-10-15 00:42:10.470 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 12:42:10 da manh�
+2020-10-15 00:42:14.969 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 00:42:21.701 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 12:42:10 da manh�. Usado por 1602718941701 ms
+2020-10-15 00:52:54.460 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 12:52:54 da manh�
+2020-10-15 00:53:01.075 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 00:53:42.089 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 12:53:42 da manh�
+2020-10-15 00:53:45.388 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 12:53:42 da manh�. Usado por 1602719625388 ms
+2020-10-15 01:02:22.642 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:02:22 da manh�
+2020-10-15 01:02:29.254 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 01:11:59.531 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:11:59 da manh�
+2020-10-15 01:12:16.787 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:12:16 da manh�
+2020-10-15 01:12:29.702 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:12:29 da manh�
+2020-10-15 01:12:44.790 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:12:44 da manh�
+2020-10-15 01:13:11.061 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:13:11 da manh�
+2020-10-15 01:13:48.060 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:13:48 da manh�
+2020-10-15 01:13:52.111 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 01:13:53.502 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:13:48 da manh�. Usado por 1602720833502 ms
+2020-10-15 01:13:57.774 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:13:57 da manh�
+2020-10-15 01:14:01.717 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 01:14:05.696 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:13:57 da manh�. Usado por 1602720845695 ms
+2020-10-15 01:14:19.598 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:14:19 da manh�
+2020-10-15 01:14:24.192 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 01:18:19.440 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:18:19 da manh�
+2020-10-15 01:18:29.241 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:18:19 da manh�. Usado por 1602721109240 ms
+2020-10-15 01:20:13.223 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:20:13 da manh�
+2020-10-15 01:22:46.116 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:22:46 da manh�
+2020-10-15 01:22:50.384 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:22:46 da manh�. Usado por 1602721370383 ms
+2020-10-15 01:23:10.086 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:23:10 da manh�
+2020-10-15 01:23:15.532 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:23:10 da manh�. Usado por 1602721395530 ms
+2020-10-15 01:23:37.143 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:23:37 da manh�
+2020-10-15 01:24:49.528 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:24:49 da manh�
+2020-10-15 01:25:01.197 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:24:49 da manh�. Usado por 1602721501196 ms
+2020-10-15 01:25:40.991 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:25:40 da manh�
+2020-10-15 01:25:44.545 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:25:40 da manh�. Usado por 1602721544544 ms
+2020-10-15 01:26:47.864 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:26:47 da manh�
+2020-10-15 01:28:12.688 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:28:12 da manh�
+2020-10-15 01:28:28.320 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:28:12 da manh�. Usado por 1602721708320 ms
+2020-10-15 01:28:29.441 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:28:29 da manh�
+2020-10-15 01:28:36.298 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:28:29 da manh�. Usado por 1602721716297 ms
+2020-10-15 01:29:28.048 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:29:28 da manh�
+2020-10-15 01:29:32.609 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:29:28 da manh�. Usado por 1602721772609 ms
+2020-10-15 01:32:16.884 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:32:16 da manh�
+2020-10-15 01:32:36.597 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:32:16 da manh�. Usado por 1602721956595 ms
+2020-10-15 01:32:41.250 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:32:41 da manh�
+2020-10-15 01:32:44.469 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:32:41 da manh�. Usado por 1602721964468 ms
+2020-10-15 01:32:57.382 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:32:57 da manh�
+2020-10-15 01:33:01.716 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:32:57 da manh�. Usado por 1602721981715 ms
+2020-10-15 01:33:21.883 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:33:21 da manh�
+2020-10-15 01:33:35.137 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:33:21 da manh�. Usado por 1602722015137 ms
+2020-10-15 01:34:47.518 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:34:47 da manh�
+2020-10-15 01:35:12.774 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 01:35:54.615 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:35:54 da manh�
+2020-10-15 01:35:58.645 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 01:36:08.210 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:35:54 da manh�. Usado por 1602722168209 ms
+2020-10-15 01:38:18.703 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:38:18 da manh�
+2020-10-15 01:38:23.931 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-15 01:40:28.440 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:40:28 da manh�
+2020-10-15 01:40:32.362 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin

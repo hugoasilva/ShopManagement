@@ -28,6 +28,7 @@ import pt.shop.management.util.ShopManagementUtil;
 import pt.shop.management.ui.main.toolbar.ToolbarController;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -86,10 +87,14 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initDrawer();
         initComponents();
-        initCombos();
+        try {
+            initCombos();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initCombos() {
+    private void initCombos() throws UnsupportedEncodingException {
         // Initialize customer combo box
         customerCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
                 new Label("NIF"), new Label("Contacto", new Label("E-mail")));
@@ -106,7 +111,8 @@ public class MainController implements Initializable {
         invoiceCombo.setPromptText("Pesquisar por...");
 
         // Initialize product combo box
-        productCombo.getItems().addAll(new Label("ID"), new Label("Nome"), new Label("Preço"));
+        productCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
+                new Label(new String("Preço".getBytes(), "UTF-8")));
         productCombo.setPromptText("Pesquisar por...");
     }
 

@@ -12,6 +12,8 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.exceptions.ExceptionUtil;
 import pt.shop.management.util.ShopManagementUtil;
 
+import java.text.Normalizer;
+
 /**
  * Main Class
  *
@@ -54,7 +56,7 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("Sistema de Gestão de Loja");
+        stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), "UTF-8"));
 
         ShopManagementUtil.setStageIcon(stage);
 

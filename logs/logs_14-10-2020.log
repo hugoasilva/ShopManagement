@@ -630,3 +630,5 @@ Caused by: java.lang.UnsupportedOperationException: Cannot resolve 'icm-search'
 2020-10-14 21:56:47.783 [Thread-5] INFO  main.java.pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 14-10-2020 09:54:49 da tarde. Usado por 1602709007782 ms
 2020-10-14 22:07:52.527 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 10:07:52 da tarde
 2020-10-14 22:07:55.550 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-14 22:08:53.355 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 14-10-2020 10:08:53 da tarde
+2020-10-14 22:08:56.200 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
