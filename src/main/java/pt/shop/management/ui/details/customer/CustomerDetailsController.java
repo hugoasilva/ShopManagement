@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * Customer Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-15
  */
 
 public class CustomerDetailsController implements Initializable {
@@ -56,12 +56,14 @@ public class CustomerDetailsController implements Initializable {
 
     // Customer data
     private final String customerID;
+    private String notesPath;
+
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
     // Database handler instance
     DatabaseHandler databaseHandler;
-    private String notesPath;
+
     // UI Content
     @FXML
     private Label id;
@@ -77,8 +79,6 @@ public class CustomerDetailsController implements Initializable {
     private Label nif;
     @FXML
     private TableView<Note> tableView;
-    @FXML
-    private TableColumn<Note, String> idCol;
     @FXML
     private TableColumn<Note, String> messageCol;
 
@@ -102,7 +102,6 @@ public class CustomerDetailsController implements Initializable {
      * Init notes table columns
      */
     private void initCol() {
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
     }
 

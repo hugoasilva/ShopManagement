@@ -25,11 +25,12 @@ import java.util.ResourceBundle;
  * Customer Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-15
+ * @version 2020-10-16
  */
 
 public class CustomerAddController implements Initializable {
 
+    private final static String LOCAL_CUSTOMER_PATH = "uploads/clientes";
     private final static String REMOTE_CUSTOMER_PATH = "/home/pi/gestao/clientes/";
 
     // Database handler instance
@@ -52,7 +53,7 @@ public class CustomerAddController implements Initializable {
 
     // Customer variables
     private String id;
-    private String notesFile;
+    private String notesPath;
     private Boolean isInEditMode = false;
 
     @Override
@@ -88,7 +89,7 @@ public class CustomerAddController implements Initializable {
         String customerEmail = email.getText();
         String customerNif = nif.getText();
         String customerNotes = REMOTE_CUSTOMER_PATH + this.id + ".json";
-        this.notesFile = customerNotes;
+        this.notesPath = customerNotes;
 
         if (customerName.isEmpty() || customerAddress.isEmpty() || customerPhone.isEmpty()
                 || customerEmail.isEmpty() || customerNif.isEmpty()) {
@@ -146,7 +147,7 @@ public class CustomerAddController implements Initializable {
      */
     private void handleUpdateCustomer() {
         Customer customer = new Customer(id, name.getText(), address.getText(),
-                phone.getText(), email.getText(), nif.getText(), REMOTE_CUSTOMER_PATH + id + ".json");
+                phone.getText(), email.getText(), nif.getText(), this.notesPath);
         if (DatabaseHandler.getInstance().updateCustomer(customer)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Successo!",
                     "Dados de cliente atualizados.");
@@ -161,7 +162,7 @@ public class CustomerAddController implements Initializable {
      */
     private void createNotesJSON() {
         try {
-            File file = new File("uploads/" + this.id + ".json");
+            File file = new File(LOCAL_CUSTOMER_PATH + this.id + ".json");
             if (file.exists()) {
                 file.delete();
             }
@@ -169,7 +170,7 @@ public class CustomerAddController implements Initializable {
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write("[]");
             fileWriter.close();
-            FileHandler.uploadFile(file.getPath(), this.notesFile);
+            FileHandler.uploadFile(file.getPath(), this.notesPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
