@@ -165,6 +165,128 @@ public final class DatabaseHandler {
     }
 
     /**
+     * Get employee count at database
+     *
+     * @return new employee's id
+     */
+    public static int getEmployeeId() {
+        ResultSet rs;
+        try {
+            PreparedStatement stmt = conn.prepareStatement(GET_EMPLOYEE_ID_QUERY);
+            rs = stmt.executeQuery();
+            //Retrieving the result
+            rs.next();
+            return rs.getInt(1) + 1;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+            return 0;
+        }
+    }
+
+    /**
+     * Insert new employee
+     *
+     * @param employee - employee object
+     * @return - true if success, false otherwise
+     */
+    public static boolean insertEmployee(Employee employee) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(INSERT_EMPLOYEE_QUERY);
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getAddress());
+            statement.setString(3, employee.getPhone());
+            statement.setString(4, employee.getEmail());
+            statement.setString(5, employee.getNif());
+            statement.setString(6, employee.getNotes());
+
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Get invoice count in database
+     *
+     * @return new invoice's id
+     */
+    public static int getInvoiceId() {
+        ResultSet rs;
+        try {
+            PreparedStatement stmt = conn.prepareStatement(GET_INVOICE_ID_QUERY);
+            rs = stmt.executeQuery();
+            //Retrieving the result
+            rs.next();
+            return rs.getInt(1) + 1;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+            return 0;
+        }
+    }
+
+    /**
+     * Insert new invoice
+     *
+     * @param invoice - invoice object
+     * @return - true if success, false otherwise
+     */
+    public static boolean insertInvoice(Invoice invoice) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(INSERT_INVOICE_QUERY);
+            statement.setString(1, invoice.getCustomerId());
+            statement.setString(2, invoice.getEmployeeId());
+            statement.setString(3, invoice.getDate());
+            statement.setString(4, invoice.getProducts());
+            statement.setString(5, invoice.getPdf());
+
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Get product count in database
+     *
+     * @return new product's id
+     */
+    public static int getProductId() {
+        ResultSet rs;
+        try {
+            PreparedStatement stmt = conn.prepareStatement(GET_PRODUCT_ID_QUERY);
+            rs = stmt.executeQuery();
+            //Retrieving the result
+            rs.next();
+            return rs.getInt(1) + 1;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+            return 0;
+        }
+    }
+
+    /**
+     * Insert new product
+     *
+     * @param product - product object
+     * @return - true if success, false otherwise
+     */
+    public static boolean insertProduct(Product product) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(INSERT_PRODUCT_QUERY);
+            statement.setString(1, product.getName());
+            statement.setString(2, product.getPrice());
+            statement.setString(3, product.getQuantity());
+
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
      * Delete customer from database
      *
      * @param customer - customer object
@@ -203,48 +325,6 @@ public final class DatabaseHandler {
 //            stmt.setString(7, customer.getId());
             int res = stmt.executeUpdate();
             return (res > 0);
-        } catch (SQLException ex) {
-            printSQLException(ex);
-        }
-        return false;
-    }
-
-    /**
-     * Get employee count at database
-     *
-     * @return new employee's id
-     */
-    public static int getEmployeeId() {
-        ResultSet rs;
-        try {
-            PreparedStatement stmt = conn.prepareStatement(GET_EMPLOYEE_ID_QUERY);
-            rs = stmt.executeQuery();
-            //Retrieving the result
-            rs.next();
-            return rs.getInt(1) + 1;
-        } catch (SQLException ex) {
-            printSQLException(ex);
-            return 0;
-        }
-    }
-
-    /**
-     * Insert new employee
-     *
-     * @param employee - employee object
-     * @return - true if success, false otherwise
-     */
-    public static boolean insertEmployee(Employee employee) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(INSERT_EMPLOYEE_QUERY);
-            statement.setString(1, employee.getName());
-            statement.setString(2, employee.getAddress());
-            statement.setString(3, employee.getPhone());
-            statement.setString(4, employee.getEmail());
-            statement.setString(5, employee.getNif());
-            statement.setString(6, employee.getNotes());
-
-            return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             printSQLException(ex);
         }
@@ -297,47 +377,6 @@ public final class DatabaseHandler {
     }
 
     /**
-     * Get invoice count in database
-     *
-     * @return new invoice's id
-     */
-    public static int getInvoiceId() {
-        ResultSet rs;
-        try {
-            PreparedStatement stmt = conn.prepareStatement(GET_INVOICE_ID_QUERY);
-            rs = stmt.executeQuery();
-            //Retrieving the result
-            rs.next();
-            return rs.getInt(1) + 1;
-        } catch (SQLException ex) {
-            printSQLException(ex);
-            return 0;
-        }
-    }
-
-    /**
-     * Insert new invoice
-     *
-     * @param invoice - invoice object
-     * @return - true if success, false otherwise
-     */
-    public static boolean insertInvoice(Invoice invoice) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(INSERT_INVOICE_QUERY);
-            statement.setString(1, invoice.getCustomerId());
-            statement.setString(2, invoice.getEmployeeId());
-            statement.setString(3, invoice.getDate());
-            statement.setString(4, invoice.getProducts());
-            statement.setString(5, invoice.getPdf());
-
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            printSQLException(ex);
-        }
-        return false;
-    }
-
-    /**
      * Delete invoice from database
      *
      * @param invoice - invoice object
@@ -375,45 +414,6 @@ public final class DatabaseHandler {
 //            stmt.setString(6, invoice.getId());
             int res = stmt.executeUpdate();
             return (res > 0);
-        } catch (SQLException ex) {
-            printSQLException(ex);
-        }
-        return false;
-    }
-
-    /**
-     * Get product count in database
-     *
-     * @return new product's id
-     */
-    public static int getProductId() {
-        ResultSet rs;
-        try {
-            PreparedStatement stmt = conn.prepareStatement(GET_PRODUCT_ID_QUERY);
-            rs = stmt.executeQuery();
-            //Retrieving the result
-            rs.next();
-            return rs.getInt(1) + 1;
-        } catch (SQLException ex) {
-            printSQLException(ex);
-            return 0;
-        }
-    }
-
-    /**
-     * Insert new product
-     *
-     * @param product - product object
-     * @return - true if success, false otherwise
-     */
-    public static boolean insertProduct(Product product) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(INSERT_PRODUCT_QUERY);
-            statement.setString(1, product.getName());
-            statement.setString(2, product.getPrice());
-            statement.setString(3, product.getQuantity());
-
-            return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             printSQLException(ex);
         }

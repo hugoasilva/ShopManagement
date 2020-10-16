@@ -1,7 +1,5 @@
 package pt.shop.management.ui.add.customer;
 
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +15,6 @@ import pt.shop.management.ui.alert.AlertMaker;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
@@ -173,7 +170,7 @@ public class CustomerAddController implements Initializable {
             fileWriter.write("[]");
             fileWriter.close();
             FileHandler.uploadFile(file.getPath(), this.notesFile);
-        } catch (IOException | JSchException | SftpException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

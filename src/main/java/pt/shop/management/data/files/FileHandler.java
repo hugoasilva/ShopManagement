@@ -77,10 +77,8 @@ public class FileHandler {
      *
      * @param path     - remote file path
      * @param fileName - local file name
-     * @throws JSchException - JSch exception
-     * @throws SftpException - SFTP exception
      */
-    public static void downloadFile(String path, String fileName) throws JSchException, SftpException {
+    public static void downloadFile(String path, String fileName) {
         try {
             ChannelSftp channelSftp = setupSFTP();
             channelSftp.connect();
@@ -100,10 +98,8 @@ public class FileHandler {
      *
      * @param localPath  - local file path
      * @param remotePath - remote file path
-     * @throws JSchException - JSch exception
-     * @throws SftpException - SFTP exception
      */
-    public static void uploadFile(String localPath, String remotePath) throws JSchException, SftpException {
+    public static void uploadFile(String localPath, String remotePath) {
         try {
             ChannelSftp channelSftp = setupSFTP();
             channelSftp.connect();
