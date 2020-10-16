@@ -11,7 +11,6 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.alert.AlertMaker;
 
-import java.io.File;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

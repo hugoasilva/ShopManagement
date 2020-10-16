@@ -56,13 +56,10 @@ public final class DatabaseHandler {
             "(nome, quantidade) VALUES (?, ?)";
 
     // Update Queries
-    private static final String UPDATE_CUSTOMER_QUERY = "UPDATE clientes SET nome=?, morada=?, contacto=?, " +
-            "email=?, " + "nif=?, notas=? WHERE id_cliente=?";
-    private static final String UPDATE_EMPLOYEE_QUERY = "UPDATE empregados SET nome=?, morada=?, contacto=?, " +
-            "email=?, " + "nif=?, notas=? WHERE id_empregado=?";
-    private static final String UPDATE_INVOICE_QUERY = "UPDATE faturas SET id_cliente=?, id_funcionario=?, " +
-            "data_fatura=?, " + "produtos=?, pdf=? WHERE id_fatura=?";
-    private static final String UPDATE_PRODUCT_QUERY = "UPDATE produtos SET nome=?, quantidade=? WHERE id_produto=?";
+    private static final String UPDATE_CUSTOMER_QUERY = "UPDATE clientes SET ?=? WHERE id_cliente=?";
+    private static final String UPDATE_EMPLOYEE_QUERY = "UPDATE empregados SET ?=? WHERE id_empregado=?";
+    private static final String UPDATE_INVOICE_QUERY = "UPDATE faturas SET ?=? WHERE id_fatura=?";
+    private static final String UPDATE_PRODUCT_QUERY = "UPDATE produtos SET ?=? WHERE id_produto=?";
     private static final Statement stmt = null;
     private static DatabaseHandler handler = null;
     private static Connection conn = null;
@@ -168,6 +165,51 @@ public final class DatabaseHandler {
     }
 
     /**
+     * Delete customer from database
+     *
+     * @param customer - customer object
+     * @return - true if success, false otherwise
+     */
+    public boolean deleteCustomer(Customer customer) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement(DELETE_CUSTOMER_QUERY);
+            stmt.setString(1, customer.getId());
+            int res = stmt.executeUpdate();
+            if (res == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Update customer data at database
+     *
+     * @param customer - customer object
+     * @return - true if success, false otherwise
+     */
+    public boolean updateCustomer(Customer customer) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement(UPDATE_CUSTOMER_QUERY);
+            // TODO Update changed fields
+//            stmt.setString(1, customer.getName());
+//            stmt.setString(2, customer.getAddress());
+//            stmt.setString(3, customer.getPhone());
+//            stmt.setString(4, customer.getEmail());
+//            stmt.setString(5, customer.getNif());
+//            stmt.setString(6, customer.getNotes());
+//            stmt.setString(7, customer.getId());
+            int res = stmt.executeUpdate();
+            return (res > 0);
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
      * Get employee count at database
      *
      * @return new employee's id
@@ -201,7 +243,53 @@ public final class DatabaseHandler {
             statement.setString(4, employee.getEmail());
             statement.setString(5, employee.getNif());
             statement.setString(6, employee.getNotes());
+
             return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Delete employee from database
+     *
+     * @param employee - employee object
+     * @return - true if success, false otherwise
+     */
+    public boolean deleteEmployee(Employee employee) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement(DELETE_EMPLOYEE_QUERY);
+            stmt.setString(1, employee.getId());
+            int res = stmt.executeUpdate();
+            if (res == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Update employee data at database
+     *
+     * @param employee - customer object
+     * @return - true if success, false otherwise
+     */
+    public boolean updateEmployee(Employee employee) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement(UPDATE_EMPLOYEE_QUERY);
+            // TODO Update changed fields
+//            stmt.setString(1, employee.getName());
+//            stmt.setString(2, employee.getAddress());
+//            stmt.setString(3, employee.getPhone());
+//            stmt.setString(4, employee.getEmail());
+//            stmt.setString(5, employee.getNif());
+//            stmt.setString(6, employee.getNotes());
+//            stmt.setString(7, employee.getId());
+            int res = stmt.executeUpdate();
+            return (res > 0);
         } catch (SQLException ex) {
             printSQLException(ex);
         }
@@ -250,132 +338,6 @@ public final class DatabaseHandler {
     }
 
     /**
-     * Get product count in database
-     *
-     * @return new product's id
-     */
-    public static int getProductId() {
-        ResultSet rs;
-        try {
-            PreparedStatement stmt = conn.prepareStatement(GET_PRODUCT_ID_QUERY);
-            rs = stmt.executeQuery();
-            //Retrieving the result
-            rs.next();
-            return rs.getInt(1) + 1;
-        } catch (SQLException ex) {
-            printSQLException(ex);
-            return 0;
-        }
-    }
-
-    /**
-     * Insert new product
-     *
-     * @param product - product object
-     * @return - true if success, false otherwise
-     */
-    public static boolean insertProduct(Product product) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(INSERT_PRODUCT_QUERY);
-            statement.setString(1, product.getName());
-            statement.setString(2, product.getQuantity());
-
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            printSQLException(ex);
-        }
-        return false;
-    }
-
-    /**
-     * Delete customer from database
-     *
-     * @param customer - customer object
-     * @return - true if success, false otherwise
-     */
-    public boolean deleteCustomer(Customer customer) {
-        try {
-            PreparedStatement stmt = conn.prepareStatement(DELETE_CUSTOMER_QUERY);
-            stmt.setString(1, customer.getId());
-            int res = stmt.executeUpdate();
-            if (res == 1) {
-                return true;
-            }
-        } catch (SQLException ex) {
-            printSQLException(ex);
-        }
-        return false;
-    }
-
-    /**
-     * Update customer data at database
-     *
-     * @param customer - customer object
-     * @return - true if success, false otherwise
-     */
-    public boolean updateCustomer(Customer customer) {
-        try {
-            PreparedStatement stmt = conn.prepareStatement(UPDATE_CUSTOMER_QUERY);
-            stmt.setString(1, customer.getName());
-            stmt.setString(2, customer.getAddress());
-            stmt.setString(3, customer.getPhone());
-            stmt.setString(4, customer.getEmail());
-            stmt.setString(5, customer.getNif());
-            stmt.setString(6, customer.getNotes());
-            stmt.setString(7, customer.getId());
-            int res = stmt.executeUpdate();
-            return (res > 0);
-        } catch (SQLException ex) {
-            printSQLException(ex);
-        }
-        return false;
-    }
-
-    /**
-     * Delete employee from database
-     *
-     * @param employee - employee object
-     * @return - true if success, false otherwise
-     */
-    public boolean deleteEmployee(Employee employee) {
-        try {
-            PreparedStatement stmt = conn.prepareStatement(DELETE_EMPLOYEE_QUERY);
-            stmt.setString(1, employee.getId());
-            int res = stmt.executeUpdate();
-            if (res == 1) {
-                return true;
-            }
-        } catch (SQLException ex) {
-            printSQLException(ex);
-        }
-        return false;
-    }
-
-    /**
-     * Update employee data at database
-     *
-     * @param employee - customer object
-     * @return - true if success, false otherwise
-     */
-    public boolean updateEmployee(Employee employee) {
-        try {
-            PreparedStatement stmt = conn.prepareStatement(UPDATE_EMPLOYEE_QUERY);
-            stmt.setString(1, employee.getName());
-            stmt.setString(2, employee.getAddress());
-            stmt.setString(3, employee.getPhone());
-            stmt.setString(4, employee.getEmail());
-            stmt.setString(5, employee.getNif());
-            stmt.setString(6, employee.getNotes());
-            stmt.setString(7, employee.getId());
-            int res = stmt.executeUpdate();
-            return (res > 0);
-        } catch (SQLException ex) {
-            printSQLException(ex);
-        }
-        return false;
-    }
-
-    /**
      * Delete invoice from database
      *
      * @param invoice - invoice object
@@ -404,14 +366,54 @@ public final class DatabaseHandler {
     public boolean updateInvoice(Invoice invoice) {
         try {
             PreparedStatement stmt = conn.prepareStatement(UPDATE_INVOICE_QUERY);
-            stmt.setString(1, invoice.getCustomerId());
-            stmt.setString(2, invoice.getEmployeeId());
-            stmt.setString(3, invoice.getDate());
-            stmt.setString(4, invoice.getProducts());
-            stmt.setString(5, invoice.getPdf());
-            stmt.setString(6, invoice.getId());
+            // TODO Update changed fields
+//            stmt.setString(1, invoice.getCustomerId());
+//            stmt.setString(2, invoice.getEmployeeId());
+//            stmt.setString(3, invoice.getDate());
+//            stmt.setString(4, invoice.getProducts());
+//            stmt.setString(5, invoice.getPdf());
+//            stmt.setString(6, invoice.getId());
             int res = stmt.executeUpdate();
             return (res > 0);
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Get product count in database
+     *
+     * @return new product's id
+     */
+    public static int getProductId() {
+        ResultSet rs;
+        try {
+            PreparedStatement stmt = conn.prepareStatement(GET_PRODUCT_ID_QUERY);
+            rs = stmt.executeQuery();
+            //Retrieving the result
+            rs.next();
+            return rs.getInt(1) + 1;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+            return 0;
+        }
+    }
+
+    /**
+     * Insert new product
+     *
+     * @param product - product object
+     * @return - true if success, false otherwise
+     */
+    public static boolean insertProduct(Product product) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(INSERT_PRODUCT_QUERY);
+            statement.setString(1, product.getName());
+            statement.setString(2, product.getPrice());
+            statement.setString(3, product.getQuantity());
+
+            return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             printSQLException(ex);
         }
@@ -447,9 +449,10 @@ public final class DatabaseHandler {
     public boolean updateProduct(Product product) {
         try {
             PreparedStatement stmt = conn.prepareStatement(UPDATE_PRODUCT_QUERY);
-            stmt.setString(1, product.getName());
-            stmt.setString(2, product.getQuantity());
-            stmt.setString(6, product.getId());
+            // TODO Update changed fields
+//            stmt.setString(1, product.getName());
+//            stmt.setString(2, product.getQuantity());
+//            stmt.setString(6, product.getId());
             int res = stmt.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {

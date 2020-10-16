@@ -99,22 +99,22 @@ public class MainController implements Initializable {
         // Initialize customer combo box
         customerCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
                 new Label("NIF"), new Label("Contacto"), new Label("E-mail"));
-        customerCombo.setPromptText("Pesquisar por...");
+        customerCombo.setPromptText("Tipo de pesquisa...");
 
         // Initialize employee combo box
         employeeCombo.getItems().addAll(new Label("ID"), new Label("Nome"), new Label("NIF"),
                 new Label("Contacto"), new Label("E-mail"));
-        employeeCombo.setPromptText("Pesquisar por...");
+        employeeCombo.setPromptText("Tipo de pesquisa...");
 
         // Initialize invoice combo box
         invoiceCombo.getItems().addAll(new Label("ID"), new Label("ID Cliente"),
                 new Label("ID Empregado"), new Label("Data"));
-        invoiceCombo.setPromptText("Pesquisar por...");
+        invoiceCombo.setPromptText("Tipo de pesquisa...");
 
         // Initialize product combo box
         productCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
                 new Label(new String("Preço".getBytes(), StandardCharsets.UTF_8)));
-        productCombo.setPromptText("Pesquisar por...");
+        productCombo.setPromptText("Tipo de pesquisa...");
     }
 
     private Stage getStage() {

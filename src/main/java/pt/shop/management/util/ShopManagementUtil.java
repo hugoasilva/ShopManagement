@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 public class ShopManagementUtil {
 
     //Resources
-    public static final String ICON_IMAGE_LOC = "/img/ballot.png";
+    public static final String ICON_IMAGE_LOC = "/img/icon.png";
 
     // Date and time formats
     private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");

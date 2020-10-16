@@ -5,3 +5,5 @@
 2020-10-15 13:35:17.631 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 01:35:17 da tarde
 2020-10-15 13:35:21.033 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
 2020-10-15 13:35:24.969 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 15-10-2020 01:35:17 da tarde. Usado por 1602765324968 ms
+2020-10-15 18:06:54.113 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 15-10-2020 06:06:54 da tarde
+2020-10-15 18:07:00.904 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin

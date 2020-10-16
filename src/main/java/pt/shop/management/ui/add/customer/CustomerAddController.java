@@ -52,6 +52,8 @@ public class CustomerAddController implements Initializable {
     private StackPane rootPane;
     @FXML
     private AnchorPane mainContainer;
+
+    // Customer variables
     private String id;
     private String notesFile;
     private Boolean isInEditMode = false;
@@ -79,7 +81,7 @@ public class CustomerAddController implements Initializable {
      * @throws SQLException - database exception
      */
     @FXML
-    private void addCustomer(ActionEvent event) throws SQLException, UnsupportedEncodingException {
+    private void addCustomer(ActionEvent event) throws SQLException {
 
         String customerId = String.valueOf(DatabaseHandler.getCustomerId());
         this.id = customerId;
@@ -145,7 +147,7 @@ public class CustomerAddController implements Initializable {
     /**
      * Handle customer update
      */
-    private void handleUpdateCustomer() throws UnsupportedEncodingException {
+    private void handleUpdateCustomer() {
         Customer customer = new Customer(id, name.getText(), address.getText(),
                 phone.getText(), email.getText(), nif.getText(), REMOTE_CUSTOMER_PATH + id + ".json");
         if (DatabaseHandler.getInstance().updateCustomer(customer)) {
