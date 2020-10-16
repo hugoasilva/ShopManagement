@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 
 public class EmployeeAddController implements Initializable {
 
-    private final static String LOCAL_EMPLOYEE_PATH = "uploads/empregados";
+    private final static String LOCAL_EMPLOYEE_PATH = "uploads/";
     private final static String REMOTE_EMPLOYEE_PATH = "/home/pi/gestao/empregados/";
 
     // Database handler instance

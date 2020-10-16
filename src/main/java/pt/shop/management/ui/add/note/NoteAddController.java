@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.alert.AlertMaker;
 
@@ -20,16 +19,16 @@ import java.util.ResourceBundle;
  * Note Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-16
  */
 
 public class NoteAddController implements Initializable {
 
-    private final String customerID;
-    private final String notesPath;
+    // Note data
+    private final String id;
+    private final String path;
+    private Boolean isInEditMode = false;
 
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // UI Content
     @FXML
     private JFXTextField message;
@@ -37,17 +36,15 @@ public class NoteAddController implements Initializable {
     private StackPane rootPane;
     @FXML
     private AnchorPane mainContainer;
-    private Boolean isInEditMode = false;
 
-    public NoteAddController(String customerID, String notesPath) {
-        this.customerID = customerID;
-        this.notesPath = notesPath;
+    public NoteAddController(String id, String path) {
+        this.id = id;
+        this.path = path;
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
     }
 
     /**
@@ -62,17 +59,17 @@ public class NoteAddController implements Initializable {
     }
 
     /**
-     * Add note to JSON file
+     * Add note
      *
      * @param event - add note event
      */
     @FXML
     private void addNote(ActionEvent event) {
-        System.out.println(message.getText());
-        // TODO
-        // Add note to JSON and save
 
-        if (message.getText().isEmpty()) {
+        String noteId = String.valueOf(this.getNoteId());
+        String noteMessage = message.getText();
+
+        if (noteMessage.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
                     new String("Por favor insira uma descrição para a nota.".getBytes(), StandardCharsets.UTF_8));
             return;
@@ -80,7 +77,38 @@ public class NoteAddController implements Initializable {
 
         if (isInEditMode) {
             handleUpdateNote();
+            return;
         }
+
+        Note note = new Note(noteId, noteMessage);
+        if (this.addNoteToJSON(note)) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Nota adicionada", "Nota adicionado com sucesso!");
+            clearEntries();
+        } else {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Ocorreu um erro", "Verifique os dados e tente novamente.");
+        }
+    }
+
+    /**
+     * Get notes count at JSON file
+     *
+     * @return - new note's id
+     */
+    private int getNoteId() {
+        return 1;
+    }
+
+    /**
+     * Add note to JSON file
+     *
+     * @param note - note object
+     * @return - true if successful, false otherwise
+     */
+    private boolean addNoteToJSON(Note note) {
+        // TODO
+        return true;
     }
 
     /**

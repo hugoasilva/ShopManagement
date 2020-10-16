@@ -61,10 +61,11 @@ public class CustomerDetailsController implements Initializable {
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
+
     // Database handler instance
     DatabaseHandler databaseHandler;
 
-    // UI Content
+    // UI content
     @FXML
     private Label id;
     @FXML
@@ -155,6 +156,23 @@ public class CustomerDetailsController implements Initializable {
     }
 
     /**
+     * Get customer notes JSON file
+     *
+     * @param id        - customer id
+     * @param notesPath - customer notes path
+     * @throws SftpException - SFTP exception
+     * @throws JSchException - JSch exception
+     * @throws IOException   - IO exception
+     */
+    private void getCustomerNotes(String id, String notesPath) throws SftpException, JSchException, IOException {
+        String fileName = id + ".json";
+        FileHandler.downloadFile(notesPath, fileName);
+
+        // Parse JSON
+        this.parseJSON(LOCAL_DOWNLOAD_PATH + fileName);
+    }
+
+    /**
      * Parse JSON file to notes list
      *
      * @param filePath - JSON file path
@@ -181,23 +199,6 @@ public class CustomerDetailsController implements Initializable {
                 }
             }
         }
-    }
-
-    /**
-     * Get customer notes JSON file
-     *
-     * @param id        - customer id
-     * @param notesPath - customer notes path
-     * @throws SftpException - SFTP exception
-     * @throws JSchException - JSch exception
-     * @throws IOException   - IO exception
-     */
-    private void getCustomerNotes(String id, String notesPath) throws SftpException, JSchException, IOException {
-        String fileName = id + ".json";
-        FileHandler.downloadFile(notesPath, fileName);
-
-        // Parse JSON
-        this.parseJSON(LOCAL_DOWNLOAD_PATH + fileName);
     }
 
     /**

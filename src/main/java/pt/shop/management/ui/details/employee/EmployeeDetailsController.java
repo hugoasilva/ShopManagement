@@ -156,6 +156,23 @@ public class EmployeeDetailsController implements Initializable {
     }
 
     /**
+     * Get employee notes JSON file
+     *
+     * @param id        - employee id
+     * @param notesPath - employee notes path
+     * @throws SftpException - SFTP exception
+     * @throws JSchException - JSch exception
+     * @throws IOException   - IO exception
+     */
+    private void getEmployeeNotes(String id, String notesPath) throws SftpException, JSchException, IOException {
+        String fileName = id + ".json";
+        FileHandler.downloadFile(notesPath, fileName);
+
+        // Parse JSON
+        this.parseJSON(LOCAL_DOWNLOAD_PATH + fileName);
+    }
+
+    /**
      * Parse JSON file to notes list
      *
      * @param filePath - JSON file path
@@ -182,23 +199,6 @@ public class EmployeeDetailsController implements Initializable {
                 }
             }
         }
-    }
-
-    /**
-     * Get employee notes JSON file
-     *
-     * @param id        - employee id
-     * @param notesPath - employee notes path
-     * @throws SftpException - SFTP exception
-     * @throws JSchException - JSch exception
-     * @throws IOException   - IO exception
-     */
-    private void getEmployeeNotes(String id, String notesPath) throws SftpException, JSchException, IOException {
-        String fileName = id + ".json";
-        FileHandler.downloadFile(notesPath, fileName);
-
-        // Parse JSON
-        this.parseJSON(LOCAL_DOWNLOAD_PATH + fileName);
     }
 
     /**

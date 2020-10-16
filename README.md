@@ -4,7 +4,7 @@ This is a shop management software developed using JavaFX programming language.
 * 2020-10-15
 
 ### Software Used
-  * [GSon v2.7](https://github.com/google/gson) - JSON Library. Used to store customer and employee notes yo JSON file.
+  * [GSon v2.7](https://github.com/google/gson) - JSON Library. Used to store customer and employee notes to JSON file.
   * [Ikonli v11.5.0](https://github.com/kordamp/ikonli) - JavaFX Icon library.
   * [JDK v11.0.8](https://github.com/openjdk/jdk) - Java Development Kit.
   * [JavaFX v11.0.2](https://github.com/openjdk/jfx) - Java GUI Library. Used to design interface.

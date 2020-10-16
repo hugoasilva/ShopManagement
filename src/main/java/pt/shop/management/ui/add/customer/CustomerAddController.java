@@ -30,12 +30,19 @@ import java.util.ResourceBundle;
 
 public class CustomerAddController implements Initializable {
 
-    private final static String LOCAL_CUSTOMER_PATH = "uploads/clientes";
+    // Directory paths
+    private final static String LOCAL_CUSTOMER_PATH = "uploads/";
     private final static String REMOTE_CUSTOMER_PATH = "/home/pi/gestao/clientes/";
+
+    // Customer data
+    private String id;
+    private String notesPath;
+    private Boolean isInEditMode = false;
 
     // Database handler instance
     DatabaseHandler databaseHandler;
-    // UI Content
+
+    // UI content
     @FXML
     private JFXTextField name;
     @FXML
@@ -50,11 +57,6 @@ public class CustomerAddController implements Initializable {
     private StackPane rootPane;
     @FXML
     private AnchorPane mainContainer;
-
-    // Customer variables
-    private String id;
-    private String notesPath;
-    private Boolean isInEditMode = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
