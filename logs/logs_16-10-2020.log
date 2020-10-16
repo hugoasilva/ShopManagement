@@ -6,3 +6,6 @@
 2020-10-16 02:07:47.561 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 16-10-2020 02:07:41 da manh�. Usado por 1602810467561 ms
 2020-10-16 02:34:31.644 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 16-10-2020 02:34:31 da manh�
 2020-10-16 02:34:36.053 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 16-10-2020 02:34:31 da manh�. Usado por 1602812076052 ms
+2020-10-16 02:38:12.908 [main] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja iniciado às 16-10-2020 02:38:12 da manh�
+2020-10-16 02:38:19.150 [JavaFX Application Thread] INFO  pt.shop.management.ui.login.LoginController - Sessão iniciada com sucesso com o utilizador: admin
+2020-10-16 02:38:35.936 [Thread-5] INFO  pt.shop.management.ui.main.Main - Sistema de Gestão de Loja fechado às 16-10-2020 02:38:12 da manh�. Usado por 1602812315935 ms
