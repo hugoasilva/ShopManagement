@@ -14,7 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.FileHandler;
+import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.alert.AlertMaker;
 
@@ -107,7 +107,7 @@ public class InvoiceAddController implements Initializable {
         Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoiceProducts, invoicePdf);
 
         if (DatabaseHandler.insertInvoice(invoice)) {
-            FileHandler.uploadFile(this.invoicePath, this.invoiceFile);
+            SFTPHandler.uploadFile(this.invoicePath, this.invoiceFile);
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Nova fatura adicionada",
                     "Fatura nr " + invoiceId + " adicionada com sucesso.");
             clearEntries();

@@ -6,14 +6,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * SFTP Server Handler Class
+ *
  * @author Hugo Silva
  * @version 2020-10-13
  */
 
-public class FileHandler {
+public class SFTPHandler {
 
     // Logger
-    private static final Logger LOGGER = LogManager.getLogger(FileHandler.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(SFTPHandler.class.getName());
 
     // SFTP server details
     private static final String SFTP_SERVER_URL = "projecthub.hopto.org";

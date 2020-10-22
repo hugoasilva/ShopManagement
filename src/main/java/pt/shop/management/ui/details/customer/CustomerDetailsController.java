@@ -21,7 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.FileHandler;
+import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
@@ -166,7 +166,7 @@ public class CustomerDetailsController implements Initializable {
      */
     private void getCustomerNotes(String id, String notesPath) throws SftpException, JSchException, IOException {
         String fileName = id + ".json";
-        FileHandler.downloadFile(notesPath, fileName);
+        SFTPHandler.downloadFile(notesPath, fileName);
 
         // Parse JSON
         this.parseJSON(LOCAL_DOWNLOAD_PATH + fileName);

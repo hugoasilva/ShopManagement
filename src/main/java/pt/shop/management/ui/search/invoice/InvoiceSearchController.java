@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.FileHandler;
+import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.add.invoice.InvoiceAddController;
 import pt.shop.management.ui.alert.AlertMaker;
@@ -148,7 +148,7 @@ public class InvoiceSearchController implements Initializable {
      */
     private void showInvoicePDF(String id, String pdfPath) throws SftpException, JSchException {
         String fileName = id + ".pdf";
-        FileHandler.downloadFile(pdfPath, fileName);
+        SFTPHandler.downloadFile(pdfPath, fileName);
 
         // Open file
         ShopManagementUtil.openFile(LOCAL_DOWNLOAD_PATH + fileName);

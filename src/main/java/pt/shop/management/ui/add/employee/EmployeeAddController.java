@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.FileHandler;
+import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.alert.AlertMaker;
 
@@ -172,7 +172,7 @@ public class EmployeeAddController implements Initializable {
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write("[]");
             fileWriter.close();
-            FileHandler.uploadFile(file.getPath(), this.notesPath);
+            SFTPHandler.uploadFile(file.getPath(), this.notesPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
