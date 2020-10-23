@@ -44,16 +44,16 @@ javafx {
 }
 
 dependencies {
-    compile 'junit:junit:4.12'
-    compile 'com.jcraft:jsch:0.1.55'
-    compile 'com.jfoenix:jfoenix:9.0.10'
-    compile 'mysql:mysql-connector-java:8.0.21'
-    compile 'org.kordamp.ikonli:ikonli-javafx:11.5.0'
-    compile 'org.kordamp.ikonli:ikonli-icomoon-pack:11.5.0'
-    compile 'org.kordamp.ikonli:ikonli-ionicons-pack:11.5.0'
-    compile 'org.kordamp.ikonli:ikonli-ionicons4-pack:11.5.0'
-    compile 'org.kordamp.ikonli:ikonli-fontawesome-pack:11.5.0'
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+    implementation 'junit:junit:4.12'
+    implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'mysql:mysql-connector-java:8.0.22'
+    implementation 'org.kordamp.ikonli:ikonli-javafx:11.5.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.13.3'
+    implementation 'org.apache.logging.log4j:log4j-core:2.13.3'
+    implementation 'org.kordamp.ikonli:ikonli-icomoon-pack:11.5.0'
+    implementation 'org.kordamp.ikonli:ikonli-ionicons-pack:11.5.0'
+    implementation 'org.kordamp.ikonli:ikonli-ionicons4-pack:11.5.0'
+    implementation 'org.kordamp.ikonli:ikonli-fontawesome-pack:11.5.0'
 }
