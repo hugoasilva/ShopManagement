@@ -1,7 +1,5 @@
 package pt.shop.management.ui.details.customer;
 
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,7 +34,7 @@ import java.util.ResourceBundle;
  * Customer Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-15
+ * @version 2020-10-23
  */
 
 public class CustomerDetailsController implements Initializable {
@@ -73,7 +71,7 @@ public class CustomerDetailsController implements Initializable {
     @FXML
     private TableColumn<Note, String> messageCol;
 
-    public CustomerDetailsController(String id) throws SQLException {
+    public CustomerDetailsController(String id) {
         this.customerID = id;
     }
 
@@ -84,8 +82,8 @@ public class CustomerDetailsController implements Initializable {
             tableView.setItems(list);
             loadData();
             initCol();
-        } catch (SQLException | IOException | SftpException | JSchException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 
@@ -126,7 +124,7 @@ public class CustomerDetailsController implements Initializable {
      *
      * @throws SQLException - database exception
      */
-    private void loadData() throws SQLException, SftpException, JSchException, IOException {
+    private void loadData() throws SQLException {
         DatabaseHandler handler = DatabaseHandler.getInstance();
         PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_CUSTOMER_QUERY);
         preparedStatement.setString(1, customerID);
@@ -146,7 +144,7 @@ public class CustomerDetailsController implements Initializable {
     }
 
     /**
-     * Get customer notes JSON file
+     * Get customer notes from JSON file
      *
      * @param id        - customer id
      * @param notesPath - customer notes path
@@ -171,8 +169,7 @@ public class CustomerDetailsController implements Initializable {
     @FXML
     public void addNoteButtonAction() throws IOException {
         String fileName = this.customerID + ".json";
-        NoteAddController controller = new NoteAddController(this.customerID,
-                LOCAL_DOWNLOAD_PATH + fileName, this.notesPath);
+        NoteAddController controller = new NoteAddController(LOCAL_DOWNLOAD_PATH + fileName, this.notesPath);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(

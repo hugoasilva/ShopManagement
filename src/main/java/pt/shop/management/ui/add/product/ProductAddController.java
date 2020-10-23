@@ -13,7 +13,6 @@ import pt.shop.management.ui.alert.AlertMaker;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -21,7 +20,7 @@ import java.util.ResourceBundle;
  * Product Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 
 public class ProductAddController implements Initializable {
@@ -62,10 +61,9 @@ public class ProductAddController implements Initializable {
      * Add product to table
      *
      * @param event - add product event
-     * @throws SQLException - database exception
      */
     @FXML
-    private void addProduct(ActionEvent event) throws SQLException {
+    private void addProduct(ActionEvent event) {
 
         String productId = String.valueOf(DatabaseHandler.getProductId());
         this.id = productId;

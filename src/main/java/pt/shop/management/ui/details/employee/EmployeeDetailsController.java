@@ -1,11 +1,5 @@
 package pt.shop.management.ui.details.employee;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.files.JSONHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
@@ -28,22 +23,18 @@ import pt.shop.management.ui.add.note.NoteAddController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Employee Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 
 public class EmployeeDetailsController implements Initializable {
@@ -62,7 +53,7 @@ public class EmployeeDetailsController implements Initializable {
     // Database handler instance
     DatabaseHandler databaseHandler;
     private String notesPath;
-    // UI Content
+    // UI content
     @FXML
     private Label id;
     @FXML
@@ -80,7 +71,7 @@ public class EmployeeDetailsController implements Initializable {
     @FXML
     private TableColumn<Note, String> messageCol;
 
-    public EmployeeDetailsController(String id) throws SQLException {
+    public EmployeeDetailsController(String id) {
         this.employeeID = id;
     }
 
@@ -91,8 +82,8 @@ public class EmployeeDetailsController implements Initializable {
             tableView.setItems(list);
             loadData();
             initCol();
-        } catch (SQLException | IOException | SftpException | JSchException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 
@@ -133,7 +124,7 @@ public class EmployeeDetailsController implements Initializable {
      *
      * @throws SQLException - database exception
      */
-    private void loadData() throws SQLException, SftpException, JSchException, IOException {
+    private void loadData() throws SQLException {
         DatabaseHandler handler = DatabaseHandler.getInstance();
         PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_EMPLOYEE_QUERY);
         preparedStatement.setString(1, employeeID);
@@ -153,48 +144,20 @@ public class EmployeeDetailsController implements Initializable {
     }
 
     /**
-     * Get employee notes JSON file
+     * Get employee notes from JSON file
      *
      * @param id        - employee id
      * @param notesPath - employee notes path
-     * @throws SftpException - SFTP exception
-     * @throws JSchException - JSch exception
-     * @throws IOException   - IO exception
      */
-    private void getEmployeeNotes(String id, String notesPath) throws SftpException, JSchException, IOException {
+    private void getEmployeeNotes(String id, String notesPath) {
         String fileName = id + ".json";
         SFTPHandler.downloadFile(notesPath, fileName);
 
         // Parse JSON
-        this.parseJSON(LOCAL_DOWNLOAD_PATH + fileName);
-    }
+        List<Note> notes = JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + id + ".json");
 
-    /**
-     * Parse JSON file to notes list
-     *
-     * @param filePath - JSON file path
-     * @throws IOException - IO exception
-     */
-    private void parseJSON(String filePath) throws IOException {
-        Path path = Paths.get(filePath);
-
-        try (Reader reader = Files.newBufferedReader(path,
-                StandardCharsets.UTF_8)) {
-
-            JsonParser parser = new JsonParser();
-            JsonElement tree = parser.parse(reader);
-
-            JsonArray array = tree.getAsJsonArray();
-
-            for (JsonElement element : array) {
-
-                if (element.isJsonObject()) {
-                    JsonObject note = element.getAsJsonObject();
-                    String id = note.get("id").getAsString();
-                    String message = note.get("message").getAsString();
-                    list.add(new Note(id, message));
-                }
-            }
+        for (Note note : notes) {
+            list.add(new Note(note.getId(), note.getMessage()));
         }
     }
 
@@ -205,8 +168,8 @@ public class EmployeeDetailsController implements Initializable {
      */
     @FXML
     public void addNoteButtonAction() throws IOException {
-        NoteAddController controller = new NoteAddController(this.employeeID,
-                LOCAL_DOWNLOAD_PATH + this.employeeID + ".json", this.notesPath);
+        String fileName = this.employeeID + ".json";
+        NoteAddController controller = new NoteAddController(LOCAL_DOWNLOAD_PATH + fileName, this.notesPath);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(

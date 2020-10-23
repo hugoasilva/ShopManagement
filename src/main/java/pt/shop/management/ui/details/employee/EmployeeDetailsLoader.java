@@ -10,7 +10,7 @@ import javafx.stage.Stage;
  * Employee Details Loader Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 public class EmployeeDetailsLoader extends Application {
 

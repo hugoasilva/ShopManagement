@@ -17,7 +17,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -25,7 +24,7 @@ import java.util.ResourceBundle;
  * Customer Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-16
+ * @version 2020-10-23
  */
 
 public class CustomerAddController implements Initializable {
@@ -75,10 +74,9 @@ public class CustomerAddController implements Initializable {
      * Add customer to table
      *
      * @param event - add customer event
-     * @throws SQLException - database exception
      */
     @FXML
-    private void addCustomer(ActionEvent event) throws SQLException {
+    private void addCustomer(ActionEvent event) {
 
         String customerId = String.valueOf(DatabaseHandler.getCustomerId());
         this.id = customerId;
@@ -163,9 +161,9 @@ public class CustomerAddController implements Initializable {
         try {
             File file = new File(LOCAL_CUSTOMER_PATH + this.id + ".json");
             if (file.exists()) {
-                file.delete();
+                System.out.println(file.delete());
             }
-            file.createNewFile();
+            System.out.println(file.createNewFile());
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write("[]");
             fileWriter.close();

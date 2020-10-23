@@ -23,13 +23,12 @@ import java.util.ResourceBundle;
  * Note Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-16
+ * @version 2020-10-23
  */
 
 public class NoteAddController implements Initializable {
 
     // Note data
-    private final String id;
     private final String localPath;
     private final String remotePath;
 
@@ -43,8 +42,7 @@ public class NoteAddController implements Initializable {
     @FXML
     private AnchorPane mainContainer;
 
-    public NoteAddController(String id, String localPath, String remotePath) {
-        this.id = id;
+    public NoteAddController(String localPath, String remotePath) {
         this.localPath = localPath;
         this.remotePath = remotePath;
     }
@@ -79,7 +77,6 @@ public class NoteAddController implements Initializable {
         if (!notes.get(0).getMessage().equals("error")) {
             String noteId = String.valueOf(notes.size() + 1);
             String noteMessage = message.getText();
-            System.out.println(noteMessage + noteId);
 
             if (noteMessage.isEmpty()) {
                 AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",

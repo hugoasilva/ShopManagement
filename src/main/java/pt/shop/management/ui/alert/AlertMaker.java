@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -26,7 +27,7 @@ import java.util.List;
  * Alert Dialog class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 
 public class AlertMaker {
@@ -72,17 +73,18 @@ public class AlertMaker {
 
         controls.forEach(controlButton -> {
             controlButton.getStyleClass().add("dialog-button");
-            controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
-                dialog.close();
-            });
+            controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> dialog.close());
         });
 
         dialogLayout.setHeading(new Label(header));
         dialogLayout.setBody(new Label(body));
         dialogLayout.setActions(controls);
         dialog.show();
-        dialog.setOnDialogClosed((JFXDialogEvent event1) -> {
-            nodeToBeBlurred.setEffect(null);
+        dialog.setOnDialogClosed(new EventHandler<JFXDialogEvent>() {
+            @Override
+            public void handle(JFXDialogEvent event1) {
+                nodeToBeBlurred.setEffect(null);
+            }
         });
         nodeToBeBlurred.setEffect(blur);
     }

@@ -9,7 +9,6 @@ import pt.shop.management.data.model.Invoice;
 import pt.shop.management.data.model.Product;
 
 import javax.swing.*;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 
@@ -17,7 +16,7 @@ import java.sql.*;
  * Database Handler Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 
 public final class DatabaseHandler {
@@ -60,16 +59,11 @@ public final class DatabaseHandler {
     private static final String UPDATE_EMPLOYEE_QUERY = "UPDATE empregados SET ?=? WHERE id_empregado=?";
     private static final String UPDATE_INVOICE_QUERY = "UPDATE faturas SET ?=? WHERE id_fatura=?";
     private static final String UPDATE_PRODUCT_QUERY = "UPDATE produtos SET ?=? WHERE id_produto=?";
-    private static final Statement stmt = null;
     private static DatabaseHandler handler = null;
     private static Connection conn = null;
 
     static {
-        try {
-            createConnection();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        createConnection();
     }
 
     private DatabaseHandler() {
@@ -85,7 +79,7 @@ public final class DatabaseHandler {
     /**
      * Create database connection
      */
-    private static void createConnection() throws UnsupportedEncodingException {
+    private static void createConnection() {
         try {
             conn = DriverManager.getConnection(DATABASE_SERVER_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         } catch (SQLException e) {
@@ -118,7 +112,7 @@ public final class DatabaseHandler {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         DatabaseHandler.getInstance();
     }
 

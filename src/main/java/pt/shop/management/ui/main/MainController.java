@@ -39,7 +39,7 @@ import java.util.logging.Logger;
  * Main Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 
 public class MainController implements Initializable {

@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  * Employee List Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 
 public class EmployeeListController implements Initializable {
@@ -89,13 +89,13 @@ public class EmployeeListController implements Initializable {
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
-        TableColumn<Employee, Void> detailsCol = new TableColumn("Ficha");
+        TableColumn<Employee, Void> detailsCol = new TableColumn<>("Ficha");
 
         Callback<TableColumn<Employee, Void>, TableCell<Employee, Void>> cellFactory =
-                new Callback<TableColumn<Employee, Void>, TableCell<Employee, Void>>() {
+                new Callback<>() {
                     @Override
                     public TableCell<Employee, Void> call(final TableColumn<Employee, Void> param) {
-                        final TableCell<Employee, Void> cell = new TableCell<Employee, Void>() {
+                        return new TableCell<>() {
                             private final Button btn = new Button("Abrir Ficha");
 
                             {
@@ -103,7 +103,7 @@ public class EmployeeListController implements Initializable {
                                     Employee data = getTableView().getItems().get(getIndex());
                                     try {
                                         showEmployeeDetails(data.getId());
-                                    } catch (IOException | SQLException e) {
+                                    } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 });
@@ -119,7 +119,6 @@ public class EmployeeListController implements Initializable {
                                 }
                             }
                         };
-                        return cell;
                     }
                 };
 
@@ -132,7 +131,7 @@ public class EmployeeListController implements Initializable {
      *
      * @param id - employee id
      */
-    private void showEmployeeDetails(String id) throws IOException, SQLException {
+    private void showEmployeeDetails(String id) throws IOException {
         EmployeeDetailsController controller = new EmployeeDetailsController(id);
 
         FXMLLoader loader =
@@ -202,8 +201,8 @@ public class EmployeeListController implements Initializable {
         alert.setContentText("Tem a certeza que pretende apagar o empregado " + selectedForDeletion.getName() + "?");
         Optional<ButtonType> answer = alert.showAndWait();
 
-        if (answer.get() == ButtonType.OK) {
-            Boolean result = DatabaseHandler.getInstance().deleteEmployee(selectedForDeletion);
+        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+            boolean result = DatabaseHandler.getInstance().deleteEmployee(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Empregado apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");

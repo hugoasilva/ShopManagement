@@ -17,7 +17,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -52,7 +51,7 @@ public class EmployeeAddController implements Initializable {
     @FXML
     private AnchorPane mainContainer;
 
-    // Employe variables
+    // Employee variables
     private String id;
     private String notesPath;
     private Boolean isInEditMode = false;
@@ -77,10 +76,9 @@ public class EmployeeAddController implements Initializable {
      * Add employee to table
      *
      * @param event - add employee event
-     * @throws SQLException - database exception
      */
     @FXML
-    private void addEmployee(ActionEvent event) throws SQLException {
+    private void addEmployee(ActionEvent event) {
 
         String employeeId = String.valueOf(DatabaseHandler.getEmployeeId());
         this.id = employeeId;
@@ -166,9 +164,9 @@ public class EmployeeAddController implements Initializable {
         try {
             File file = new File(LOCAL_EMPLOYEE_PATH + this.id + ".json");
             if (file.exists()) {
-                file.delete();
+                System.out.println(file.delete());
             }
-            file.createNewFile();
+            System.out.println(file.createNewFile());
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write("[]");
             fileWriter.close();

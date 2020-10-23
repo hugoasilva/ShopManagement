@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  * Customer List Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 
 public class CustomerListController implements Initializable {
@@ -89,13 +89,13 @@ public class CustomerListController implements Initializable {
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
-        TableColumn<Customer, Void> detailsCol = new TableColumn("Ficha");
+        TableColumn<Customer, Void> detailsCol = new TableColumn<>("Ficha");
 
         Callback<TableColumn<Customer, Void>, TableCell<Customer, Void>> cellFactory =
-                new Callback<TableColumn<Customer, Void>, TableCell<Customer, Void>>() {
+                new Callback<>() {
                     @Override
                     public TableCell<Customer, Void> call(final TableColumn<Customer, Void> param) {
-                        final TableCell<Customer, Void> cell = new TableCell<Customer, Void>() {
+                        return new TableCell<>() {
                             private final Button btn = new Button("Abrir Ficha");
 
                             {
@@ -103,7 +103,7 @@ public class CustomerListController implements Initializable {
                                     Customer data = getTableView().getItems().get(getIndex());
                                     try {
                                         showCustomerDetails(data.getId());
-                                    } catch (IOException | SQLException e) {
+                                    } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 });
@@ -119,7 +119,6 @@ public class CustomerListController implements Initializable {
                                 }
                             }
                         };
-                        return cell;
                     }
                 };
 
@@ -132,7 +131,7 @@ public class CustomerListController implements Initializable {
      *
      * @param id - customer id
      */
-    private void showCustomerDetails(String id) throws IOException, SQLException {
+    private void showCustomerDetails(String id) throws IOException {
         CustomerDetailsController controller = new CustomerDetailsController(id);
 
         FXMLLoader loader =
@@ -201,8 +200,8 @@ public class CustomerListController implements Initializable {
         alert.setContentText("Tem a certeza que pretende apagar o cliente " + selectedForDeletion.getName() + "?");
         Optional<ButtonType> answer = alert.showAndWait();
 
-        if (answer.get() == ButtonType.OK) {
-            Boolean result = DatabaseHandler.getInstance().deleteCustomer(selectedForDeletion);
+        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+            boolean result = DatabaseHandler.getInstance().deleteCustomer(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Cliente apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");

@@ -197,7 +197,7 @@
 }
 
 /* Label Styling */
-.customerLabel {
+.detailsLabel {
     -fx-text-fill: -fx-primaryText;
     -fx-font-size: 14pt;
 }

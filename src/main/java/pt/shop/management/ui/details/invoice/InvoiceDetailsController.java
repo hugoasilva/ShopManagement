@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * Invoice Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-13
+ * @version 2020-10-23
  */
 
 public class InvoiceDetailsController implements Initializable {
@@ -44,7 +44,7 @@ public class InvoiceDetailsController implements Initializable {
     @FXML
     private Label notes;
 
-    public InvoiceDetailsController(String id) throws SQLException {
+    public InvoiceDetailsController(String id) {
         this.customerID = id;
     }
 

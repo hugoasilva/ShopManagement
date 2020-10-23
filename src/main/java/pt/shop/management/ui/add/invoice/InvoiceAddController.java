@@ -1,7 +1,5 @@
 package pt.shop.management.ui.add.invoice;
 
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
@@ -28,7 +26,7 @@ import java.util.ResourceBundle;
  * Invoice Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-15
+ * @version 2020-10-23
  */
 
 public class InvoiceAddController implements Initializable {
@@ -56,7 +54,6 @@ public class InvoiceAddController implements Initializable {
 
     private String id;
     private String invoicePath;
-    private String invoiceFile;
     private Boolean isInEditMode = Boolean.FALSE;
 
     @Override
@@ -81,7 +78,7 @@ public class InvoiceAddController implements Initializable {
      * @param event - add invoice event
      */
     @FXML
-    public void addInvoice(ActionEvent event) throws SftpException, JSchException {
+    public void addInvoice(ActionEvent event) {
 
         String invoiceId = String.valueOf(DatabaseHandler.getInvoiceId());
         this.id = invoiceId;
@@ -90,7 +87,6 @@ public class InvoiceAddController implements Initializable {
         String invoiceDate = date.getValue().toString();
         String invoiceProducts = products.getText();
         String invoicePdf = REMOTE_INVOICE_PATH + this.id + ".pdf";
-        this.invoiceFile = invoicePdf;
 
         if (customerId.isEmpty() || employeeId.isEmpty() || invoiceDate.isEmpty()
                 || invoiceProducts.isEmpty()) {
@@ -107,7 +103,7 @@ public class InvoiceAddController implements Initializable {
         Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoiceProducts, invoicePdf);
 
         if (DatabaseHandler.insertInvoice(invoice)) {
-            SFTPHandler.uploadFile(this.invoicePath, this.invoiceFile);
+            SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Nova fatura adicionada",
                     "Fatura nr " + invoiceId + " adicionada com sucesso.");
             clearEntries();
