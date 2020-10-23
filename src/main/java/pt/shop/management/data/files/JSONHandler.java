@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * JSON Handler Class
  *
  * @author Hugo Silva
- * @version 2020-10-22
+ * @version 2020-10-23
  */
 
 public class JSONHandler {
@@ -27,53 +28,41 @@ public class JSONHandler {
 
     public static void notesToJSON(List<Note> notes, String path) {
         try {
-//            // Initialize a list of type DataObject
-//            List<Note> objList = new ArrayList<>();
-//            objList.add(new Note("0", "zero"));
-//            objList.add(new Note("1", "one"));
-//            objList.add(new Note("2", "two"));
-
-            // create Gson instance
+            // Create Gson instance
             Gson gson = new Gson();
 
-            // create a writer
+            // Create a writer
             Writer writer = Files.newBufferedWriter(Paths.get(path));
 
-            // convert book object to JSON file
+            // Convert notes list object to JSON file
             gson.toJson(notes, writer);
 
-            // close writer
+            // Close writer
             writer.close();
-
         } catch (Exception ex) {
             printJSONException(ex);
         }
     }
 
-    public static Object JSONToNotes(String path) {
+    public static List<Note> JSONToNotes(String path) {
+        List<Note> notes = new ArrayList<>();
         try {
-            // create Gson instance
+            // Create Gson instance
             Gson gson = new Gson();
 
-            // create a reader
+            // Create a reader
             Reader reader = Files.newBufferedReader(Paths.get(path));
 
-            // convert JSON array to list of books
-            List<Note> notes = Arrays.asList(gson.fromJson(reader, Note[].class));
+            // Convert JSON array to list of notes
+            notes = Arrays.asList(gson.fromJson(reader, Note[].class));
 
-            // print books
-            for (Note x : notes) {
-                System.out.println(x.getMessage());
-            }
-
-            // close reader
+            // Close reader
             reader.close();
-
-            return notes;
         } catch (Exception ex) {
+            notes.add(new Note("0", "error"));
             printJSONException(ex);
-            return false;
         }
+        return notes;
     }
 
     /**

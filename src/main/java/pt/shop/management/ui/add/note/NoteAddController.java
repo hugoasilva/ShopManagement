@@ -7,12 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import pt.shop.management.data.files.JSONHandler;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.alert.AlertMaker;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -66,29 +68,36 @@ public class NoteAddController implements Initializable {
     @FXML
     private void addNote(ActionEvent event) {
 
-        String noteId = String.valueOf(this.getNoteId());
-        String noteMessage = message.getText();
+        // Initialize a list of type DataObject
+        List<Note> notes = JSONHandler.JSONToNotes(this.path);
 
-        if (noteMessage.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
-                    new String("Por favor insira uma descrição para a nota.".getBytes(), StandardCharsets.UTF_8));
-            return;
+        if (!notes.get(0).getMessage().equals("error")) {
+            String noteId = String.valueOf(this.getNoteId());
+            String noteMessage = message.getText();
+
+            notes.add(new Note(noteId, noteMessage));
         }
 
-        if (isInEditMode) {
-            handleUpdateNote();
-            return;
-        }
-
-        Note note = new Note(noteId, noteMessage);
-        if (this.addNoteToJSON(note)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Nota adicionada", "Nota adicionado com sucesso!");
-            clearEntries();
-        } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Ocorreu um erro", "Verifique os dados e tente novamente.");
-        }
+//        if (noteMessage.isEmpty()) {
+//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
+//                    new String("Por favor insira uma descrição para a nota.".getBytes(), StandardCharsets.UTF_8));
+//            return;
+//        }
+//
+//        if (isInEditMode) {
+//            handleUpdateNote();
+//            return;
+//        }
+//
+//        Note note = new Note(noteId, noteMessage);
+//        if (this.addNoteToJSON(note)) {
+//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+//                    new ArrayList<>(), "Nota adicionada", "Nota adicionado com sucesso!");
+//            clearEntries();
+//        } else {
+//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+//                    new ArrayList<>(), "Ocorreu um erro", "Verifique os dados e tente novamente.");
+//        }
     }
 
     /**
@@ -97,6 +106,8 @@ public class NoteAddController implements Initializable {
      * @return - new note's id
      */
     private int getNoteId() {
+//        int counter = 0;
+//        List<Note> notes = JSONHandler.JSONToNotes(this.path);
         return 1;
     }
 

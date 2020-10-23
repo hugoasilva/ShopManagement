@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.files.JSONHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Note;
@@ -37,6 +38,7 @@ import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -160,44 +162,16 @@ public class CustomerDetailsController implements Initializable {
      *
      * @param id        - customer id
      * @param notesPath - customer notes path
-     * @throws SftpException - SFTP exception
-     * @throws JSchException - JSch exception
-     * @throws IOException   - IO exception
      */
-    private void getCustomerNotes(String id, String notesPath) throws SftpException, JSchException, IOException {
+    private void getCustomerNotes(String id, String notesPath) {
         String fileName = id + ".json";
         SFTPHandler.downloadFile(notesPath, fileName);
 
         // Parse JSON
-        this.parseJSON(LOCAL_DOWNLOAD_PATH + fileName);
-    }
+        List<Note> notes = JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + fileName);
 
-    /**
-     * Parse JSON file to notes list
-     *
-     * @param filePath - JSON file path
-     * @throws IOException - IO exception
-     */
-    private void parseJSON(String filePath) throws IOException {
-        Path path = Paths.get(filePath);
-
-        try (Reader reader = Files.newBufferedReader(path,
-                StandardCharsets.UTF_8)) {
-
-            JsonParser parser = new JsonParser();
-            JsonElement tree = parser.parse(reader);
-
-            JsonArray array = tree.getAsJsonArray();
-
-            for (JsonElement element : array) {
-
-                if (element.isJsonObject()) {
-                    JsonObject note = element.getAsJsonObject();
-                    String id = note.get("id").getAsString();
-                    String message = note.get("message").getAsString();
-                    list.add(new Note(id, message));
-                }
-            }
+        for (Note note : notes) {
+            list.add(new Note(note.getId(), note.getMessage()));
         }
     }
 
