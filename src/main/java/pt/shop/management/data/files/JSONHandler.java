@@ -26,7 +26,7 @@ public class JSONHandler {
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(JSONHandler.class.getName());
 
-    public static void notesToJSON(List<Note> notes, String path) {
+    public static boolean notesToJSON(List<Note> notes, String path) {
         try {
             // Create Gson instance
             Gson gson = new Gson();
@@ -39,8 +39,10 @@ public class JSONHandler {
 
             // Close writer
             writer.close();
+            return true;
         } catch (Exception ex) {
             printJSONException(ex);
+            return false;
         }
     }
 

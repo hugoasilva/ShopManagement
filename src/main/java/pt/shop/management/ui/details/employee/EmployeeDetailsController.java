@@ -56,15 +56,12 @@ public class EmployeeDetailsController implements Initializable {
 
     // Employee data
     private final String employeeID;
-    private String notesPath;
-
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
-
     // Database handler instance
     DatabaseHandler databaseHandler;
-
+    private String notesPath;
     // UI Content
     @FXML
     private Label id;
@@ -208,7 +205,8 @@ public class EmployeeDetailsController implements Initializable {
      */
     @FXML
     public void addNoteButtonAction() throws IOException {
-        NoteAddController controller = new NoteAddController(this.employeeID, this.notesPath);
+        NoteAddController controller = new NoteAddController(this.employeeID,
+                LOCAL_DOWNLOAD_PATH + this.employeeID + ".json", this.notesPath);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(

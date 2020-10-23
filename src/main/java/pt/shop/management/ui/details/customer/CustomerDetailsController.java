@@ -1,9 +1,5 @@
 package pt.shop.management.ui.details.customer;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 import javafx.collections.FXCollections;
@@ -29,12 +25,7 @@ import pt.shop.management.ui.add.note.NoteAddController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,15 +49,12 @@ public class CustomerDetailsController implements Initializable {
 
     // Customer data
     private final String customerID;
-    private String notesPath;
-
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
-
     // Database handler instance
     DatabaseHandler databaseHandler;
-
+    private String notesPath;
     // UI content
     @FXML
     private Label id;
@@ -168,7 +156,7 @@ public class CustomerDetailsController implements Initializable {
         SFTPHandler.downloadFile(notesPath, fileName);
 
         // Parse JSON
-        List<Note> notes = JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + fileName);
+        List<Note> notes = JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + id + ".json");
 
         for (Note note : notes) {
             list.add(new Note(note.getId(), note.getMessage()));
@@ -182,7 +170,9 @@ public class CustomerDetailsController implements Initializable {
      */
     @FXML
     public void addNoteButtonAction() throws IOException {
-        NoteAddController controller = new NoteAddController(this.customerID, this.notesPath);
+        String fileName = this.customerID + ".json";
+        NoteAddController controller = new NoteAddController(this.customerID,
+                LOCAL_DOWNLOAD_PATH + fileName, this.notesPath);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(

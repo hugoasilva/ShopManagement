@@ -33,15 +33,12 @@ public class CustomerAddController implements Initializable {
     // Directory paths
     private final static String LOCAL_CUSTOMER_PATH = "uploads/";
     private final static String REMOTE_CUSTOMER_PATH = "/home/pi/gestao/clientes/";
-
+    // Database handler instance
+    DatabaseHandler databaseHandler;
     // Customer data
     private String id;
     private String notesPath;
     private Boolean isInEditMode = false;
-
-    // Database handler instance
-    DatabaseHandler databaseHandler;
-
     // UI content
     @FXML
     private JFXTextField name;

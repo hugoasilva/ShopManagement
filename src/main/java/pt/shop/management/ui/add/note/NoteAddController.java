@@ -8,12 +8,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.files.JSONHandler;
+import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.alert.AlertMaker;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,7 +30,9 @@ public class NoteAddController implements Initializable {
 
     // Note data
     private final String id;
-    private final String path;
+    private final String localPath;
+    private final String remotePath;
+
     private Boolean isInEditMode = false;
 
     // UI Content
@@ -39,9 +43,10 @@ public class NoteAddController implements Initializable {
     @FXML
     private AnchorPane mainContainer;
 
-    public NoteAddController(String id, String path) {
+    public NoteAddController(String id, String localPath, String remotePath) {
         this.id = id;
-        this.path = path;
+        this.localPath = localPath;
+        this.remotePath = remotePath;
     }
 
 
@@ -69,57 +74,35 @@ public class NoteAddController implements Initializable {
     private void addNote(ActionEvent event) {
 
         // Initialize a list of type DataObject
-        List<Note> notes = JSONHandler.JSONToNotes(this.path);
+        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(this.localPath));
 
         if (!notes.get(0).getMessage().equals("error")) {
-            String noteId = String.valueOf(this.getNoteId());
+            String noteId = String.valueOf(notes.size() + 1);
             String noteMessage = message.getText();
+            System.out.println(noteMessage + noteId);
+
+            if (noteMessage.isEmpty()) {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
+                        new String("Por favor insira uma descrição para a nota.".getBytes(), StandardCharsets.UTF_8));
+                return;
+            }
+
+            if (isInEditMode) {
+                handleUpdateNote();
+                return;
+            }
 
             notes.add(new Note(noteId, noteMessage));
+            if (JSONHandler.notesToJSON(notes, this.localPath)) {
+                SFTPHandler.uploadFile(this.localPath, this.remotePath);
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Nota adicionada", "Nota adicionado com sucesso!");
+                clearEntries();
+            } else {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Ocorreu um erro", "Verifique os dados e tente novamente.");
+            }
         }
-
-//        if (noteMessage.isEmpty()) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
-//                    new String("Por favor insira uma descrição para a nota.".getBytes(), StandardCharsets.UTF_8));
-//            return;
-//        }
-//
-//        if (isInEditMode) {
-//            handleUpdateNote();
-//            return;
-//        }
-//
-//        Note note = new Note(noteId, noteMessage);
-//        if (this.addNoteToJSON(note)) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Nota adicionada", "Nota adicionado com sucesso!");
-//            clearEntries();
-//        } else {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Ocorreu um erro", "Verifique os dados e tente novamente.");
-//        }
-    }
-
-    /**
-     * Get notes count at JSON file
-     *
-     * @return - new note's id
-     */
-    private int getNoteId() {
-//        int counter = 0;
-//        List<Note> notes = JSONHandler.JSONToNotes(this.path);
-        return 1;
-    }
-
-    /**
-     * Add note to JSON file
-     *
-     * @param note - note object
-     * @return - true if successful, false otherwise
-     */
-    private boolean addNoteToJSON(Note note) {
-        // TODO
-        return true;
     }
 
     /**
