@@ -51,8 +51,8 @@ public class ProductDetailsController implements Initializable {
         databaseHandler = DatabaseHandler.getInstance();
         try {
             loadData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 

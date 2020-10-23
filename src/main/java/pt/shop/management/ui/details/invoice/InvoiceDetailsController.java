@@ -54,8 +54,8 @@ public class InvoiceDetailsController implements Initializable {
         try {
             loadData();
 //            initLabels();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 

@@ -74,8 +74,8 @@ public class EmployeeListController implements Initializable {
         initCol();
         try {
             loadData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 
@@ -260,8 +260,8 @@ public class EmployeeListController implements Initializable {
             stage.setOnHiding((e) -> {
                 try {
                     handleRefresh(new ActionEvent());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
                 }
             });
         } catch (IOException ex) {

@@ -12,36 +12,36 @@
             <padding>
                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
             </padding>
-            <Label fx:id="name" layoutX="150.0" layoutY="250.0" minHeight="40" minWidth="69" styleClass="customerLabel">
+            <Label fx:id="name" layoutX="150.0" layoutY="250.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
                 <VBox.margin>
                     <Insets left="150.0" top="75.0"/>
                 </VBox.margin>
             </Label>
             <Label fx:id="id" layoutX="150.0" layoutY="150.0" minHeight="40" minWidth="69" prefHeight="40.0"
-                   prefWidth="127.0" styleClass="customerLabel">
+                   prefWidth="127.0" styleClass="detailsLabel">
                 <VBox.margin>
                     <Insets left="150.0"/>
                 </VBox.margin>
             </Label>
             <Label fx:id="address" layoutX="150.0" layoutY="350.0" minHeight="40" minWidth="69"
-                   styleClass="customerLabel">
+                   styleClass="detailsLabel">
                 <VBox.margin>
                     <Insets left="150.0"/>
                 </VBox.margin>
             </Label>
             <Label fx:id="phone" layoutX="150.0" layoutY="450.0" minHeight="40" minWidth="69"
-                   styleClass="customerLabel">
+                   styleClass="detailsLabel">
                 <VBox.margin>
                     <Insets left="150.0"/>
                 </VBox.margin>
             </Label>
             <Label fx:id="email" layoutX="150.0" layoutY="550.0" minHeight="40" minWidth="69"
-                   styleClass="customerLabel">
+                   styleClass="detailsLabel">
                 <VBox.margin>
                     <Insets left="150.0"/>
                 </VBox.margin>
             </Label>
-            <Label fx:id="nif" layoutX="150.0" layoutY="650.0" minHeight="40" minWidth="69" styleClass="customerLabel">
+            <Label fx:id="nif" layoutX="150.0" layoutY="650.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
                 <VBox.margin>
                     <Insets left="150.0"/>
                 </VBox.margin>

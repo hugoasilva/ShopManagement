@@ -84,8 +84,8 @@ public class InvoiceSearchController implements Initializable {
         initCol();
         try {
             loadData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 
@@ -280,8 +280,8 @@ public class InvoiceSearchController implements Initializable {
             stage.setOnHiding((e) -> {
                 try {
                     handleRefresh(new ActionEvent());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
                 }
             });
         } catch (IOException ex) {

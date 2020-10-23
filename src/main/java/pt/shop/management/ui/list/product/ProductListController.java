@@ -70,8 +70,8 @@ public class ProductListController implements Initializable {
         initCol();
         try {
             loadData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 
@@ -251,8 +251,8 @@ public class ProductListController implements Initializable {
             stage.setOnHiding((e) -> {
                 try {
                     handleRefresh(new ActionEvent());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
                 }
             });
         } catch (IOException ex) {
