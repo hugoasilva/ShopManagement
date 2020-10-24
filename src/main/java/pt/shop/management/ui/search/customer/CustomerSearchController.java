@@ -1,5 +1,6 @@
 package pt.shop.management.ui.search.customer;
 
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,19 +9,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.add.customer.CustomerAddController;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.details.customer.CustomerDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -49,11 +48,15 @@ public class CustomerSearchController implements Initializable {
     private static final String SEARCH_NIF_QUERY = "SELECT * FROM clientes WHERE nif=?";
     private static final String SEARCH_PHONE_QUERY = "SELECT * FROM clientes WHERE contacto=?";
     private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM clientes WHERE email=?";
-    private final String type;
+    private static final String SELECT_CUSTOMERS_QUERY = "SELECT * FROM clientes";
+
     // Customer list object
     ObservableList<Customer> list = FXCollections.observableArrayList();
-    private String search;
     // UI Content
+    @FXML
+    private JFXComboBox<Label> customerCombo;
+    @FXML
+    private TextField customerSearchInput;
     @FXML
     private TableView<Customer> tableView;
     @FXML
@@ -68,21 +71,11 @@ public class CustomerSearchController implements Initializable {
     private TableColumn<Customer, String> emailCol;
     @FXML
     private TableColumn<Customer, String> nifCol;
-    @FXML
-    private TableColumn<Customer, String> notesCol;
-    @FXML
-    private StackPane rootPane;
-    @FXML
-    private AnchorPane contentPane;
-
-    public CustomerSearchController(String type, String search) {
-        this.type = type;
-        this.search = search;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initCol();
+        this.initCol();
+        this.initCombo();
         try {
             loadData();
         } catch (SQLException throwable) {
@@ -100,7 +93,72 @@ public class CustomerSearchController implements Initializable {
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
-        notesCol.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        TableColumn<Customer, Void> detailsCol = new TableColumn<>("Ficha");
+
+        Callback<TableColumn<Customer, Void>, TableCell<Customer, Void>> cellFactory =
+                new Callback<>() {
+                    @Override
+                    public TableCell<Customer, Void> call(final TableColumn<Customer, Void> param) {
+                        return new TableCell<>() {
+                            private final Button btn = new Button("Abrir Ficha");
+
+                            {
+                                btn.setOnAction((ActionEvent event) -> {
+                                    Customer data = getTableView().getItems().get(getIndex());
+                                    try {
+                                        showCustomerDetails(data.getId());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void updateItem(Void item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                } else {
+                                    setGraphic(btn);
+                                }
+                            }
+                        };
+                    }
+                };
+        detailsCol.setPrefWidth(80);
+        detailsCol.setCellFactory(cellFactory);
+        tableView.getColumns().add(detailsCol);
+    }
+
+    /**
+     * Initialize search combo box
+     */
+    private void initCombo() {
+        customerCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
+                new Label("NIF"), new Label("Contacto"), new Label("E-mail"));
+        customerCombo.setPromptText("Tipo de pesquisa...");
+    }
+
+    /**
+     * Show customer details window
+     *
+     * @param id - customer id
+     */
+    private void showCustomerDetails(String id) throws IOException {
+        CustomerDetailsController controller = new CustomerDetailsController(id);
+
+        FXMLLoader loader =
+                new FXMLLoader(getClass().getResource(
+                        "/fxml/customer/CustomerDetails.fxml"));
+        loader.setController(controller);
+
+        Parent parent = loader.load();
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setTitle("Ficha de Cliente");
+        stage.setScene(new Scene(parent));
+        stage.show();
+        ShopManagementUtil.setStageIcon(stage);
     }
 
     private Stage getStage() {
@@ -113,29 +171,9 @@ public class CustomerSearchController implements Initializable {
      * @throws SQLException - database exception
      */
     private void loadData() throws SQLException {
-        String query = null;
-        switch (this.type) {
-            case "ID":
-                query = SEARCH_ID_QUERY;
-                break;
-            case "Nome":
-                query = SEARCH_NAME_QUERY;
-                this.search = "%" + this.search + "%";
-                break;
-            case "NIF":
-                query = SEARCH_NIF_QUERY;
-                break;
-            case "Contacto":
-                query = SEARCH_PHONE_QUERY;
-                break;
-            case "E-mail":
-                query = SEARCH_EMAIL_QUERY;
-                break;
-        }
         list.clear();
         DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, this.search);
+        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_CUSTOMERS_QUERY);
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
@@ -176,7 +214,7 @@ public class CustomerSearchController implements Initializable {
         Optional<ButtonType> answer = alert.showAndWait();
 
         if (answer.get() == ButtonType.OK) {
-            Boolean result = DatabaseHandler.getInstance().deleteCustomer(selectedForDeletion);
+            boolean result = DatabaseHandler.getInstance().deleteCustomer(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Cliente apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");
@@ -201,6 +239,77 @@ public class CustomerSearchController implements Initializable {
     @FXML
     private void handleRefresh(ActionEvent event) throws SQLException {
         loadData();
+    }
+
+    /**
+     * Search customer operation
+     *
+     * @throws SQLException - SQL exception
+     */
+    public void searchCustomer() throws SQLException {
+        String comboInput = customerCombo.getSelectionModel().getSelectedItem().getText();
+        String searchInput = customerSearchInput.getText();
+
+        String query = null;
+        switch (comboInput) {
+            case "ID":
+                query = SEARCH_ID_QUERY;
+                break;
+            case "Nome":
+                query = SEARCH_NAME_QUERY;
+                searchInput = "%" + searchInput + "%";
+                break;
+            case "NIF":
+                query = SEARCH_NIF_QUERY;
+                break;
+            case "Contacto":
+                query = SEARCH_PHONE_QUERY;
+                break;
+            case "E-mail":
+                query = SEARCH_EMAIL_QUERY;
+                break;
+        }
+        list.clear();
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
+        preparedStatement.setString(1, searchInput);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        try {
+            while (resultSet.next()) {
+                String id = resultSet.getString("id_cliente");
+                String name = resultSet.getString("nome");
+                String address = resultSet.getString("morada");
+                String phone = resultSet.getString("contacto");
+                String email = resultSet.getString("email");
+                String nif = resultSet.getString("nif");
+                String notes = resultSet.getString("notas");
+
+                list.add(new Customer(id, name, address, phone, email, nif, notes));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tableView.setItems(list);
+    }
+
+    /**
+     * Handle search customer key press
+     *
+     * @param event - key event
+     * @throws IOException - IO exception
+     */
+    public void handleSearchCustomerKeyPress(KeyEvent event) throws IOException, SQLException {
+        this.searchCustomer();
+    }
+
+    /**
+     * Handle search customer button press
+     *
+     * @param event - button click event
+     * @throws IOException - IO exception
+     */
+    public void handleSearchCustomerButtonPress(ActionEvent event) throws IOException, SQLException {
+        this.searchCustomer();
     }
 
     /**

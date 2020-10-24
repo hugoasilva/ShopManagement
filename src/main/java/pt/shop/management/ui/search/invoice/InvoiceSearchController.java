@@ -1,5 +1,6 @@
 package pt.shop.management.ui.search.invoice;
 
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,8 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -48,15 +48,16 @@ public class InvoiceSearchController implements Initializable {
     private static final String SEARCH_CUSTOMER_QUERY = "SELECT * FROM faturas WHERE id_cliente=?";
     private static final String SEARCH_EMPLOYEE_QUERY = "SELECT * FROM faturas WHERE id_empregado=?";
     private static final String SEARCH_DATE_QUERY = "SELECT * FROM faturas WHERE data_fatura=?";
+    private static final String SELECT_INVOICES_QUERY = "SELECT * FROM faturas";
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
-    private final String type;
-    private final String search;
     // Invoice list object
     ObservableList<Invoice> list = FXCollections.observableArrayList();
     // UI Content
     @FXML
-    private StackPane rootPane;
+    private JFXComboBox<Label> invoiceCombo;
+    @FXML
+    private TextField invoiceSearchInput;
     @FXML
     private TableView<Invoice> tableView;
     @FXML
@@ -69,17 +70,11 @@ public class InvoiceSearchController implements Initializable {
     private TableColumn<Invoice, String> dateCol;
     @FXML
     private TableColumn<Invoice, String> productsCol;
-    @FXML
-    private AnchorPane contentPane;
-
-    public InvoiceSearchController(String type, String search) {
-        this.type = type;
-        this.search = search;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initCol();
+        this.initCol();
+        this.initCombo();
         try {
             loadData();
         } catch (SQLException throwable) {
@@ -97,7 +92,6 @@ public class InvoiceSearchController implements Initializable {
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         productsCol.setCellValueFactory(new PropertyValueFactory<>("products"));
         TableColumn<Invoice, Void> pdfCol = new TableColumn<>("PDF");
-
         Callback<TableColumn<Invoice, Void>, TableCell<Invoice, Void>> cellFactoryPDF =
                 new Callback<>() {
                     @Override
@@ -155,11 +149,21 @@ public class InvoiceSearchController implements Initializable {
                         };
                     }
                 };
-
+        pdfCol.setPrefWidth(80);
         pdfCol.setCellFactory(cellFactoryPDF);
+        detailsCol.setPrefWidth(80);
         detailsCol.setCellFactory(cellFactoryDetails);
         tableView.getColumns().add(pdfCol);
         tableView.getColumns().add(detailsCol);
+    }
+
+    /**
+     * Initialize search combo box
+     */
+    private void initCombo() {
+        invoiceCombo.getItems().addAll(new Label("ID"), new Label("ID Cliente"),
+                new Label("ID Empregado"), new Label("Data"));
+        invoiceCombo.setPromptText("Tipo de pesquisa...");
     }
 
     /**
@@ -202,25 +206,9 @@ public class InvoiceSearchController implements Initializable {
      * @throws SQLException - database exception
      */
     private void loadData() throws SQLException {
-        String query = null;
-        switch (this.type) {
-            case "ID":
-                query = SEARCH_ID_QUERY;
-                break;
-            case "ID Cliente":
-                query = SEARCH_CUSTOMER_QUERY;
-                break;
-            case "ID Empregado":
-                query = SEARCH_EMPLOYEE_QUERY;
-                break;
-            case "Data":
-                query = SEARCH_DATE_QUERY;
-                break;
-        }
         list.clear();
         DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, this.search);
+        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_INVOICES_QUERY);
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
@@ -285,6 +273,72 @@ public class InvoiceSearchController implements Initializable {
     @FXML
     private void handleRefresh(ActionEvent event) throws SQLException {
         loadData();
+    }
+
+    /**
+     * Search invoice operation
+     *
+     * @throws IOException - IO exception
+     */
+    public void searchInvoice() throws SQLException {
+        String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
+        String searchInput = invoiceSearchInput.getText();
+
+        String query = null;
+        switch (comboInput) {
+            case "ID":
+                query = SEARCH_ID_QUERY;
+                break;
+            case "ID Cliente":
+                query = SEARCH_CUSTOMER_QUERY;
+                break;
+            case "ID Empregado":
+                query = SEARCH_EMPLOYEE_QUERY;
+                break;
+            case "Data":
+                query = SEARCH_DATE_QUERY;
+                break;
+        }
+        list.clear();
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
+        preparedStatement.setString(1, searchInput);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        try {
+            while (resultSet.next()) {
+                String id = resultSet.getString("id_fatura");
+                String customerId = resultSet.getString("id_cliente");
+                String employeeId = resultSet.getString("id_empregado");
+                String date = resultSet.getString("data_fatura");
+                String products = resultSet.getString("produtos");
+                String pdf = resultSet.getString("pdf");
+
+                list.add(new Invoice(id, customerId, employeeId, date, products, pdf));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tableView.setItems(list);
+    }
+
+    /**
+     * Handle search invoice key press
+     *
+     * @param event - key event
+     * @throws IOException - IO exception
+     */
+    public void handleSearchInvoiceKeyPress(KeyEvent event) throws SQLException {
+        this.searchInvoice();
+    }
+
+    /**
+     * Handle search invoice key press
+     *
+     * @param event - key event
+     * @throws IOException - IO exception
+     */
+    public void handleSearchInvoiceButtonPress(ActionEvent event) throws SQLException {
+        this.searchInvoice();
     }
 
     /**

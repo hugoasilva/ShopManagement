@@ -1,5 +1,6 @@
 package pt.shop.management.ui.search.employee;
 
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,19 +9,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.add.employee.EmployeeAddController;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.details.employee.EmployeeDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -49,11 +48,15 @@ public class EmployeeSearchController implements Initializable {
     private static final String SEARCH_NIF_QUERY = "SELECT * FROM empregados WHERE nif=?";
     private static final String SEARCH_PHONE_QUERY = "SELECT * FROM empregados WHERE contacto=?";
     private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM empregados WHERE email=?";
-    private final String type;
+    private static final String SELECT_EMPLOYEES_QUERY = "SELECT * FROM empregados";
+
     // Employee list object
     ObservableList<Employee> list = FXCollections.observableArrayList();
-    private String search;
     // UI Content
+    @FXML
+    private JFXComboBox<Label> employeeCombo;
+    @FXML
+    private TextField employeeSearchInput;
     @FXML
     private TableView<Employee> tableView;
     @FXML
@@ -68,21 +71,11 @@ public class EmployeeSearchController implements Initializable {
     private TableColumn<Employee, String> emailCol;
     @FXML
     private TableColumn<Employee, String> nifCol;
-    @FXML
-    private TableColumn<Employee, String> notesCol;
-    @FXML
-    private StackPane rootPane;
-    @FXML
-    private AnchorPane contentPane;
-
-    public EmployeeSearchController(String type, String search) {
-        this.type = type;
-        this.search = search;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initCol();
+        this.initCol();
+        this.initCombo();
         try {
             loadData();
         } catch (SQLException throwable) {
@@ -100,7 +93,72 @@ public class EmployeeSearchController implements Initializable {
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
-        notesCol.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        TableColumn<Employee, Void> detailsCol = new TableColumn<>("Ficha");
+
+        Callback<TableColumn<Employee, Void>, TableCell<Employee, Void>> cellFactory =
+                new Callback<>() {
+                    @Override
+                    public TableCell<Employee, Void> call(final TableColumn<Employee, Void> param) {
+                        return new TableCell<>() {
+                            private final Button btn = new Button("Abrir Ficha");
+
+                            {
+                                btn.setOnAction((ActionEvent event) -> {
+                                    Employee data = getTableView().getItems().get(getIndex());
+                                    try {
+                                        showEmployeeDetails(data.getId());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void updateItem(Void item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                } else {
+                                    setGraphic(btn);
+                                }
+                            }
+                        };
+                    }
+                };
+        detailsCol.setPrefWidth(80);
+        detailsCol.setCellFactory(cellFactory);
+        tableView.getColumns().add(detailsCol);
+    }
+
+    /**
+     * Assign table columns to employee properties
+     */
+    private void initCombo() {
+        employeeCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
+                new Label("NIF"), new Label("Contacto"), new Label("E-mail"));
+        employeeCombo.setPromptText("Tipo de pesquisa...");
+    }
+
+    /**
+     * Show employee details window
+     *
+     * @param id - employee id
+     */
+    private void showEmployeeDetails(String id) throws IOException {
+        EmployeeDetailsController controller = new EmployeeDetailsController(id);
+
+        FXMLLoader loader =
+                new FXMLLoader(getClass().getResource(
+                        "/fxml/employee/EmployeeDetails.fxml"));
+        loader.setController(controller);
+
+        Parent parent = loader.load();
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setTitle("Ficha de Empregado");
+        stage.setScene(new Scene(parent));
+        stage.show();
+        ShopManagementUtil.setStageIcon(stage);
     }
 
     private Stage getStage() {
@@ -108,35 +166,14 @@ public class EmployeeSearchController implements Initializable {
     }
 
     /**
-     * Load employee
-     * table data
+     * Load employee table data
      *
      * @throws SQLException - database exception
      */
     private void loadData() throws SQLException {
-        String query = null;
-        switch (this.type) {
-            case "ID":
-                query = SEARCH_ID_QUERY;
-                break;
-            case "Nome":
-                query = SEARCH_NAME_QUERY;
-                this.search = "%" + this.search + "%";
-                break;
-            case "NIF":
-                query = SEARCH_NIF_QUERY;
-                break;
-            case "Contacto":
-                query = SEARCH_PHONE_QUERY;
-                break;
-            case "E-mail":
-                query = SEARCH_EMAIL_QUERY;
-                break;
-        }
         list.clear();
         DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, this.search);
+        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_EMPLOYEES_QUERY);
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
@@ -177,7 +214,7 @@ public class EmployeeSearchController implements Initializable {
         Optional<ButtonType> answer = alert.showAndWait();
 
         if (answer.get() == ButtonType.OK) {
-            Boolean result = DatabaseHandler.getInstance().deleteEmployee(selectedForDeletion);
+            boolean result = DatabaseHandler.getInstance().deleteEmployee(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Empregado apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");
@@ -202,6 +239,77 @@ public class EmployeeSearchController implements Initializable {
     @FXML
     private void handleRefresh(ActionEvent event) throws SQLException {
         loadData();
+    }
+
+    /**
+     * Search employee operation
+     *
+     * @throws SQLException - SQL exception
+     */
+    public void searchEmployee() throws SQLException {
+        String comboInput = employeeCombo.getSelectionModel().getSelectedItem().getText();
+        String searchInput = employeeSearchInput.getText();
+
+        String query = null;
+        switch (comboInput) {
+            case "ID":
+                query = SEARCH_ID_QUERY;
+                break;
+            case "Nome":
+                query = SEARCH_NAME_QUERY;
+                searchInput = "%" + searchInput + "%";
+                break;
+            case "NIF":
+                query = SEARCH_NIF_QUERY;
+                break;
+            case "Contacto":
+                query = SEARCH_PHONE_QUERY;
+                break;
+            case "E-mail":
+                query = SEARCH_EMAIL_QUERY;
+                break;
+        }
+        list.clear();
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
+        preparedStatement.setString(1, searchInput);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        try {
+            while (resultSet.next()) {
+                String id = resultSet.getString("id_empregado");
+                String name = resultSet.getString("nome");
+                String address = resultSet.getString("morada");
+                String phone = resultSet.getString("contacto");
+                String email = resultSet.getString("email");
+                String nif = resultSet.getString("nif");
+                String notes = resultSet.getString("notas");
+
+                list.add(new Employee(id, name, address, phone, email, nif, notes));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tableView.setItems(list);
+    }
+
+    /**
+     * Handle search employee key press
+     *
+     * @param event - key event
+     * @throws IOException - IO exception
+     */
+    public void handleSearchEmployeeKeyPress(KeyEvent event) throws IOException, SQLException {
+        this.searchEmployee();
+    }
+
+    /**
+     * Handle search employee button press
+     *
+     * @param event - button click event
+     * @throws IOException - IO exception
+     */
+    public void handleSearchEmployeeButtonPress(ActionEvent event) throws IOException, SQLException {
+        this.searchEmployee();
     }
 
     /**

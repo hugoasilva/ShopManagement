@@ -112,7 +112,7 @@ public class InvoiceAddController implements Initializable {
             SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Nova fatura adicionada",
-                    "Fatura nr " + invoiceId + " adicionada com sucesso.", true);
+                    "Fatura nr " + invoiceId + " adicionada com sucesso.", false);
             clearEntries();
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -154,7 +154,7 @@ public class InvoiceAddController implements Initializable {
         if (databaseHandler.updateInvoice(invoice)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
-                    "Dados de fatura atualizados.", true);
+                    "Dados de fatura atualizados.", false);
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed",
                     new String("Não foi possível atualizar os dados.".getBytes(),

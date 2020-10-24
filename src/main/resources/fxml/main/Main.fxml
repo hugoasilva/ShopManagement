@@ -1,212 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="custom-pane"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="custom-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="pt.shop.management.ui.main.MainController">
-    <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" resizableOnDrag="true" resizeContent="true"
-               styleClass="jfx-drawer"/>
     <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0">
         <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                     AnchorPane.topAnchor="25.0">
             <JFXTabPane fx:id="mainTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <Tab closable="false" styleClass="tab-main" text="Pesquisa de Clientes">
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <VBox prefHeight="412.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0"
-                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" styleClass="detailsVBox">
-                                <VBox.margin>
-                                    <Insets bottom="20.0" left="100.0" right="100.0" top="100.0"/>
-                                </VBox.margin>
-                                <FontIcon iconLiteral="icm-search" iconSize="60" styleClass="font-icon">
-                                    <VBox.margin>
-                                        <Insets top="30.0"/>
-                                    </VBox.margin>
-                                </FontIcon>
-                                <HBox alignment="CENTER" spacing="50.0" styleClass="searcHBox">
-                                    <HBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="200.0"/>
-                                    </HBox.margin>
-                                    <JFXComboBox fx:id="customerCombo" labelFloat="true" prefHeight="26.0"
-                                                 prefWidth="230.0" promptText="Tipo de Pesquisa:"
-                                                 styleClass="searchCombo">
-                                        <HBox.margin>
-                                            <Insets left="50.0"/>
-                                        </HBox.margin>
-                                    </JFXComboBox>
-                                    <JFXTextField fx:id="customerSearchInput" labelFloat="true" prefWidth="500.0"
-                                                  promptText="Pesquisar..." styleClass="searchInput">
-                                        <HBox.margin>
-                                            <Insets right="50.0"/>
-                                        </HBox.margin>
-                                    </JFXTextField>
-                                </HBox>
-                                <JFXButton onAction="#handleSearchCustomerButtonPress"
-                                           onKeyPressed="#handleSearchCustomerKeyPress" prefHeight="44.0"
-                                           prefWidth="151.0" text="Pesquisar">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" top="50.0"/>
-                                    </VBox.margin>
-                                </JFXButton>
-                            </VBox>
-                        </VBox>
+                <Tab closable="false" styleClass="tab-main" text="Clientes">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0">
+                        <JFXTabPane fx:id="customerTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="customerAddTab" closable="false" styleClass="tab-main" text="Adicionar"/>
+                            <Tab fx:id="customerSearchTab" closable="false" styleClass="tab-main" text="Pesquisar"/>
+                        </JFXTabPane>
                     </AnchorPane>
                 </Tab>
-                <Tab closable="false" styleClass="tab-main" text="Pesquisa de Empregados">
+                <Tab closable="false" styleClass="tab-main" text="Empregados">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <VBox prefHeight="412.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0"
-                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" styleClass="detailsVBox">
-                                <VBox.margin>
-                                    <Insets bottom="20.0" left="100.0" right="100.0" top="100.0"/>
-                                </VBox.margin>
-                                <FontIcon iconLiteral="icm-search" iconSize="60" styleClass="font-icon">
-                                    <VBox.margin>
-                                        <Insets top="30.0"/>
-                                    </VBox.margin>
-                                </FontIcon>
-                                <HBox alignment="CENTER" spacing="50.0" styleClass="searcHBox">
-                                    <HBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="100.0"/>
-                                    </HBox.margin>
-                                    <JFXComboBox fx:id="employeeCombo" labelFloat="true" prefHeight="26.0"
-                                                 prefWidth="230.0" promptText="Tipo de Pesquisa:"
-                                                 styleClass="searchCombo">
-                                        <HBox.margin>
-                                            <Insets left="50.0"/>
-                                        </HBox.margin>
-                                    </JFXComboBox>
-                                    <JFXTextField fx:id="employeeSearchInput" labelFloat="true" prefWidth="500.0"
-                                                  promptText="Pesquisar..." styleClass="searchInput">
-                                        <HBox.margin>
-                                            <Insets right="50.0"/>
-                                        </HBox.margin>
-                                    </JFXTextField>
-                                    <VBox.margin>
-                                        <Insets/>
-                                    </VBox.margin>
-                                </HBox>
-                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                    <JFXButton onAction="#handleSearchEmployeeButtonPress"
-                                               onKeyPressed="#handleSearchEmployeeKeyPress" prefHeight="44.0"
-                                               prefWidth="151.0" text="Pesquisar">
-                                        <HBox.margin>
-                                            <Insets bottom="20.0" top="50.0"/>
-                                        </HBox.margin>
-                                    </JFXButton>
-                                </HBox>
-                            </VBox>
-                        </VBox>
+                        <JFXTabPane fx:id="employeeTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="employeeAddTab" closable="false" styleClass="tab-main" text="Adicionar"/>
+                            <Tab fx:id="employeeSearchTab" closable="false" styleClass="tab-main" text="Pesquisar"/>
+                        </JFXTabPane>
                     </AnchorPane>
                 </Tab>
-                <Tab closable="false" styleClass="tab-main" text="Pesquisa de Faturas">
+                <Tab closable="false" styleClass="tab-main" text="Faturas">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <VBox prefHeight="412.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0"
-                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" styleClass="detailsVBox">
-                                <VBox.margin>
-                                    <Insets bottom="20.0" left="100.0" right="100.0" top="100.0"/>
-                                </VBox.margin>
-                                <FontIcon iconLiteral="icm-search" iconSize="60" styleClass="font-icon">
-                                    <VBox.margin>
-                                        <Insets top="30.0"/>
-                                    </VBox.margin>
-                                </FontIcon>
-                                <HBox alignment="CENTER" spacing="50.0" styleClass="searcHBox">
-                                    <HBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="100.0"/>
-                                    </HBox.margin>
-                                    <JFXComboBox fx:id="invoiceCombo" labelFloat="true" prefHeight="26.0"
-                                                 prefWidth="230.0" promptText="Tipo de Pesquisa:"
-                                                 styleClass="searchCombo">
-                                        <HBox.margin>
-                                            <Insets left="50.0"/>
-                                        </HBox.margin>
-                                    </JFXComboBox>
-                                    <JFXTextField fx:id="invoiceSearchInput" labelFloat="true" prefWidth="500.0"
-                                                  promptText="Pesquisar..." styleClass="searchInput">
-                                        <HBox.margin>
-                                            <Insets right="50.0"/>
-                                        </HBox.margin>
-                                    </JFXTextField>
-                                </HBox>
-                                <JFXButton onAction="#handleSearchInvoiceButtonPress"
-                                           onKeyPressed="#handleSearchInvoiceKeyPress" prefHeight="44.0"
-                                           prefWidth="151.0" text="Pesquisar">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" top="50.0"/>
-                                    </VBox.margin>
-                                </JFXButton>
-                            </VBox>
-                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"/>
-                        </VBox>
+                        <JFXTabPane fx:id="invoiceTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="invoiceAddTab" closable="false" styleClass="tab-main" text="Adicionar"/>
+                            <Tab fx:id="invoiceSearchTab" closable="false" styleClass="tab-main" text="Pesquisar"/>
+                        </JFXTabPane>
                     </AnchorPane>
                 </Tab>
-                <Tab closable="false" styleClass="tab-main" text="Pesquisa de Produtos">
+                <Tab closable="false" styleClass="tab-main" text="Produtos">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <VBox prefHeight="412.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0"
-                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="1000.0" styleClass="detailsVBox">
-                                <VBox.margin>
-                                    <Insets bottom="20.0" left="100.0" right="100.0" top="100.0"/>
-                                </VBox.margin>
-                                <FontIcon iconLiteral="icm-search" iconSize="60" styleClass="font-icon">
-                                    <VBox.margin>
-                                        <Insets top="30.0"/>
-                                    </VBox.margin>
-                                </FontIcon>
-                                <HBox alignment="CENTER" spacing="50.0" styleClass="searcHBox">
-                                    <HBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="200.0"/>
-                                    </HBox.margin>
-                                    <JFXComboBox fx:id="productCombo" labelFloat="true" prefHeight="26.0"
-                                                 prefWidth="230.0" promptText="Tipo de Pesquisa:"
-                                                 styleClass="searchCombo">
-                                        <HBox.margin>
-                                            <Insets left="50.0"/>
-                                        </HBox.margin>
-                                    </JFXComboBox>
-                                    <JFXTextField fx:id="productSearchInput" labelFloat="true" prefWidth="500.0"
-                                                  promptText="Pesquisar..." styleClass="searchInput">
-                                        <HBox.margin>
-                                            <Insets right="50.0"/>
-                                        </HBox.margin>
-                                    </JFXTextField>
-                                </HBox>
-                                <JFXButton onAction="#handleSearchProductButtonPress"
-                                           onKeyPressed="#handleSearchProductKeyPress" prefHeight="44.0"
-                                           prefWidth="151.0" text="Pesquisar">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" top="50.0"/>
-                                    </VBox.margin>
-                                </JFXButton>
-                            </VBox>
-                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"/>
-                        </VBox>
+                        <!--                        <JFXTabPane fx:id="productTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"-->
+                        <!--                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">-->
+                        <!--                            <Tab fx:id="productAddTab" closable="false" styleClass="tab-main" text="Adicionar"/>-->
+                        <!--                            <Tab fx:id="productSearchTab" closable="false" styleClass="tab-main" text="Pesquisar"/>-->
+                        <!--                        </JFXTabPane>-->
                     </AnchorPane>
                 </Tab>
             </JFXTabPane>
-            <JFXHamburger fx:id="hamburger" styleClass="jfx-hamburger-icon" AnchorPane.rightAnchor="950.0"
-                          AnchorPane.topAnchor="100.0"/>
         </AnchorPane>
         <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Menu mnemonicParsing="false" text="Ficheiro">
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuClose" text="Sair"/>
             </Menu>
             <Menu mnemonicParsing="false" text="Adicionar">
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuAddInvoice" text="Adicionar Fatura"/>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuAddCustomer" text="Adicionar Cliente"/>
             </Menu>
             <Menu mnemonicParsing="false" text="Ver">
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuViewInvoiceList" text="Lista de Faturas"/>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuViewCustomerList" text="Lista de Clientes"/>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFullScreen" text="Full Screen"/>
             </Menu>
             <Menu mnemonicParsing="false" text="Ajuda">

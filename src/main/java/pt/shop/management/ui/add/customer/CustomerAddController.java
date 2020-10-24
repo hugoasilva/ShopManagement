@@ -108,7 +108,7 @@ public class CustomerAddController implements Initializable {
             this.createNotesJSON();
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Cliente adicionado",
-                    customerName + " adicionado com sucesso!", true);
+                    customerName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -152,7 +152,7 @@ public class CustomerAddController implements Initializable {
         if (DatabaseHandler.getInstance().updateCustomer(customer)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
-                    "Dados de cliente atualizados.", true);
+                    "Dados de cliente atualizados.", false);
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Erro",

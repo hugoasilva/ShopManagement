@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'pt.shop.management'
-version '1.43'
+version '2.0'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11

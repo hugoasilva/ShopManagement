@@ -5,19 +5,20 @@
 <?import java.lang.String?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" stylesheets="@../../css/styles.css"
            xmlns="http://javafx.com/javafx/8.0.141"
-           fx:controller="pt.shop.management.ui.list.product.ProductListController">
-    <AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="456.0" prefWidth="700.0"
+           fx:controller="pt.shop.management.ui.search.product.ProductSearchController">
+    <AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="525.0" prefWidth="798.0"
                 stylesheets="@../../css/styles.css">
-        <TableView fx:id="tableView" prefHeight="400.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0"
-                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+        <TableView fx:id="tableView" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="853.0"
+                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="30.0">
             <columns>
                 <TableColumn fx:id="idCol" maxWidth="120.0" prefWidth="75.0" text="ID"/>
-                <TableColumn fx:id="nameCol" prefWidth="150.0" text="Nome"/>
-                <TableColumn fx:id="priceCol" prefWidth="150.0" text="Preço"/>
-                <TableColumn fx:id="qtyCol" prefWidth="150.0" text="Quantidade"/>
+                <TableColumn fx:id="customerCol" prefWidth="150.0" text="Cliente"/>
+                <TableColumn fx:id="employeeCol" prefWidth="150.0" text="Empregado"/>
+                <TableColumn fx:id="dateCol" prefWidth="120.0" text="Data"/>
+                <TableColumn fx:id="productsCol" prefWidth="100.0" text="Produtos"/>
             </columns>
             <columnResizePolicy>
-                <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/>
             </columnResizePolicy>
             <contextMenu>
                 <ContextMenu>
@@ -33,9 +34,9 @@
                 </ContextMenu>
             </contextMenu>
         </TableView>
-        <MenuBar prefHeight="32.0" prefWidth="722.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                 AnchorPane.topAnchor="0.0">
-            <Menu mnemonicParsing="false" text="Ficheiro">
+        <MenuBar layoutX="10.0" layoutY="10.0" prefHeight="32.0" prefWidth="722.0" AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Menu mnemonicParsing="false" text="File">
                 <MenuItem mnemonicParsing="false" text="Exportar para PDF"/>
                 <MenuItem mnemonicParsing="false" onAction="#closeStage" text="Fechar"/>
             </Menu>

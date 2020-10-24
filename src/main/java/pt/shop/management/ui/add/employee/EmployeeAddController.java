@@ -108,7 +108,7 @@ public class EmployeeAddController implements Initializable {
             this.createNotesJSON();
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Empregado adicionado",
-                    employeeName + " adicionado com sucesso!", true);
+                    employeeName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -152,7 +152,7 @@ public class EmployeeAddController implements Initializable {
         if (DatabaseHandler.getInstance().updateEmployee(employee)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
-                    "Dados de empregado atualizados.", true);
+                    "Dados de empregado atualizados.", false);
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Erro",

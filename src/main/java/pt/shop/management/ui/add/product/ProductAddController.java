@@ -114,7 +114,7 @@ public class ProductAddController implements Initializable {
 
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Produto adicionado",
-                    productName + " adicionado com sucesso!", true);
+                    productName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -166,7 +166,7 @@ public class ProductAddController implements Initializable {
         if (DatabaseHandler.getInstance().updateProduct(product)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
-                    "Dados de produto atualizados.", true);
+                    "Dados de produto atualizados.", false);
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Erro",
