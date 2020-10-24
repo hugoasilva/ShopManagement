@@ -33,6 +33,17 @@ public class ToolbarController implements Initializable {
     }
 
     /**
+     * Load add employee window
+     *
+     * @param event - click event
+     */
+    @FXML
+    private void loadAddEmployee(ActionEvent event) {
+        ShopManagementUtil.loadWindow(getClass().getResource(
+                "/fxml/employee/EmployeeAdd.fxml"), "Adicionar Empregado", null);
+    }
+
+    /**
      * Load add invoice window
      *
      * @param event - click event
@@ -44,14 +55,14 @@ public class ToolbarController implements Initializable {
     }
 
     /**
-     * Load add employee window
+     * Load add product window
      *
      * @param event - click event
      */
     @FXML
-    private void loadAddEmployee(ActionEvent event) {
+    public void loadAddProduct(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/employee/EmployeeAdd.fxml"), "Adicionar Empregado", null);
+                "/fxml/product/ProductAdd.fxml"), "Adicionar Produto", null);
     }
 
     /**
@@ -66,6 +77,17 @@ public class ToolbarController implements Initializable {
     }
 
     /**
+     * Load employee table window
+     *
+     * @param event - click event
+     */
+    @FXML
+    private void loadEmployeeTable(ActionEvent event) {
+        ShopManagementUtil.loadWindow(getClass().getResource(
+                "/fxml/employee/EmployeeList.fxml"), "Lista de Empregados", null);
+    }
+
+    /**
      * Load invoice table window
      *
      * @param event - click event
@@ -77,13 +99,14 @@ public class ToolbarController implements Initializable {
     }
 
     /**
-     * Load employee table window
+     * Load product table window
      *
      * @param event - click event
      */
     @FXML
-    private void loadEmployeeTable(ActionEvent event) {
+    public void loadProductTable(ActionEvent event) {
         ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/employee/EmployeeList.fxml"), "Lista de Empregados", null);
+                "/fxml/product/ProductList.fxml"), "Lista de Produtos", null);
     }
+
 }

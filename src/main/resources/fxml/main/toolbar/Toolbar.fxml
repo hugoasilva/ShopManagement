@@ -12,6 +12,13 @@
             <FontIcon iconLiteral="icm-user" iconSize="40" styleClass="font-icon"/>
         </graphic>
     </JFXButton>
+    <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadAddEmployee"
+               prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="Adicionar Empregado"
+               textAlignment="CENTER">
+        <graphic>
+            <FontIcon iconLiteral="icm-user-tie" iconSize="40" styleClass="font-icon"/>
+        </graphic>
+    </JFXButton>
     <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadAddInvoice"
                prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="Adicionar Fatura"
                textAlignment="CENTER">
@@ -19,11 +26,11 @@
             <FontIcon iconLiteral="icm-file-text2" iconSize="40" styleClass="font-icon"/>
         </graphic>
     </JFXButton>
-    <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadAddEmployee"
-               prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="Adicionar Empregado"
+    <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadAddProduct"
+               prefHeight="400.0" prefWidth="200.0" styleClass="toolbar-button" text="Adicionar Produto"
                textAlignment="CENTER">
         <graphic>
-            <FontIcon iconLiteral="icm-user-tie" iconSize="40" styleClass="font-icon"/>
+            <FontIcon iconLiteral="dashicons-list-view" iconSize="40" styleClass="font-icon"/>
         </graphic>
     </JFXButton>
     <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
@@ -34,6 +41,13 @@
         </graphic>
     </JFXButton>
     <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="81.0" mnemonicParsing="false"
+               onAction="#loadEmployeeTable" prefHeight="400.0" prefWidth="200.0"
+               styleClass="toolbar-button" text="Lista de Empregados" textAlignment="CENTER">
+        <graphic>
+            <FontIcon iconLiteral="ion-ios-people" iconSize="60" styleClass="font-icon"/>
+        </graphic>
+    </JFXButton>
+    <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="81.0" mnemonicParsing="false"
                onAction="#loadInvoiceTable" prefHeight="400.0" prefWidth="200.0"
                styleClass="toolbar-button" text="Lista de Faturas" textAlignment="CENTER">
         <graphic>
@@ -41,10 +55,10 @@
         </graphic>
     </JFXButton>
     <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="81.0" mnemonicParsing="false"
-               onAction="#loadEmployeeTable" prefHeight="400.0" prefWidth="200.0"
-               styleClass="toolbar-button" text="Lista de Empregados" textAlignment="CENTER">
+               onAction="#loadProductTable" prefHeight="400.0" prefWidth="200.0"
+               styleClass="toolbar-button" text="Lista de Produtos" textAlignment="CENTER">
         <graphic>
-            <FontIcon iconLiteral="ion-ios-people" iconSize="60" styleClass="font-icon"/>
+            <FontIcon iconLiteral="hwf-clipboard-list" iconSize="40" styleClass="font-icon"/>
         </graphic>
     </JFXButton>
 </VBox>

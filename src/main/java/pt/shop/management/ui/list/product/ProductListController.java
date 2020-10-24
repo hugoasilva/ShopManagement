@@ -44,7 +44,7 @@ import java.util.logging.Logger;
 public class ProductListController implements Initializable {
 
     // Database query
-    private static final String SELECT_PRODUCTS_QUERY = "SELECT * FROM produtos";
+    private static final String SELECT_PRODUCTS_QUERY = "SELECT * FROM products";
 
     // Customer list object
     ObservableList<Product> list = FXCollections.observableArrayList();
@@ -97,7 +97,7 @@ public class ProductListController implements Initializable {
                                     Product data = getTableView().getItems().get(getIndex());
                                     try {
                                         showProductDetails(data.getId());
-                                    } catch (IOException | SQLException e) {
+                                    } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 });
@@ -126,7 +126,7 @@ public class ProductListController implements Initializable {
      *
      * @param id - product id
      */
-    private void showProductDetails(String id) throws IOException, SQLException {
+    private void showProductDetails(String id) throws IOException {
         ProductDetailsController controller = new ProductDetailsController(id);
 
         FXMLLoader loader =
@@ -159,12 +159,13 @@ public class ProductListController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
-                String id = resultSet.getString("id_produto");
-                String name = resultSet.getString("nome");
-                String price = resultSet.getString("preco");
-                String quantity = resultSet.getString("quantidade");
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                String price = resultSet.getString("price");
+                String quantity = resultSet.getString("quantity");
+                String image = resultSet.getString("image");
 
-                list.add(new Product(id, name, price, quantity));
+                list.add(new Product(id, name, price, quantity, image));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductAddController.class.getName()).log(Level.SEVERE, null, ex);
@@ -192,8 +193,8 @@ public class ProductListController implements Initializable {
         alert.setContentText("Tem a certeza que pretende apagar o produto " + selectedForDeletion.getName() + "?");
         Optional<ButtonType> answer = alert.showAndWait();
 
-        if (answer.get() == ButtonType.OK) {
-            Boolean result = DatabaseHandler.getInstance().deleteProduct(selectedForDeletion);
+        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+            boolean result = DatabaseHandler.getInstance().deleteProduct(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Produto apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");

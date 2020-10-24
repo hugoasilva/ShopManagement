@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
-import pt.shop.management.ui.add.employee.EmployeeAddController;
 import pt.shop.management.ui.alert.AlertMaker;
 
 import java.io.File;
@@ -36,11 +35,17 @@ import java.util.ResourceBundle;
 
 public class InvoiceAddController implements Initializable {
 
-    private static final Logger LOGGER = LogManager.getLogger(EmployeeAddController.class.getName());
-
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(InvoiceAddController.class.getName());
+    // Directory paths
     private final static String REMOTE_INVOICE_PATH = "/home/pi/gestao/faturas/";
-
-    // UI Content
+    // Database handler instance
+    private DatabaseHandler databaseHandler;
+    // Invoice data
+    private String id;
+    private String invoicePath;
+    private Boolean isInEditMode = Boolean.FALSE;
+    // UI content
     @FXML
     private JFXTextField customer;
     @FXML
@@ -55,13 +60,6 @@ public class InvoiceAddController implements Initializable {
     private StackPane rootPane;
     @FXML
     private AnchorPane mainContainer;
-
-    // Database handler instance
-    private DatabaseHandler databaseHandler;
-
-    private String id;
-    private String invoicePath;
-    private Boolean isInEditMode = Boolean.FALSE;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,8 +106,8 @@ public class InvoiceAddController implements Initializable {
             return;
         }
 
-        Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoiceProducts, invoicePdf);
-
+        Invoice invoice = new Invoice(invoiceId, customerId,
+                employeeId, invoiceDate, invoiceProducts, invoicePdf);
         if (DatabaseHandler.insertInvoice(invoice)) {
             SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -134,6 +132,7 @@ public class InvoiceAddController implements Initializable {
         date.setValue(LocalDate.parse(invoice.getDate()));
         products.setText(invoice.getProducts());
         pdf.setText(invoice.getPdf());
+
         isInEditMode = Boolean.TRUE;
     }
 

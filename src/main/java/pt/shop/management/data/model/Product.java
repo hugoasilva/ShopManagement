@@ -12,6 +12,7 @@ public class Product {
     private String name;
     private String price;
     private String quantity;
+    private String image;
 
     /**
      * Product object constructor
@@ -20,12 +21,14 @@ public class Product {
      * @param name     - product's message
      * @param price    - product's price
      * @param quantity - product's quantity
+     * @param image    - product's image file path
      */
-    public Product(String id, String name, String price, String quantity) {
+    public Product(String id, String name, String price, String quantity, String image) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.image = image;
     }
 
     /**
@@ -87,7 +90,26 @@ public class Product {
      *
      * @param quantity - product quantity
      */
-    public void setMessage(String quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
+
+    /**
+     * Get product image
+     *
+     * @return - product image
+     */
+    public String getImage() {
+        return this.image;
+    }
+
+    /**
+     * Set product image
+     *
+     * @param image - product image
+     */
+    public void setImage(String image) {
+        this.quantity = image;
+    }
+
 }

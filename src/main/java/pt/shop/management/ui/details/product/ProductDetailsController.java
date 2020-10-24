@@ -91,10 +91,12 @@ public class ProductDetailsController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
 
-        String id = resultSet.getString("id_produto");
-        String name = resultSet.getString("nome");
-        String price = resultSet.getString("preco");
-        String quantity = resultSet.getString("quantidade");
-        this.inflateUI(new Product(id, name, price, quantity));
+        String id = resultSet.getString("id");
+        String name = resultSet.getString("name");
+        String price = resultSet.getString("price");
+        String quantity = resultSet.getString("quantity");
+        String image = resultSet.getString("image");
+
+        this.inflateUI(new Product(id, name, price, quantity, image));
     }
 }
