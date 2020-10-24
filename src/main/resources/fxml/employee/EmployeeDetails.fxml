@@ -58,14 +58,14 @@
                        prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                 <columns>
-                    <TableColumn fx:id="messageCol" minWidth="350.0" prefWidth="250.0" text="Descrição" />
+                    <TableColumn fx:id="messageCol" minWidth="350.0" prefWidth="250.0" text="Descrição"/>
                 </columns>
                 <contextMenu>
                     <ContextMenu>
                         <items>
-                            <!--                            <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>-->
-                            <!--                            <MenuItem mnemonicParsing="false" onAction="#handleCustomerEdit" text="Editar"/>-->
-                            <!--                            <MenuItem mnemonicParsing="false" onAction="#handleCustomerDelete" text="Apagar"/>-->
+                            <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>
+                            <MenuItem mnemonicParsing="false" onAction="#handleNoteEdit" text="Editar"/>
+                            <MenuItem mnemonicParsing="false" onAction="#handleNoteDelete" text="Apagar"/>
                         </items>
                     </ContextMenu>
                 </contextMenu>

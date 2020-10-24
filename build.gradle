@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'pt.shop.management'
-version '1.42'
+version '1.43'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -46,6 +46,7 @@ javafx {
 dependencies {
     implementation 'junit:junit:4.12'
     implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'commons-io:commons-io:2.6'
     implementation 'com.jfoenix:jfoenix:9.0.10'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'mysql:mysql-connector-java:8.0.22'

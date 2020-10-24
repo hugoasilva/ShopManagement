@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.commons.io.FileUtils;
 import pt.shop.management.ui.main.MainController;
 
 import java.awt.*;
@@ -116,6 +117,11 @@ public class ShopManagementUtil {
     public static void createDownloadsUploadsFolder() {
         try {
             Path path = Paths.get("downloads/");
+            // Check if folder already exists and delete it
+            if (Files.exists(path)) {
+                FileUtils.forceDelete(new File("downloads/"));
+            }
+            // Create downloads folder
             Files.createDirectories(path);
         } catch (IOException e) {
             Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.INFO,
@@ -123,6 +129,11 @@ public class ShopManagementUtil {
         }
         try {
             Path path = Paths.get("uploads/");
+            // Check if folder already exists and delete it
+            if (Files.exists(path)) {
+                FileUtils.forceDelete(new File("uploads/"));
+            }
+            // Create uploads folder
             Files.createDirectories(path);
         } catch (IOException e) {
             Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.INFO,

@@ -244,11 +244,10 @@ public class CustomerDetailsController implements Initializable {
      * Refresh handler
      *
      * @param event - refresh event
-     * @throws SQLException - database exception
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
-        loadData();
+    private void handleRefresh(ActionEvent event) {
+        this.getCustomerNotes(customerID, notesPath);
     }
 
     /**

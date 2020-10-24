@@ -148,11 +148,11 @@ public class NoteAddController implements Initializable {
             return;
         }
 
-        // Initialize a list of type DataObject
+        // Parse JSON
         List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(this.localPath));
 
         // Edit note message
-        notes.set(Integer.parseInt(note.getId()) - 1, note);
+        notes.set(Integer.parseInt(note.getId()), note);
 
         // Convert notes to JSON and upload to server
         if (JSONHandler.notesToJSON(notes, this.localPath)) {

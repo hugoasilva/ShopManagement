@@ -8,9 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -20,16 +18,22 @@ import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
+import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.main.MainController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Employee Details Controller Class
@@ -190,5 +194,100 @@ public class EmployeeDetailsController implements Initializable {
         ShopManagementUtil.setStageIcon(stage);
         stage.showAndWait();
         this.getEmployeeNotes(this.employeeID, this.notesPath);
+    }
+
+    /**
+     * Note delete handler
+     *
+     * @param event - delete event
+     */
+    @FXML
+    private void handleNoteDelete(ActionEvent event) {
+        //Fetch the selected row
+        Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        if (selectedForDeletion == null) {
+            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+                    "Por favor seleccione uma nota para editar.");
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Apagar Nota");
+        alert.setContentText("Tem a certeza que pretende apagar a nota?");
+        Optional<ButtonType> answer = alert.showAndWait();
+
+        String fileName = LOCAL_DOWNLOAD_PATH + employeeID + ".json";
+
+        // Parse JSON
+        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(fileName));
+
+        System.out.println(selectedForDeletion.getId());
+        // Remove note
+        notes.remove(Integer.parseInt(selectedForDeletion.getId()));
+        for (int i = 0; i < notes.size(); i++) {
+            notes.get(i).setId(String.valueOf(i));
+        }
+
+        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+            JSONHandler.notesToJSON(notes, fileName);
+            SFTPHandler.uploadFile(fileName, this.notesPath);
+            AlertMaker.showSimpleAlert("Nota apagada",
+                    "Nota apagada com sucesso.");
+            list.remove(selectedForDeletion);
+        } else {
+            AlertMaker.showSimpleAlert("Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+        }
+    }
+
+    /**
+     * Refresh handler
+     *
+     * @param event - refresh event
+     */
+    @FXML
+    private void handleRefresh(ActionEvent event) {
+        this.getEmployeeNotes(employeeID, notesPath);
+    }
+
+    /**
+     * Note edit handler
+     *
+     * @param event - edit event
+     */
+    @FXML
+    public void handleNoteEdit(ActionEvent event) {
+        //Fetch the selected row
+        Note selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+
+        if (selectedForEdit == null) {
+            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+                    "Por favor seleccione uma nota para editar.");
+            return;
+        }
+        try {
+
+            NoteAddController controller = new NoteAddController(
+                    LOCAL_DOWNLOAD_PATH + this.employeeID + ".json", this.notesPath);
+
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/note/NoteAdd.fxml"));
+            loader.setController(controller);
+
+            Parent parent = loader.load();
+
+            controller.inflateUI(selectedForEdit);
+
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Adicionar Nota");
+            stage.setScene(new Scene(parent));
+            ShopManagementUtil.setStageIcon(stage);
+            stage.showAndWait();
+            this.getEmployeeNotes(this.employeeID, this.notesPath);
+
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
