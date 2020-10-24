@@ -83,13 +83,13 @@ public class ProductListController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         qtyCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        TableColumn<Product, Void> detailsCol = new TableColumn("Ficha");
+        TableColumn<Product, Void> detailsCol = new TableColumn<>("Ficha");
 
         Callback<TableColumn<Product, Void>, TableCell<Product, Void>> cellFactory =
-                new Callback<TableColumn<Product, Void>, TableCell<Product, Void>>() {
+                new Callback<>() {
                     @Override
                     public TableCell<Product, Void> call(final TableColumn<Product, Void> param) {
-                        final TableCell<Product, Void> cell = new TableCell<Product, Void>() {
+                        return new TableCell<>() {
                             private final Button btn = new Button("Abrir Ficha");
 
                             {
@@ -113,7 +113,6 @@ public class ProductListController implements Initializable {
                                 }
                             }
                         };
-                        return cell;
                     }
                 };
 
