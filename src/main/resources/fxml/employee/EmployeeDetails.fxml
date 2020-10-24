@@ -58,7 +58,7 @@
                        prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                 <columns>
-                    <TableColumn fx:id="messageCol" minWidth="150.0" prefWidth="250.0" text="Descrição"/>
+                    <TableColumn fx:id="messageCol" minWidth="350.0" prefWidth="250.0" text="Descrição" />
                 </columns>
                 <contextMenu>
                     <ContextMenu>
@@ -74,7 +74,7 @@
                 </VBox.margin>
             </TableView>
         </VBox>
-        <FontIcon iconLiteral="fa-user-circle-o" iconSize="60" layoutX="220.0" layoutY="80.0" styleClass="font-icon"
+        <FontIcon iconLiteral="fa-black-tie" iconSize="60" layoutX="220.0" layoutY="80.0" styleClass="font-icon"
                   text=""/>
         <FontIcon iconLiteral="fa-plus" iconSize="20" layoutX="455.0" layoutY="415.0"
                   onMouseClicked="#addNoteButtonAction" styleClass="font-icon, notesButton"/>

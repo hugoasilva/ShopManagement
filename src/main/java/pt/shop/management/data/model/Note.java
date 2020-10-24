@@ -8,7 +8,7 @@ package pt.shop.management.data.model;
  */
 
 public class Note {
-    private final String id;
+    private String id;
     private String message;
 
     /**
@@ -29,6 +29,15 @@ public class Note {
      */
     public String getId() {
         return this.id;
+    }
+
+    /**
+     * Set note id
+     *
+     * @param id - note message
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**

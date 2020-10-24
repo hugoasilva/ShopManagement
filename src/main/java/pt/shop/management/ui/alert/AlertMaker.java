@@ -3,8 +3,6 @@ package pt.shop.management.ui.alert;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.events.JFXDialogEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -73,7 +71,7 @@ public class AlertMaker {
 
         controls.forEach(controlButton -> {
             controlButton.getStyleClass().add("dialog-button");
-            controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) ->  {
+            controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                 if (closeParent) {
                     Stage stage = (Stage) dialog.getParent().getScene().getWindow();
                     stage.close();

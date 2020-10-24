@@ -33,6 +33,7 @@ public class NoteAddController implements Initializable {
     private final String remotePath;
 
     private Boolean isInEditMode = false;
+    private String id;
 
     // UI Content
     @FXML
@@ -79,12 +80,11 @@ public class NoteAddController implements Initializable {
      */
     @FXML
     private void addNote(ActionEvent event) {
-
         // Initialize a list of type DataObject
         List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(this.localPath));
 
         if (!notes.get(0).getMessage().equals("error")) {
-            String noteId = String.valueOf(notes.size() + 1);
+            String noteId = String.valueOf(notes.size());
             String noteMessage = message.getText();
 
             if (noteMessage.isEmpty()) {
@@ -105,7 +105,7 @@ public class NoteAddController implements Initializable {
                 SFTPHandler.uploadFile(this.localPath, this.remotePath);
                 AlertMaker.showMaterialDialog(rootPane, mainContainer,
                         new ArrayList<>(), "Nota adicionada",
-                        "Nota adicionado com sucesso!", true);
+                        "Nota adicionada com sucesso!", true);
             } else {
                 AlertMaker.showMaterialDialog(rootPane, mainContainer,
                         new ArrayList<>(), "Ocorreu um erro",
@@ -122,7 +122,8 @@ public class NoteAddController implements Initializable {
     public void inflateUI(Note note) {
         this.message.setText(note.getMessage());
 
-        isInEditMode = Boolean.TRUE;
+        this.isInEditMode = Boolean.TRUE;
+        this.id = note.getId();
     }
 
     /**
@@ -136,14 +137,33 @@ public class NoteAddController implements Initializable {
      * Handle customer update
      */
     private void handleUpdateNote() {
-//        Customer customer = new Customer(id, name.getText(), address.getText(),
-//                phone.getText(), email.getText(), nif.getText(), REMOTE_CUSTOMER_PATH + id + ".json");
-//        if (DatabaseHandler.getInstance().updateCustomer(customer)) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Successo!",
-//                    "Dados de cliente atualizados.");
-//        } else {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Erro",
-//                    "Não foi possível atualizar os dados.");
-//        }
+        Note note = new Note(this.id, message.getText());
+
+        // Check if note is empty
+        if (note.getMessage().isEmpty()) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Dados insuficientes",
+                    new String("Por favor insira uma descrição para a nota.".getBytes(),
+                            StandardCharsets.UTF_8), false);
+            return;
+        }
+
+        // Initialize a list of type DataObject
+        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(this.localPath));
+
+        // Edit note message
+        notes.set(Integer.parseInt(note.getId()) - 1, note);
+
+        // Convert notes to JSON and upload to server
+        if (JSONHandler.notesToJSON(notes, this.localPath)) {
+            SFTPHandler.uploadFile(this.localPath, this.remotePath);
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Successo",
+                    "Nota editada com sucesso!", true);
+        } else {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Ocorreu um erro",
+                    "Não foi possível atualizar a nota.", false);
+        }
     }
 }

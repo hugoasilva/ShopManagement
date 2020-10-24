@@ -81,7 +81,6 @@ public class EmployeeDetailsController implements Initializable {
         databaseHandler = DatabaseHandler.getInstance();
         try {
             tableView.setPlaceholder(new Label("Nenhuma nota adicionada"));
-            tableView.setItems(list);
             loadData();
             initCol();
         } catch (SQLException throwable) {
@@ -153,15 +152,19 @@ public class EmployeeDetailsController implements Initializable {
      */
     private void getEmployeeNotes(String id, String notesPath) {
         String fileName = id + ".json";
+        // Download notes JSON file
         SFTPHandler.downloadFile(notesPath, fileName);
-
         // Parse JSON
         List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + id + ".json"));
         notes.remove(0);
-
+        // Delete notes list
+        this.list = FXCollections.observableArrayList();
+        // Add notes to list
         for (Note note : notes) {
             list.add(new Note(note.getId(), note.getMessage()));
         }
+        // Add list to table
+        tableView.setItems(list);
     }
 
     /**
@@ -171,8 +174,8 @@ public class EmployeeDetailsController implements Initializable {
      */
     @FXML
     public void addNoteButtonAction() throws IOException {
-        String fileName = this.employeeID + ".json";
-        NoteAddController controller = new NoteAddController(LOCAL_DOWNLOAD_PATH + fileName, this.notesPath);
+        NoteAddController controller = new NoteAddController(
+                LOCAL_DOWNLOAD_PATH + this.employeeID + ".json", this.notesPath);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -184,7 +187,8 @@ public class EmployeeDetailsController implements Initializable {
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setTitle("Adicionar Nota");
         stage.setScene(new Scene(parent));
-        stage.show();
         ShopManagementUtil.setStageIcon(stage);
+        stage.showAndWait();
+        this.getEmployeeNotes(this.employeeID, this.notesPath);
     }
 }

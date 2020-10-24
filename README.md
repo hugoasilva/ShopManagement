@@ -1,7 +1,7 @@
 # Material Design Shop Management Software using JavaFX
 This is a shop management software developed using JavaFX programming language.   
 ### Last updated
-* 2020-10-23
+* 2020-10-24
 
 ### Software Used
   * [GSon v2.8](https://github.com/google/gson) - JSON Library. Used to store customer and employee notes to JSON file.
