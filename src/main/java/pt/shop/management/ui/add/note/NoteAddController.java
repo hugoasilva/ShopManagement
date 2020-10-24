@@ -64,6 +64,15 @@ public class NoteAddController implements Initializable {
     }
 
     /**
+     * Close parent
+     */
+    @FXML
+    private void closeParent() {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
      * Add note
      *
      * @param event - add note event
@@ -79,8 +88,10 @@ public class NoteAddController implements Initializable {
             String noteMessage = message.getText();
 
             if (noteMessage.isEmpty()) {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
-                        new String("Por favor insira uma descrição para a nota.".getBytes(), StandardCharsets.UTF_8));
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Dados insuficientes",
+                        new String("Por favor insira uma descrição para a nota.".getBytes(),
+                                StandardCharsets.UTF_8), false);
                 return;
             }
 
@@ -93,11 +104,12 @@ public class NoteAddController implements Initializable {
             if (JSONHandler.notesToJSON(notes, this.localPath)) {
                 SFTPHandler.uploadFile(this.localPath, this.remotePath);
                 AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                        new ArrayList<>(), "Nota adicionada", "Nota adicionado com sucesso!");
-                clearEntries();
+                        new ArrayList<>(), "Nota adicionada",
+                        "Nota adicionado com sucesso!", true);
             } else {
                 AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                        new ArrayList<>(), "Ocorreu um erro", "Verifique os dados e tente novamente.");
+                        new ArrayList<>(), "Ocorreu um erro",
+                        "Verifique os dados e tente novamente.", false);
             }
         }
     }

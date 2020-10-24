@@ -72,8 +72,9 @@ public class ProductAddController implements Initializable {
         String productQuantity = quantity.getText();
 
         if (productName.isEmpty() || productQuantity.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
-                    "Por favor insira dados em todos os campos.");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Dados insuficientes",
+                    "Por favor insira dados em todos os campos.", false);
             return;
         }
 
@@ -85,11 +86,13 @@ public class ProductAddController implements Initializable {
         Product product = new Product(productId, productName, productPrice, productQuantity);
         if (DatabaseHandler.insertProduct(product)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Produto adicionado", productName + " adicionado com sucesso!");
+                    new ArrayList<>(), "Produto adicionado",
+                    productName + " adicionado com sucesso!", true);
             clearEntries();
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Ocorreu um erro", "Verifique os dados e tente novamente.");
+                    new ArrayList<>(), "Ocorreu um erro",
+                    "Verifique os dados e tente novamente.", false);
         }
     }
 
@@ -119,11 +122,14 @@ public class ProductAddController implements Initializable {
     private void handleUpdateProduct() {
         Product product = new Product(id, name.getText(), price.getText(), quantity.getText());
         if (DatabaseHandler.getInstance().updateProduct(product)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Successo!",
-                    "Dados de produto atualizados.");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Successo!",
+                    "Dados de produto atualizados.", true);
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Erro",
-                    new String("Não foi possível atualizar os dados.".getBytes(), StandardCharsets.UTF_8));
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Erro",
+                    new String("Não foi possível atualizar os dados.".getBytes(),
+                            StandardCharsets.UTF_8), false);
         }
     }
 }

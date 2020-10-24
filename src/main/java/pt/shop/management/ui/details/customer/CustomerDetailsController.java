@@ -27,6 +27,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -79,6 +80,7 @@ public class CustomerDetailsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         databaseHandler = DatabaseHandler.getInstance();
         try {
+            tableView.setPlaceholder(new Label("Nenhuma nota adicionada"));
             tableView.setItems(list);
             loadData();
             initCol();
@@ -154,7 +156,8 @@ public class CustomerDetailsController implements Initializable {
         SFTPHandler.downloadFile(notesPath, fileName);
 
         // Parse JSON
-        List<Note> notes = JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + id + ".json");
+        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + id + ".json"));
+        notes.remove(0);
 
         for (Note note : notes) {
             list.add(new Note(note.getId(), note.getMessage()));

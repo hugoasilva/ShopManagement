@@ -63,7 +63,7 @@ public class AlertMaker {
     }
 
     public static void showMaterialDialog(StackPane root, Node nodeToBeBlurred, List<JFXButton> controls,
-                                          String header, String body) {
+                                          String header, String body, boolean closeParent) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
         if (controls.isEmpty()) {
             controls.add(new JFXButton("OK"));
@@ -73,19 +73,20 @@ public class AlertMaker {
 
         controls.forEach(controlButton -> {
             controlButton.getStyleClass().add("dialog-button");
-            controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> dialog.close());
+            controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) ->  {
+                if (closeParent) {
+                    Stage stage = (Stage) dialog.getParent().getScene().getWindow();
+                    stage.close();
+                }
+                dialog.close();
+            });
         });
 
         dialogLayout.setHeading(new Label(header));
         dialogLayout.setBody(new Label(body));
         dialogLayout.setActions(controls);
         dialog.show();
-        dialog.setOnDialogClosed(new EventHandler<JFXDialogEvent>() {
-            @Override
-            public void handle(JFXDialogEvent event1) {
-                nodeToBeBlurred.setEffect(null);
-            }
-        });
+        dialog.setOnDialogClosed(event1 -> nodeToBeBlurred.setEffect(null));
         nodeToBeBlurred.setEffect(blur);
     }
 

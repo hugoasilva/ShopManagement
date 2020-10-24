@@ -8,16 +8,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.data.files.JSONHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Customer;
+import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.alert.AlertMaker;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -30,7 +31,7 @@ import java.util.ResourceBundle;
 public class CustomerAddController implements Initializable {
 
     // Directory paths
-    private final static String LOCAL_CUSTOMER_PATH = "uploads/";
+    private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     private final static String REMOTE_CUSTOMER_PATH = "/home/pi/gestao/clientes/";
     // Database handler instance
     DatabaseHandler databaseHandler;
@@ -90,8 +91,9 @@ public class CustomerAddController implements Initializable {
 
         if (customerName.isEmpty() || customerAddress.isEmpty() || customerPhone.isEmpty()
                 || customerEmail.isEmpty() || customerNif.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
-                    "Por favor insira dados em todos os campos.");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Dados insuficientes",
+                    "Por favor insira dados em todos os campos.", false);
             return;
         }
 
@@ -105,11 +107,13 @@ public class CustomerAddController implements Initializable {
         if (DatabaseHandler.insertCustomer(customer)) {
             this.createNotesJSON();
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Cliente adicionado", customerName + " adicionado com sucesso!");
+                    new ArrayList<>(), "Cliente adicionado",
+                    customerName + " adicionado com sucesso!", true);
             clearEntries();
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Ocorreu um erro", "Verifique os dados e tente novamente.");
+                    new ArrayList<>(), "Ocorreu um erro",
+                    "Verifique os dados e tente novamente.", false);
         }
     }
 
@@ -146,11 +150,14 @@ public class CustomerAddController implements Initializable {
         Customer customer = new Customer(id, name.getText(), address.getText(),
                 phone.getText(), email.getText(), nif.getText(), this.notesPath);
         if (DatabaseHandler.getInstance().updateCustomer(customer)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Successo!",
-                    "Dados de cliente atualizados.");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Successo!",
+                    "Dados de cliente atualizados.", true);
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Erro",
-                    new String("Não foi possível atualizar os dados.".getBytes(), StandardCharsets.UTF_8));
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Erro",
+                    new String("Não foi possível atualizar os dados.".getBytes(),
+                            StandardCharsets.UTF_8), false);
         }
     }
 
@@ -158,18 +165,15 @@ public class CustomerAddController implements Initializable {
      * Create empty notes JSON file
      */
     private void createNotesJSON() {
-        try {
-            File file = new File(LOCAL_CUSTOMER_PATH + this.id + ".json");
-            if (file.exists()) {
-                System.out.println(file.delete());
-            }
-            System.out.println(file.createNewFile());
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write("[]");
-            fileWriter.close();
-            SFTPHandler.uploadFile(file.getPath(), this.notesPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Create notes list
+        List<Note> notes = new ArrayList<>();
+        // Add null message to notes list
+        notes.add(new Note("0", "Message zero"));
+        String path = LOCAL_DOWNLOAD_PATH + this.id + ".json";
+        // Convert notes list to JSON
+        JSONHandler.notesToJSON(notes, path);
+        // Upload file to server
+        File file = new File(path);
+        SFTPHandler.uploadFile(file.getPath(), this.notesPath);
     }
 }

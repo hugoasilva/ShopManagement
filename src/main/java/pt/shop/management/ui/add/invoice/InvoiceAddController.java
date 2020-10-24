@@ -11,13 +11,18 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
+import pt.shop.management.ui.add.employee.EmployeeAddController;
 import pt.shop.management.ui.alert.AlertMaker;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,6 +35,8 @@ import java.util.ResourceBundle;
  */
 
 public class InvoiceAddController implements Initializable {
+
+    private static final Logger LOGGER = LogManager.getLogger(EmployeeAddController.class.getName());
 
     private final static String REMOTE_INVOICE_PATH = "/home/pi/gestao/faturas/";
 
@@ -90,8 +97,9 @@ public class InvoiceAddController implements Initializable {
 
         if (customerId.isEmpty() || employeeId.isEmpty() || invoiceDate.isEmpty()
                 || invoiceProducts.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Dados insuficientes",
-                    "Por favor insira dados em todos os campos.");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Dados insuficientes",
+                    "Por favor insira dados em todos os campos.", false);
             return;
         }
 
@@ -104,12 +112,14 @@ public class InvoiceAddController implements Initializable {
 
         if (DatabaseHandler.insertInvoice(invoice)) {
             SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Nova fatura adicionada",
-                    "Fatura nr " + invoiceId + " adicionada com sucesso.");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Nova fatura adicionada",
+                    "Fatura nr " + invoiceId + " adicionada com sucesso.", true);
             clearEntries();
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Erro ao adicionar fatura",
-                    "Verifique todos os campos e tente novamente");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Erro ao adicionar fatura",
+                    "Verifique todos os campos e tente novamente", false);
         }
     }
 
@@ -143,11 +153,13 @@ public class InvoiceAddController implements Initializable {
         Invoice invoice = new Invoice(id, customer.getText(), employee.getText(),
                 date.getValue().toString(), products.getText(), pdf.getText());
         if (databaseHandler.updateInvoice(invoice)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Success",
-                    "Update complete");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Successo!",
+                    "Dados de fatura atualizados.", true);
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed",
-                    "Could not update data");
+                    new String("Não foi possível atualizar os dados.".getBytes(),
+                            StandardCharsets.UTF_8), false);
         }
     }
 
@@ -162,9 +174,7 @@ public class InvoiceAddController implements Initializable {
         // Store File Path
         File file = fileChooser.showOpenDialog(stage);
         if (file == null) {
-            // TODO
-            // Handle no file selected message
-            System.out.println("No file selected");
+            LOGGER.log(Level.INFO, "No pdf file was selected.");
         } else {
             this.invoicePath = file.getAbsolutePath();
         }
