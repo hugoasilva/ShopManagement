@@ -13,12 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.JSONHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.search.invoice.InvoiceSearchController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -43,9 +43,9 @@ import java.util.logging.Logger;
 
 public class CustomerDetailsController implements Initializable {
     // Database query
+    private static final String SELECT_CUSTOMER_NOTES_QUERY = "SELECT * FROM notes_customers WHERE customer_id=?";
     private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM customers WHERE id=?";
-    // Local downloads path
-    private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
+
     // Customer data
     private final String customerID;
     // Notes list
@@ -53,7 +53,6 @@ public class CustomerDetailsController implements Initializable {
     ObservableList<Note> list = FXCollections.observableArrayList();
     // Database handler instance
     DatabaseHandler databaseHandler;
-    private String notesPath;
     // UI content
     @FXML
     private Label id;
@@ -138,31 +137,29 @@ public class CustomerDetailsController implements Initializable {
         String phone = resultSet.getString("phone");
         String email = resultSet.getString("email");
         String nif = resultSet.getString("nif");
-//        this.notesPath = notes;
-//        this.getCustomerNotes(id, notes);
+        this.getCustomerNotes();
         this.inflateUI(new Customer(id, name, address, phone, email, nif));
     }
 
     /**
-     * Get customer notes from JSON file
-     *
-     * @param id        - customer id
-     * @param notesPath - customer notes path
+     * Get customer notes
      */
-    private void getCustomerNotes(String id, String notesPath) {
-        String fileName = id + ".json";
-        // Download notes JSON file
-        SFTPHandler.downloadFile(notesPath, fileName);
-        // Parse JSON
-        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + fileName));
-        notes.remove(0);
-        // Delete notes list
-        this.list = FXCollections.observableArrayList();
-        // Add notes to list
-        for (Note note : notes) {
-            list.add(new Note(note.getId(), note.getMessage()));
+    private void getCustomerNotes() throws SQLException {
+        list.clear();
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_CUSTOMER_NOTES_QUERY);
+        preparedStatement.setString(1, customerID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        try {
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String message = resultSet.getString("message");
+
+                list.add(new Note(id, message));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // Add list to table
         tableView.setItems(list);
     }
 
@@ -172,9 +169,8 @@ public class CustomerDetailsController implements Initializable {
      * @throws IOException - IO exception
      */
     @FXML
-    public void addNoteButtonAction() throws IOException {
-        NoteAddController controller = new NoteAddController(
-                LOCAL_DOWNLOAD_PATH + this.customerID + ".json", this.notesPath);
+    public void addNoteButtonAction() throws IOException, SQLException {
+        NoteAddController controller = new NoteAddController(this.customerID, "customer");
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -188,7 +184,7 @@ public class CustomerDetailsController implements Initializable {
         stage.setScene(new Scene(parent));
         ShopManagementUtil.setStageIcon(stage);
         stage.showAndWait();
-        //this.getCustomerNotes(this.customerID);
+        this.getCustomerNotes();
     }
 
     /**
@@ -198,41 +194,41 @@ public class CustomerDetailsController implements Initializable {
      */
     @FXML
     private void handleNoteDelete(ActionEvent event) {
-        //Fetch the selected row
-        Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
-        if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
-                    "Por favor seleccione uma nota para editar.");
-            return;
-        }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Nota");
-        alert.setContentText("Tem a certeza que pretende apagar a nota?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        String fileName = LOCAL_DOWNLOAD_PATH + customerID + ".json";
-
-        // Parse JSON
-        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(fileName));
-
-        System.out.println(selectedForDeletion.getId());
-        // Remove note
-        notes.remove(Integer.parseInt(selectedForDeletion.getId()));
-        for (int i = 0; i < notes.size(); i++) {
-            notes.get(i).setId(String.valueOf(i));
-        }
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
-            JSONHandler.notesToJSON(notes, fileName);
-            SFTPHandler.uploadFile(fileName, this.notesPath);
-            AlertMaker.showSimpleAlert("Nota apagada",
-                    "Nota apagada com sucesso.");
-            list.remove(selectedForDeletion);
-        } else {
-            AlertMaker.showSimpleAlert("Cancelado",
-                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
-        }
+//        //Fetch the selected row
+//        Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+//        if (selectedForDeletion == null) {
+//            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+//                    "Por favor seleccione uma nota para editar.");
+//            return;
+//        }
+//
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Apagar Nota");
+//        alert.setContentText("Tem a certeza que pretende apagar a nota?");
+//        Optional<ButtonType> answer = alert.showAndWait();
+//
+//        String fileName = LOCAL_DOWNLOAD_PATH + customerID + ".json";
+//
+//        // Parse JSON
+//        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(fileName));
+//
+//        System.out.println(selectedForDeletion.getId());
+//        // Remove note
+//        notes.remove(Integer.parseInt(selectedForDeletion.getId()));
+//        for (int i = 0; i < notes.size(); i++) {
+//            notes.get(i).setId(String.valueOf(i));
+//        }
+//
+//        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+//            JSONHandler.notesToJSON(notes, fileName);
+//            SFTPHandler.uploadFile(fileName, this.notesPath);
+//            AlertMaker.showSimpleAlert("Nota apagada",
+//                    "Nota apagada com sucesso.");
+//            list.remove(selectedForDeletion);
+//        } else {
+//            AlertMaker.showSimpleAlert("Cancelado",
+//                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+//        }
     }
 
     /**
@@ -241,8 +237,8 @@ public class CustomerDetailsController implements Initializable {
      * @param event - refresh event
      */
     @FXML
-    private void handleRefresh(ActionEvent event) {
-        this.getCustomerNotes(customerID, notesPath);
+    private void handleRefresh(ActionEvent event) throws SQLException {
+        this.getCustomerNotes();
     }
 
     /**
@@ -262,8 +258,7 @@ public class CustomerDetailsController implements Initializable {
         }
         try {
 
-            NoteAddController controller = new NoteAddController(
-                    LOCAL_DOWNLOAD_PATH + this.customerID + ".json", this.notesPath);
+            NoteAddController controller = new NoteAddController(this.customerID, "customer");
 
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(
@@ -279,9 +274,9 @@ public class CustomerDetailsController implements Initializable {
             stage.setScene(new Scene(parent));
             ShopManagementUtil.setStageIcon(stage);
             stage.showAndWait();
-            this.getCustomerNotes(this.customerID, this.notesPath);
+            this.getCustomerNotes();
 
-        } catch (IOException ex) {
+        } catch (IOException | SQLException ex) {
             Logger.getLogger(CustomerDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

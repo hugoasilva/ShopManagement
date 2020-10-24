@@ -13,12 +13,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.JSONHandler;
 import pt.shop.management.data.files.SFTPHandler;
+import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.search.invoice.InvoiceSearchController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -44,10 +45,8 @@ import java.util.logging.Logger;
 public class EmployeeDetailsController implements Initializable {
 
     // Database query
-    private static final String SELECT_EMPLOYEE_QUERY = "SELECT * FROM invoices WHERE id=?";
-
-    // Local downloads path
-    private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
+    private static final String SELECT_EMPLOYEE_NOTES_QUERY = "SELECT * FROM notes_employees WHERE employee_id=?";
+    private static final String SELECT_EMPLOYEE_QUERY = "SELECT * FROM employees WHERE id=?";
 
     // Employee data
     private final String employeeID;
@@ -56,7 +55,6 @@ public class EmployeeDetailsController implements Initializable {
     ObservableList<Note> list = FXCollections.observableArrayList();
     // Database handler instance
     DatabaseHandler databaseHandler;
-    private String notesPath;
     // UI content
     @FXML
     private Label id;
@@ -141,30 +139,29 @@ public class EmployeeDetailsController implements Initializable {
         String phone = resultSet.getString("phone");
         String email = resultSet.getString("email");
         String nif = resultSet.getString("nif");
-//        this.getEmployeeNotes(id, notes);
+        this.getEmployeeNotes();
         this.inflateUI(new Employee(id, name, address, phone, email, nif));
     }
 
     /**
      * Get employee notes from JSON file
-     *
-     * @param id        - employee id
-     * @param notesPath - employee notes path
      */
-    private void getEmployeeNotes(String id, String notesPath) {
-        String fileName = id + ".json";
-        // Download notes JSON file
-        SFTPHandler.downloadFile(notesPath, fileName);
-        // Parse JSON
-        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(LOCAL_DOWNLOAD_PATH + id + ".json"));
-        notes.remove(0);
-        // Delete notes list
-        this.list = FXCollections.observableArrayList();
-        // Add notes to list
-        for (Note note : notes) {
-            list.add(new Note(note.getId(), note.getMessage()));
+    private void getEmployeeNotes() throws SQLException {
+        list.clear();
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_EMPLOYEE_NOTES_QUERY);
+        preparedStatement.setString(1, employeeID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        try {
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String message = resultSet.getString("message");
+
+                list.add(new Note(id, message));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // Add list to table
         tableView.setItems(list);
     }
 
@@ -174,9 +171,8 @@ public class EmployeeDetailsController implements Initializable {
      * @throws IOException - IO exception
      */
     @FXML
-    public void addNoteButtonAction() throws IOException {
-        NoteAddController controller = new NoteAddController(
-                LOCAL_DOWNLOAD_PATH + this.employeeID + ".json", this.notesPath);
+    public void addNoteButtonAction() throws IOException, SQLException {
+        NoteAddController controller = new NoteAddController(this.employeeID, "employee");
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -190,7 +186,7 @@ public class EmployeeDetailsController implements Initializable {
         stage.setScene(new Scene(parent));
         ShopManagementUtil.setStageIcon(stage);
         stage.showAndWait();
-        this.getEmployeeNotes(this.employeeID, this.notesPath);
+        this.getEmployeeNotes();
     }
 
     /**
@@ -200,41 +196,41 @@ public class EmployeeDetailsController implements Initializable {
      */
     @FXML
     private void handleNoteDelete(ActionEvent event) {
-        //Fetch the selected row
-        Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
-        if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
-                    "Por favor seleccione uma nota para editar.");
-            return;
-        }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Nota");
-        alert.setContentText("Tem a certeza que pretende apagar a nota?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        String fileName = LOCAL_DOWNLOAD_PATH + employeeID + ".json";
-
-        // Parse JSON
-        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(fileName));
-
-        System.out.println(selectedForDeletion.getId());
-        // Remove note
-        notes.remove(Integer.parseInt(selectedForDeletion.getId()));
-        for (int i = 0; i < notes.size(); i++) {
-            notes.get(i).setId(String.valueOf(i));
-        }
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
-            JSONHandler.notesToJSON(notes, fileName);
-            SFTPHandler.uploadFile(fileName, this.notesPath);
-            AlertMaker.showSimpleAlert("Nota apagada",
-                    "Nota apagada com sucesso.");
-            list.remove(selectedForDeletion);
-        } else {
-            AlertMaker.showSimpleAlert("Cancelado",
-                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
-        }
+//        //Fetch the selected row
+//        Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+//        if (selectedForDeletion == null) {
+//            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+//                    "Por favor seleccione uma nota para editar.");
+//            return;
+//        }
+//
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Apagar Nota");
+//        alert.setContentText("Tem a certeza que pretende apagar a nota?");
+//        Optional<ButtonType> answer = alert.showAndWait();
+//
+//        String fileName = LOCAL_DOWNLOAD_PATH + employeeID + ".json";
+//
+//        // Parse JSON
+//        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(fileName));
+//
+//        System.out.println(selectedForDeletion.getId());
+//        // Remove note
+//        notes.remove(Integer.parseInt(selectedForDeletion.getId()));
+//        for (int i = 0; i < notes.size(); i++) {
+//            notes.get(i).setId(String.valueOf(i));
+//        }
+//
+//        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+//            JSONHandler.notesToJSON(notes, fileName);
+//            SFTPHandler.uploadFile(fileName, this.notesPath);
+//            AlertMaker.showSimpleAlert("Nota apagada",
+//                    "Nota apagada com sucesso.");
+//            list.remove(selectedForDeletion);
+//        } else {
+//            AlertMaker.showSimpleAlert("Cancelado",
+//                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+//        }
     }
 
     /**
@@ -243,8 +239,8 @@ public class EmployeeDetailsController implements Initializable {
      * @param event - refresh event
      */
     @FXML
-    private void handleRefresh(ActionEvent event) {
-        this.getEmployeeNotes(employeeID, notesPath);
+    private void handleRefresh(ActionEvent event) throws SQLException {
+        this.getEmployeeNotes();
     }
 
     /**
@@ -254,37 +250,37 @@ public class EmployeeDetailsController implements Initializable {
      */
     @FXML
     public void handleNoteEdit(ActionEvent event) {
-        //Fetch the selected row
-        Note selectedForEdit = tableView.getSelectionModel().getSelectedItem();
-
-        if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
-                    "Por favor seleccione uma nota para editar.");
-            return;
-        }
-        try {
-
-            NoteAddController controller = new NoteAddController(
-                    LOCAL_DOWNLOAD_PATH + this.employeeID + ".json", this.notesPath);
-
-            FXMLLoader loader =
-                    new FXMLLoader(getClass().getResource(
-                            "/fxml/note/NoteAdd.fxml"));
-            loader.setController(controller);
-
-            Parent parent = loader.load();
-
-            controller.inflateUI(selectedForEdit);
-
-            Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Adicionar Nota");
-            stage.setScene(new Scene(parent));
-            ShopManagementUtil.setStageIcon(stage);
-            stage.showAndWait();
-            this.getEmployeeNotes(this.employeeID, this.notesPath);
-
-        } catch (IOException ex) {
-            Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        //Fetch the selected row
+//        Note selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+//
+//        if (selectedForEdit == null) {
+//            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+//                    "Por favor seleccione uma nota para editar.");
+//            return;
+//        }
+//        try {
+//
+//            NoteAddController controller = new NoteAddController(
+//                    LOCAL_DOWNLOAD_PATH + this.employeeID + ".json", this.notesPath);
+//
+//            FXMLLoader loader =
+//                    new FXMLLoader(getClass().getResource(
+//                            "/fxml/note/NoteAdd.fxml"));
+//            loader.setController(controller);
+//
+//            Parent parent = loader.load();
+//
+//            controller.inflateUI(selectedForEdit);
+//
+//            Stage stage = new Stage(StageStyle.DECORATED);
+//            stage.setTitle("Adicionar Nota");
+//            stage.setScene(new Scene(parent));
+//            ShopManagementUtil.setStageIcon(stage);
+//            stage.showAndWait();
+//            this.getEmployeeNotes(this.employeeID, this.notesPath);
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 }

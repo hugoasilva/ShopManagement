@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.JSONHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
@@ -105,7 +104,6 @@ public class EmployeeAddController implements Initializable {
         Employee employee = new Employee(employeeId, employeeName, employeeAddress,
                 employeePhone, employeeEmail, employeeNif);
         if (DatabaseHandler.insertEmployee(employee)) {
-            this.createNotesJSON();
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Empregado adicionado",
                     employeeName + " adicionado com sucesso!", false);
@@ -159,21 +157,5 @@ public class EmployeeAddController implements Initializable {
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }
-    }
-
-    /**
-     * Create empty notes JSON file
-     */
-    private void createNotesJSON() {
-        // Create notes list
-        List<Note> notes = new ArrayList<>();
-        // Add null message to notes list
-        notes.add(new Note("0", "Message zero"));
-        String path = LOCAL_DOWNLOAD_PATH + this.id + ".json";
-        // Convert notes list to JSON
-        JSONHandler.notesToJSON(notes, path);
-        // Upload file to server
-        File file = new File(path);
-        SFTPHandler.uploadFile(file.getPath(), this.notesPath);
     }
 }
