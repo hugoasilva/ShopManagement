@@ -43,13 +43,10 @@ import java.util.logging.Logger;
  */
 
 public class CustomerDetailsController implements Initializable {
-
     // Database query
     private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM clientes WHERE id_cliente=?";
-
     // Local downloads path
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
-
     // Customer data
     private final String customerID;
     // Notes list
