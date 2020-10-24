@@ -121,7 +121,6 @@ public class CustomerListController implements Initializable {
                         };
                     }
                 };
-
         detailsCol.setCellFactory(cellFactory);
         tableView.getColumns().add(detailsCol);
     }

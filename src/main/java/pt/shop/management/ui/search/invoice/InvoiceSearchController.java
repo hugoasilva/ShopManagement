@@ -1,7 +1,5 @@
 package pt.shop.management.ui.search.invoice;
 
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +20,6 @@ import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.add.invoice.InvoiceAddController;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.main.MainController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -98,26 +95,19 @@ public class InvoiceSearchController implements Initializable {
         employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         productsCol.setCellValueFactory(new PropertyValueFactory<>("products"));
-        TableColumn<Invoice, Void> pdfCol = new TableColumn("PDF");
+        TableColumn<Invoice, Void> pdfCol = new TableColumn<>("PDF");
 
-        Callback<TableColumn<Invoice, Void>, TableCell<Invoice, Void>> cellFactory =
-                new Callback<TableColumn<Invoice, Void>, TableCell<Invoice, Void>>() {
+        Callback<TableColumn<Invoice, Void>, TableCell<Invoice, Void>> cellFactoryPDF =
+                new Callback<>() {
                     @Override
                     public TableCell<Invoice, Void> call(final TableColumn<Invoice, Void> param) {
-                        final TableCell<Invoice, Void> cell = new TableCell<Invoice, Void>() {
-
+                        return new TableCell<>() {
                             private final Button btn = new Button("Abrir PDF");
 
                             {
                                 btn.setOnAction((ActionEvent event) -> {
                                     Invoice data = getTableView().getItems().get(getIndex());
-                                    try {
-                                        showInvoicePDF(data.getId(), data.getPdf());
-                                    } catch (SftpException e) {
-                                        e.printStackTrace();
-                                    } catch (JSchException e) {
-                                        e.printStackTrace();
-                                    }
+                                    showInvoicePDF(data.getId(), data.getPdf());
                                 });
                             }
 
@@ -131,27 +121,57 @@ public class InvoiceSearchController implements Initializable {
                                 }
                             }
                         };
-                        return cell;
+                    }
+                };
+        TableColumn<Invoice, Void> detailsCol = new TableColumn<>("Ficha");
+        Callback<TableColumn<Invoice, Void>, TableCell<Invoice, Void>> cellFactoryDetails =
+                new Callback<>() {
+                    @Override
+                    public TableCell<Invoice, Void> call(final TableColumn<Invoice, Void> param) {
+                        return new TableCell<>() {
+                            private final Button btn = new Button("Abrir Ficha");
+
+                            {
+                                btn.setOnAction((ActionEvent event) -> {
+                                    Invoice data = getTableView().getItems().get(getIndex());
+                                    showInvoiceDetails(data.getId());
+                                });
+                            }
+
+                            @Override
+                            public void updateItem(Void item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                } else {
+                                    setGraphic(btn);
+                                }
+                            }
+                        };
                     }
                 };
 
-        pdfCol.setCellFactory(cellFactory);
+        pdfCol.setCellFactory(cellFactoryPDF);
+        detailsCol.setCellFactory(cellFactoryDetails);
         tableView.getColumns().add(pdfCol);
+        tableView.getColumns().add(detailsCol);
     }
 
     /**
      * Show Invoice PDF
      *
      * @param pdfPath - invoice pdf file path
-     * @throws SftpException - sftp connection exception
-     * @throws JSchException - jsch session exception
      */
-    private void showInvoicePDF(String id, String pdfPath) throws SftpException, JSchException {
+    private void showInvoicePDF(String id, String pdfPath) {
         String fileName = id + ".pdf";
         SFTPHandler.downloadFile(pdfPath, fileName);
 
         // Open file
         ShopManagementUtil.openFile(LOCAL_DOWNLOAD_PATH + fileName);
+    }
+
+    private void showInvoiceDetails(String id) {
+
     }
 
     private Stage getStage() {

@@ -24,14 +24,11 @@ import java.util.ResourceBundle;
 public class ProductDetailsController implements Initializable {
 
     // Database query
-    private static final String SELECT_PRODUCT_QUERY = "SELECT * FROM produtos WHERE id_produto=?";
-
-    // Customer data
-    private final String productID;
-
+    private static final String SELECT_PRODUCT_QUERY = "SELECT * FROM products WHERE id=?";
     // Database handler instance
-
     DatabaseHandler databaseHandler;
+    // Product data
+    private final String productID;
     // UI Content
     @FXML
     private Label id;
