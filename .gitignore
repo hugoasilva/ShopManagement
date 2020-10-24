@@ -1,4 +1,8 @@
+.gitignore
+.gradle/
+.idea/
 build/
-logs
 downloads
+gradle/
+logs
 uploads
