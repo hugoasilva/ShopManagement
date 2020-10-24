@@ -20,6 +20,7 @@ import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.add.invoice.InvoiceAddController;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.details.invoice.InvoiceDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -126,7 +127,11 @@ public class InvoiceListController implements Initializable {
                             {
                                 btn.setOnAction((ActionEvent event) -> {
                                     Invoice data = getTableView().getItems().get(getIndex());
-                                    showInvoiceDetails(data.getId());
+                                    try {
+                                        showInvoiceDetails(data.getId());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 });
                             }
 
@@ -157,8 +162,21 @@ public class InvoiceListController implements Initializable {
         ShopManagementUtil.openFile(LOCAL_DOWNLOAD_PATH + fileName);
     }
 
-    private void showInvoiceDetails(String id) {
+    private void showInvoiceDetails(String id) throws IOException {
+        InvoiceDetailsController controller = new InvoiceDetailsController(id);
 
+        FXMLLoader loader =
+                new FXMLLoader(getClass().getResource(
+                        "/fxml/invoice/InvoiceDetails.fxml"));
+        loader.setController(controller);
+
+        Parent parent = loader.load();
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setTitle("Ficha de Fatura");
+        stage.setScene(new Scene(parent));
+        stage.show();
+        ShopManagementUtil.setStageIcon(stage);
     }
 
     private Stage getStage() {
