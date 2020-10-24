@@ -2,7 +2,6 @@
 .gradle/
 .idea/
 build/
-downloads
 gradle/
 logs
 uploads
