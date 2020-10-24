@@ -74,7 +74,7 @@
                 </VBox.margin>
             </TableView>
         </VBox>
-        <FontIcon iconLiteral="fa-black-tie" iconSize="60" layoutX="220.0" layoutY="80.0" styleClass="font-icon"
+        <FontIcon iconLiteral="fa-plus" iconSize="60" layoutX="220.0" layoutY="80.0" styleClass="font-icon"
                   text=""/>
         <FontIcon iconLiteral="fa-plus" iconSize="20" layoutX="455.0" layoutY="415.0"
                   onMouseClicked="#addNoteButtonAction" styleClass="font-icon, notesButton"/>
