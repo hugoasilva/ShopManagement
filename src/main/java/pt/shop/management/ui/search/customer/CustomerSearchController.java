@@ -239,7 +239,7 @@ public class CustomerSearchController implements Initializable {
                 }
             });
         } catch (IOException ex) {
-            Logger.getLogger(CustomerAddController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

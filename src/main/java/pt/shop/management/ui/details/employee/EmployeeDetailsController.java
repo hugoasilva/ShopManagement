@@ -287,7 +287,7 @@ public class EmployeeDetailsController implements Initializable {
             this.getEmployeeNotes(this.employeeID, this.notesPath);
 
         } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

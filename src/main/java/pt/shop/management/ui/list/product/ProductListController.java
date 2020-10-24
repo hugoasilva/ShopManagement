@@ -167,7 +167,7 @@ public class ProductListController implements Initializable {
                 list.add(new Product(id, name, price, quantity, image));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProductAddController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tableView.setItems(list);
     }
@@ -256,7 +256,7 @@ public class ProductListController implements Initializable {
                 }
             });
         } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -175,7 +175,7 @@ public class CustomerListController implements Initializable {
                 list.add(new Customer(id, name, address, phone, email, nif, notes));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerAddController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerListController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tableView.setItems(list);
     }
@@ -264,7 +264,7 @@ public class CustomerListController implements Initializable {
                 }
             });
         } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerListController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

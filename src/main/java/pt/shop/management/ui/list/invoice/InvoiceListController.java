@@ -168,7 +168,7 @@ public class InvoiceListController implements Initializable {
                 list.add(new Invoice(id, customerId, employeeId, date, products, pdf));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(InvoiceAddController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceListController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tableView.setItems(list);
     }
@@ -257,7 +257,7 @@ public class InvoiceListController implements Initializable {
                 }
             });
         } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceListController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -284,7 +284,7 @@ public class CustomerDetailsController implements Initializable {
             this.getCustomerNotes(this.customerID, this.notesPath);
 
         } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

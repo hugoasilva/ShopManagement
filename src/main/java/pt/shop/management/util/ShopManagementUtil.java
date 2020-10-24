@@ -66,7 +66,7 @@ public class ShopManagementUtil {
             stage.show();
             setStageIcon(stage);
         } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         return controller;
     }

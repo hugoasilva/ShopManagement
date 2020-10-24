@@ -152,7 +152,7 @@ public class EmployeeSearchController implements Initializable {
                 list.add(new Employee(id, name, address, phone, email, nif, notes));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(EmployeeAddController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tableView.setItems(list);
     }
@@ -241,7 +241,7 @@ public class EmployeeSearchController implements Initializable {
                 }
             });
         } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
