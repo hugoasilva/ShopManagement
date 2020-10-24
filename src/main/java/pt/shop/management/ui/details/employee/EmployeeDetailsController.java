@@ -19,7 +19,6 @@ import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.main.MainController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;

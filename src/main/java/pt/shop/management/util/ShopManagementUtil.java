@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.io.FileUtils;
-import pt.shop.management.ui.main.MainController;
 
 import java.awt.*;
 import java.io.File;

@@ -20,7 +20,6 @@ import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.add.invoice.InvoiceAddController;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.details.customer.CustomerDetailsController;
 import pt.shop.management.ui.details.invoice.InvoiceDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 

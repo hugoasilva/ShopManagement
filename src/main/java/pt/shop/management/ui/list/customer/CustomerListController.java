@@ -20,7 +20,6 @@ import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.add.customer.CustomerAddController;
 import pt.shop.management.ui.alert.AlertMaker;
 import pt.shop.management.ui.details.customer.CustomerDetailsController;
-import pt.shop.management.ui.main.MainController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;

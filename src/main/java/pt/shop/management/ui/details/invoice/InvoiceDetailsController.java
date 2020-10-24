@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Invoice;
 
 import java.net.URL;
@@ -26,10 +25,10 @@ public class InvoiceDetailsController implements Initializable {
 
     // Database query
     private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM faturas WHERE id=?";
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // Invoice data
     private final String invoiceID;
+    // Database handler instance
+    DatabaseHandler databaseHandler;
     // UI Content
     @FXML
     private Label id;
@@ -57,6 +56,7 @@ public class InvoiceDetailsController implements Initializable {
             throwable.printStackTrace();
         }
     }
+
     /**
      * Cancel button handler
      *
