@@ -14,7 +14,6 @@ public class Customer {
     String phone;
     String email;
     String nif;
-    String notes;
 
     /**
      * Customer object constructor
@@ -25,16 +24,14 @@ public class Customer {
      * @param phone   - customer's phone
      * @param email   - customer's email
      * @param nif     - customer's nif
-     * @param notes   - customer's notes
      */
-    public Customer(String id, String name, String address, String phone, String email, String nif, String notes) {
+    public Customer(String id, String name, String address, String phone, String email, String nif) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.nif = nif;
-        this.notes = notes;
     }
 
     /**
@@ -124,21 +121,5 @@ public class Customer {
      */
     public void setNif(String nif) {
         this.nif = nif;
-    }
-
-    /**
-     * Get customer notes
-     *
-     * @return - customer notes
-     */
-    public String getNotes() {
-        return this.notes;
-    }
-
-    /**
-     * Get customer notes
-     */
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 }

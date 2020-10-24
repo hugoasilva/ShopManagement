@@ -44,11 +44,11 @@ import java.util.logging.Logger;
 public class InvoiceSearchController implements Initializable {
 
     // Database queries
-    private static final String SEARCH_ID_QUERY = "SELECT * FROM faturas WHERE id_fatura=?";
-    private static final String SEARCH_CUSTOMER_QUERY = "SELECT * FROM faturas WHERE id_cliente=?";
-    private static final String SEARCH_EMPLOYEE_QUERY = "SELECT * FROM faturas WHERE id_empregado=?";
-    private static final String SEARCH_DATE_QUERY = "SELECT * FROM faturas WHERE data_fatura=?";
-    private static final String SELECT_INVOICES_QUERY = "SELECT * FROM faturas";
+    private static final String SEARCH_ID_QUERY = "SELECT * FROM invoices WHERE id=?";
+    private static final String SEARCH_CUSTOMER_QUERY = "SELECT * FROM invoices WHERE customer_id=?";
+    private static final String SEARCH_EMPLOYEE_QUERY = "SELECT * FROM invoices WHERE employee_id=?";
+    private static final String SEARCH_DATE_QUERY = "SELECT * FROM invoices WHERE date=?";
+    private static final String SELECT_INVOICES_QUERY = "SELECT * FROM invoices";
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Invoice list object
@@ -212,11 +212,11 @@ public class InvoiceSearchController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
-                String id = resultSet.getString("id_fatura");
-                String customerId = resultSet.getString("id_cliente");
-                String employeeId = resultSet.getString("id_empregado");
-                String date = resultSet.getString("data_fatura");
-                String products = resultSet.getString("produtos");
+                String id = resultSet.getString("id");
+                String customerId = resultSet.getString("customer_id");
+                String employeeId = resultSet.getString("employee_id");
+                String date = resultSet.getString("date");
+                String products = resultSet.getString("products");
                 String pdf = resultSet.getString("pdf");
 
                 list.add(new Invoice(id, customerId, employeeId, date, products, pdf));

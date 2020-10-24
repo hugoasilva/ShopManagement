@@ -25,40 +25,40 @@ public final class DatabaseHandler {
     private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class.getName());
 
     // Database details
-    private static final String DATABASE_SERVER_URL = "jdbc:mysql://projecthub.hopto.org:3306/gestao" +
+    private static final String DATABASE_SERVER_URL = "jdbc:mysql://projecthub.hopto.org:3306/management" +
             "?useTimezone=true&serverTimezone=UTC";
     private static final String DATABASE_USERNAME = "admin";
     private static final String DATABASE_PASSWORD = "dbpw";
 
     // Select Queries
-    private static final String GET_CUSTOMER_ID_QUERY = "SELECT COUNT(*) FROM clientes";
-    private static final String GET_EMPLOYEE_ID_QUERY = "SELECT COUNT(*) FROM empregados";
-    private static final String GET_INVOICE_ID_QUERY = "SELECT COUNT(*) FROM faturas";
-    private static final String GET_PRODUCT_ID_QUERY = "SELECT COUNT(*) FROM produtos";
-    private static final String GET_CUSTOMER_INVOICE_COUNT = "SELECT COUNT(*) FROM faturas WHERE id_cliente=?";
-    private static final String GET_EMPLOYEE_INVOICE_COUNT = "SELECT COUNT(*) FROM faturas WHERE id_empregado=?";
+    private static final String GET_CUSTOMER_ID_QUERY = "SELECT COUNT(*) FROM customers";
+    private static final String GET_EMPLOYEE_ID_QUERY = "SELECT COUNT(*) FROM employees";
+    private static final String GET_INVOICE_ID_QUERY = "SELECT COUNT(*) FROM invoices";
+    private static final String GET_PRODUCT_ID_QUERY = "SELECT COUNT(*) FROM products";
+    private static final String GET_CUSTOMER_INVOICE_COUNT = "SELECT COUNT(*) FROM invoices WHERE customer_id=?";
+    private static final String GET_EMPLOYEE_INVOICE_COUNT = "SELECT COUNT(*) FROM invoices WHERE employee_id=?";
 
     // Delete Queries
-    private static final String DELETE_CUSTOMER_QUERY = "DELETE FROM clientes WHERE id_cliente = ?";
-    private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM empregados WHERE id_empregado = ?";
-    private static final String DELETE_INVOICE_QUERY = "DELETE FROM faturas WHERE id_fatura = ?";
-    private static final String DELETE_PRODUCT_QUERY = "DELETE FROM produtos WHERE id_produto = ?";
+    private static final String DELETE_CUSTOMER_QUERY = "DELETE FROM customers WHERE id = ?";
+    private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM employees WHERE id = ?";
+    private static final String DELETE_INVOICE_QUERY = "DELETE FROM invoices WHERE id = ?";
+    private static final String DELETE_PRODUCT_QUERY = "DELETE FROM products WHERE id = ?";
 
     // Insert Queries
-    private final static String INSERT_CUSTOMER_QUERY = "INSERT INTO clientes " +
-            "(nome, morada, contacto, email, nif, notas) VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String INSERT_EMPLOYEE_QUERY = "INSERT INTO empregados " +
-            "(nome, morada, contacto, email, nif, notas) VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String INSERT_INVOICE_QUERY = "INSERT INTO faturas " +
-            "(id_cliente, id_empregado, data_fatura, produtos, pdf) VALUES (?, ?, ?, ?, ?)";
-    private final static String INSERT_PRODUCT_QUERY = "INSERT INTO produtos " +
-            "(nome, quantidade) VALUES (?, ?)";
+    private final static String INSERT_CUSTOMER_QUERY = "INSERT INTO customers " +
+            "(name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?, ?)";
+    private final static String INSERT_EMPLOYEE_QUERY = "INSERT INTO employees " +
+            "(name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?, ?)";
+    private final static String INSERT_INVOICE_QUERY = "INSERT INTO invoices " +
+            "(customer_id, employee_id, date, products, pdf) VALUES (?, ?, ?, ?, ?)";
+    private final static String INSERT_PRODUCT_QUERY = "INSERT INTO products " +
+            "(name, price, quantity, image) VALUES (?, ?, ?, ?)";
 
     // Update Queries
-    private static final String UPDATE_CUSTOMER_QUERY = "UPDATE clientes SET ?=? WHERE id_cliente=?";
-    private static final String UPDATE_EMPLOYEE_QUERY = "UPDATE empregados SET ?=? WHERE id_empregado=?";
-    private static final String UPDATE_INVOICE_QUERY = "UPDATE faturas SET ?=? WHERE id_fatura=?";
-    private static final String UPDATE_PRODUCT_QUERY = "UPDATE produtos SET ?=? WHERE id_produto=?";
+    private static final String UPDATE_CUSTOMER_QUERY = "UPDATE customers SET ?=? WHERE id=?";
+    private static final String UPDATE_EMPLOYEE_QUERY = "UPDATE employees SET ?=? WHERE id=?";
+    private static final String UPDATE_INVOICE_QUERY = "UPDATE invoices SET ?=? WHERE id=?";
+    private static final String UPDATE_PRODUCT_QUERY = "UPDATE products SET ?=? WHERE id=?";
     private static DatabaseHandler handler = null;
     private static Connection conn = null;
 
@@ -149,7 +149,6 @@ public final class DatabaseHandler {
             statement.setString(3, customer.getPhone());
             statement.setString(4, customer.getEmail());
             statement.setString(5, customer.getNif());
-            statement.setString(6, customer.getNotes());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -191,7 +190,6 @@ public final class DatabaseHandler {
             statement.setString(3, employee.getPhone());
             statement.setString(4, employee.getEmail());
             statement.setString(5, employee.getNif());
-            statement.setString(6, employee.getNotes());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {

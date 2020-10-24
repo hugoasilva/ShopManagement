@@ -103,7 +103,7 @@ public class EmployeeAddController implements Initializable {
         }
 
         Employee employee = new Employee(employeeId, employeeName, employeeAddress,
-                employeePhone, employeeEmail, employeeNif, employeeNotes);
+                employeePhone, employeeEmail, employeeNif);
         if (DatabaseHandler.insertEmployee(employee)) {
             this.createNotesJSON();
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -148,7 +148,7 @@ public class EmployeeAddController implements Initializable {
      */
     private void handleUpdateEmployee() {
         Employee employee = new Employee(id, name.getText(), address.getText(),
-                phone.getText(), email.getText(), nif.getText(), this.notesPath);
+                phone.getText(), email.getText(), nif.getText());
         if (DatabaseHandler.getInstance().updateEmployee(employee)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",

@@ -43,12 +43,12 @@ import java.util.logging.Logger;
 public class EmployeeSearchController implements Initializable {
 
     // Database queries
-    private static final String SEARCH_ID_QUERY = "SELECT * FROM empregados WHERE id_empregado=?";
-    private static final String SEARCH_NAME_QUERY = "SELECT * FROM empregados WHERE nome LIKE ?";
-    private static final String SEARCH_NIF_QUERY = "SELECT * FROM empregados WHERE nif=?";
-    private static final String SEARCH_PHONE_QUERY = "SELECT * FROM empregados WHERE contacto=?";
-    private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM empregados WHERE email=?";
-    private static final String SELECT_EMPLOYEES_QUERY = "SELECT * FROM empregados";
+    private static final String SEARCH_ID_QUERY = "SELECT * FROM employees WHERE id=?";
+    private static final String SEARCH_NAME_QUERY = "SELECT * FROM employees WHERE name LIKE ?";
+    private static final String SEARCH_NIF_QUERY = "SELECT * FROM employees WHERE nif=?";
+    private static final String SEARCH_PHONE_QUERY = "SELECT * FROM employees WHERE phone=?";
+    private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM employees WHERE email=?";
+    private static final String SELECT_EMPLOYEES_QUERY = "SELECT * FROM employees";
 
     // Employee list object
     ObservableList<Employee> list = FXCollections.observableArrayList();
@@ -177,15 +177,14 @@ public class EmployeeSearchController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
-                String id = resultSet.getString("id_empregado");
-                String name = resultSet.getString("nome");
-                String address = resultSet.getString("morada");
-                String phone = resultSet.getString("contacto");
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                String address = resultSet.getString("address");
+                String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String nif = resultSet.getString("nif");
-                String notes = resultSet.getString("notas");
 
-                list.add(new Employee(id, name, address, phone, email, nif, notes));
+                list.add(new Employee(id, name, address, phone, email, nif));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
@@ -276,15 +275,14 @@ public class EmployeeSearchController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
-                String id = resultSet.getString("id_empregado");
-                String name = resultSet.getString("nome");
-                String address = resultSet.getString("morada");
-                String phone = resultSet.getString("contacto");
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                String address = resultSet.getString("address");
+                String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String nif = resultSet.getString("nif");
-                String notes = resultSet.getString("notas");
 
-                list.add(new Employee(id, name, address, phone, email, nif, notes));
+                list.add(new Employee(id, name, address, phone, email, nif));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);

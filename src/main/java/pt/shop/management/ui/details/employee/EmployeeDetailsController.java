@@ -44,7 +44,7 @@ import java.util.logging.Logger;
 public class EmployeeDetailsController implements Initializable {
 
     // Database query
-    private static final String SELECT_EMPLOYEE_QUERY = "SELECT * FROM empregados WHERE id_empregado=?";
+    private static final String SELECT_EMPLOYEE_QUERY = "SELECT * FROM invoices WHERE id=?";
 
     // Local downloads path
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
@@ -135,16 +135,14 @@ public class EmployeeDetailsController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
 
-        String id = resultSet.getString("id_empregado");
-        String name = resultSet.getString("nome");
-        String address = resultSet.getString("morada");
-        String phone = resultSet.getString("contacto");
+        String id = resultSet.getString("id");
+        String name = resultSet.getString("name");
+        String address = resultSet.getString("address");
+        String phone = resultSet.getString("phone");
         String email = resultSet.getString("email");
         String nif = resultSet.getString("nif");
-        String notes = resultSet.getString("notas");
-        this.notesPath = notes;
-        this.getEmployeeNotes(id, notes);
-        this.inflateUI(new Employee(id, name, address, phone, email, nif, notes));
+//        this.getEmployeeNotes(id, notes);
+        this.inflateUI(new Employee(id, name, address, phone, email, nif));
     }
 
     /**

@@ -43,12 +43,12 @@ import java.util.logging.Logger;
 public class CustomerSearchController implements Initializable {
 
     // Database queries
-    private static final String SEARCH_ID_QUERY = "SELECT * FROM clientes WHERE id_cliente=?";
-    private static final String SEARCH_NAME_QUERY = "SELECT * FROM clientes WHERE nome LIKE ?";
-    private static final String SEARCH_NIF_QUERY = "SELECT * FROM clientes WHERE nif=?";
-    private static final String SEARCH_PHONE_QUERY = "SELECT * FROM clientes WHERE contacto=?";
-    private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM clientes WHERE email=?";
-    private static final String SELECT_CUSTOMERS_QUERY = "SELECT * FROM clientes";
+    private static final String SEARCH_ID_QUERY = "SELECT * FROM customers WHERE id=?";
+    private static final String SEARCH_NAME_QUERY = "SELECT * FROM customers WHERE name LIKE ?";
+    private static final String SEARCH_NIF_QUERY = "SELECT * FROM customers WHERE nif=?";
+    private static final String SEARCH_PHONE_QUERY = "SELECT * FROM customers WHERE phone=?";
+    private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM customers WHERE email=?";
+    private static final String SELECT_CUSTOMERS_QUERY = "SELECT * FROM customers";
 
     // Customer list object
     ObservableList<Customer> list = FXCollections.observableArrayList();
@@ -177,15 +177,14 @@ public class CustomerSearchController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
-                String id = resultSet.getString("id_cliente");
-                String name = resultSet.getString("nome");
-                String address = resultSet.getString("morada");
-                String phone = resultSet.getString("contacto");
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                String address = resultSet.getString("address");
+                String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String nif = resultSet.getString("nif");
-                String notes = resultSet.getString("notas");
 
-                list.add(new Customer(id, name, address, phone, email, nif, notes));
+                list.add(new Customer(id, name, address, phone, email, nif));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
@@ -276,15 +275,14 @@ public class CustomerSearchController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
-                String id = resultSet.getString("id_cliente");
-                String name = resultSet.getString("nome");
-                String address = resultSet.getString("morada");
-                String phone = resultSet.getString("contacto");
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                String address = resultSet.getString("address");
+                String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String nif = resultSet.getString("nif");
-                String notes = resultSet.getString("notas");
 
-                list.add(new Customer(id, name, address, phone, email, nif, notes));
+                list.add(new Customer(id, name, address, phone, email, nif));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);

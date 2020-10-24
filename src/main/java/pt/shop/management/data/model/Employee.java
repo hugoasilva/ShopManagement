@@ -14,7 +14,6 @@ public class Employee {
     String phone;
     String email;
     String nif;
-    String notes;
 
     /**
      * Employee object constructor
@@ -25,16 +24,14 @@ public class Employee {
      * @param phone   - employee's phone
      * @param email   - employee's email
      * @param nif     - employee's nif
-     * @param notes   - employee's notes
      */
-    public Employee(String id, String name, String address, String phone, String email, String nif, String notes) {
+    public Employee(String id, String name, String address, String phone, String email, String nif) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.nif = nif;
-        this.notes = notes;
     }
 
     /**
@@ -124,21 +121,5 @@ public class Employee {
      */
     public void setNif(String nif) {
         this.nif = nif;
-    }
-
-    /**
-     * Get employee notes
-     *
-     * @return - customer notes
-     */
-    public String getNotes() {
-        return this.notes;
-    }
-
-    /**
-     * Get employee notes
-     */
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 }

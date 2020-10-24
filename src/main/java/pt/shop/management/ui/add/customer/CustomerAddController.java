@@ -86,8 +86,6 @@ public class CustomerAddController implements Initializable {
         String customerPhone = phone.getText();
         String customerEmail = email.getText();
         String customerNif = nif.getText();
-        String customerNotes = REMOTE_CUSTOMER_PATH + this.id + ".json";
-        this.notesPath = customerNotes;
 
         if (customerName.isEmpty() || customerAddress.isEmpty() || customerPhone.isEmpty()
                 || customerEmail.isEmpty() || customerNif.isEmpty()) {
@@ -103,7 +101,7 @@ public class CustomerAddController implements Initializable {
         }
 
         Customer customer = new Customer(customerId, customerName,
-                customerAddress, customerPhone, customerEmail, customerNif, customerNotes);
+                customerAddress, customerPhone, customerEmail, customerNif);
         if (DatabaseHandler.insertCustomer(customer)) {
             this.createNotesJSON();
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -148,7 +146,7 @@ public class CustomerAddController implements Initializable {
      */
     private void handleUpdateCustomer() {
         Customer customer = new Customer(id, name.getText(), address.getText(),
-                phone.getText(), email.getText(), nif.getText(), this.notesPath);
+                phone.getText(), email.getText(), nif.getText());
         if (DatabaseHandler.getInstance().updateCustomer(customer)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",

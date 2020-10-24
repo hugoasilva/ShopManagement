@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 
 public class CustomerDetailsController implements Initializable {
     // Database query
-    private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM clientes WHERE id_cliente=?";
+    private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM customers WHERE id=?";
     // Local downloads path
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Customer data
@@ -132,16 +132,15 @@ public class CustomerDetailsController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
 
-        String id = resultSet.getString("id_cliente");
-        String name = resultSet.getString("nome");
-        String address = resultSet.getString("morada");
-        String phone = resultSet.getString("contacto");
+        String id = resultSet.getString("id");
+        String name = resultSet.getString("name");
+        String address = resultSet.getString("address");
+        String phone = resultSet.getString("phone");
         String email = resultSet.getString("email");
         String nif = resultSet.getString("nif");
-        String notes = resultSet.getString("notas");
-        this.notesPath = notes;
-        this.getCustomerNotes(id, notes);
-        this.inflateUI(new Customer(id, name, address, phone, email, nif, notes));
+//        this.notesPath = notes;
+//        this.getCustomerNotes(id, notes);
+        this.inflateUI(new Customer(id, name, address, phone, email, nif));
     }
 
     /**
@@ -189,7 +188,7 @@ public class CustomerDetailsController implements Initializable {
         stage.setScene(new Scene(parent));
         ShopManagementUtil.setStageIcon(stage);
         stage.showAndWait();
-        this.getCustomerNotes(this.customerID, this.notesPath);
+        //this.getCustomerNotes(this.customerID);
     }
 
     /**
