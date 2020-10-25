@@ -245,45 +245,50 @@ public class ProductSearchController implements Initializable {
      * @throws SQLException - SQL exception
      */
     public void searchProduct() throws SQLException {
-        String comboInput = productCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = productSearchInput.getText();
-
-        String query = null;
-        switch (comboInput) {
-            case "ID":
-                query = SEARCH_ID_QUERY;
-                break;
-            case "Nome":
-                query = SEARCH_NAME_QUERY;
-                searchInput = "%" + searchInput + "%";
-                break;
-            case "Preço":
-                query = SEARCH_PRICE_QUERY;
-                break;
-            case "Quantidade":
-                query = SEARCH_QUANTITY_QUERY;
-                break;
-        }
-        list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, searchInput);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String price = resultSet.getString("price");
-                String supplierId = resultSet.getString("supplier_id");
-                String quantity = resultSet.getString("quantity");
-                String image = resultSet.getString("image");
-
-                list.add(new Product(id, name, price, supplierId, quantity, image));
+        // Check if user input is present
+        if (productCombo.getSelectionModel().isEmpty() || productSearchInput.getText().isEmpty()) {
+            AlertMaker.showErrorMessage("Erro!",
+                    "Insira dados em todos os campos.");
+        } else {
+            String comboInput = productCombo.getSelectionModel().getSelectedItem().getText();
+            String searchInput = productSearchInput.getText();
+            String query = null;
+            switch (comboInput) {
+                case "ID":
+                    query = SEARCH_ID_QUERY;
+                    break;
+                case "Nome":
+                    query = SEARCH_NAME_QUERY;
+                    searchInput = "%" + searchInput + "%";
+                    break;
+                case "Preço":
+                    query = SEARCH_PRICE_QUERY;
+                    break;
+                case "Quantidade":
+                    query = SEARCH_QUANTITY_QUERY;
+                    break;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            list.clear();
+            DatabaseHandler handler = DatabaseHandler.getInstance();
+            PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, searchInput);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            try {
+                while (resultSet.next()) {
+                    String id = resultSet.getString("id");
+                    String name = resultSet.getString("name");
+                    String price = resultSet.getString("price");
+                    String supplierId = resultSet.getString("supplier_id");
+                    String quantity = resultSet.getString("quantity");
+                    String image = resultSet.getString("image");
+
+                    list.add(new Product(id, name, price, supplierId, quantity, image));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tableView.setItems(list);
         }
-        tableView.setItems(list);
     }
 
     /**

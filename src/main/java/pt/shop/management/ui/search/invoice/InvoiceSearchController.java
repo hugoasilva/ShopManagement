@@ -287,54 +287,59 @@ public class InvoiceSearchController implements Initializable {
     /**
      * Search invoice operation
      *
-     * @throws IOException - IO exception
+     * @throws SQLException - SQL exception
      */
     public void searchInvoice() throws SQLException {
-        String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = invoiceSearchInput.getText();
-
-        String query = null;
-        switch (comboInput) {
-            case "ID":
-                query = SEARCH_ID_QUERY;
-                break;
-            case "ID Cliente":
-                query = SEARCH_CUSTOMER_QUERY;
-                break;
-            case "ID Empregado":
-                query = SEARCH_EMPLOYEE_QUERY;
-                break;
-            case "Data":
-                query = SEARCH_DATE_QUERY;
-                break;
-        }
-        list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, searchInput);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-                String id = resultSet.getString("id_fatura");
-                String customerId = resultSet.getString("id_cliente");
-                String employeeId = resultSet.getString("id_empregado");
-                String date = resultSet.getString("data_fatura");
-                String products = resultSet.getString("produtos");
-                String pdf = resultSet.getString("pdf");
-
-                list.add(new Invoice(id, customerId, employeeId, date, products, pdf));
+        // Check if user input is present
+        if (invoiceCombo.getSelectionModel().isEmpty() || invoiceSearchInput.getText().isEmpty()) {
+            AlertMaker.showErrorMessage("Erro!",
+                    "Insira dados em todos os campos.");
+        } else {
+            String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
+            String searchInput = invoiceSearchInput.getText();
+            String query = null;
+            switch (comboInput) {
+                case "ID":
+                    query = SEARCH_ID_QUERY;
+                    break;
+                case "ID Cliente":
+                    query = SEARCH_CUSTOMER_QUERY;
+                    break;
+                case "ID Empregado":
+                    query = SEARCH_EMPLOYEE_QUERY;
+                    break;
+                case "Data":
+                    query = SEARCH_DATE_QUERY;
+                    break;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            list.clear();
+            DatabaseHandler handler = DatabaseHandler.getInstance();
+            PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, searchInput);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            try {
+                while (resultSet.next()) {
+                    String id = resultSet.getString("id_fatura");
+                    String customerId = resultSet.getString("id_cliente");
+                    String employeeId = resultSet.getString("id_empregado");
+                    String date = resultSet.getString("data_fatura");
+                    String products = resultSet.getString("produtos");
+                    String pdf = resultSet.getString("pdf");
+
+                    list.add(new Invoice(id, customerId, employeeId, date, products, pdf));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tableView.setItems(list);
         }
-        tableView.setItems(list);
     }
 
     /**
      * Handle search invoice key press
      *
      * @param event - key event
-     * @throws IOException - IO exception
+     * @throws SQLException - SQL exception
      */
     public void handleSearchInvoiceKeyPress(KeyEvent event) throws SQLException {
         this.searchInvoice();
@@ -344,7 +349,7 @@ public class InvoiceSearchController implements Initializable {
      * Handle search invoice key press
      *
      * @param event - key event
-     * @throws IOException - IO exception
+     * @throws SQLException - SQL exception
      */
     public void handleSearchInvoiceButtonPress(ActionEvent event) throws SQLException {
         this.searchInvoice();

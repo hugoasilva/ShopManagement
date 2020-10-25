@@ -246,48 +246,53 @@ public class CustomerSearchController implements Initializable {
      * @throws SQLException - SQL exception
      */
     public void searchCustomer() throws SQLException {
-        String comboInput = customerCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = customerSearchInput.getText();
-
-        String query = null;
-        switch (comboInput) {
-            case "ID":
-                query = SEARCH_ID_QUERY;
-                break;
-            case "Nome":
-                query = SEARCH_NAME_QUERY;
-                searchInput = "%" + searchInput + "%";
-                break;
-            case "NIF":
-                query = SEARCH_NIF_QUERY;
-                break;
-            case "Contacto":
-                query = SEARCH_PHONE_QUERY;
-                break;
-            case "E-mail":
-                query = SEARCH_EMAIL_QUERY;
-                break;
-        }
-        list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, searchInput);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String address = resultSet.getString("address");
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String nif = resultSet.getString("nif");
-
-                list.add(new Customer(id, name, address, phone, email, nif));
+        // Check if user input is present
+        if (customerCombo.getSelectionModel().isEmpty() || customerSearchInput.getText().isEmpty()) {
+            AlertMaker.showErrorMessage("Erro!",
+                    "Insira dados em todos os campos.");
+        } else {
+            String comboInput = customerCombo.getSelectionModel().getSelectedItem().getText();
+            String searchInput = customerSearchInput.getText();
+            String query = null;
+            switch (comboInput) {
+                case "ID":
+                    query = SEARCH_ID_QUERY;
+                    break;
+                case "Nome":
+                    query = SEARCH_NAME_QUERY;
+                    searchInput = "%" + searchInput + "%";
+                    break;
+                case "NIF":
+                    query = SEARCH_NIF_QUERY;
+                    break;
+                case "Contacto":
+                    query = SEARCH_PHONE_QUERY;
+                    break;
+                case "E-mail":
+                    query = SEARCH_EMAIL_QUERY;
+                    break;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            list.clear();
+            DatabaseHandler handler = DatabaseHandler.getInstance();
+            PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, searchInput);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            try {
+                while (resultSet.next()) {
+                    String id = resultSet.getString("id");
+                    String name = resultSet.getString("name");
+                    String address = resultSet.getString("address");
+                    String phone = resultSet.getString("phone");
+                    String email = resultSet.getString("email");
+                    String nif = resultSet.getString("nif");
+
+                    list.add(new Customer(id, name, address, phone, email, nif));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tableView.setItems(list);
         }
-        tableView.setItems(list);
     }
 
     /**

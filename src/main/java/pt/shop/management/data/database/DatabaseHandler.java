@@ -59,8 +59,10 @@ public final class DatabaseHandler {
             "UPDATE customers SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
     private static final String UPDATE_EMPLOYEE_QUERY =
             "UPDATE employees SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
-    private static final String UPDATE_INVOICE_QUERY = "UPDATE invoices SET ?=? WHERE id=?";
-    private static final String UPDATE_PRODUCT_QUERY = "UPDATE products SET ?=? WHERE id=?";
+    private static final String UPDATE_INVOICE_QUERY =
+            "UPDATE invoices SET customer_id=?, employee_id=?, date=? WHERE id=?";
+    private static final String UPDATE_PRODUCT_QUERY =
+            "UPDATE products SET name=?, price=?, supplier_id=?, quantity=? WHERE id=?";
 
     // Database instances
     private static DatabaseHandler handler = null;
@@ -409,9 +411,7 @@ public final class DatabaseHandler {
             statement.setString(1, invoice.getCustomerId());
             statement.setString(2, invoice.getEmployeeId());
             statement.setString(3, invoice.getDate());
-            statement.setString(4, invoice.getProducts());
-            statement.setString(5, invoice.getPdf());
-            statement.setString(6, invoice.getId());
+            statement.setString(4, invoice.getId());
             int res = statement.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {
@@ -452,8 +452,9 @@ public final class DatabaseHandler {
             // TODO Update changed fields
             statement.setString(1, product.getName());
             statement.setString(2, product.getPrice());
-            statement.setString(3, product.getQuantity());
-            statement.setString(4, product.getId());
+            statement.setString(3, product.getSupplierId());
+            statement.setString(4, product.getQuantity());
+            statement.setString(5, product.getId());
             int res = statement.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {
