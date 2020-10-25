@@ -25,14 +25,11 @@ import java.util.ResourceBundle;
 
 public class CustomerAddController implements Initializable {
 
-    // Directory paths
-    private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
-    private final static String REMOTE_CUSTOMER_PATH = "/home/pi/gestao/clientes/";
     // Database handler instance
     DatabaseHandler databaseHandler;
     // Customer data
     private String id;
-    private String notesPath;
+    private String editId;
     private Boolean isInEditMode = false;
     // UI content
     @FXML
@@ -115,6 +112,7 @@ public class CustomerAddController implements Initializable {
      * @param customer - customer object
      */
     public void inflateUI(Customer customer) {
+        this.editId = customer.getId();
         name.setText(customer.getName());
         address.setText(customer.getAddress());
         phone.setText(customer.getPhone());
@@ -139,12 +137,13 @@ public class CustomerAddController implements Initializable {
      * Handle customer update
      */
     private void handleUpdateCustomer() {
-        Customer customer = new Customer(id, name.getText(), address.getText(),
+        System.out.println(id);
+        Customer customer = new Customer(this.editId, name.getText(), address.getText(),
                 phone.getText(), email.getText(), nif.getText());
         if (DatabaseHandler.getInstance().updateCustomer(customer)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
-                    "Dados de cliente atualizados.", false);
+                    "Dados de cliente atualizados.", true);
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Erro",

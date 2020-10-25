@@ -25,8 +25,8 @@ public final class DatabaseHandler {
     private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class.getName());
 
     // Database details
-    private static final String DATABASE_SERVER_URL = "jdbc:mysql://projecthub.hopto.org:3306/management" +
-            "?useTimezone=true&serverTimezone=UTC";
+    private static final String DATABASE_SERVER_URL =
+            "jdbc:mysql://projecthub.hopto.org:3306/management?useTimezone=true&serverTimezone=UTC";
     private static final String DATABASE_USERNAME = "admin";
     private static final String DATABASE_PASSWORD = "dbpw";
 
@@ -55,20 +55,36 @@ public final class DatabaseHandler {
             "(name, price, quantity, image) VALUES (?, ?, ?, ?)";
 
     // Update Queries
-    private static final String UPDATE_CUSTOMER_QUERY = "UPDATE customers SET ?=? WHERE id=?";
-    private static final String UPDATE_EMPLOYEE_QUERY = "UPDATE employees SET ?=? WHERE id=?";
+    private static final String UPDATE_CUSTOMER_QUERY =
+            "UPDATE customers SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
+    private static final String UPDATE_EMPLOYEE_QUERY =
+            "UPDATE employees SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
     private static final String UPDATE_INVOICE_QUERY = "UPDATE invoices SET ?=? WHERE id=?";
     private static final String UPDATE_PRODUCT_QUERY = "UPDATE products SET ?=? WHERE id=?";
+
+    // Database instances
     private static DatabaseHandler handler = null;
     private static Connection conn = null;
 
-    static {
+    /**
+     * Constructor
+     */
+    private DatabaseHandler() {
         createConnection();
     }
 
-    private DatabaseHandler() {
+    /**
+     * Main function
+     */
+    public static void main(String[] args) {
+        DatabaseHandler.getInstance();
     }
 
+    /**
+     * Initialize database handler instance
+     *
+     * @return - database handler instance
+     */
     public static DatabaseHandler getInstance() {
         if (handler == null) {
             handler = new DatabaseHandler();
@@ -112,10 +128,6 @@ public final class DatabaseHandler {
         }
     }
 
-    public static void main(String[] args) {
-        DatabaseHandler.getInstance();
-    }
-
     /**
      * Get customer count at database
      *
@@ -124,8 +136,8 @@ public final class DatabaseHandler {
     public static int getCustomerId() {
         ResultSet rs;
         try {
-            PreparedStatement stmt = conn.prepareStatement(GET_CUSTOMER_ID_QUERY);
-            rs = stmt.executeQuery();
+            PreparedStatement statement = conn.prepareStatement(GET_CUSTOMER_ID_QUERY);
+            rs = statement.executeQuery();
             //Retrieving the result
             rs.next();
             return rs.getInt(1) + 1;
@@ -165,8 +177,8 @@ public final class DatabaseHandler {
     public static int getEmployeeId() {
         ResultSet rs;
         try {
-            PreparedStatement stmt = conn.prepareStatement(GET_EMPLOYEE_ID_QUERY);
-            rs = stmt.executeQuery();
+            PreparedStatement statement = conn.prepareStatement(GET_EMPLOYEE_ID_QUERY);
+            rs = statement.executeQuery();
             //Retrieving the result
             rs.next();
             return rs.getInt(1) + 1;
@@ -206,8 +218,8 @@ public final class DatabaseHandler {
     public static int getInvoiceId() {
         ResultSet rs;
         try {
-            PreparedStatement stmt = conn.prepareStatement(GET_INVOICE_ID_QUERY);
-            rs = stmt.executeQuery();
+            PreparedStatement statement = conn.prepareStatement(GET_INVOICE_ID_QUERY);
+            rs = statement.executeQuery();
             //Retrieving the result
             rs.next();
             return rs.getInt(1) + 1;
@@ -247,8 +259,8 @@ public final class DatabaseHandler {
     public static int getProductId() {
         ResultSet rs;
         try {
-            PreparedStatement stmt = conn.prepareStatement(GET_PRODUCT_ID_QUERY);
-            rs = stmt.executeQuery();
+            PreparedStatement statement = conn.prepareStatement(GET_PRODUCT_ID_QUERY);
+            rs = statement.executeQuery();
             //Retrieving the result
             rs.next();
             return rs.getInt(1) + 1;
@@ -286,9 +298,9 @@ public final class DatabaseHandler {
      */
     public boolean deleteCustomer(Customer customer) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(DELETE_CUSTOMER_QUERY);
-            stmt.setString(1, customer.getId());
-            int res = stmt.executeUpdate();
+            PreparedStatement statement = conn.prepareStatement(DELETE_CUSTOMER_QUERY);
+            statement.setString(1, customer.getId());
+            int res = statement.executeUpdate();
             if (res == 1) {
                 return true;
             }
@@ -306,16 +318,17 @@ public final class DatabaseHandler {
      */
     public boolean updateCustomer(Customer customer) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(UPDATE_CUSTOMER_QUERY);
-            // TODO Update changed fields
-//            stmt.setString(1, customer.getName());
-//            stmt.setString(2, customer.getAddress());
-//            stmt.setString(3, customer.getPhone());
-//            stmt.setString(4, customer.getEmail());
-//            stmt.setString(5, customer.getNif());
-//            stmt.setString(6, customer.getNotes());
-//            stmt.setString(7, customer.getId());
-            int res = stmt.executeUpdate();
+            PreparedStatement statement = conn.prepareStatement(UPDATE_CUSTOMER_QUERY);
+            statement.setString(1, customer.getName());
+            statement.setString(2, customer.getAddress());
+            statement.setString(3, customer.getPhone());
+            statement.setString(4, customer.getEmail());
+            statement.setString(5, customer.getNif());
+            statement.setString(6, customer.getId());
+            System.out.println(customer.getId());
+            System.out.println(statement);
+            int res = statement.executeUpdate();
+            System.out.println(res);
             return (res > 0);
         } catch (SQLException ex) {
             printSQLException(ex);
@@ -331,9 +344,9 @@ public final class DatabaseHandler {
      */
     public boolean deleteEmployee(Employee employee) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(DELETE_EMPLOYEE_QUERY);
-            stmt.setString(1, employee.getId());
-            int res = stmt.executeUpdate();
+            PreparedStatement statement = conn.prepareStatement(DELETE_EMPLOYEE_QUERY);
+            statement.setString(1, employee.getId());
+            int res = statement.executeUpdate();
             if (res == 1) {
                 return true;
             }
@@ -346,21 +359,19 @@ public final class DatabaseHandler {
     /**
      * Update employee data at database
      *
-     * @param employee - customer object
+     * @param employee - employee object
      * @return - true if success, false otherwise
      */
     public boolean updateEmployee(Employee employee) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(UPDATE_EMPLOYEE_QUERY);
-            // TODO Update changed fields
-//            stmt.setString(1, employee.getName());
-//            stmt.setString(2, employee.getAddress());
-//            stmt.setString(3, employee.getPhone());
-//            stmt.setString(4, employee.getEmail());
-//            stmt.setString(5, employee.getNif());
-//            stmt.setString(6, employee.getNotes());
-//            stmt.setString(7, employee.getId());
-            int res = stmt.executeUpdate();
+            PreparedStatement statement = conn.prepareStatement(UPDATE_EMPLOYEE_QUERY);
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getAddress());
+            statement.setString(3, employee.getPhone());
+            statement.setString(4, employee.getEmail());
+            statement.setString(5, employee.getNif());
+            statement.setString(6, employee.getId());
+            int res = statement.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {
             printSQLException(ex);
@@ -376,9 +387,9 @@ public final class DatabaseHandler {
      */
     public boolean deleteInvoice(Invoice invoice) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(DELETE_INVOICE_QUERY);
-            stmt.setString(1, invoice.getId());
-            int res = stmt.executeUpdate();
+            PreparedStatement statement = conn.prepareStatement(DELETE_INVOICE_QUERY);
+            statement.setString(1, invoice.getId());
+            int res = statement.executeUpdate();
             if (res == 1) {
                 return true;
             }
@@ -396,15 +407,15 @@ public final class DatabaseHandler {
      */
     public boolean updateInvoice(Invoice invoice) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(UPDATE_INVOICE_QUERY);
+            PreparedStatement statement = conn.prepareStatement(UPDATE_INVOICE_QUERY);
             // TODO Update changed fields
-//            stmt.setString(1, invoice.getCustomerId());
-//            stmt.setString(2, invoice.getEmployeeId());
-//            stmt.setString(3, invoice.getDate());
-//            stmt.setString(4, invoice.getProducts());
-//            stmt.setString(5, invoice.getPdf());
-//            stmt.setString(6, invoice.getId());
-            int res = stmt.executeUpdate();
+//            statement.setString(1, invoice.getCustomerId());
+//            statement.setString(2, invoice.getEmployeeId());
+//            statement.setString(3, invoice.getDate());
+//            statement.setString(4, invoice.getProducts());
+//            statement.setString(5, invoice.getPdf());
+//            statement.setString(6, invoice.getId());
+            int res = statement.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {
             printSQLException(ex);
@@ -420,9 +431,9 @@ public final class DatabaseHandler {
      */
     public boolean deleteProduct(Product product) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(DELETE_PRODUCT_QUERY);
-            stmt.setString(1, product.getId());
-            int res = stmt.executeUpdate();
+            PreparedStatement statement = conn.prepareStatement(DELETE_PRODUCT_QUERY);
+            statement.setString(1, product.getId());
+            int res = statement.executeUpdate();
             if (res == 1) {
                 return true;
             }
@@ -440,12 +451,12 @@ public final class DatabaseHandler {
      */
     public boolean updateProduct(Product product) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(UPDATE_PRODUCT_QUERY);
+            PreparedStatement statement = conn.prepareStatement(UPDATE_PRODUCT_QUERY);
             // TODO Update changed fields
-//            stmt.setString(1, product.getName());
-//            stmt.setString(2, product.getQuantity());
-//            stmt.setString(6, product.getId());
-            int res = stmt.executeUpdate();
+//            statement.setString(1, product.getName());
+//            statement.setString(2, product.getQuantity());
+//            statement.setString(6, product.getId());
+            int res = statement.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {
             printSQLException(ex);
@@ -461,9 +472,9 @@ public final class DatabaseHandler {
      */
     public boolean getCustomerInvoiceCount(Customer customer) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(GET_CUSTOMER_INVOICE_COUNT);
-            stmt.setString(1, customer.getId());
-            ResultSet rs = stmt.executeQuery();
+            PreparedStatement statement = conn.prepareStatement(GET_CUSTOMER_INVOICE_COUNT);
+            statement.setString(1, customer.getId());
+            ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
                 return (count > 0);
@@ -482,9 +493,9 @@ public final class DatabaseHandler {
      */
     public boolean getEmployeeInvoiceCount(Employee employee) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(GET_EMPLOYEE_INVOICE_COUNT);
-            stmt.setString(1, employee.getId());
-            ResultSet rs = stmt.executeQuery();
+            PreparedStatement statement = conn.prepareStatement(GET_EMPLOYEE_INVOICE_COUNT);
+            statement.setString(1, employee.getId());
+            ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
                 return (count > 0);

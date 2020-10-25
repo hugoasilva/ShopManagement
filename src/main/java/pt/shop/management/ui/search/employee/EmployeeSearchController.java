@@ -335,7 +335,8 @@ public class EmployeeSearchController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Editar Empregado");
             stage.setScene(new Scene(parent));
-            stage.show();
+            stage.showAndWait();
+            this.loadData();
             ShopManagementUtil.setStageIcon(stage);
 
             stage.setOnHiding((e) -> {
@@ -345,7 +346,7 @@ public class EmployeeSearchController implements Initializable {
                     throwable.printStackTrace();
                 }
             });
-        } catch (IOException ex) {
+        } catch (IOException | SQLException ex) {
             Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
