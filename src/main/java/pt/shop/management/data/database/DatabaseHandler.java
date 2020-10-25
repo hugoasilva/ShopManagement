@@ -282,6 +282,7 @@ public final class DatabaseHandler {
             statement.setString(1, product.getName());
             statement.setString(2, product.getPrice());
             statement.setString(3, product.getQuantity());
+            statement.setString(4, product.getImage());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -325,11 +326,8 @@ public final class DatabaseHandler {
             statement.setString(4, customer.getEmail());
             statement.setString(5, customer.getNif());
             statement.setString(6, customer.getId());
-            System.out.println(customer.getId());
-            System.out.println(statement);
-            int res = statement.executeUpdate();
-            System.out.println(res);
-            return (res > 0);
+
+            return (statement.executeUpdate() > 0);
         } catch (SQLException ex) {
             printSQLException(ex);
         }
@@ -408,13 +406,12 @@ public final class DatabaseHandler {
     public boolean updateInvoice(Invoice invoice) {
         try {
             PreparedStatement statement = conn.prepareStatement(UPDATE_INVOICE_QUERY);
-            // TODO Update changed fields
-//            statement.setString(1, invoice.getCustomerId());
-//            statement.setString(2, invoice.getEmployeeId());
-//            statement.setString(3, invoice.getDate());
-//            statement.setString(4, invoice.getProducts());
-//            statement.setString(5, invoice.getPdf());
-//            statement.setString(6, invoice.getId());
+            statement.setString(1, invoice.getCustomerId());
+            statement.setString(2, invoice.getEmployeeId());
+            statement.setString(3, invoice.getDate());
+            statement.setString(4, invoice.getProducts());
+            statement.setString(5, invoice.getPdf());
+            statement.setString(6, invoice.getId());
             int res = statement.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {
@@ -453,9 +450,10 @@ public final class DatabaseHandler {
         try {
             PreparedStatement statement = conn.prepareStatement(UPDATE_PRODUCT_QUERY);
             // TODO Update changed fields
-//            statement.setString(1, product.getName());
-//            statement.setString(2, product.getQuantity());
-//            statement.setString(6, product.getId());
+            statement.setString(1, product.getName());
+            statement.setString(2, product.getPrice());
+            statement.setString(3, product.getQuantity());
+            statement.setString(4, product.getId());
             int res = statement.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {

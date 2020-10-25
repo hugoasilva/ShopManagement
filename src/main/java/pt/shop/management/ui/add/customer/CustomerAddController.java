@@ -137,7 +137,6 @@ public class CustomerAddController implements Initializable {
      * Handle customer update
      */
     private void handleUpdateCustomer() {
-        System.out.println(id);
         Customer customer = new Customer(this.editId, name.getText(), address.getText(),
                 phone.getText(), email.getText(), nif.getText());
         if (DatabaseHandler.getInstance().updateCustomer(customer)) {

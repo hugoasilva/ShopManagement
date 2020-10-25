@@ -40,7 +40,7 @@ public class ProductAddController implements Initializable {
     private static final Logger LOGGER = LogManager.getLogger(ProductAddController.class.getName());
     // Directory paths
     private final static String LOCAL_UPLOAD_PATH = "uploads/";
-    private final static String REMOTE_PRODUCT_PATH = "/home/pi/gestao/faturas/";
+    private final static String REMOTE_PRODUCT_PATH = "/home/pi/management/products/";
     // Database handler instance
     DatabaseHandler databaseHandler;
     // Product data

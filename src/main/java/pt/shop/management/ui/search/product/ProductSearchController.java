@@ -44,14 +44,14 @@ public class ProductSearchController implements Initializable {
 
     // Database queries
     private static final String SEARCH_ID_QUERY = "SELECT * FROM products WHERE id=?";
-    private static final String SEARCH_NAME_QUERY = "SELECT * FROM products WHERE name=?";
+    private static final String SEARCH_NAME_QUERY = "SELECT * FROM products WHERE name LIKE ?";
     private static final String SEARCH_PRICE_QUERY = "SELECT * FROM products WHERE price=?";
     private static final String SEARCH_QUANTITY_QUERY = "SELECT * FROM products WHERE quantity=?";
     private static final String SELECT_PRODUCTS_QUERY = "SELECT * FROM products";
 
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
-    // Invoice list object
+    // Product list object
     ObservableList<Product> list = FXCollections.observableArrayList();
     // UI Content
     @FXML
@@ -81,7 +81,7 @@ public class ProductSearchController implements Initializable {
     }
 
     /**
-     * Assign table columns to invoice properties
+     * Assign table columns to product properties
      */
     private void initCol() {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));

@@ -119,8 +119,8 @@
     -fx-padding: 0 -50 20 50;
 }
 
-.jfx-tab-pane .tab-header-area .jfx-rippler{
-    -jfx-rippler-fill : -fx-blue;
+.jfx-tab-pane .tab-header-area .jfx-rippler {
+    -jfx-rippler-fill: -fx-blue;
     -fx-stroke-width: 3pt;
 
 }
