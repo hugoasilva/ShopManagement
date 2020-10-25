@@ -237,7 +237,7 @@ public class CustomerSearchController implements Initializable {
      */
     @FXML
     private void handleRefresh(ActionEvent event) throws SQLException {
-        loadData();
+        this.loadData();
     }
 
     /**
@@ -335,8 +335,9 @@ public class CustomerSearchController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Editar Cliente");
             stage.setScene(new Scene(parent));
-            stage.show();
             ShopManagementUtil.setStageIcon(stage);
+            stage.showAndWait();
+            this.loadData();
 
             stage.setOnHiding((e) -> {
                 try {
@@ -345,7 +346,7 @@ public class CustomerSearchController implements Initializable {
                     throwable.printStackTrace();
                 }
             });
-        } catch (IOException ex) {
+        } catch (IOException | SQLException ex) {
             Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

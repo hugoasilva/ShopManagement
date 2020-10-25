@@ -29,6 +29,7 @@ public class EmployeeAddController implements Initializable {
     DatabaseHandler databaseHandler;
     // Employee data
     private String id;
+    private String editId;
     private Boolean isInEditMode = false;
     // UI Content
     @FXML
@@ -110,6 +111,7 @@ public class EmployeeAddController implements Initializable {
      * @param employee - employee object
      */
     public void inflateUI(Employee employee) {
+        this.editId = employee.getId();
         name.setText(employee.getName());
         address.setText(employee.getAddress());
         phone.setText(employee.getPhone());
@@ -134,7 +136,7 @@ public class EmployeeAddController implements Initializable {
      * Handle employee update
      */
     private void handleUpdateEmployee() {
-        Employee employee = new Employee(id, name.getText(), address.getText(),
+        Employee employee = new Employee(this.editId, name.getText(), address.getText(),
                 phone.getText(), email.getText(), nif.getText());
         if (DatabaseHandler.getInstance().updateEmployee(employee)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,

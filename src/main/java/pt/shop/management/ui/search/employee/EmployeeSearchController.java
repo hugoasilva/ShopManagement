@@ -157,7 +157,7 @@ public class EmployeeSearchController implements Initializable {
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setTitle("Ficha de Empregado");
         stage.setScene(new Scene(parent));
-        stage.show();
+        stage.showAndWait();
         ShopManagementUtil.setStageIcon(stage);
     }
 
@@ -335,9 +335,9 @@ public class EmployeeSearchController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Editar Empregado");
             stage.setScene(new Scene(parent));
+            ShopManagementUtil.setStageIcon(stage);
             stage.showAndWait();
             this.loadData();
-            ShopManagementUtil.setStageIcon(stage);
 
             stage.setOnHiding((e) -> {
                 try {
