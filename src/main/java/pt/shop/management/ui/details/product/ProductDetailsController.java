@@ -91,9 +91,10 @@ public class ProductDetailsController implements Initializable {
         String id = resultSet.getString("id");
         String name = resultSet.getString("name");
         String price = resultSet.getString("price");
+        String supplier = resultSet.getString("supplier_id");
         String quantity = resultSet.getString("quantity");
         String image = resultSet.getString("image");
 
-        this.inflateUI(new Product(id, name, price, quantity, image));
+        this.inflateUI(new Product(id, name, price, supplier, quantity, image));
     }
 }

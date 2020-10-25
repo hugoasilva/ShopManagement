@@ -11,22 +11,26 @@ public class Product {
     private final String id;
     private String name;
     private String price;
+    private String supplierId;
+    private String supplierName;
     private String quantity;
-    private String image;
+    private final String image;
 
     /**
      * Product object constructor
      *
-     * @param id       - product's id
-     * @param name     - product's message
-     * @param price    - product's price
-     * @param quantity - product's quantity
-     * @param image    - product's image file path
+     * @param id          - product's id
+     * @param name        - product's message
+     * @param price       - product's price
+     * @param supplier_id - product's supplier id
+     * @param quantity    - product's quantity
+     * @param image       - product's image file path
      */
-    public Product(String id, String name, String price, String quantity, String image) {
+    public Product(String id, String name, String price, String supplier_id, String quantity, String image) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.supplierId = supplier_id;
         this.quantity = quantity;
         this.image = image;
     }
@@ -74,6 +78,42 @@ public class Product {
      */
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    /**
+     * Get product supplier id
+     *
+     * @return - product supplier id
+     */
+    public String getSupplierId() {
+        return this.supplierId;
+    }
+
+    /**
+     * Set product supplier id
+     *
+     * @param id - supplier id
+     */
+    public void setSupplierId(String id) {
+        this.supplierId = id;
+    }
+
+    /**
+     * Get product supplier name
+     *
+     * @return - product supplier name
+     */
+    public String getSupplierName() {
+        return this.supplierName;
+    }
+
+    /**
+     * Set product supplier name
+     *
+     * @param name - supplier name
+     */
+    public void setSupplierName(String name) {
+        this.supplierName = name;
     }
 
     /**

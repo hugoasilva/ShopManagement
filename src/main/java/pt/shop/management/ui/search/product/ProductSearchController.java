@@ -47,7 +47,11 @@ public class ProductSearchController implements Initializable {
     private static final String SEARCH_NAME_QUERY = "SELECT * FROM products WHERE name LIKE ?";
     private static final String SEARCH_PRICE_QUERY = "SELECT * FROM products WHERE price=?";
     private static final String SEARCH_QUANTITY_QUERY = "SELECT * FROM products WHERE quantity=?";
-    private static final String SELECT_PRODUCTS_QUERY = "SELECT * FROM products";
+    private static final String SELECT_PRODUCTS_QUERY = "SELECT management.products.*" +
+            ", suppliers.name AS supplier_name " +
+            "FROM products " +
+            "INNER JOIN suppliers ON suppliers.id=products.supplier_id";
+
 
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
@@ -66,6 +70,8 @@ public class ProductSearchController implements Initializable {
     private TableColumn<Product, String> nameCol;
     @FXML
     private TableColumn<Product, String> priceCol;
+    @FXML
+    private TableColumn<Product, String> supplierCol;
     @FXML
     private TableColumn<Product, String> quantityCol;
 
@@ -87,6 +93,7 @@ public class ProductSearchController implements Initializable {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        supplierCol.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         TableColumn<Product, Void> detailsCol = new TableColumn<>("Ficha");
         Callback<TableColumn<Product, Void>, TableCell<Product, Void>> cellFactoryDetails =
@@ -170,10 +177,14 @@ public class ProductSearchController implements Initializable {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
                 String price = resultSet.getString("price");
+                String supplierId = resultSet.getString("supplier_id");
+                String supplierName = resultSet.getString("supplier_name");
                 String quantity = resultSet.getString("quantity");
                 String image = resultSet.getString("image");
 
-                list.add(new Product(id, name, price, quantity, image));
+                Product product = new Product(id, name, price, supplierId, quantity, image);
+                product.setSupplierName(supplierName);
+                list.add(product);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
@@ -191,8 +202,8 @@ public class ProductSearchController implements Initializable {
         //Fetch the selected row
         Product selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhuma fatura seleccionada",
-                    "Por favor seleccione uma fatura para apagar.");
+            AlertMaker.showErrorMessage("Nenhum produto seleccionado",
+                    "Por favor seleccione um produto para apagar.");
             return;
         }
 
@@ -264,10 +275,11 @@ public class ProductSearchController implements Initializable {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
                 String price = resultSet.getString("price");
+                String supplierId = resultSet.getString("supplier_id");
                 String quantity = resultSet.getString("quantity");
                 String image = resultSet.getString("image");
 
-                list.add(new Product(id, name, price, quantity, image));
+                list.add(new Product(id, name, price, supplierId, quantity, image));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);

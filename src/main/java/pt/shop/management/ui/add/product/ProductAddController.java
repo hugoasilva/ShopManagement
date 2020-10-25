@@ -54,6 +54,8 @@ public class ProductAddController implements Initializable {
     @FXML
     private JFXTextField price;
     @FXML
+    private JFXTextField supplier;
+    @FXML
     private JFXTextField quantity;
     @FXML
     private JFXButton image;
@@ -90,6 +92,7 @@ public class ProductAddController implements Initializable {
         this.id = productId;
         String productName = name.getText();
         String productPrice = price.getText();
+        String productSupplierId = supplier.getText();
         String productQuantity = quantity.getText();
         String productImage = REMOTE_PRODUCT_PATH + this.id + ".png";
 
@@ -106,7 +109,7 @@ public class ProductAddController implements Initializable {
         }
 
         Product product = new Product(productId, productName,
-                productPrice, productQuantity, productImage);
+                productPrice, productSupplierId, productQuantity, productImage);
         if (DatabaseHandler.insertProduct(product)) {
             String path = LOCAL_UPLOAD_PATH + this.id + ".png";
             this.imageToPNG(path);
@@ -162,7 +165,7 @@ public class ProductAddController implements Initializable {
      * Handle product update
      */
     private void handleUpdateProduct() {
-        Product product = new Product(id, name.getText(), price.getText(), quantity.getText(), image.getText());
+        Product product = new Product(id, name.getText(), price.getText(), supplier.getText(), quantity.getText(), image.getText());
         if (DatabaseHandler.getInstance().updateProduct(product)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
