@@ -10,7 +10,9 @@ package pt.shop.management.data.model;
 public class Invoice {
     private final String id;
     private String customerId;
+    private String customerName;
     private String employeeId;
+    private String employeeName;
     private String date;
     private String products;
     private String pdf;
@@ -132,5 +134,41 @@ public class Invoice {
      */
     public void setPdf(String pdf) {
         this.pdf = pdf;
+    }
+
+    /**
+     * Get invoice customer name
+     *
+     * @return - invoice customer name
+     */
+    public String getCustomerName() {
+        return this.customerName;
+    }
+
+    /**
+     * Set invoice customer name
+     *
+     * @param name - invoice customer name
+     */
+    public void setCustomerName(String name) {
+        this.customerName = name;
+    }
+
+    /**
+     * Get invoice employee name
+     *
+     * @return - invoice employee name
+     */
+    public String getEmployeeName() {
+        return this.employeeName;
+    }
+
+    /**
+     * Set invoice employee name
+     *
+     * @param name - invoice employee name
+     */
+    public void setEmployeeName(String name) {
+        this.employeeName = name;
     }
 }

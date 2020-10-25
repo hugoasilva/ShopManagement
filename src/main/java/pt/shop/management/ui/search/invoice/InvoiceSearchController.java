@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  * Invoice Search Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class InvoiceSearchController implements Initializable {
@@ -48,7 +48,12 @@ public class InvoiceSearchController implements Initializable {
     private static final String SEARCH_CUSTOMER_QUERY = "SELECT * FROM invoices WHERE customer_id=?";
     private static final String SEARCH_EMPLOYEE_QUERY = "SELECT * FROM invoices WHERE employee_id=?";
     private static final String SEARCH_DATE_QUERY = "SELECT * FROM invoices WHERE date=?";
-    private static final String SELECT_INVOICES_QUERY = "SELECT * FROM invoices";
+    private static final String SELECT_INVOICES_QUERY = "SELECT management.invoices.*" +
+            ", customers.name AS customer_name" +
+            ", employees.name AS employee_name " +
+            "FROM invoices " +
+            "INNER JOIN customers ON customers.id=invoices.customer_id " +
+            "INNER JOIN employees ON employees.id=invoices.employee_id";
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Invoice list object
@@ -87,8 +92,8 @@ public class InvoiceSearchController implements Initializable {
      */
     private void initCol() {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
+        customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         productsCol.setCellValueFactory(new PropertyValueFactory<>("products"));
         TableColumn<Invoice, Void> pdfCol = new TableColumn<>("PDF");
@@ -212,14 +217,18 @@ public class InvoiceSearchController implements Initializable {
         ResultSet resultSet = preparedStatement.executeQuery();
         try {
             while (resultSet.next()) {
+
                 String id = resultSet.getString("id");
-                String customerId = resultSet.getString("customer_id");
-                String employeeId = resultSet.getString("employee_id");
+                String customerName = resultSet.getString("customer_name");
+                String employeeName = resultSet.getString("employee_name");
                 String date = resultSet.getString("date");
                 String products = resultSet.getString("products");
                 String pdf = resultSet.getString("pdf");
 
-                list.add(new Invoice(id, customerId, employeeId, date, products, pdf));
+                Invoice invoice = new Invoice(id, customerName, employeeName, date, products, pdf);
+                invoice.setCustomerName(customerName);
+                invoice.setEmployeeName(employeeName);
+                list.add(invoice);
             }
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);

@@ -32,14 +32,11 @@ public class NoteAddController implements Initializable {
             "(customer_id, message) VALUES (?, ?)";
     private static final String INSERT_EMPLOYEE_NOTE_QUERY = "INSERT INTO notes_employees " +
             "(employee_id, message) VALUES (?, ?)";
-
+    private final String type;
     // Database handler instance
     DatabaseHandler databaseHandler;
-
     private Boolean isInEditMode = false;
     private String id;
-    private final String type;
-
     // UI Content
     @FXML
     private JFXTextField message;

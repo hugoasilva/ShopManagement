@@ -8,35 +8,27 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Employee;
-import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.alert.AlertMaker;
 
-import java.io.File;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Employee Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-16
+ * @version 2020-10-25
  */
 
 public class EmployeeAddController implements Initializable {
 
-    // Directory paths
-    private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
-    private final static String REMOTE_EMPLOYEE_PATH = "/home/pi/gestao/empregados/";
     // Database handler instance
     DatabaseHandler databaseHandler;
     // Employee data
     private String id;
-    private String notesPath;
     private Boolean isInEditMode = false;
     // UI Content
     @FXML
@@ -77,7 +69,6 @@ public class EmployeeAddController implements Initializable {
      */
     @FXML
     private void addEmployee(ActionEvent event) {
-
         String employeeId = String.valueOf(DatabaseHandler.getEmployeeId());
         this.id = employeeId;
         String employeeName = name.getText();
@@ -85,8 +76,6 @@ public class EmployeeAddController implements Initializable {
         String employeePhone = phone.getText();
         String employeeEmail = email.getText();
         String employeeNif = nif.getText();
-        String employeeNotes = REMOTE_EMPLOYEE_PATH + this.id + ".json";
-        this.notesPath = employeeNotes;
 
         if (employeeName.isEmpty() || employeeAddress.isEmpty() || employeePhone.isEmpty()
                 || employeeEmail.isEmpty() || employeeNif.isEmpty()) {

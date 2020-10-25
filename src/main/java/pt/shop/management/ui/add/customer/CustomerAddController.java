@@ -8,16 +8,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Customer;
-import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.alert.AlertMaker;
 
-import java.io.File;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**

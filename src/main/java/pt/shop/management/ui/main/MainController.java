@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Main Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class MainController implements Initializable {
