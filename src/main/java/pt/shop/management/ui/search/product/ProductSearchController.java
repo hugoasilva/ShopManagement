@@ -53,7 +53,6 @@ public class ProductSearchController implements Initializable {
             "INNER JOIN suppliers ON suppliers.id=products.supplier_id";
 
 
-
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Product list object
     ObservableList<Product> list = FXCollections.observableArrayList();

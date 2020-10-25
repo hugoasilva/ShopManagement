@@ -9,12 +9,12 @@ package pt.shop.management.data.model;
 
 public class Product {
     private final String id;
+    private final String image;
     private String name;
     private String price;
     private String supplierId;
     private String supplierName;
     private String quantity;
-    private final String image;
 
     /**
      * Product object constructor
