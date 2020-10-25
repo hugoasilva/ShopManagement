@@ -15,7 +15,7 @@
             <padding>
                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
             </padding>
-            <FontIcon iconLiteral="fa-file-text" iconSize="60" styleClass="font-icon">
+            <FontIcon iconLiteral="fa-file-text" iconSize="80" styleClass="font-icon">
                 <VBox.margin>
                     <Insets left="210.0"/>
                 </VBox.margin>

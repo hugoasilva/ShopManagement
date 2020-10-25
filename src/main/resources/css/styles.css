@@ -72,7 +72,7 @@
 
 .tab-label {
     -fx-text-fill: -fx-secondary;
-    -fx-font-size: 12pt;
+    -fx-font-size: 14pt;
 }
 
 .tab-main {
@@ -111,12 +111,18 @@
 }
 
 .jfx-tab-pane .tab:selected {
-    -fx-background-color: -fx-primaryText;
+    -fx-background-color: -fx-secondary;
     -fx-background-radius: 100000px;
 }
 
 .jfx-tab-pane .tab-header-area {
     -fx-padding: 0 -50 20 50;
+}
+
+.jfx-tab-pane .tab-header-area .jfx-rippler{
+    -jfx-rippler-fill : -fx-blue;
+    -fx-stroke-width: 3pt;
+
 }
 
 /* Menu bar Styling */

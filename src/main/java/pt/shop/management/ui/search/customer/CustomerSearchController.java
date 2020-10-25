@@ -212,7 +212,7 @@ public class CustomerSearchController implements Initializable {
         alert.setContentText("Tem a certeza que pretende apagar o cliente " + selectedForDeletion.getName() + "?");
         Optional<ButtonType> answer = alert.showAndWait();
 
-        if (answer.get() == ButtonType.OK) {
+        if (answer.isPresent() && answer.get() == ButtonType.OK) {
             boolean result = DatabaseHandler.getInstance().deleteCustomer(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Cliente apagado",

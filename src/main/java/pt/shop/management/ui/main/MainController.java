@@ -65,10 +65,6 @@ public class MainController implements Initializable {
     @FXML
     private JFXTabPane productTabPane;
     @FXML
-    private JFXComboBox<Label> productCombo;
-    @FXML
-    private TextField productSearchInput;
-    @FXML
     private Tab productAddTab;
     @FXML
     private Tab productSearchTab;
@@ -110,16 +106,6 @@ public class MainController implements Initializable {
         stage.setFullScreen(!stage.isFullScreen());
     }
 
-    private void initCombos() {
-        //
-
-//
-//        // Initialize product combo box
-//        productCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
-//                new Label(new String("Preço".getBytes(), StandardCharsets.UTF_8)));
-//        productCombo.setPromptText("Tipo de pesquisa...");
-    }
-
     private void initComponents() {
         mainTabPane.tabMinWidthProperty().bind(
                 rootAnchorPane.widthProperty().divide(mainTabPane.getTabs().size()).subtract(40));
@@ -129,10 +115,9 @@ public class MainController implements Initializable {
                 rootAnchorPane.widthProperty().divide(employeeTabPane.getTabs().size()).subtract(50));
         invoiceTabPane.tabMinWidthProperty().bind(
                 rootAnchorPane.widthProperty().divide(invoiceTabPane.getTabs().size()).subtract(50));
-//        productTabPane.tabMinWidthProperty().bind(
-//                rootAnchorPane.widthProperty().divide(productTabPane.getTabs().size()).subtract(15));
+        productTabPane.tabMinWidthProperty().bind(
+                rootAnchorPane.widthProperty().divide(productTabPane.getTabs().size()).subtract(50));
     }
-
 
     private void initTabs() {
         try {
@@ -152,10 +137,10 @@ public class MainController implements Initializable {
             invoiceSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/invoice/InvoiceSearch.fxml")));
             // Initialize product tab content
-//            productAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
-//                    "/fxml/product/ProductAdd.fxml")));
-//            productSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
-//                    "/fxml/product/ProductSearch.fxml")));
+            productAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+                    "/fxml/product/ProductAdd.fxml")));
+            productSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+                    "/fxml/product/ProductSearch.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }

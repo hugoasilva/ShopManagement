@@ -1,7 +1,7 @@
 # Material Design Shop Management Software using JavaFX
 This is a shop management software developed using JavaFX programming language.   
 ### Last updated
-* 2020-10-24
+* 2020-10-25
 
 ### Software Used
   * [Ikonli v11.5.0](https://github.com/kordamp/ikonli) - JavaFX Icon library.
