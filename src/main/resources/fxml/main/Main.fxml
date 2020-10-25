@@ -1,42 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="custom-pane"
-           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.main.MainController">
+
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="custom-pane" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.shop.management.ui.main.MainController">
     <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0">
-        <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="25.0">
-            <JFXTabPane fx:id="mainTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <Tab closable="false" styleClass="tab-main" text="Clientes">
+        <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+            <JFXTabPane fx:id="mainTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                <Tab closable="false" style="-fx-padding: 15 15 15 15;" styleClass="tab-main" text="Clientes">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0">
-                        <JFXTabPane fx:id="customerTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="customerAddTab" closable="false" styleClass="tab-main" text="Adicionar"/>
-                            <Tab fx:id="customerSearchTab" closable="false" styleClass="tab-main" text="Pesquisar"/>
+                        <JFXTabPane fx:id="customerTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="customerAddTab" closable="false" styleClass="tab-main" text="Adicionar" />
+                            <Tab fx:id="customerSearchTab" closable="false" styleClass="tab-main" text="Pesquisar" />
                         </JFXTabPane>
                     </AnchorPane>
                 </Tab>
                 <Tab closable="false" styleClass="tab-main" text="Empregados">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <JFXTabPane fx:id="employeeTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="employeeAddTab" closable="false" styleClass="tab-main" text="Adicionar"/>
-                            <Tab fx:id="employeeSearchTab" closable="false" styleClass="tab-main" text="Pesquisar"/>
+                        <JFXTabPane fx:id="employeeTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="employeeAddTab" closable="false" styleClass="tab-main" text="Adicionar" />
+                            <Tab fx:id="employeeSearchTab" closable="false" styleClass="tab-main" text="Pesquisar" />
                         </JFXTabPane>
                     </AnchorPane>
                 </Tab>
                 <Tab closable="false" styleClass="tab-main" text="Faturas">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <JFXTabPane fx:id="invoiceTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="invoiceAddTab" closable="false" styleClass="tab-main" text="Adicionar"/>
-                            <Tab fx:id="invoiceSearchTab" closable="false" styleClass="tab-main" text="Pesquisar"/>
+                        <JFXTabPane fx:id="invoiceTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="invoiceAddTab" closable="false" styleClass="tab-main" text="Adicionar" />
+                            <Tab fx:id="invoiceSearchTab" closable="false" styleClass="tab-main" text="Pesquisar" />
                         </JFXTabPane>
                     </AnchorPane>
                 </Tab>
@@ -53,15 +45,15 @@
         </AnchorPane>
         <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Menu mnemonicParsing="false" text="Ficheiro">
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuClose" text="Sair"/>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuClose" text="Sair" />
             </Menu>
             <Menu mnemonicParsing="false" text="Adicionar">
             </Menu>
             <Menu mnemonicParsing="false" text="Ver">
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFullScreen" text="Full Screen"/>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFullScreen" text="Full Screen" />
             </Menu>
             <Menu mnemonicParsing="false" text="Ajuda">
-                <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="Sobre"/>
+                <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="Sobre" />
             </Menu>
         </MenuBar>
     </AnchorPane>

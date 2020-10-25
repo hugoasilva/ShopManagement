@@ -122,13 +122,13 @@ public class MainController implements Initializable {
 
     private void initComponents() {
         mainTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(mainTabPane.getTabs().size()).subtract(15));
+                rootAnchorPane.widthProperty().divide(mainTabPane.getTabs().size()).subtract(40));
         customerTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(customerTabPane.getTabs().size()).subtract(15));
+                rootAnchorPane.widthProperty().divide(customerTabPane.getTabs().size()).subtract(50));
         employeeTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(employeeTabPane.getTabs().size()).subtract(15));
+                rootAnchorPane.widthProperty().divide(employeeTabPane.getTabs().size()).subtract(50));
         invoiceTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(invoiceTabPane.getTabs().size()).subtract(15));
+                rootAnchorPane.widthProperty().divide(invoiceTabPane.getTabs().size()).subtract(50));
 //        productTabPane.tabMinWidthProperty().bind(
 //                rootAnchorPane.widthProperty().divide(productTabPane.getTabs().size()).subtract(15));
     }
