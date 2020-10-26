@@ -18,7 +18,6 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.search.invoice.InvoiceSearchController;
 
 import java.io.File;
 import java.net.URL;
@@ -32,7 +31,7 @@ import java.util.ResourceBundle;
  * Invoice Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class InvoiceAddController implements Initializable {
@@ -41,8 +40,6 @@ public class InvoiceAddController implements Initializable {
     private static final Logger LOGGER = LogManager.getLogger(InvoiceAddController.class.getName());
     // Directory paths
     private final static String REMOTE_INVOICE_PATH = "/home/pi/gestao/faturas/";
-    // Database handler instance
-    private DatabaseHandler databaseHandler;
     // Invoice data
     private String id;
     private String invoicePath;
@@ -152,7 +149,7 @@ public class InvoiceAddController implements Initializable {
     private void handleUpdateInvoice() throws SQLException {
         Invoice invoice = new Invoice(id, customer.getText(), employee.getText(),
                 date.getValue().toString(), products.getText(), pdf.getText());
-        if (databaseHandler.updateInvoice(invoice)) {
+        if (DatabaseHandler.updateInvoice(invoice)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de fatura atualizados.", true);

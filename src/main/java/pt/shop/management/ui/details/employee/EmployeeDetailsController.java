@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  * Employee Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class EmployeeDetailsController implements Initializable {
@@ -42,8 +42,6 @@ public class EmployeeDetailsController implements Initializable {
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // UI content
     @FXML
     private Label id;
@@ -115,7 +113,7 @@ public class EmployeeDetailsController implements Initializable {
      */
     private void getEmployeeNotes() throws SQLException {
         list.clear();
-        list = DatabaseHandler.getEmployeeNotes(this.employee);
+        list = DatabaseHandler.getEmployeeNotesList(this.employee);
         tableView.setItems(list);
     }
 

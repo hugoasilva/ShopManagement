@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Product;
 
 import java.net.URL;
@@ -15,15 +14,13 @@ import java.util.ResourceBundle;
  * Product Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class ProductDetailsController implements Initializable {
 
     // Product data
     private final Product product;
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // UI Content
     @FXML
     private Label id;

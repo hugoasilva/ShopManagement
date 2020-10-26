@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  * Customer Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class CustomerDetailsController implements Initializable {
@@ -44,8 +44,6 @@ public class CustomerDetailsController implements Initializable {
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // UI content
     @FXML
     private Label id;
@@ -117,7 +115,7 @@ public class CustomerDetailsController implements Initializable {
      */
     private void getCustomerNotes() throws SQLException {
         list.clear();
-        list = DatabaseHandler.getCustomerNotes(this.customer);
+        list = DatabaseHandler.getCustomerNotesList(this.customer);
         tableView.setItems(list);
     }
 

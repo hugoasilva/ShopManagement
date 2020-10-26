@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  * Customer Search Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class CustomerSearchController implements Initializable {
@@ -239,7 +239,7 @@ public class CustomerSearchController implements Initializable {
         } else {
             String comboInput = customerCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = customerSearchInput.getText();
-            this.list = DatabaseHandler.getCustomerSearch(comboInput, searchInput);
+            this.list = DatabaseHandler.searchCustomer(comboInput, searchInput);
             tableView.setItems(list);
         }
     }

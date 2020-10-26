@@ -17,8 +17,6 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.search.invoice.InvoiceSearchController;
-import pt.shop.management.ui.search.product.ProductSearchController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -34,7 +32,7 @@ import java.util.ResourceBundle;
  * Product Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class ProductAddController implements Initializable {
@@ -44,8 +42,6 @@ public class ProductAddController implements Initializable {
     // Directory paths
     private final static String LOCAL_UPLOAD_PATH = "uploads/";
     private final static String REMOTE_PRODUCT_PATH = "/home/pi/management/products/";
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // Product data
     private String id;
     private String imagePath;

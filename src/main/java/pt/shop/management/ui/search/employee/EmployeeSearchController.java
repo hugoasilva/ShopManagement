@@ -238,7 +238,7 @@ public class EmployeeSearchController implements Initializable {
         } else {
             String comboInput = employeeCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = employeeSearchInput.getText();
-            this.list = DatabaseHandler.getEmployeeSearch(comboInput, searchInput);
+            this.list = DatabaseHandler.searchEmployee(comboInput, searchInput);
             this.tableView.setItems(list);
         }
     }

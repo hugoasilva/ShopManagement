@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.search.employee.EmployeeSearchController;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -27,8 +26,6 @@ import java.util.ResourceBundle;
 
 public class EmployeeAddController implements Initializable {
 
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // Employee data
     private String id;
     private String editId;

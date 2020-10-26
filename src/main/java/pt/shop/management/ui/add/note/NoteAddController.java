@@ -21,15 +21,13 @@ import java.util.ResourceBundle;
  * Note Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class NoteAddController implements Initializable {
 
     // Note data
     private final String id;
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     private String noteId;
     private String type;
     private Boolean isInEditMode = false;

@@ -68,8 +68,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initComponents();
-        this.initTabs();
+        this.initComponents();
     }
 
     private Stage getStage() {
@@ -97,26 +96,36 @@ public class MainController implements Initializable {
                 "/fxml/about/About.fxml"), "Sobre", null);
     }
 
+    /**
+     * Handle menu full screen item
+     *
+     * @param event - click event
+     */
     @FXML
     private void handleMenuFullScreen(ActionEvent event) {
         Stage stage = getStage();
         stage.setFullScreen(!stage.isFullScreen());
     }
 
+    /**
+     * Initialize tab panes
+     */
     private void initComponents() {
         mainTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(mainTabPane.getTabs().size()).subtract(40));
+                rootAnchorPane.widthProperty().divide(
+                        mainTabPane.getTabs().size()).subtract(40));
         customerTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(customerTabPane.getTabs().size()).subtract(50));
+                rootAnchorPane.widthProperty().divide(
+                        customerTabPane.getTabs().size()).subtract(50));
         employeeTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(employeeTabPane.getTabs().size()).subtract(50));
+                rootAnchorPane.widthProperty().divide(
+                        employeeTabPane.getTabs().size()).subtract(50));
         invoiceTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(invoiceTabPane.getTabs().size()).subtract(50));
+                rootAnchorPane.widthProperty().divide(
+                        invoiceTabPane.getTabs().size()).subtract(50));
         productTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(productTabPane.getTabs().size()).subtract(50));
-    }
-
-    private void initTabs() {
+                rootAnchorPane.widthProperty().divide(
+                        productTabPane.getTabs().size()).subtract(50));
         try {
             // Initialize customer tab content
             customerAddTab.setContent(FXMLLoader.load(this.getClass().getResource(

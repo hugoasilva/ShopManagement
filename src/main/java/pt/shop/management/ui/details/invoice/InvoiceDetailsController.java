@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Invoice;
 
 import java.net.URL;
@@ -15,15 +14,13 @@ import java.util.ResourceBundle;
  * Invoice Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-24
+ * @version 2020-10-25
  */
 
 public class InvoiceDetailsController implements Initializable {
 
     // Invoice data
     private final Invoice invoice;
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // UI Content
     @FXML
     private Label id;

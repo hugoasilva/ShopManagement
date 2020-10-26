@@ -5,8 +5,15 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+/**
+ * Database Pool Class
+ *
+ * @author Hugo Silva
+ * @version 2020-10-25
+ */
+
 public class DatabasePool {
-    private static BasicDataSource dataSource;
+    private static final BasicDataSource dataSource;
 
     static {
         dataSource = new BasicDataSource();

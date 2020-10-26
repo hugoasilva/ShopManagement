@@ -230,7 +230,7 @@ public class ProductSearchController implements Initializable {
         } else {
             String comboInput = productCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = productSearchInput.getText();
-            this.list = DatabaseHandler.getProductSearch(comboInput, searchInput);
+            this.list = DatabaseHandler.searchProduct(comboInput, searchInput);
             this.tableView.setItems(list);
         }
     }

@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.search.customer.CustomerSearchController;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -22,13 +21,11 @@ import java.util.ResourceBundle;
  * Customer Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class CustomerAddController implements Initializable {
 
-    // Database handler instance
-    DatabaseHandler databaseHandler;
     // Customer data
     private String id;
     private String editId;

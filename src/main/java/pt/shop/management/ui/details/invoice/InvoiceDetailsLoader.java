@@ -10,7 +10,7 @@ import javafx.stage.Stage;
  * Invoice Details Loader Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 public class InvoiceDetailsLoader extends Application {
 

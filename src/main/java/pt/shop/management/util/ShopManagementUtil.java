@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 /**
  * Shop Management Util Class
@@ -80,19 +79,6 @@ public class ShopManagementUtil {
 
     public static String getDateString(Date date) {
         return DATE_FORMAT.format(date);
-    }
-
-    /**
-     * Check if email address is valid
-     *
-     * @param emailID - email address
-     * @return - true if valid, false otherwise
-     */
-    public static boolean validateEmailAddress(String emailID) {
-        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(emailID).matches();
     }
 
     /**
