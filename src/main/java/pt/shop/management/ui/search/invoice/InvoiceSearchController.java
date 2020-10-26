@@ -274,7 +274,7 @@ public class InvoiceSearchController implements Initializable {
         } else {
             String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = invoiceSearchInput.getText();
-            this.list = DatabaseHandler.getInvoiceSearch(comboInput, searchInput);
+            this.list = DatabaseHandler.searchInvoice(comboInput, searchInput);
             this.tableView.setItems(list);
         }
     }

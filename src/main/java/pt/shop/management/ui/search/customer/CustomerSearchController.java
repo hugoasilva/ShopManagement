@@ -124,8 +124,8 @@ public class CustomerSearchController implements Initializable {
      * Initialize search combo box
      */
     private void initCombo() {
-        customerCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
-                new Label("NIF"), new Label("Contacto"), new Label("E-mail"));
+        customerCombo.getItems().addAll(new Label("ID ou Nome"), new Label("NIF"),
+                new Label("Contacto"), new Label("E-mail"));
         customerCombo.setPromptText("Tipo de pesquisa...");
     }
 

@@ -124,8 +124,8 @@ public class EmployeeSearchController implements Initializable {
      * Assign table columns to employee properties
      */
     private void initCombo() {
-        employeeCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
-                new Label("NIF"), new Label("Contacto"), new Label("E-mail"));
+        employeeCombo.getItems().addAll(new Label("ID ou Nome"), new Label("NIF"),
+                new Label("Contacto"), new Label("E-mail"));
         employeeCombo.setPromptText("Tipo de pesquisa...");
     }
 

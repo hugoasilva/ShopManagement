@@ -37,7 +37,7 @@ public final class DatabaseHandler {
     private static final String GET_CUSTOMERS_QUERY =
             "SELECT * FROM customers";
     private static final String SEARCH_CUSTOMERS_BY_ID_QUERY =
-            "SELECT * FROM customers WHERE id=?";
+            "SELECT * FROM customers WHERE id LIKE ?";
     private static final String SEARCH_CUSTOMERS_BY_NAME_QUERY =
             "SELECT * FROM customers WHERE name LIKE ?";
     private static final String SEARCH_CUSTOMERS_BY_NIF_QUERY =
@@ -55,7 +55,7 @@ public final class DatabaseHandler {
     private static final String GET_EMPLOYEES_QUERY =
             "SELECT * FROM employees";
     private static final String SEARCH_EMPLOYEES_BY_ID_QUERY =
-            "SELECT * FROM employees WHERE id=?";
+            "SELECT * FROM employees WHERE id LIKE ?";
     private static final String SEARCH_EMPLOYEES_BY_NAME_QUERY =
             "SELECT * FROM employees WHERE name LIKE ?";
     private static final String SEARCH_EMPLOYEES_BY_NIF_QUERY =
@@ -76,7 +76,7 @@ public final class DatabaseHandler {
                     "INNER JOIN customers ON customers.id=invoices.customer_id " +
                     "INNER JOIN employees ON employees.id=invoices.employee_id";
     private static final String SEARCH_INVOICES_BY_ID_QUERY =
-            "SELECT * FROM invoices WHERE id=?";
+            "SELECT * FROM invoices WHERE id LIKE ?";
     private static final String SEARCH_INVOICES_BY_CUSTOMER_QUERY =
             "SELECT * FROM invoices WHERE customer_id=?";
     private static final String SEARCH_INVOICES_BY_EMPLOYEE_QUERY =
@@ -103,7 +103,7 @@ public final class DatabaseHandler {
                     "FROM products " +
                     "INNER JOIN suppliers ON suppliers.id=products.supplier_id";
     private static final String SEARCH_PRODUCTS_BY_ID_QUERY =
-            "SELECT * FROM products WHERE id=?";
+            "SELECT * FROM products WHERE id LIKE ?";
     private static final String SEARCH_PRODUCTS_BY_NAME_QUERY =
             "SELECT * FROM products WHERE name LIKE ?";
     private static final String SEARCH_PRODUCTS_BY_PRICE_QUERY =
@@ -154,6 +154,9 @@ public final class DatabaseHandler {
     private static final String UPDATE_PRODUCT_QUERY =
             "UPDATE products SET name=?, price=?, supplier_id=?, quantity=? WHERE id=?";
 
+    private static Connection connection = null;
+    private static PreparedStatement preparedStatement = null;
+
     /**
      * Log SQL Exception
      *
@@ -176,19 +179,49 @@ public final class DatabaseHandler {
     }
 
     /**
+     * Check login credentials
+     *
+     * @param username - username
+     * @param password - password
+     * @return - true if correct, false otherwise
+     * @throws SQLException - SQL exception
+     */
+    public static boolean login(String username, String password) throws SQLException {
+        try {
+            DataSource ds = DatabasePool.getConnection();
+            // Get connection
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(LOGIN_QUERY);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return false;
+    }
+
+    /**
      * Get new customer id
      *
      * @return new customer's id
      */
     public static int getCustomerId() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMER_ID_QUERY);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
@@ -212,11 +245,9 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertCustomer(Customer customer) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_CUSTOMER_QUERY);
             preparedStatement.setString(1, customer.getName());
@@ -224,7 +255,6 @@ public final class DatabaseHandler {
             preparedStatement.setString(3, customer.getPhone());
             preparedStatement.setString(4, customer.getEmail());
             preparedStatement.setString(5, customer.getNif());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -246,15 +276,12 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteCustomer(Customer customer) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_CUSTOMER_QUERY);
             preparedStatement.setString(1, customer.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -276,11 +303,9 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateCustomer(Customer customer) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_CUSTOMER_QUERY);
             preparedStatement.setString(1, customer.getName());
@@ -289,7 +314,6 @@ public final class DatabaseHandler {
             preparedStatement.setString(4, customer.getEmail());
             preparedStatement.setString(5, customer.getNif());
             preparedStatement.setString(6, customer.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -312,15 +336,11 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Customer> getCustomerList() throws SQLException {
         ObservableList<Customer> list = FXCollections.observableArrayList();
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMERS_QUERY);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
@@ -355,14 +375,14 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Customer> searchCustomer(String combo, String search) throws SQLException {
         ObservableList<Customer> list = FXCollections.observableArrayList();
-
         String query = null;
         switch (combo) {
-            case "ID":
-                query = SEARCH_CUSTOMERS_BY_ID_QUERY;
-                break;
-            case "Nome":
-                query = SEARCH_CUSTOMERS_BY_NAME_QUERY;
+            case "ID ou Nome":
+                if (search.matches("[0-9]+")) {
+                    query = SEARCH_CUSTOMERS_BY_ID_QUERY;
+                } else {
+                    query = SEARCH_CUSTOMERS_BY_NAME_QUERY;
+                }
                 search = "%" + search + "%";
                 break;
             case "NIF":
@@ -375,16 +395,12 @@ public final class DatabaseHandler {
                 query = SEARCH_CUSTOMERS_BY_EMAIL_QUERY;
                 break;
         }
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
@@ -415,14 +431,11 @@ public final class DatabaseHandler {
      * @return new employee's id
      */
     public static int getEmployeeId() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEE_ID_QUERY);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
@@ -446,11 +459,9 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertEmployee(Employee employee) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE_QUERY);
             preparedStatement.setString(1, employee.getName());
@@ -458,7 +469,6 @@ public final class DatabaseHandler {
             preparedStatement.setString(3, employee.getPhone());
             preparedStatement.setString(4, employee.getEmail());
             preparedStatement.setString(5, employee.getNif());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -480,15 +490,12 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteEmployee(Employee employee) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE_QUERY);
             preparedStatement.setString(1, employee.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -510,11 +517,9 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateEmployee(Employee employee) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE_QUERY);
             preparedStatement.setString(1, employee.getName());
@@ -523,7 +528,6 @@ public final class DatabaseHandler {
             preparedStatement.setString(4, employee.getEmail());
             preparedStatement.setString(5, employee.getNif());
             preparedStatement.setString(6, employee.getId());
-
             return (preparedStatement.executeUpdate() > 0);
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -546,15 +550,11 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Employee> getEmployeeList() throws SQLException {
         ObservableList<Employee> list = FXCollections.observableArrayList();
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEES_QUERY);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
@@ -589,14 +589,14 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Employee> searchEmployee(String combo, String search) throws SQLException {
         ObservableList<Employee> list = FXCollections.observableArrayList();
-
         String query = null;
         switch (combo) {
-            case "ID":
-                query = SEARCH_EMPLOYEES_BY_ID_QUERY;
-                break;
-            case "Nome":
-                query = SEARCH_EMPLOYEES_BY_NAME_QUERY;
+            case "ID ou Nome":
+                if (search.matches("[0-9]+")) {
+                    query = SEARCH_EMPLOYEES_BY_ID_QUERY;
+                } else {
+                    query = SEARCH_EMPLOYEES_BY_NAME_QUERY;
+                }
                 search = "%" + search + "%";
                 break;
             case "NIF":
@@ -609,16 +609,12 @@ public final class DatabaseHandler {
                 query = SEARCH_EMPLOYEES_BY_EMAIL_QUERY;
                 break;
         }
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
@@ -649,14 +645,11 @@ public final class DatabaseHandler {
      * @return new invoice's id
      */
     public static int getInvoiceId() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_INVOICE_ID_QUERY);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
@@ -680,18 +673,15 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertInvoice(Invoice invoice) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_INVOICE_QUERY);
             preparedStatement.setString(1, invoice.getCustomerId());
             preparedStatement.setString(2, invoice.getEmployeeId());
             preparedStatement.setString(3, invoice.getDate());
             preparedStatement.setString(4, invoice.getPdf());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -713,15 +703,12 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteInvoice(Invoice invoice) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_INVOICE_QUERY);
             preparedStatement.setString(1, invoice.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -744,12 +731,9 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Invoice> getInvoiceList() throws SQLException {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_INVOICES_QUERY);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -787,13 +771,13 @@ public final class DatabaseHandler {
      * @return - invoice search list
      * @throws SQLException - SQL exception
      */
-    public static ObservableList<Invoice> getInvoiceSearch(String combo, String search) throws SQLException {
+    public static ObservableList<Invoice> searchInvoice(String combo, String search) throws SQLException {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
-
         String query = null;
         switch (combo) {
             case "ID":
                 query = SEARCH_INVOICES_BY_ID_QUERY;
+                search = "%" + search + "%";
                 break;
             case "ID Cliente":
                 query = SEARCH_INVOICES_BY_CUSTOMER_QUERY;
@@ -805,12 +789,9 @@ public final class DatabaseHandler {
                 query = SEARCH_INVOICES_BY_DATE_QUERY;
                 break;
         }
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
@@ -825,7 +806,6 @@ public final class DatabaseHandler {
 
                 list.add(new Invoice(id, customerId, employeeId, date, products, pdf));
             }
-
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
@@ -845,14 +825,11 @@ public final class DatabaseHandler {
      * @return new customer note's id
      */
     public static int getCustomerNotesId() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMER_NOTE_ID_QUERY);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
@@ -876,16 +853,13 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertCustomerNote(Note note) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_CUSTOMER_NOTE_QUERY);
             preparedStatement.setString(1, note.getPersonId());
             preparedStatement.setString(2, note.getMessage());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -907,15 +881,12 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteCustomerNote(Note note) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_CUSTOMER_NOTE_QUERY);
             preparedStatement.setString(1, note.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -937,16 +908,13 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateCustomerNote(Note note) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_CUSTOMER_NOTE_QUERY);
             preparedStatement.setString(1, note.getMessage());
             preparedStatement.setString(2, note.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -970,16 +938,12 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Note> getCustomerNotesList(Customer customer) throws SQLException {
         ObservableList<Note> list = FXCollections.observableArrayList();
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMER_NOTES_QUERY);
             preparedStatement.setString(1, customer.getId());
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
@@ -1004,14 +968,11 @@ public final class DatabaseHandler {
      * Get employee note new id
      */
     public static int getEmployeeNotesId() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEE_NOTE_ID_QUERY);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
@@ -1035,16 +996,13 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertEmployeeNote(Note note) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE_NOTE_QUERY);
             preparedStatement.setString(1, note.getPersonId());
             preparedStatement.setString(2, note.getMessage());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1066,15 +1024,12 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteEmployeeNote(Note note) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE_NOTE_QUERY);
             preparedStatement.setString(1, note.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1096,16 +1051,13 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateEmployeeNote(Note note) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE_NOTE_QUERY);
             preparedStatement.setString(1, note.getMessage());
             preparedStatement.setString(2, note.getId());
-
             return (preparedStatement.executeUpdate() > 0);
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1129,16 +1081,12 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Note> getEmployeeNotesList(Employee employee) throws SQLException {
         ObservableList<Note> list = FXCollections.observableArrayList();
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEE_NOTES_QUERY);
             preparedStatement.setString(1, employee.getId());
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
@@ -1165,14 +1113,11 @@ public final class DatabaseHandler {
      * @return new product's id
      */
     public static int getProductId() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_PRODUCT_ID_QUERY);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
@@ -1196,18 +1141,15 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertProduct(Product product) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getPrice());
             preparedStatement.setString(3, product.getQuantity());
             preparedStatement.setString(4, product.getImage());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1230,17 +1172,13 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Product> getProductList() throws SQLException {
         ObservableList<Product> list = FXCollections.observableArrayList();
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_PRODUCTS_QUERY);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
                 String price = resultSet.getString("price");
@@ -1276,14 +1214,14 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Product> searchProduct(String combo, String search) throws SQLException {
         ObservableList<Product> list = FXCollections.observableArrayList();
-
         String query = null;
         switch (combo) {
-            case "ID":
-                query = SEARCH_PRODUCTS_BY_ID_QUERY;
-                break;
-            case "Nome":
-                query = SEARCH_PRODUCTS_BY_NAME_QUERY;
+            case "ID ou Nome":
+                if (search.matches("[0-9]+")) {
+                    query = SEARCH_PRODUCTS_BY_ID_QUERY;
+                } else {
+                    query = SEARCH_PRODUCTS_BY_NAME_QUERY;
+                }
                 search = "%" + search + "%";
                 break;
             case "Preço":
@@ -1293,16 +1231,12 @@ public final class DatabaseHandler {
                 query = SEARCH_PRODUCTS_BY_QUANTITY_QUERY;
                 break;
         }
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
@@ -1327,33 +1261,6 @@ public final class DatabaseHandler {
         return list;
     }
 
-    public static boolean login(String username, String password) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            DataSource ds = DatabasePool.getConnection();
-            // getting connection
-            connection = ds.getConnection();
-            preparedStatement = connection.prepareStatement(LOGIN_QUERY);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return false;
-    }
-
     /**
      * Delete product from database
      *
@@ -1361,15 +1268,12 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteProduct(Product product) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1391,11 +1295,9 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateProduct(Product product) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getName());
@@ -1403,7 +1305,6 @@ public final class DatabaseHandler {
             preparedStatement.setString(3, product.getSupplierId());
             preparedStatement.setString(4, product.getQuantity());
             preparedStatement.setString(5, product.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1425,18 +1326,15 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateInvoice(Invoice invoice) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_INVOICE_QUERY);
             preparedStatement.setString(1, invoice.getCustomerId());
             preparedStatement.setString(2, invoice.getEmployeeId());
             preparedStatement.setString(3, invoice.getDate());
             preparedStatement.setString(4, invoice.getId());
-
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1458,15 +1356,12 @@ public final class DatabaseHandler {
      * @return - invoice count
      */
     public int getCustomerInvoiceCount(Customer customer) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMER_INVOICE_COUNT);
             preparedStatement.setString(1, customer.getId());
-
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -1491,15 +1386,12 @@ public final class DatabaseHandler {
      * @return - invoice count
      */
     public int getEmployeeInvoiceCount(Employee employee) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
-            // getting connection
+            // Get connection
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEE_INVOICE_COUNT);
             preparedStatement.setString(1, employee.getId());
-
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);

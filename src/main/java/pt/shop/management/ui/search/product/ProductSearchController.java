@@ -121,7 +121,7 @@ public class ProductSearchController implements Initializable {
      * Initialize search combo box
      */
     private void initCombo() {
-        productCombo.getItems().addAll(new Label("ID"), new Label("Nome"),
+        productCombo.getItems().addAll(new Label("ID ou Nome"),
                 new Label(new String("Preço".getBytes(), StandardCharsets.UTF_8), new Label("Quantidade")));
         productCombo.setPromptText("Tipo de pesquisa...");
     }
