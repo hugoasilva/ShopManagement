@@ -214,9 +214,7 @@ public class CustomerSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        String comboInput = customerCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = customerSearchInput.getText();
-        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+        if (customerCombo.getValue() == null && customerSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getCustomerList();
             this.tableView.setItems(list);

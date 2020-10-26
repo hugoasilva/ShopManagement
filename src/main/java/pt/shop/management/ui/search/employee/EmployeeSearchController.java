@@ -214,9 +214,7 @@ public class EmployeeSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        String comboInput = employeeCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = employeeSearchInput.getText();
-        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+        if (employeeCombo.getValue() == null && employeeSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getEmployeeList();
             this.tableView.setItems(list);

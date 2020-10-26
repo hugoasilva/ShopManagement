@@ -207,9 +207,7 @@ public class ProductSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        String comboInput = productCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = productSearchInput.getText();
-        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+        if (productCombo.getValue() != null && productSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getProductList();
             this.tableView.setItems(list);

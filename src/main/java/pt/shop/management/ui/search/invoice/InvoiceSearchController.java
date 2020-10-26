@@ -252,7 +252,7 @@ public class InvoiceSearchController implements Initializable {
     public void refreshTable() throws SQLException {
         String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
         String searchInput = invoiceSearchInput.getText();
-        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+        if (invoiceCombo.getValue() == null && invoiceSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getInvoiceList();
             this.tableView.setItems(list);

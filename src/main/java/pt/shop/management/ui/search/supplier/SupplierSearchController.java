@@ -208,9 +208,7 @@ public class SupplierSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        String comboInput = supplierCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = supplierSearchInput.getText();
-        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+        if (supplierCombo.getValue() == null && supplierSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getSupplierList();
             this.tableView.setItems(list);
