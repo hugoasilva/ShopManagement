@@ -6,19 +6,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.alert.AlertMaker;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -32,11 +29,8 @@ import java.util.ResourceBundle;
 
 public class SupplierAddController implements Initializable {
 
-    // Logger
-    private static final Logger LOGGER = LogManager.getLogger(SupplierAddController.class.getName());
     // Supplier data
     private String id;
-    private String imagePath;
     private Boolean isInEditMode = Boolean.FALSE;
     ;
     // UI Content
@@ -101,16 +95,16 @@ public class SupplierAddController implements Initializable {
 
         Supplier supplier = new Supplier(supplierId, supplierName,
                 supplierAddress, supplierPhone, supplierEmail, supplierNif);
-//        if (DatabaseHandler.insertSupplier(supplier)) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Fornecedor adicionado",
-//                    supplierName + " adicionado com sucesso!", true);
-//            clearEntries();
-//        } else {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Ocorreu um erro",
-//                    "Verifique os dados e tente novamente.", false);
-//        }
+        if (DatabaseHandler.insertSupplier(supplier)) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Fornecedor adicionado",
+                    supplierName + " adicionado com sucesso!", true);
+            clearEntries();
+        } else {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Ocorreu um erro",
+                    "Verifique os dados e tente novamente.", false);
+        }
     }
 
     /**
@@ -146,32 +140,15 @@ public class SupplierAddController implements Initializable {
         Supplier supplier =
                 new Supplier(id, name.getText(), address.getText(),
                         phone.getText(), email.getText(), nif.getText());
-//        if (DatabaseHandler.updateSupplier(supplier)) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Successo!",
-//                    "Dados de fornecedor atualizados.", false);
-//        } else {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Erro",
-//                    new String("Não foi possível atualizar os dados.".getBytes(),
-//                            StandardCharsets.UTF_8), false);
-//        }
-    }
-
-    public void chooseImage(ActionEvent actionEvent) {
-        // Open File Chooser
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Abrir Imagem");
-        fileChooser.getExtensionFilters().addAll(new
-                FileChooser.ExtensionFilter("Imagem do produto", "*.jpg", "*.jpeg", "*.png"));
-        Stage stage = new Stage(StageStyle.DECORATED);
-
-        // Store File Path
-        File file = fileChooser.showOpenDialog(stage);
-        if (file == null) {
-            LOGGER.log(Level.INFO, "No image file was selected.");
+        if (DatabaseHandler.updateSupplier(supplier)) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Successo!",
+                    "Dados de fornecedor atualizados.", false);
         } else {
-            this.imagePath = file.getAbsolutePath();
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Erro",
+                    new String("Não foi possível atualizar os dados.".getBytes(),
+                            StandardCharsets.UTF_8), false);
         }
     }
 }

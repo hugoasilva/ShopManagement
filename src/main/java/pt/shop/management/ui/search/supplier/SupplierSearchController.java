@@ -124,7 +124,7 @@ public class SupplierSearchController implements Initializable {
      */
     private void initCombo() {
         supplierCombo.getItems().addAll(new Label("ID ou Nome"),
-                new Label(new String("Preço".getBytes(), StandardCharsets.UTF_8)), new Label("Quantidade"));
+                new Label("Contacto"), new Label("E-mail"), new Label("NIF"));
         supplierCombo.setPromptText("Tipo de pesquisa...");
     }
 
@@ -155,7 +155,7 @@ public class SupplierSearchController implements Initializable {
      * @throws SQLException - database exception
      */
     public void loadData() throws SQLException {
-        // this.list = DatabaseHandler.getSupplierList();
+        this.list = DatabaseHandler.getSupplierList();
         tableView.setItems(list);
     }
 
@@ -212,7 +212,7 @@ public class SupplierSearchController implements Initializable {
         String searchInput = supplierSearchInput.getText();
         if (comboInput.isEmpty() && searchInput.isEmpty()) {
             this.list.clear();
-            //this.list = DatabaseHandler.getSupplierList();
+            this.list = DatabaseHandler.getSupplierList();
             this.tableView.setItems(list);
         } else {
             this.searchSupplier();
@@ -232,7 +232,7 @@ public class SupplierSearchController implements Initializable {
         } else {
             String comboInput = supplierCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = supplierSearchInput.getText();
-            //this.list = DatabaseHandler.searchSupplier(comboInput, searchInput);
+            this.list = DatabaseHandler.searchSupplier(comboInput, searchInput);
             this.tableView.setItems(list);
         }
     }

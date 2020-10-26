@@ -155,6 +155,23 @@ public final class DatabaseHandler {
                     "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
                     "WHERE products.quantity=?";
 
+    // Supplier queries
+    // Customer select queries
+    private static final String GET_SUPPLIER_ID_QUERY =
+            "SELECT COUNT(*) FROM suppliers";
+    private static final String GET_SUPPLIERS_QUERY =
+            "SELECT * FROM suppliers";
+    private static final String SEARCH_SUPPLIERS_BY_ID_QUERY =
+            "SELECT * FROM suppliers WHERE id LIKE ?";
+    private static final String SEARCH_SUPPLIERS_BY_NAME_QUERY =
+            "SELECT * FROM suppliers WHERE name LIKE ?";
+    private static final String SEARCH_SUPPLIERS_BY_NIF_QUERY =
+            "SELECT * FROM suppliers WHERE nif LIKE ?";
+    private static final String SEARCH_SUPPLIERS_BY_PHONE_QUERY =
+            "SELECT * FROM suppliers WHERE phone LIKE ?";
+    private static final String SEARCH_SUPPLIERS_BY_EMAIL_QUERY =
+            "SELECT * FROM suppliers WHERE email LIKE ?";
+
     // Delete queries
     private static final String DELETE_CUSTOMER_QUERY =
             "DELETE FROM customers WHERE id = ?";
@@ -168,6 +185,8 @@ public final class DatabaseHandler {
             "DELETE FROM invoices WHERE id = ?";
     private static final String DELETE_PRODUCT_QUERY =
             "DELETE FROM products WHERE id = ?";
+    private static final String DELETE_SUPPLIER_QUERY =
+            "DELETE FROM suppliers WHERE id = ?";
 
     // Insert queries
     private final static String INSERT_CUSTOMER_QUERY =
@@ -183,6 +202,8 @@ public final class DatabaseHandler {
             "INSERT INTO invoices (customer_id, employee_id, date, pdf) VALUES (?, ?, ?, ?)";
     private final static String INSERT_PRODUCT_QUERY =
             "INSERT INTO products (name, price, supplier_id, quantity, image) VALUES (?, ?, ?, ?, ?)";
+    private final static String INSERT_SUPPLIER_QUERY =
+            "INSERT INTO suppliers (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
 
     // Update queries
     private static final String UPDATE_CUSTOMER_QUERY =
@@ -197,6 +218,8 @@ public final class DatabaseHandler {
             "UPDATE invoices SET customer_id=?, employee_id=?, date=? WHERE id=?";
     private static final String UPDATE_PRODUCT_QUERY =
             "UPDATE products SET name=?, price=?, supplier_id=?, quantity=? WHERE id=?";
+    private static final String UPDATE_SUPPLIER_QUERY =
+            "UPDATE suppliers SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
 
     /**
      * Log SQL Exception
@@ -436,21 +459,18 @@ public final class DatabaseHandler {
                 } else {
                     query = SEARCH_CUSTOMERS_BY_NAME_QUERY;
                 }
-                search = "%" + search + "%";
                 break;
             case "NIF":
                 query = SEARCH_CUSTOMERS_BY_NIF_QUERY;
-                search = "%" + search + "%";
                 break;
             case "Contacto":
                 query = SEARCH_CUSTOMERS_BY_PHONE_QUERY;
-                search = "%" + search + "%";
                 break;
             case "E-mail":
                 query = SEARCH_CUSTOMERS_BY_EMAIL_QUERY;
-                search = "%" + search + "%";
                 break;
         }
+        search = "%" + search + "%";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1475,24 +1495,194 @@ public final class DatabaseHandler {
         return false;
     }
 
-//    public static ObservableList<Supplier> getSupplierList() {
-//    }
+    public static ObservableList<Supplier> getSupplierList() throws SQLException {
+        ObservableList<Supplier> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            DataSource dataSource = DatabasePool.getConnection();
+            // Get connection
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(GET_SUPPLIERS_QUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                String address = resultSet.getString("address");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String nif = resultSet.getString("nif");
 
-    public static boolean deleteSupplier(Supplier selectedForDeletion) {
-        return true;
+                list.add(new Supplier(id, name, address, phone, email, nif));
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return list;
     }
 
-//    public static boolean insertSupplier(Supplier supplier) {
-//    }
-//
-//    public static boolean updateSupplier(Supplier supplier) {
-//    }
-//
-//    public static ObservableList<Supplier> searchSupplier(String comboInput, String searchInput) {
-//    }
+    public static ObservableList<Supplier> searchSupplier(String combo, String search) throws SQLException {
+        ObservableList<Supplier> list = FXCollections.observableArrayList();
+        String query = null;
+        switch (combo) {
+            case "ID ou Nome":
+                if (search.matches("[0-9]+")) {
+                    query = SEARCH_SUPPLIERS_BY_ID_QUERY;
+                } else {
+                    query = SEARCH_SUPPLIERS_BY_NAME_QUERY;
+                }
+                break;
+            case "Contacto":
+                query = SEARCH_SUPPLIERS_BY_PHONE_QUERY;
+                break;
+            case "E-mail":
+                query = SEARCH_SUPPLIERS_BY_EMAIL_QUERY;
+                break;
+            case "NIF":
+                query = SEARCH_SUPPLIERS_BY_NIF_QUERY;
+                break;
+        }
+        search = "%" + search + "%";
 
-    public static char[] getSupplierId() {
-        return new char[0];
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            DataSource dataSource = DatabasePool.getConnection();
+            // Get connection
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, search);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                String address = resultSet.getString("address");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String nif = resultSet.getString("nif");
+
+                list.add(new Supplier(id, name, address, phone, email, nif));
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return list;
+    }
+
+    public static boolean deleteSupplier(Supplier supplier) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            DataSource dataSource = DatabasePool.getConnection();
+            // Get connection
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_SUPPLIER_QUERY);
+            preparedStatement.setString(1, supplier.getId());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return false;
+    }
+
+    public static boolean insertSupplier(Supplier supplier) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            DataSource dataSource = DatabasePool.getConnection();
+            // Get connection
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_SUPPLIER_QUERY);
+            preparedStatement.setString(1, supplier.getName());
+            preparedStatement.setString(2, supplier.getAddress());
+            preparedStatement.setString(3, supplier.getPhone());
+            preparedStatement.setString(4, supplier.getEmail());
+            preparedStatement.setString(5, supplier.getNif());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return false;
+    }
+
+    public static boolean updateSupplier(Supplier supplier) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            DataSource dataSource = DatabasePool.getConnection();
+            // Get connection
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_SUPPLIER_QUERY);
+            preparedStatement.setString(1, supplier.getName());
+            preparedStatement.setString(2, supplier.getAddress());
+            preparedStatement.setString(3, supplier.getPhone());
+            preparedStatement.setString(4, supplier.getEmail());
+            preparedStatement.setString(5, supplier.getNif());
+            preparedStatement.setString(6, supplier.getId());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return false;
+    }
+
+    public static int getSupplierId() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            DataSource dataSource = DatabasePool.getConnection();
+            // Get connection
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(GET_SUPPLIER_ID_QUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1) + 1;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+            return 0;
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
     }
 
     /**
