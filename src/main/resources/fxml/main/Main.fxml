@@ -94,6 +94,26 @@
                         </JFXTabPane>
                     </AnchorPane>
                 </Tab>
+                <Tab closable="false" styleClass="tab-main" text="Fornecedores">
+                    <graphic>
+                        <FontIcon iconLiteral="dashicons-products" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <JFXTabPane fx:id="supplierTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="supplierAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-plus" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="supplierSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-search" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                        </JFXTabPane>
+                    </AnchorPane>
+                </Tab>
             </JFXTabPane>
         </AnchorPane>
         <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

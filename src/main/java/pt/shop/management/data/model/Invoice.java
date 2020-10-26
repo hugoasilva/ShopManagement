@@ -4,7 +4,7 @@ package pt.shop.management.data.model;
  * Invoice Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public class Invoice {
@@ -14,8 +14,8 @@ public class Invoice {
     private String employeeId;
     private String employeeName;
     private String date;
-    private String products;
     private String pdf;
+    private String products;
 
     /**
      * Invoice object constructor
@@ -24,16 +24,13 @@ public class Invoice {
      * @param customerId - customer's id
      * @param employeeId - employee's id
      * @param date       - invoice date
-     * @param products   - invoice products
      * @param pdf        - invoice pdf file path
      */
-    public Invoice(String id, String customerId, String employeeId, String date,
-                   String products, String pdf) {
+    public Invoice(String id, String customerId, String employeeId, String date, String pdf) {
         this.id = id;
         this.customerId = customerId;
         this.employeeId = employeeId;
         this.date = date;
-        this.products = products;
         this.pdf = pdf;
     }
 
@@ -101,24 +98,6 @@ public class Invoice {
     }
 
     /**
-     * Get invoice products
-     *
-     * @return - invoice products
-     */
-    public String getProducts() {
-        return this.products;
-    }
-
-    /**
-     * Set invoice products
-     *
-     * @param products - invoice products
-     */
-    public void setProducts(String products) {
-        this.products = products;
-    }
-
-    /**
      * Get invoice pdf
      *
      * @return - invoice pdf
@@ -170,5 +149,23 @@ public class Invoice {
      */
     public void setEmployeeName(String name) {
         this.employeeName = name;
+    }
+
+    /**
+     * Get invoice products
+     *
+     * @return - invoice products
+     */
+    public String getProducts() {
+        return this.products;
+    }
+
+    /**
+     * Set invoice products
+     *
+     * @param products - invoice products
+     */
+    public void setProducts(String products) {
+        this.products = products;
     }
 }

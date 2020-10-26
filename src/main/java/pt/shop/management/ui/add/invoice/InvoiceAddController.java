@@ -105,7 +105,7 @@ public class InvoiceAddController implements Initializable {
         }
 
         Invoice invoice = new Invoice(invoiceId, customerId,
-                employeeId, invoiceDate, invoiceProducts, invoicePdf);
+                employeeId, invoiceDate, invoicePdf);
         if (DatabaseHandler.insertInvoice(invoice)) {
             SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -148,7 +148,8 @@ public class InvoiceAddController implements Initializable {
      */
     private void handleUpdateInvoice() throws SQLException {
         Invoice invoice = new Invoice(id, customer.getText(), employee.getText(),
-                date.getValue().toString(), products.getText(), pdf.getText());
+                date.getValue().toString(), pdf.getText());
+        invoice.setProducts(products.getText());
         if (DatabaseHandler.updateInvoice(invoice)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",

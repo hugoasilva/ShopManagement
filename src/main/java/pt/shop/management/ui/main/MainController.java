@@ -34,7 +34,7 @@ public class MainController implements Initializable {
     @FXML
     private JFXTabPane mainTabPane;
 
-    // Customer Tab
+    // Customer tab
     @FXML
     private JFXTabPane customerTabPane;
     @FXML
@@ -42,7 +42,7 @@ public class MainController implements Initializable {
     @FXML
     private Tab customerSearchTab;
 
-    // Employee Tab
+    // Employee tab
     @FXML
     private JFXTabPane employeeTabPane;
     @FXML
@@ -50,7 +50,7 @@ public class MainController implements Initializable {
     @FXML
     private Tab employeeSearchTab;
 
-    // Invoice Tab
+    // Invoice tab
     @FXML
     private JFXTabPane invoiceTabPane;
     @FXML
@@ -58,13 +58,21 @@ public class MainController implements Initializable {
     @FXML
     private Tab invoiceSearchTab;
 
-    // Product Tab Content
+    // Product tab
     @FXML
     private JFXTabPane productTabPane;
     @FXML
     private Tab productAddTab;
     @FXML
     private Tab productSearchTab;
+
+    // Supplier tab
+    @FXML
+    private JFXTabPane supplierTabPane;
+    @FXML
+    private Tab supplierAddTab;
+    @FXML
+    private Tab supplierSearchTab;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -126,6 +134,9 @@ public class MainController implements Initializable {
         productTabPane.tabMinWidthProperty().bind(
                 rootAnchorPane.widthProperty().divide(
                         productTabPane.getTabs().size()).subtract(50));
+        supplierTabPane.tabMinWidthProperty().bind(
+                rootAnchorPane.widthProperty().divide(
+                        supplierTabPane.getTabs().size()).subtract(50));
         try {
             // Initialize customer tab content
             customerAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
@@ -147,6 +158,11 @@ public class MainController implements Initializable {
                     "/fxml/product/ProductAdd.fxml")));
             productSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/product/ProductSearch.fxml")));
+            // Initialize supplier tab content
+            supplierAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+                    "/fxml/supplier/SupplierAdd.fxml")));
+            supplierSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+                    "/fxml/supplier/SupplierSearch.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }

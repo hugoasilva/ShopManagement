@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.apache.commons.lang3.StringUtils;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.add.product.ProductAddController;
@@ -122,7 +123,7 @@ public class ProductSearchController implements Initializable {
      */
     private void initCombo() {
         productCombo.getItems().addAll(new Label("ID ou Nome"),
-                new Label(new String("Preço".getBytes(), StandardCharsets.UTF_8), new Label("Quantidade")));
+                new Label(new String("Preço".getBytes(), StandardCharsets.UTF_8)), new Label("Quantidade"));
         productCombo.setPromptText("Tipo de pesquisa...");
     }
 
@@ -228,7 +229,8 @@ public class ProductSearchController implements Initializable {
             AlertMaker.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
-            String comboInput = productCombo.getSelectionModel().getSelectedItem().getText();
+            String comboInput =
+                    StringUtils.stripAccents(productCombo.getSelectionModel().getSelectedItem().getText());
             String searchInput = productSearchInput.getText();
             this.list = DatabaseHandler.searchProduct(comboInput, searchInput);
             this.tableView.setItems(list);

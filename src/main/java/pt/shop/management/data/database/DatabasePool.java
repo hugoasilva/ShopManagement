@@ -3,7 +3,6 @@ package pt.shop.management.data.database;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 
 /**
  * Database Pool Class
@@ -21,15 +20,17 @@ public class DatabasePool {
         dataSource.setUrl("jdbc:mysql://projecthub.hopto.org:3306/management?useTimezone=true&serverTimezone=UTC");
         dataSource.setUsername("admin");
         dataSource.setPassword("dbpw");
-        dataSource.setInitialSize(10);
-        dataSource.setMaxTotal(10);
-
+        dataSource.setInitialSize(50);
+        dataSource.setMaxIdle(20);
+        dataSource.setMaxTotal(100);
+        dataSource.setMaxWaitMillis(10000);
+        dataSource.setMaxOpenPreparedStatements(100);
     }
 
     private DatabasePool() {
     }
 
-    public static DataSource getConnection() throws SQLException {
+    public static DataSource getConnection() {
         return dataSource;
     }
 }

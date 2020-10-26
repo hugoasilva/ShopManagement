@@ -41,11 +41,11 @@ public final class DatabaseHandler {
     private static final String SEARCH_CUSTOMERS_BY_NAME_QUERY =
             "SELECT * FROM customers WHERE name LIKE ?";
     private static final String SEARCH_CUSTOMERS_BY_NIF_QUERY =
-            "SELECT * FROM customers WHERE nif=?";
+            "SELECT * FROM customers WHERE nif LIKE ?";
     private static final String SEARCH_CUSTOMERS_BY_PHONE_QUERY =
-            "SELECT * FROM customers WHERE phone=?";
+            "SELECT * FROM customers WHERE phone LIKE ?";
     private static final String SEARCH_CUSTOMERS_BY_EMAIL_QUERY =
-            "SELECT * FROM customers WHERE email=?";
+            "SELECT * FROM customers WHERE email LIKE ?";
 
     // Employee select queries
     private static final String GET_EMPLOYEE_ID_QUERY =
@@ -59,11 +59,11 @@ public final class DatabaseHandler {
     private static final String SEARCH_EMPLOYEES_BY_NAME_QUERY =
             "SELECT * FROM employees WHERE name LIKE ?";
     private static final String SEARCH_EMPLOYEES_BY_NIF_QUERY =
-            "SELECT * FROM employees WHERE nif=?";
+            "SELECT * FROM employees WHERE nif LIKE ?";
     private static final String SEARCH_EMPLOYEES_BY_PHONE_QUERY =
-            "SELECT * FROM employees WHERE phone=?";
+            "SELECT * FROM employees WHERE phone LIKE ?";
     private static final String SEARCH_EMPLOYEES_BY_EMAIL_QUERY =
-            "SELECT * FROM employees WHERE email=?";
+            "SELECT * FROM employees WHERE email LIKE ?";
 
     // Invoice select queries
     private static final String GET_INVOICE_ID_QUERY =
@@ -76,13 +76,41 @@ public final class DatabaseHandler {
                     "INNER JOIN customers ON customers.id=invoices.customer_id " +
                     "INNER JOIN employees ON employees.id=invoices.employee_id";
     private static final String SEARCH_INVOICES_BY_ID_QUERY =
-            "SELECT * FROM invoices WHERE id LIKE ?";
-    private static final String SEARCH_INVOICES_BY_CUSTOMER_QUERY =
-            "SELECT * FROM invoices WHERE customer_id=?";
-    private static final String SEARCH_INVOICES_BY_EMPLOYEE_QUERY =
-            "SELECT * FROM invoices WHERE employee_id=?";
+            "SELECT management.invoices.*" +
+                    ", customers.name AS customer_name" +
+                    ", employees.name AS employee_name " +
+                    "FROM invoices " +
+                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
+                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
+                    "WHERE invoices.id LIKE ?";
+    private static final String SEARCH_INVOICES_BY_CUSTOMER_ID_QUERY =
+            "SELECT management.invoices.*" +
+                    ", customers.name AS customer_name" +
+                    ", employees.name AS employee_name " +
+                    "FROM invoices " +
+                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
+                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
+                    "WHERE invoices.customer_id LIKE ?";
+    private static final String SEARCH_INVOICES_BY_CUSTOMER_NAME_QUERY = null;
+    // TODO
+    private static final String SEARCH_INVOICES_BY_EMPLOYEE_ID_QUERY =
+            "SELECT management.invoices.*" +
+                    ", customers.name AS customer_name" +
+                    ", employees.name AS employee_name " +
+                    "FROM invoices " +
+                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
+                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
+                    "WHERE invoices.employee_id LIKE ?";
+    private static final String SEARCH_INVOICES_BY_EMPLOYEE_NAME_QUERY = null;
+    // TODO
     private static final String SEARCH_INVOICES_BY_DATE_QUERY =
-            "SELECT * FROM invoices WHERE date=?";
+            "SELECT management.invoices.*" +
+                    ", customers.name AS customer_name" +
+                    ", employees.name AS employee_name " +
+                    "FROM invoices " +
+                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
+                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
+                    "WHERE invoices.date=?";
 
     // Note select queries
     private static final String GET_CUSTOMER_NOTE_ID_QUERY =
@@ -103,13 +131,29 @@ public final class DatabaseHandler {
                     "FROM products " +
                     "INNER JOIN suppliers ON suppliers.id=products.supplier_id";
     private static final String SEARCH_PRODUCTS_BY_ID_QUERY =
-            "SELECT * FROM products WHERE id LIKE ?";
+            "SELECT management.products.*" +
+                    ", suppliers.name AS supplier_name " +
+                    "FROM products " +
+                    "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
+                    "WHERE products.id LIKE ?";
     private static final String SEARCH_PRODUCTS_BY_NAME_QUERY =
-            "SELECT * FROM products WHERE name LIKE ?";
+            "SELECT management.products.*" +
+                    ", suppliers.name AS supplier_name " +
+                    "FROM products " +
+                    "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
+                    "WHERE products.name LIKE ?";
     private static final String SEARCH_PRODUCTS_BY_PRICE_QUERY =
-            "SELECT * FROM products WHERE price=?";
+            "SELECT management.products.*" +
+                    ", suppliers.name AS supplier_name " +
+                    "FROM products " +
+                    "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
+                    "WHERE products.price=?";
     private static final String SEARCH_PRODUCTS_BY_QUANTITY_QUERY =
-            "SELECT * FROM products WHERE quantity=?";
+            "SELECT management.products.*" +
+                    ", suppliers.name AS supplier_name " +
+                    "FROM products " +
+                    "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
+                    "WHERE products.quantity=?";
 
     // Delete queries
     private static final String DELETE_CUSTOMER_QUERY =
@@ -154,9 +198,6 @@ public final class DatabaseHandler {
     private static final String UPDATE_PRODUCT_QUERY =
             "UPDATE products SET name=?, price=?, supplier_id=?, quantity=? WHERE id=?";
 
-    private static Connection connection = null;
-    private static PreparedStatement preparedStatement = null;
-
     /**
      * Log SQL Exception
      *
@@ -187,10 +228,12 @@ public final class DatabaseHandler {
      * @throws SQLException - SQL exception
      */
     public static boolean login(String username, String password) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            DataSource ds = DatabasePool.getConnection();
+            DataSource dataSource = DatabasePool.getConnection();
             // Get connection
-            connection = ds.getConnection();
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(LOGIN_QUERY);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
@@ -217,6 +260,8 @@ public final class DatabaseHandler {
      * @return new customer's id
      */
     public static int getCustomerId() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -245,6 +290,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertCustomer(Customer customer) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -276,6 +323,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteCustomer(Customer customer) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -303,6 +352,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateCustomer(Customer customer) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -336,6 +387,8 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Customer> getCustomerList() throws SQLException {
         ObservableList<Customer> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -387,14 +440,19 @@ public final class DatabaseHandler {
                 break;
             case "NIF":
                 query = SEARCH_CUSTOMERS_BY_NIF_QUERY;
+                search = "%" + search + "%";
                 break;
             case "Contacto":
                 query = SEARCH_CUSTOMERS_BY_PHONE_QUERY;
+                search = "%" + search + "%";
                 break;
             case "E-mail":
                 query = SEARCH_CUSTOMERS_BY_EMAIL_QUERY;
+                search = "%" + search + "%";
                 break;
         }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -431,6 +489,8 @@ public final class DatabaseHandler {
      * @return new employee's id
      */
     public static int getEmployeeId() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -459,6 +519,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertEmployee(Employee employee) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -490,6 +552,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteEmployee(Employee employee) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -517,6 +581,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateEmployee(Employee employee) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -550,6 +616,8 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Employee> getEmployeeList() throws SQLException {
         ObservableList<Employee> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -601,14 +669,19 @@ public final class DatabaseHandler {
                 break;
             case "NIF":
                 query = SEARCH_EMPLOYEES_BY_NIF_QUERY;
+                search = "%" + search + "%";
                 break;
             case "Contacto":
                 query = SEARCH_EMPLOYEES_BY_PHONE_QUERY;
+                search = "%" + search + "%";
                 break;
             case "E-mail":
                 query = SEARCH_EMPLOYEES_BY_EMAIL_QUERY;
+                search = "%" + search + "%";
                 break;
         }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -645,6 +718,8 @@ public final class DatabaseHandler {
      * @return new invoice's id
      */
     public static int getInvoiceId() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -673,6 +748,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertInvoice(Invoice invoice) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -703,6 +780,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteInvoice(Invoice invoice) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -731,6 +810,8 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Invoice> getInvoiceList() throws SQLException {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -742,10 +823,9 @@ public final class DatabaseHandler {
                 String customerName = resultSet.getString("customer_name");
                 String employeeName = resultSet.getString("employee_name");
                 String date = resultSet.getString("date");
-                String products = resultSet.getString("products");
                 String pdf = resultSet.getString("pdf");
 
-                Invoice invoice = new Invoice(id, customerName, employeeName, date, products, pdf);
+                Invoice invoice = new Invoice(id, customerName, employeeName, date, pdf);
                 invoice.setCustomerName(customerName);
                 invoice.setEmployeeName(employeeName);
                 list.add(invoice);
@@ -780,15 +860,19 @@ public final class DatabaseHandler {
                 search = "%" + search + "%";
                 break;
             case "ID Cliente":
-                query = SEARCH_INVOICES_BY_CUSTOMER_QUERY;
+                query = SEARCH_INVOICES_BY_CUSTOMER_ID_QUERY;
+                search = "%" + search + "%";
                 break;
             case "ID Empregado":
-                query = SEARCH_INVOICES_BY_EMPLOYEE_QUERY;
+                query = SEARCH_INVOICES_BY_EMPLOYEE_ID_QUERY;
+                search = "%" + search + "%";
                 break;
             case "Data":
                 query = SEARCH_INVOICES_BY_DATE_QUERY;
                 break;
         }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -797,14 +881,18 @@ public final class DatabaseHandler {
             preparedStatement.setString(1, search);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String id = resultSet.getString("id_fatura");
-                String customerId = resultSet.getString("id_cliente");
-                String employeeId = resultSet.getString("id_empregado");
-                String date = resultSet.getString("data_fatura");
-                String products = resultSet.getString("produtos");
+                String id = resultSet.getString("id");
+                String customerId = resultSet.getString("customer_id");
+                String customerName = resultSet.getString("customer_name");
+                String employeeId = resultSet.getString("employee_id");
+                String employeeName = resultSet.getString("employee_name");
+                String date = resultSet.getString("date");
                 String pdf = resultSet.getString("pdf");
 
-                list.add(new Invoice(id, customerId, employeeId, date, products, pdf));
+                Invoice invoice = new Invoice(id, customerId, employeeId, date, pdf);
+                invoice.setCustomerName(customerName);
+                invoice.setEmployeeName(employeeName);
+                list.add(invoice);
             }
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -825,6 +913,8 @@ public final class DatabaseHandler {
      * @return new customer note's id
      */
     public static int getCustomerNotesId() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -853,6 +943,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertCustomerNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -881,6 +973,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteCustomerNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -908,6 +1002,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateCustomerNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -938,6 +1034,8 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Note> getCustomerNotesList(Customer customer) throws SQLException {
         ObservableList<Note> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -968,6 +1066,8 @@ public final class DatabaseHandler {
      * Get employee note new id
      */
     public static int getEmployeeNotesId() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -996,6 +1096,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertEmployeeNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1024,6 +1126,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteEmployeeNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1051,6 +1155,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateEmployeeNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1081,6 +1187,8 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Note> getEmployeeNotesList(Employee employee) throws SQLException {
         ObservableList<Note> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1113,6 +1221,8 @@ public final class DatabaseHandler {
      * @return new product's id
      */
     public static int getProductId() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1141,6 +1251,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean insertProduct(Product product) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1172,6 +1284,8 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Product> getProductList() throws SQLException {
         ObservableList<Product> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1224,13 +1338,15 @@ public final class DatabaseHandler {
                 }
                 search = "%" + search + "%";
                 break;
-            case "Preço":
+            case "Preco":
                 query = SEARCH_PRODUCTS_BY_PRICE_QUERY;
                 break;
             case "Quantidade":
                 query = SEARCH_PRODUCTS_BY_QUANTITY_QUERY;
                 break;
         }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1243,10 +1359,14 @@ public final class DatabaseHandler {
                 String name = resultSet.getString("name");
                 String price = resultSet.getString("price");
                 String supplierId = resultSet.getString("supplier_id");
+                String supplierName = resultSet.getString("supplier_name");
                 String quantity = resultSet.getString("quantity");
                 String image = resultSet.getString("image");
 
-                list.add(new Product(id, name, price, supplierId, quantity, image));
+                Product product = new Product(id, name, price, supplierId, quantity, image);
+                ;
+                product.setSupplierName(supplierName);
+                list.add(product);
             }
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1268,6 +1388,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean deleteProduct(Product product) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1295,6 +1417,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateProduct(Product product) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1326,6 +1450,8 @@ public final class DatabaseHandler {
      * @return - true if success, false otherwise
      */
     public static boolean updateInvoice(Invoice invoice) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1349,6 +1475,26 @@ public final class DatabaseHandler {
         return false;
     }
 
+//    public static ObservableList<Supplier> getSupplierList() {
+//    }
+
+    public static boolean deleteSupplier(Supplier selectedForDeletion) {
+        return true;
+    }
+
+//    public static boolean insertSupplier(Supplier supplier) {
+//    }
+//
+//    public static boolean updateSupplier(Supplier supplier) {
+//    }
+//
+//    public static ObservableList<Supplier> searchSupplier(String comboInput, String searchInput) {
+//    }
+
+    public static char[] getSupplierId() {
+        return new char[0];
+    }
+
     /**
      * Get customer invoice count at database
      *
@@ -1356,6 +1502,8 @@ public final class DatabaseHandler {
      * @return - invoice count
      */
     public int getCustomerInvoiceCount(Customer customer) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
@@ -1386,6 +1534,8 @@ public final class DatabaseHandler {
      * @return - invoice count
      */
     public int getEmployeeInvoiceCount(Employee employee) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             DataSource dataSource = DatabasePool.getConnection();
             // Get connection
