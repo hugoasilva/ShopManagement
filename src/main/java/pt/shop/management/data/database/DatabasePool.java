@@ -1,8 +1,12 @@
 package pt.shop.management.data.database;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 
 /**
  * Database Pool Class
@@ -12,25 +16,32 @@ import javax.sql.DataSource;
  */
 
 public class DatabasePool {
-    private static final BasicDataSource dataSource;
+
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(DatabasePool.class.getName());
+
+    private static ComboPooledDataSource dataSource;
 
     static {
-        dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://projecthub.hopto.org:3306/management?useTimezone=true&serverTimezone=UTC");
-        dataSource.setUsername("admin");
-        dataSource.setPassword("dbpw");
-        dataSource.setInitialSize(50);
-        dataSource.setMaxIdle(20);
-        dataSource.setMaxTotal(100);
-        dataSource.setMaxWaitMillis(10000);
-        dataSource.setMaxOpenPreparedStatements(100);
+        try {
+
+            dataSource = new ComboPooledDataSource();
+            dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
+            dataSource.setJdbcUrl("jdbc:mysql://192.168.0.199:3306/management?useTimezone=true&serverTimezone=UTC");
+            dataSource.setUser("admin");
+            dataSource.setPassword("dbpw");
+            dataSource.setMinPoolSize(100);
+            dataSource.setMaxPoolSize(1000);
+            dataSource.setMaxIdleTime(10000);
+            dataSource.setAcquireRetryAttempts(0);
+            dataSource.setAcquireRetryDelay(500);
+            dataSource.setAcquireIncrement(5);
+        } catch (PropertyVetoException e) {
+            LOGGER.log(Level.ERROR, "{}", "Cause: " + e);
+        }
     }
 
-    private DatabasePool() {
-    }
-
-    public static DataSource getConnection() {
+    public static DataSource getDataSource() {
         return dataSource;
     }
 }

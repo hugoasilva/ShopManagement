@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.model.*;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -253,20 +252,24 @@ public final class DatabaseHandler {
     public static boolean login(String username, String password) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(LOGIN_QUERY);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -285,18 +288,22 @@ public final class DatabaseHandler {
     public static int getCustomerId() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMER_ID_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
         } catch (SQLException ex) {
             logSQLException(ex);
             return 0;
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -316,15 +323,15 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(INSERT_CUSTOMER_QUERY);
             preparedStatement.setString(1, customer.getName());
             preparedStatement.setString(2, customer.getAddress());
             preparedStatement.setString(3, customer.getPhone());
             preparedStatement.setString(4, customer.getEmail());
             preparedStatement.setString(5, customer.getNif());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -349,11 +356,11 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(DELETE_CUSTOMER_QUERY);
             preparedStatement.setString(1, customer.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -378,9 +385,8 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_CUSTOMER_QUERY);
             preparedStatement.setString(1, customer.getName());
             preparedStatement.setString(2, customer.getAddress());
@@ -388,6 +394,7 @@ public final class DatabaseHandler {
             preparedStatement.setString(4, customer.getEmail());
             preparedStatement.setString(5, customer.getNif());
             preparedStatement.setString(6, customer.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -412,12 +419,13 @@ public final class DatabaseHandler {
         ObservableList<Customer> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMERS_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
@@ -431,6 +439,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -473,13 +484,14 @@ public final class DatabaseHandler {
         search = "%" + search + "%";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
@@ -493,6 +505,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -511,18 +526,23 @@ public final class DatabaseHandler {
     public static int getEmployeeId() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEE_ID_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+
             resultSet.next();
             return resultSet.getInt(1) + 1;
         } catch (SQLException ex) {
             logSQLException(ex);
             return 0;
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -542,15 +562,15 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE_QUERY);
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getAddress());
             preparedStatement.setString(3, employee.getPhone());
             preparedStatement.setString(4, employee.getEmail());
             preparedStatement.setString(5, employee.getNif());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -575,11 +595,11 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE_QUERY);
             preparedStatement.setString(1, employee.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -604,9 +624,8 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE_QUERY);
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getAddress());
@@ -614,7 +633,8 @@ public final class DatabaseHandler {
             preparedStatement.setString(4, employee.getEmail());
             preparedStatement.setString(5, employee.getNif());
             preparedStatement.setString(6, employee.getId());
-            return (preparedStatement.executeUpdate() > 0);
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
@@ -638,12 +658,13 @@ public final class DatabaseHandler {
         ObservableList<Employee> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEES_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
@@ -657,6 +678,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -702,13 +726,14 @@ public final class DatabaseHandler {
         }
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
@@ -722,6 +747,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -740,18 +768,22 @@ public final class DatabaseHandler {
     public static int getInvoiceId() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_INVOICE_ID_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
         } catch (SQLException ex) {
             logSQLException(ex);
             return 0;
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -771,14 +803,14 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(INSERT_INVOICE_QUERY);
             preparedStatement.setString(1, invoice.getCustomerId());
             preparedStatement.setString(2, invoice.getEmployeeId());
             preparedStatement.setString(3, invoice.getDate());
             preparedStatement.setString(4, invoice.getPdf());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -803,11 +835,11 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(DELETE_INVOICE_QUERY);
             preparedStatement.setString(1, invoice.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -832,12 +864,13 @@ public final class DatabaseHandler {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_INVOICES_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String customerName = resultSet.getString("customer_name");
@@ -853,6 +886,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -893,13 +929,14 @@ public final class DatabaseHandler {
         }
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String customerId = resultSet.getString("customer_id");
@@ -917,6 +954,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -935,18 +975,22 @@ public final class DatabaseHandler {
     public static int getCustomerNotesId() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMER_NOTE_ID_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
         } catch (SQLException ex) {
             logSQLException(ex);
             return 0;
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -966,12 +1010,12 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(INSERT_CUSTOMER_NOTE_QUERY);
             preparedStatement.setString(1, note.getPersonId());
             preparedStatement.setString(2, note.getMessage());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -996,11 +1040,11 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(DELETE_CUSTOMER_NOTE_QUERY);
             preparedStatement.setString(1, note.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1025,12 +1069,12 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_CUSTOMER_NOTE_QUERY);
             preparedStatement.setString(1, note.getMessage());
             preparedStatement.setString(2, note.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1056,13 +1100,14 @@ public final class DatabaseHandler {
         ObservableList<Note> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMER_NOTES_QUERY);
             preparedStatement.setString(1, customer.getId());
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String message = resultSet.getString("message");
@@ -1072,6 +1117,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1088,18 +1136,22 @@ public final class DatabaseHandler {
     public static int getEmployeeNotesId() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEE_NOTE_ID_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
         } catch (SQLException ex) {
             logSQLException(ex);
             return 0;
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1119,12 +1171,12 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE_NOTE_QUERY);
             preparedStatement.setString(1, note.getPersonId());
             preparedStatement.setString(2, note.getMessage());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1149,11 +1201,11 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE_NOTE_QUERY);
             preparedStatement.setString(1, note.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1178,13 +1230,13 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE_NOTE_QUERY);
             preparedStatement.setString(1, note.getMessage());
             preparedStatement.setString(2, note.getId());
-            return (preparedStatement.executeUpdate() > 0);
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
@@ -1209,13 +1261,14 @@ public final class DatabaseHandler {
         ObservableList<Note> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEE_NOTES_QUERY);
             preparedStatement.setString(1, employee.getId());
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String message = resultSet.getString("message");
@@ -1225,6 +1278,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1243,18 +1299,22 @@ public final class DatabaseHandler {
     public static int getProductId() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_PRODUCT_ID_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
         } catch (SQLException ex) {
             logSQLException(ex);
             return 0;
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1274,14 +1334,14 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(INSERT_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getPrice());
             preparedStatement.setString(3, product.getQuantity());
             preparedStatement.setString(4, product.getImage());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1306,12 +1366,13 @@ public final class DatabaseHandler {
         ObservableList<Product> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_PRODUCTS_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
@@ -1328,6 +1389,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1367,13 +1431,14 @@ public final class DatabaseHandler {
         }
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
@@ -1384,13 +1449,15 @@ public final class DatabaseHandler {
                 String image = resultSet.getString("image");
 
                 Product product = new Product(id, name, price, supplierId, quantity, image);
-                ;
                 product.setSupplierName(supplierName);
                 list.add(product);
             }
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1411,11 +1478,11 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(DELETE_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1440,15 +1507,15 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getPrice());
             preparedStatement.setString(3, product.getSupplierId());
             preparedStatement.setString(4, product.getQuantity());
             preparedStatement.setString(5, product.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1473,14 +1540,14 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_INVOICE_QUERY);
             preparedStatement.setString(1, invoice.getCustomerId());
             preparedStatement.setString(2, invoice.getEmployeeId());
             preparedStatement.setString(3, invoice.getDate());
             preparedStatement.setString(4, invoice.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1499,12 +1566,13 @@ public final class DatabaseHandler {
         ObservableList<Supplier> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_SUPPLIERS_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
@@ -1518,6 +1586,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1553,13 +1624,14 @@ public final class DatabaseHandler {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, search);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
@@ -1573,6 +1645,9 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1587,11 +1662,11 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(DELETE_SUPPLIER_QUERY);
             preparedStatement.setString(1, supplier.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1610,15 +1685,15 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(INSERT_SUPPLIER_QUERY);
             preparedStatement.setString(1, supplier.getName());
             preparedStatement.setString(2, supplier.getAddress());
             preparedStatement.setString(3, supplier.getPhone());
             preparedStatement.setString(4, supplier.getEmail());
             preparedStatement.setString(5, supplier.getNif());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1637,9 +1712,8 @@ public final class DatabaseHandler {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_SUPPLIER_QUERY);
             preparedStatement.setString(1, supplier.getName());
             preparedStatement.setString(2, supplier.getAddress());
@@ -1647,6 +1721,7 @@ public final class DatabaseHandler {
             preparedStatement.setString(4, supplier.getEmail());
             preparedStatement.setString(5, supplier.getNif());
             preparedStatement.setString(6, supplier.getId());
+            // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1664,18 +1739,22 @@ public final class DatabaseHandler {
     public static int getSupplierId() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_SUPPLIER_ID_QUERY);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1) + 1;
         } catch (SQLException ex) {
             logSQLException(ex);
             return 0;
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1694,19 +1773,23 @@ public final class DatabaseHandler {
     public int getCustomerInvoiceCount(Customer customer) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_CUSTOMER_INVOICE_COUNT);
             preparedStatement.setString(1, customer.getId());
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -1726,19 +1809,24 @@ public final class DatabaseHandler {
     public int getEmployeeInvoiceCount(Employee employee) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            DataSource dataSource = DatabasePool.getConnection();
-            // Get connection
-            connection = dataSource.getConnection();
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_EMPLOYEE_INVOICE_COUNT);
             preparedStatement.setString(1, employee.getId());
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }

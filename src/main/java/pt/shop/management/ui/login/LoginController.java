@@ -34,7 +34,6 @@ public class LoginController implements Initializable {
     // Logger
     private final static Logger LOGGER = LogManager.getLogger(LoginController.class.getName());
 
-
     // UI Content
     @FXML
     private JFXTextField username;
