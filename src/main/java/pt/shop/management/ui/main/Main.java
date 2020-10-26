@@ -25,6 +25,11 @@ public class Main extends Application {
     // Logger
     private final static Logger LOGGER = LogManager.getLogger(Main.class.getName());
 
+    /**
+     * Main app app main function
+     *
+     * @param args - cmd arguments
+     */
     public static void main(String[] args) {
         ShopManagementUtil.createDownloadsUploadsFolder();
         Long startTime = System.currentTimeMillis();

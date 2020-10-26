@@ -77,12 +77,12 @@ public class CustomerSearchController implements Initializable {
      * Assign table columns to customer properties
      */
     private void initCol() {
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
+        this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        this.addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        this.phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        this.emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        this.nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
         TableColumn<Customer, Void> detailsCol = new TableColumn<>("Ficha");
 
         Callback<TableColumn<Customer, Void>, TableCell<Customer, Void>> cellFactory =
@@ -117,16 +117,16 @@ public class CustomerSearchController implements Initializable {
                 };
         detailsCol.setPrefWidth(80);
         detailsCol.setCellFactory(cellFactory);
-        tableView.getColumns().add(detailsCol);
+        this.tableView.getColumns().add(detailsCol);
     }
 
     /**
      * Initialize search combo box
      */
     private void initCombo() {
-        customerCombo.getItems().addAll(new Label("ID ou Nome"), new Label("NIF"),
+        this.customerCombo.getItems().addAll(new Label("ID ou Nome"), new Label("NIF"),
                 new Label("Contacto"), new Label("E-mail"));
-        customerCombo.setPromptText("Tipo de pesquisa...");
+        this.customerCombo.setPromptText("Tipo de pesquisa...");
     }
 
     /**
@@ -152,7 +152,7 @@ public class CustomerSearchController implements Initializable {
     }
 
     private Stage getStage() {
-        return (Stage) tableView.getScene().getWindow();
+        return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
@@ -173,7 +173,7 @@ public class CustomerSearchController implements Initializable {
     @FXML
     private void handleCustomerDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
-        Customer selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        Customer selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             AlertMaker.showErrorMessage("Nenhum cliente seleccionado",
                     "Por favor seleccione um cliente para apagar.");
@@ -214,7 +214,7 @@ public class CustomerSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        if (customerCombo.getValue() == null && customerSearchInput.getText().isEmpty()) {
+        if (this.customerCombo.getValue() == null && this.customerSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getCustomerList();
             this.tableView.setItems(list);
@@ -231,12 +231,12 @@ public class CustomerSearchController implements Initializable {
      */
     public void searchCustomer() throws SQLException {
         // Check if user input is present
-        if (customerCombo.getSelectionModel().isEmpty() || customerSearchInput.getText().isEmpty()) {
+        if (this.customerCombo.getSelectionModel().isEmpty() || this.customerSearchInput.getText().isEmpty()) {
             AlertMaker.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
-            String comboInput = customerCombo.getSelectionModel().getSelectedItem().getText();
-            String searchInput = customerSearchInput.getText();
+            String comboInput = this.customerCombo.getSelectionModel().getSelectedItem().getText();
+            String searchInput = this.customerSearchInput.getText();
             this.list = DatabaseHandler.searchCustomer(comboInput, searchInput);
             tableView.setItems(list);
         }
@@ -270,7 +270,7 @@ public class CustomerSearchController implements Initializable {
     @FXML
     private void handleCustomerEdit(ActionEvent event) {
         //Fetch the selected row
-        Customer selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        Customer selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
             AlertMaker.showErrorMessage("Nenhum cliente seleccionado",
                     "Por favor seleccione um cliente para editar.");
@@ -293,7 +293,7 @@ public class CustomerSearchController implements Initializable {
 
             stage.setOnHiding((e) -> {
                 try {
-                    handleRefresh(new ActionEvent());
+                    this.handleRefresh(new ActionEvent());
                 } catch (SQLException throwable) {
                     throwable.printStackTrace();
                 }

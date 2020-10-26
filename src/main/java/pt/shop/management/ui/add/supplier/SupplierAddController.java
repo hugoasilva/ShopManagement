@@ -7,8 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.alert.AlertMaker;
@@ -71,7 +69,6 @@ public class SupplierAddController implements Initializable {
      */
     @FXML
     private void addSupplier(ActionEvent event) throws IOException, SQLException {
-
         String supplierId = String.valueOf(DatabaseHandler.getSupplierId());
         this.id = supplierId;
         String supplierName = name.getText();
@@ -88,20 +85,20 @@ public class SupplierAddController implements Initializable {
             return;
         }
 
-        if (isInEditMode) {
-            handleUpdateSupplier();
+        if (this.isInEditMode) {
+            this.handleUpdateSupplier();
             return;
         }
 
         Supplier supplier = new Supplier(supplierId, supplierName,
                 supplierAddress, supplierPhone, supplierEmail, supplierNif);
         if (DatabaseHandler.insertSupplier(supplier)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Fornecedor adicionado",
                     supplierName + " adicionado com sucesso!", true);
             clearEntries();
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
@@ -113,24 +110,24 @@ public class SupplierAddController implements Initializable {
      * @param supplier - supplier object
      */
     public void inflateUI(Supplier supplier) {
-        name.setText(supplier.getName());
-        address.setText(supplier.getAddress());
-        phone.setText(supplier.getPhone());
-        email.setText(supplier.getEmail());
-        nif.setText(supplier.getNif());
+        this.name.setText(supplier.getName());
+        this.address.setText(supplier.getAddress());
+        this.phone.setText(supplier.getPhone());
+        this.email.setText(supplier.getEmail());
+        this.nif.setText(supplier.getNif());
 
-        isInEditMode = Boolean.TRUE;
+        this.isInEditMode = Boolean.TRUE;
     }
 
     /**
      * Clear table entries
      */
     private void clearEntries() {
-        name.clear();
-        address.clear();
-        phone.clear();
-        email.clear();
-        nif.clear();
+        this.name.clear();
+        this.address.clear();
+        this.phone.clear();
+        this.email.clear();
+        this.nif.clear();
     }
 
     /**
@@ -138,14 +135,14 @@ public class SupplierAddController implements Initializable {
      */
     private void handleUpdateSupplier() throws SQLException {
         Supplier supplier =
-                new Supplier(id, name.getText(), address.getText(),
-                        phone.getText(), email.getText(), nif.getText());
+                new Supplier(this.id, this.name.getText(), this.address.getText(),
+                        this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateSupplier(supplier)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de fornecedor atualizados.", false);
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);

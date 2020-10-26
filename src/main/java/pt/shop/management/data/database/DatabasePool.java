@@ -19,7 +19,7 @@ public class DatabasePool {
 
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(DatabasePool.class.getName());
-
+    // Data source object
     private static ComboPooledDataSource dataSource;
 
     static {
@@ -36,11 +36,16 @@ public class DatabasePool {
             dataSource.setAcquireRetryAttempts(0);
             dataSource.setAcquireRetryDelay(500);
             dataSource.setAcquireIncrement(5);
-        } catch (PropertyVetoException e) {
-            LOGGER.log(Level.ERROR, "{}", "Cause: " + e);
+        } catch (PropertyVetoException ex) {
+            LOGGER.log(Level.ERROR, "Exception occurred {}", ex);
         }
     }
 
+    /**
+     * Get data source instance
+     *
+     * @return - data source instance
+     */
     public static DataSource getDataSource() {
         return dataSource;
     }

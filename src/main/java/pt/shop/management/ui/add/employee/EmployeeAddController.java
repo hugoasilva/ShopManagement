@@ -84,20 +84,20 @@ public class EmployeeAddController implements Initializable {
             return;
         }
 
-        if (isInEditMode) {
-            handleUpdateEmployee();
+        if (this.isInEditMode) {
+            this.handleUpdateEmployee();
             return;
         }
 
         Employee employee = new Employee(employeeId, employeeName, employeeAddress,
                 employeePhone, employeeEmail, employeeNif);
         if (DatabaseHandler.insertEmployee(employee)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Empregado adicionado",
                     employeeName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
@@ -110,38 +110,38 @@ public class EmployeeAddController implements Initializable {
      */
     public void inflateUI(Employee employee) {
         this.editId = employee.getId();
-        name.setText(employee.getName());
-        address.setText(employee.getAddress());
-        phone.setText(employee.getPhone());
-        email.setText(employee.getEmail());
-        nif.setText(employee.getNif());
+        this.name.setText(employee.getName());
+        this.address.setText(employee.getAddress());
+        this.phone.setText(employee.getPhone());
+        this.email.setText(employee.getEmail());
+        this.nif.setText(employee.getNif());
 
-        isInEditMode = Boolean.TRUE;
+        this.isInEditMode = Boolean.TRUE;
     }
 
     /**
      * Clear table entries
      */
     private void clearEntries() {
-        name.clear();
-        address.clear();
-        phone.clear();
-        email.clear();
-        nif.clear();
+        this.name.clear();
+        this.address.clear();
+        this.phone.clear();
+        this.email.clear();
+        this.nif.clear();
     }
 
     /**
      * Handle employee update
      */
     private void handleUpdateEmployee() throws SQLException {
-        Employee employee = new Employee(this.editId, name.getText(), address.getText(),
-                phone.getText(), email.getText(), nif.getText());
+        Employee employee = new Employee(this.editId, this.name.getText(), this.address.getText(),
+                this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateEmployee(employee)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de empregado atualizados.", true);
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);

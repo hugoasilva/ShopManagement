@@ -36,8 +36,6 @@ import java.util.logging.Logger;
  */
 
 public class CustomerDetailsController implements Initializable {
-    // Database query
-    private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM customers WHERE id=?";
 
     // Customer data
     private final Customer customer;
@@ -102,21 +100,21 @@ public class CustomerDetailsController implements Initializable {
      * @param customer - customer object
      */
     public void inflateUI(Customer customer) {
-        id.setText("ID: " + customer.getId());
-        name.setText("Nome: " + customer.getName());
-        address.setText("Morada: " + customer.getAddress());
-        phone.setText("Contacto: " + customer.getPhone());
-        email.setText("E-mail: " + customer.getEmail());
-        nif.setText("NIF: " + customer.getNif());
+        this.id.setText("ID: " + customer.getId());
+        this.name.setText("Nome: " + customer.getName());
+        this.address.setText("Morada: " + customer.getAddress());
+        this.phone.setText("Contacto: " + customer.getPhone());
+        this.email.setText("E-mail: " + customer.getEmail());
+        this.nif.setText("NIF: " + customer.getNif());
     }
 
     /**
      * Get customer notes
      */
     private void getCustomerNotes() throws SQLException {
-        list.clear();
-        list = DatabaseHandler.getCustomerNotesList(this.customer);
-        tableView.setItems(list);
+        this.list.clear();
+        this.list = DatabaseHandler.getCustomerNotesList(this.customer);
+        this.tableView.setItems(list);
     }
 
     /**
@@ -151,7 +149,7 @@ public class CustomerDetailsController implements Initializable {
     @FXML
     private void handleNoteDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
-        Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
@@ -168,7 +166,7 @@ public class CustomerDetailsController implements Initializable {
             if (result) {
                 AlertMaker.showSimpleAlert("Nota apagada",
                         "Nota apagada com sucesso.");
-                list.remove(selectedForDeletion);
+                this.list.remove(selectedForDeletion);
             } else {
                 AlertMaker.showSimpleAlert("Cancelado",
                         new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
@@ -194,7 +192,7 @@ public class CustomerDetailsController implements Initializable {
     @FXML
     public void handleNoteEdit(ActionEvent event) {
         //Fetch the selected row
-        Note selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        Note selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         selectedForEdit.setPersonType("customer");
 
         if (selectedForEdit == null) {

@@ -77,12 +77,12 @@ public class SupplierSearchController implements Initializable {
      * Assign table columns to supplier properties
      */
     private void initCol() {
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
+        this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        this.addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        this.phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        this.emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        this.nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
         TableColumn<Supplier, Void> detailsCol = new TableColumn<>("Ficha");
         Callback<TableColumn<Supplier, Void>, TableCell<Supplier, Void>> cellFactoryDetails =
                 new Callback<>() {
@@ -116,16 +116,16 @@ public class SupplierSearchController implements Initializable {
                 };
         detailsCol.setPrefWidth(80);
         detailsCol.setCellFactory(cellFactoryDetails);
-        tableView.getColumns().add(detailsCol);
+        this.tableView.getColumns().add(detailsCol);
     }
 
     /**
      * Initialize search combo box
      */
     private void initCombo() {
-        supplierCombo.getItems().addAll(new Label("ID ou Nome"),
+        this.supplierCombo.getItems().addAll(new Label("ID ou Nome"),
                 new Label("Contacto"), new Label("E-mail"), new Label("NIF"));
-        supplierCombo.setPromptText("Tipo de pesquisa...");
+        this.supplierCombo.setPromptText("Tipo de pesquisa...");
     }
 
     private void showSupplierDetails(Supplier supplier) throws IOException {
@@ -146,7 +146,7 @@ public class SupplierSearchController implements Initializable {
     }
 
     private Stage getStage() {
-        return (Stage) tableView.getScene().getWindow();
+        return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
@@ -156,7 +156,7 @@ public class SupplierSearchController implements Initializable {
      */
     public void loadData() throws SQLException {
         this.list = DatabaseHandler.getSupplierList();
-        tableView.setItems(list);
+        this.tableView.setItems(list);
     }
 
     /**
@@ -167,7 +167,7 @@ public class SupplierSearchController implements Initializable {
     @FXML
     private void handleSupplierDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
-        Supplier selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        Supplier selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             AlertMaker.showErrorMessage("Nenhum fornecedor seleccionado",
                     "Por favor seleccione um fornecedor para apagar.");
@@ -208,7 +208,7 @@ public class SupplierSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        if (supplierCombo.getValue() == null && supplierSearchInput.getText().isEmpty()) {
+        if (this.supplierCombo.getValue() == null && this.supplierSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getSupplierList();
             this.tableView.setItems(list);
@@ -224,12 +224,12 @@ public class SupplierSearchController implements Initializable {
      */
     public void searchSupplier() throws SQLException {
         // Check if user input is present
-        if (supplierCombo.getSelectionModel().isEmpty() || supplierSearchInput.getText().isEmpty()) {
+        if (this.supplierCombo.getSelectionModel().isEmpty() || this.supplierSearchInput.getText().isEmpty()) {
             AlertMaker.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
-            String comboInput = supplierCombo.getSelectionModel().getSelectedItem().getText();
-            String searchInput = supplierSearchInput.getText();
+            String comboInput = this.supplierCombo.getSelectionModel().getSelectedItem().getText();
+            String searchInput = this.supplierSearchInput.getText();
             this.list = DatabaseHandler.searchSupplier(comboInput, searchInput);
             this.tableView.setItems(list);
         }
@@ -263,7 +263,7 @@ public class SupplierSearchController implements Initializable {
     @FXML
     private void handleSupplierEdit(ActionEvent event) {
         //Fetch the selected row
-        Supplier selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        Supplier selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
             AlertMaker.showErrorMessage("Nenhum fornecedor seleccionado",
                     "Por favor seleccione um fornecedor para editar.");

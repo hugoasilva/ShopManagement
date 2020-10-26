@@ -82,7 +82,6 @@ public class InvoiceAddController implements Initializable {
      */
     @FXML
     public void addInvoice(ActionEvent event) throws SQLException {
-
         String invoiceId = String.valueOf(DatabaseHandler.getInvoiceId());
         this.id = invoiceId;
         String customerId = customer.getText();
@@ -99,21 +98,20 @@ public class InvoiceAddController implements Initializable {
             return;
         }
 
-        if (isInEditMode) {
-            handleUpdateInvoice();
+        if (this.isInEditMode) {
+            this.handleUpdateInvoice();
             return;
         }
 
-        Invoice invoice = new Invoice(invoiceId, customerId,
-                employeeId, invoiceDate, invoicePdf);
+        Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoicePdf);
         if (DatabaseHandler.insertInvoice(invoice)) {
             SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Nova fatura adicionada",
                     "Fatura nr " + invoiceId + " adicionada com sucesso.", false);
             clearEntries();
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Erro ao adicionar fatura",
                     "Verifique todos os campos e tente novamente", false);
         }
@@ -125,37 +123,37 @@ public class InvoiceAddController implements Initializable {
      * @param invoice - invoice object
      */
     public void inflateUI(Invoice invoice) {
-        customer.setText(invoice.getCustomerId());
-        employee.setText(invoice.getEmployeeId());
-        date.setValue(LocalDate.parse(invoice.getDate()));
-        products.setText(invoice.getProducts());
-        pdf.setText(invoice.getPdf());
+        this.customer.setText(invoice.getCustomerId());
+        this.employee.setText(invoice.getEmployeeId());
+        this.date.setValue(LocalDate.parse(invoice.getDate()));
+        this.products.setText(invoice.getProducts());
+        this.pdf.setText(invoice.getPdf());
 
-        isInEditMode = Boolean.TRUE;
+        this.isInEditMode = Boolean.TRUE;
     }
 
     /**
      * Clear table entries
      */
     private void clearEntries() {
-        customer.clear();
-        employee.clear();
-        products.clear();
+        this.customer.clear();
+        this.employee.clear();
+        this.products.clear();
     }
 
     /**
      * Handle invoice update
      */
     private void handleUpdateInvoice() throws SQLException {
-        Invoice invoice = new Invoice(id, customer.getText(), employee.getText(),
-                date.getValue().toString(), pdf.getText());
+        Invoice invoice = new Invoice(id, this.customer.getText(), this.employee.getText(),
+                this.date.getValue().toString(), this.pdf.getText());
         invoice.setProducts(products.getText());
         if (DatabaseHandler.updateInvoice(invoice)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de fatura atualizados.", true);
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed",
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer, new ArrayList<>(), "Failed",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }
@@ -168,7 +166,6 @@ public class InvoiceAddController implements Initializable {
         fileChooser.getExtensionFilters().addAll(new
                 FileChooser.ExtensionFilter("Ficheiro PDF", "*.pdf"));
         Stage stage = new Stage(StageStyle.DECORATED);
-
         // Store File Path
         File file = fileChooser.showOpenDialog(stage);
         if (file == null) {

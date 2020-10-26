@@ -145,7 +145,7 @@ public class ProductSearchController implements Initializable {
     }
 
     private Stage getStage() {
-        return (Stage) tableView.getScene().getWindow();
+        return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
@@ -207,7 +207,7 @@ public class ProductSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        if (productCombo.getValue() != null && productSearchInput.getText().isEmpty()) {
+        if (this.productCombo.getValue() == null && this.productSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getProductList();
             this.tableView.setItems(list);
@@ -223,13 +223,13 @@ public class ProductSearchController implements Initializable {
      */
     public void searchProduct() throws SQLException {
         // Check if user input is present
-        if (productCombo.getSelectionModel().isEmpty() || productSearchInput.getText().isEmpty()) {
+        if (this.productCombo.getSelectionModel().isEmpty() || this.productSearchInput.getText().isEmpty()) {
             AlertMaker.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput =
-                    StringUtils.stripAccents(productCombo.getSelectionModel().getSelectedItem().getText());
-            String searchInput = productSearchInput.getText();
+                    StringUtils.stripAccents(this.productCombo.getSelectionModel().getSelectedItem().getText());
+            String searchInput = this.productSearchInput.getText();
             this.list = DatabaseHandler.searchProduct(comboInput, searchInput);
             this.tableView.setItems(list);
         }
@@ -263,7 +263,7 @@ public class ProductSearchController implements Initializable {
     @FXML
     private void handleProductEdit(ActionEvent event) {
         //Fetch the selected row
-        Product selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        Product selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
             AlertMaker.showErrorMessage("Nenhum produto seleccionado",
                     "Por favor seleccione um produto para editar.");
@@ -286,7 +286,7 @@ public class ProductSearchController implements Initializable {
 
             stage.setOnHiding((e) -> {
                 try {
-                    handleRefresh(new ActionEvent());
+                    this.handleRefresh(new ActionEvent());
                 } catch (SQLException throwable) {
                     throwable.printStackTrace();
                 }

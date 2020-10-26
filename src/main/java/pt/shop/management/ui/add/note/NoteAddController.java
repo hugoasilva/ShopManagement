@@ -80,15 +80,15 @@ public class NoteAddController implements Initializable {
         String message = this.message.getText();
 
         if (message.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Dados insuficientes",
                     new String("Por favor insira uma descrição para a nota.".getBytes(),
                             StandardCharsets.UTF_8), false);
             return;
         }
 
-        if (isInEditMode) {
-            handleUpdateNote();
+        if (this.isInEditMode) {
+            this.handleUpdateNote();
             return;
         }
         Note note = null;
@@ -97,11 +97,11 @@ public class NoteAddController implements Initializable {
             note = new Note(this.noteId, message);
             note.setPersonId(this.id);
             if (DatabaseHandler.insertCustomerNote(note)) {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                         new ArrayList<>(), "Nota adicionada",
                         "Nota adicionada com sucesso!", true);
             } else {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                         new ArrayList<>(), "Ocorreu um erro",
                         "Verifique os dados e tente novamente.", false);
             }
@@ -110,11 +110,11 @@ public class NoteAddController implements Initializable {
             note = new Note(this.noteId, message);
             note.setPersonId(this.id);
             if (DatabaseHandler.insertEmployeeNote(note)) {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                         new ArrayList<>(), "Nota adicionada",
                         "Nota adicionada com sucesso!", true);
             } else {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                         new ArrayList<>(), "Ocorreu um erro",
                         "Verifique os dados e tente novamente.", false);
             }
@@ -138,7 +138,7 @@ public class NoteAddController implements Initializable {
      * Clear entry
      */
     private void clearEntries() {
-        message.clear();
+        this.message.clear();
     }
 
     /**
@@ -150,7 +150,7 @@ public class NoteAddController implements Initializable {
 
         // Check if note is empty
         if (message.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Dados insuficientes",
                     new String("Por favor insira uma descrição para a nota.".getBytes(),
                             StandardCharsets.UTF_8), false);
@@ -161,11 +161,11 @@ public class NoteAddController implements Initializable {
             note = new Note(this.noteId, message);
             boolean result = DatabaseHandler.updateCustomerNote(note);
             if (result) {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                         new ArrayList<>(), "Successo",
                         "Nota editada com sucesso!", true);
             } else {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                         new ArrayList<>(), "Ocorreu um erro",
                         "Não foi possível atualizar a nota.", false);
             }
@@ -173,11 +173,11 @@ public class NoteAddController implements Initializable {
             note = new Note(this.noteId, message);
             boolean result = DatabaseHandler.updateEmployeeNote(note);
             if (result) {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                         new ArrayList<>(), "Successo",
                         "Nota editada com sucesso!", true);
             } else {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                         new ArrayList<>(), "Ocorreu um erro",
                         "Não foi possível atualizar a nota.", false);
             }

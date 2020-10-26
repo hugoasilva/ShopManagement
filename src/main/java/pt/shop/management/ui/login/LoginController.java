@@ -82,7 +82,7 @@ public class LoginController implements Initializable {
      * Close current window
      */
     private void closeStage() {
-        ((Stage) username.getScene().getWindow()).close();
+        ((Stage) this.username.getScene().getWindow()).close();
     }
 
     /**

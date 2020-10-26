@@ -61,10 +61,10 @@ public class InvoiceDetailsController implements Initializable {
      * @param invoice - invoice object
      */
     public void inflateUI(Invoice invoice) {
-        id.setText("ID: " + invoice.getId());
-        customer.setText("Cliente: " + invoice.getCustomerId());
-        employee.setText("Empregado: " + invoice.getEmployeeId());
-        date.setText("Data: " + invoice.getDate());
-        products.setText("Produtos: " + invoice.getProducts());
+        this.id.setText("ID: " + invoice.getId());
+        this.customer.setText("Cliente: " + invoice.getCustomerId());
+        this.employee.setText("Empregado: " + invoice.getEmployeeId());
+        this.date.setText("Data: " + invoice.getDate());
+        this.products.setText("Produtos: " + invoice.getProducts());
     }
 }

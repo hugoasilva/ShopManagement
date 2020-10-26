@@ -119,49 +119,49 @@ public class MainController implements Initializable {
      * Initialize tab panes
      */
     private void initComponents() {
-        mainTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(
-                        mainTabPane.getTabs().size()).subtract(40));
-        customerTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(
-                        customerTabPane.getTabs().size()).subtract(50));
-        employeeTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(
-                        employeeTabPane.getTabs().size()).subtract(50));
-        invoiceTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(
-                        invoiceTabPane.getTabs().size()).subtract(50));
-        productTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(
-                        productTabPane.getTabs().size()).subtract(50));
-        supplierTabPane.tabMinWidthProperty().bind(
-                rootAnchorPane.widthProperty().divide(
-                        supplierTabPane.getTabs().size()).subtract(50));
+        this.mainTabPane.tabMinWidthProperty().bind(
+                this.rootAnchorPane.widthProperty().divide(
+                        this.mainTabPane.getTabs().size()).subtract(40));
+        this.customerTabPane.tabMinWidthProperty().bind(
+                this.rootAnchorPane.widthProperty().divide(
+                        this.customerTabPane.getTabs().size()).subtract(50));
+        this.employeeTabPane.tabMinWidthProperty().bind(
+                this.rootAnchorPane.widthProperty().divide(
+                        this.employeeTabPane.getTabs().size()).subtract(50));
+        this.invoiceTabPane.tabMinWidthProperty().bind(
+                this.rootAnchorPane.widthProperty().divide(
+                        this.invoiceTabPane.getTabs().size()).subtract(50));
+        this.productTabPane.tabMinWidthProperty().bind(
+                this.rootAnchorPane.widthProperty().divide(
+                        this.productTabPane.getTabs().size()).subtract(50));
+        this.supplierTabPane.tabMinWidthProperty().bind(
+                this.rootAnchorPane.widthProperty().divide(
+                        this.supplierTabPane.getTabs().size()).subtract(50));
         try {
             // Initialize customer tab content
-            customerAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.customerAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/customer/CustomerAdd.fxml")));
-            customerSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.customerSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/customer/CustomerSearch.fxml")));
             // Initialize employee tab content
-            employeeAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.employeeAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/employee/EmployeeAdd.fxml")));
-            employeeSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.employeeSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/employee/EmployeeSearch.fxml")));
             // Initialize invoice tab content
-            invoiceAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.invoiceAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/invoice/InvoiceAdd.fxml")));
-            invoiceSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.invoiceSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/invoice/InvoiceSearch.fxml")));
             // Initialize product tab content
-            productAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.productAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/product/ProductAdd.fxml")));
-            productSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.productSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/product/ProductSearch.fxml")));
             // Initialize supplier tab content
-            supplierAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.supplierAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/supplier/SupplierAdd.fxml")));
-            supplierSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+            this.supplierSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/supplier/SupplierSearch.fxml")));
         } catch (IOException e) {
             e.printStackTrace();

@@ -85,7 +85,6 @@ public class ProductAddController implements Initializable {
      */
     @FXML
     private void addProduct(ActionEvent event) throws IOException, SQLException {
-
         String productId = String.valueOf(DatabaseHandler.getProductId());
         this.id = productId;
         String productName = name.getText();
@@ -95,14 +94,14 @@ public class ProductAddController implements Initializable {
         String productImage = REMOTE_PRODUCT_PATH + this.id + ".png";
 
         if (productName.isEmpty() || productPrice.isEmpty() || productQuantity.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
         }
 
-        if (isInEditMode) {
-            handleUpdateProduct();
+        if (this.isInEditMode) {
+            this.handleUpdateProduct();
             return;
         }
 
@@ -112,7 +111,7 @@ public class ProductAddController implements Initializable {
             String path = LOCAL_UPLOAD_PATH + this.id + ".png";
             this.imageToPNG(path);
             SFTPHandler.uploadFile(path, productImage);
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Produto adicionado",
                     productName + " adicionado com sucesso!", true);
             clearEntries();
@@ -131,7 +130,6 @@ public class ProductAddController implements Initializable {
     private void imageToPNG(String image) throws IOException {
         // Read image
         BufferedImage bufferedImage = ImageIO.read(new File(this.imagePath));
-
         // Save image
         File localImage = new File(image);
         ImageIO.write(bufferedImage, "png", localImage);
@@ -143,32 +141,36 @@ public class ProductAddController implements Initializable {
      * @param product - product object
      */
     public void inflateUI(Product product) {
-        name.setText(product.getName());
-        price.setText(product.getPrice());
-        quantity.setText(product.getQuantity());
+        this.name.setText(product.getName());
+        this.price.setText(product.getPrice());
+        this.supplier.setText(product.getSupplierId());
+        this.quantity.setText(product.getQuantity());
 
-        isInEditMode = Boolean.TRUE;
+        this.isInEditMode = Boolean.TRUE;
     }
 
     /**
      * Clear table entries
      */
     private void clearEntries() {
-        name.clear();
-        quantity.clear();
+        this.name.clear();
+        this.price.clear();
+        this.supplier.clear();
+        this.quantity.clear();
     }
 
     /**
      * Handle product update
      */
     private void handleUpdateProduct() throws SQLException {
-        Product product = new Product(id, name.getText(), price.getText(), supplier.getText(), quantity.getText(), image.getText());
+        Product product = new Product(this.id, this.name.getText(), this.price.getText(),
+                this.supplier.getText(), this.quantity.getText(), this.image.getText());
         if (DatabaseHandler.updateProduct(product)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de produto atualizados.", false);
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
@@ -180,7 +182,8 @@ public class ProductAddController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Abrir Imagem");
         fileChooser.getExtensionFilters().addAll(new
-                FileChooser.ExtensionFilter("Imagem do produto", "*.jpg", "*.jpeg", "*.png"));
+                FileChooser.ExtensionFilter(
+                "Imagem do produto", "*.jpg", "*.jpeg", "*.png"));
         Stage stage = new Stage(StageStyle.DECORATED);
 
         // Store File Path

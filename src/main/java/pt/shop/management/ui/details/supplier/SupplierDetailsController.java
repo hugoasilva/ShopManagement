@@ -61,11 +61,11 @@ public class SupplierDetailsController implements Initializable {
      * @param supplier - supplier object
      */
     public void inflateUI(Supplier supplier) {
-        id.setText("ID: " + supplier.getId());
-        name.setText("Nome: " + supplier.getName());
-        address.setText("Morada: " + supplier.getAddress());
-        phone.setText("Contacto: " + supplier.getPhone());
-        email.setText("E-mail: " + supplier.getEmail());
-        nif.setText("NIF: " + supplier.getNif());
+        this.id.setText("ID: " + supplier.getId());
+        this.name.setText("Nome: " + supplier.getName());
+        this.address.setText("Morada: " + supplier.getAddress());
+        this.phone.setText("Contacto: " + supplier.getPhone());
+        this.email.setText("E-mail: " + supplier.getEmail());
+        this.nif.setText("NIF: " + supplier.getNif());
     }
 }

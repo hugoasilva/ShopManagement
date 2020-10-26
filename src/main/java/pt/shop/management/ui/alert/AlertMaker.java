@@ -79,7 +79,6 @@ public class AlertMaker {
                 dialog.close();
             });
         });
-
         dialogLayout.setHeading(new Label(header));
         dialogLayout.setBody(new Label(body));
         dialogLayout.setActions(controls);

@@ -57,9 +57,9 @@ public class ProductDetailsController implements Initializable {
      * @param product - product object
      */
     public void inflateUI(Product product) {
-        id.setText("ID: " + product.getId());
-        name.setText("Nome: " + product.getName());
-        price.setText("Preço: " + product.getPrice());
-        quantity.setText("Quantidade: " + product.getQuantity());
+        this.id.setText("ID: " + product.getId());
+        this.name.setText("Nome: " + product.getName());
+        this.price.setText("Preço: " + product.getPrice());
+        this.quantity.setText("Quantidade: " + product.getQuantity());
     }
 }

@@ -77,12 +77,12 @@ public class EmployeeSearchController implements Initializable {
      * Assign table columns to employee properties
      */
     private void initCol() {
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
+        this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        this.addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        this.phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        this.emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        this.nifCol.setCellValueFactory(new PropertyValueFactory<>("nif"));
         TableColumn<Employee, Void> detailsCol = new TableColumn<>("Ficha");
 
         Callback<TableColumn<Employee, Void>, TableCell<Employee, Void>> cellFactory =
@@ -117,16 +117,16 @@ public class EmployeeSearchController implements Initializable {
                 };
         detailsCol.setPrefWidth(80);
         detailsCol.setCellFactory(cellFactory);
-        tableView.getColumns().add(detailsCol);
+        this.tableView.getColumns().add(detailsCol);
     }
 
     /**
      * Assign table columns to employee properties
      */
     private void initCombo() {
-        employeeCombo.getItems().addAll(new Label("ID ou Nome"), new Label("NIF"),
+        this.employeeCombo.getItems().addAll(new Label("ID ou Nome"), new Label("NIF"),
                 new Label("Contacto"), new Label("E-mail"));
-        employeeCombo.setPromptText("Tipo de pesquisa...");
+        this.employeeCombo.setPromptText("Tipo de pesquisa...");
     }
 
     /**
@@ -152,7 +152,7 @@ public class EmployeeSearchController implements Initializable {
     }
 
     private Stage getStage() {
-        return (Stage) tableView.getScene().getWindow();
+        return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
@@ -173,7 +173,7 @@ public class EmployeeSearchController implements Initializable {
     @FXML
     private void handleEmployeeDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
-        Employee selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        Employee selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             AlertMaker.showErrorMessage("Nenhum empregado seleccionado",
                     "Por favor seleccione um empregado para apagar.");
@@ -185,7 +185,7 @@ public class EmployeeSearchController implements Initializable {
         alert.setContentText("Tem a certeza que pretende apagar o empregado " + selectedForDeletion.getName() + "?");
         Optional<ButtonType> answer = alert.showAndWait();
 
-        if (answer.get() == ButtonType.OK) {
+        if (answer.isPresent() && answer.get() == ButtonType.OK) {
             boolean result = DatabaseHandler.deleteEmployee(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Empregado apagado",
@@ -214,7 +214,7 @@ public class EmployeeSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        if (employeeCombo.getValue() == null && employeeSearchInput.getText().isEmpty()) {
+        if (this.employeeCombo.getValue() == null && this.employeeSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getEmployeeList();
             this.tableView.setItems(list);
@@ -230,12 +230,12 @@ public class EmployeeSearchController implements Initializable {
      */
     public void searchEmployee() throws SQLException {
         // Check if user input is present
-        if (employeeCombo.getSelectionModel().isEmpty() || employeeSearchInput.getText().isEmpty()) {
+        if (this.employeeCombo.getSelectionModel().isEmpty() || this.employeeSearchInput.getText().isEmpty()) {
             AlertMaker.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
-            String comboInput = employeeCombo.getSelectionModel().getSelectedItem().getText();
-            String searchInput = employeeSearchInput.getText();
+            String comboInput = this.employeeCombo.getSelectionModel().getSelectedItem().getText();
+            String searchInput = this.employeeSearchInput.getText();
             this.list = DatabaseHandler.searchEmployee(comboInput, searchInput);
             this.tableView.setItems(list);
         }
@@ -247,7 +247,7 @@ public class EmployeeSearchController implements Initializable {
      * @param event - key event
      * @throws IOException - IO exception
      */
-    public void handleSearchEmployeeKeyPress(KeyEvent event) throws IOException, SQLException {
+    public void handleSearchEmployeeKeyPress(KeyEvent event) throws SQLException {
         this.searchEmployee();
     }
 
@@ -257,7 +257,7 @@ public class EmployeeSearchController implements Initializable {
      * @param event - button click event
      * @throws IOException - IO exception
      */
-    public void handleSearchEmployeeButtonPress(ActionEvent event) throws IOException, SQLException {
+    public void handleSearchEmployeeButtonPress(ActionEvent event) throws SQLException {
         this.searchEmployee();
     }
 
@@ -269,7 +269,7 @@ public class EmployeeSearchController implements Initializable {
     @FXML
     private void handleEmployeeEdit(ActionEvent event) {
         //Fetch the selected row
-        Employee selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        Employee selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
             AlertMaker.showErrorMessage("Nenhum empregado seleccionado",
                     "Por favor seleccione um empregado para editar.");
@@ -292,7 +292,7 @@ public class EmployeeSearchController implements Initializable {
 
             stage.setOnHiding((e) -> {
                 try {
-                    handleRefresh(new ActionEvent());
+                    this.handleRefresh(new ActionEvent());
                 } catch (SQLException throwable) {
                     throwable.printStackTrace();
                 }

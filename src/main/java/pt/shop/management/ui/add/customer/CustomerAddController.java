@@ -68,7 +68,6 @@ public class CustomerAddController implements Initializable {
      */
     @FXML
     private void addCustomer(ActionEvent event) throws SQLException {
-
         String customerId = String.valueOf(DatabaseHandler.getCustomerId());
         this.id = customerId;
         String customerName = name.getText();
@@ -79,26 +78,26 @@ public class CustomerAddController implements Initializable {
 
         if (customerName.isEmpty() || customerAddress.isEmpty() || customerPhone.isEmpty()
                 || customerEmail.isEmpty() || customerNif.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
         }
 
-        if (isInEditMode) {
-            handleUpdateCustomer();
+        if (this.isInEditMode) {
+            this.handleUpdateCustomer();
             return;
         }
 
         Customer customer = new Customer(customerId, customerName,
                 customerAddress, customerPhone, customerEmail, customerNif);
         if (DatabaseHandler.insertCustomer(customer)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Cliente adicionado",
                     customerName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
@@ -111,38 +110,38 @@ public class CustomerAddController implements Initializable {
      */
     public void inflateUI(Customer customer) {
         this.editId = customer.getId();
-        name.setText(customer.getName());
-        address.setText(customer.getAddress());
-        phone.setText(customer.getPhone());
-        email.setText(customer.getEmail());
-        nif.setText(customer.getNif());
+        this.name.setText(customer.getName());
+        this.address.setText(customer.getAddress());
+        this.phone.setText(customer.getPhone());
+        this.email.setText(customer.getEmail());
+        this.nif.setText(customer.getNif());
 
-        isInEditMode = Boolean.TRUE;
+        this.isInEditMode = Boolean.TRUE;
     }
 
     /**
      * Clear table entries
      */
     private void clearEntries() {
-        name.clear();
-        address.clear();
-        phone.clear();
-        email.clear();
-        nif.clear();
+        this.name.clear();
+        this.address.clear();
+        this.phone.clear();
+        this.email.clear();
+        this.nif.clear();
     }
 
     /**
      * Handle customer update
      */
     private void handleUpdateCustomer() throws SQLException {
-        Customer customer = new Customer(this.editId, name.getText(), address.getText(),
-                phone.getText(), email.getText(), nif.getText());
+        Customer customer = new Customer(this.editId, this.name.getText(), this.address.getText(),
+                this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateCustomer(customer)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de cliente atualizados.", true);
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);

@@ -77,11 +77,11 @@ public class InvoiceSearchController implements Initializable {
      * Assign table columns to invoice properties
      */
     private void initCol() {
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-        productsCol.setCellValueFactory(new PropertyValueFactory<>("products"));
+        this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        this.employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
+        this.dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        this.productsCol.setCellValueFactory(new PropertyValueFactory<>("products"));
         TableColumn<Invoice, Void> pdfCol = new TableColumn<>("PDF");
         Callback<TableColumn<Invoice, Void>, TableCell<Invoice, Void>> cellFactoryPDF =
                 new Callback<>() {
@@ -144,17 +144,17 @@ public class InvoiceSearchController implements Initializable {
         pdfCol.setCellFactory(cellFactoryPDF);
         detailsCol.setPrefWidth(80);
         detailsCol.setCellFactory(cellFactoryDetails);
-        tableView.getColumns().add(pdfCol);
-        tableView.getColumns().add(detailsCol);
+        this.tableView.getColumns().add(pdfCol);
+        this.tableView.getColumns().add(detailsCol);
     }
 
     /**
      * Initialize search combo box
      */
     private void initCombo() {
-        invoiceCombo.getItems().addAll(new Label("ID"), new Label("ID Cliente"),
+        this.invoiceCombo.getItems().addAll(new Label("ID"), new Label("ID Cliente"),
                 new Label("ID Empregado"), new Label("Data"));
-        invoiceCombo.setPromptText("Tipo de pesquisa...");
+        this.invoiceCombo.setPromptText("Tipo de pesquisa...");
     }
 
     /**
@@ -188,7 +188,7 @@ public class InvoiceSearchController implements Initializable {
     }
 
     private Stage getStage() {
-        return (Stage) tableView.getScene().getWindow();
+        return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
@@ -209,7 +209,7 @@ public class InvoiceSearchController implements Initializable {
     @FXML
     private void handleInvoiceDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
-        Invoice selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        Invoice selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             AlertMaker.showErrorMessage("Nenhuma fatura seleccionada",
                     "Por favor seleccione uma fatura para apagar.");
@@ -250,9 +250,7 @@ public class InvoiceSearchController implements Initializable {
     }
 
     public void refreshTable() throws SQLException {
-        String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = invoiceSearchInput.getText();
-        if (invoiceCombo.getValue() == null && invoiceSearchInput.getText().isEmpty()) {
+        if (this.invoiceCombo.getValue() == null && this.invoiceSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getInvoiceList();
             this.tableView.setItems(list);
@@ -268,12 +266,12 @@ public class InvoiceSearchController implements Initializable {
      */
     public void searchInvoice() throws SQLException {
         // Check if user input is present
-        if (invoiceCombo.getSelectionModel().isEmpty() || invoiceSearchInput.getText().isEmpty()) {
+        if (this.invoiceCombo.getSelectionModel().isEmpty() || this.invoiceSearchInput.getText().isEmpty()) {
             AlertMaker.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
-            String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
-            String searchInput = invoiceSearchInput.getText();
+            String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
+            String searchInput = this.invoiceSearchInput.getText();
             this.list = DatabaseHandler.searchInvoice(comboInput, searchInput);
             this.tableView.setItems(list);
         }

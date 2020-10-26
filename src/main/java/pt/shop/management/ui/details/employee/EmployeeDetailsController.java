@@ -100,21 +100,21 @@ public class EmployeeDetailsController implements Initializable {
      * @param employee - employee object
      */
     public void inflateUI(Employee employee) {
-        id.setText("ID: " + employee.getId());
-        name.setText("Nome: " + employee.getName());
-        address.setText("Morada: " + employee.getAddress());
-        phone.setText("Contacto: " + employee.getPhone());
-        email.setText("E-mail: " + employee.getEmail());
-        nif.setText("NIF: " + employee.getNif());
+        this.id.setText("ID: " + employee.getId());
+        this.name.setText("Nome: " + employee.getName());
+        this.address.setText("Morada: " + employee.getAddress());
+        this.phone.setText("Contacto: " + employee.getPhone());
+        this.email.setText("E-mail: " + employee.getEmail());
+        this.nif.setText("NIF: " + employee.getNif());
     }
 
     /**
      * Get employee notes from database
      */
     private void getEmployeeNotes() throws SQLException {
-        list.clear();
-        list = DatabaseHandler.getEmployeeNotesList(this.employee);
-        tableView.setItems(list);
+        this.list.clear();
+        this.list = DatabaseHandler.getEmployeeNotesList(this.employee);
+        this.tableView.setItems(list);
     }
 
     /**
@@ -149,7 +149,7 @@ public class EmployeeDetailsController implements Initializable {
     @FXML
     private void handleNoteDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
-        Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
@@ -192,7 +192,7 @@ public class EmployeeDetailsController implements Initializable {
     @FXML
     public void handleNoteEdit(ActionEvent event) {
         //Fetch the selected row
-        Note selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        Note selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         selectedForEdit.setPersonType("employee");
 
         if (selectedForEdit == null) {
