@@ -13,7 +13,6 @@ import pt.shop.management.ui.alert.AlertMaker;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -27,16 +26,13 @@ import java.util.ResourceBundle;
 
 public class NoteAddController implements Initializable {
 
-    // Database queries
-    private static final String INSERT_CUSTOMER_NOTE_QUERY = "INSERT INTO notes_customers " +
-            "(customer_id, message) VALUES (?, ?)";
-    private static final String INSERT_EMPLOYEE_NOTE_QUERY = "INSERT INTO notes_employees " +
-            "(employee_id, message) VALUES (?, ?)";
-    private final String type;
+    // Note data
+    private final String id;
     // Database handler instance
     DatabaseHandler databaseHandler;
+    private String noteId;
+    private String type;
     private Boolean isInEditMode = false;
-    private String id;
     // UI Content
     @FXML
     private JFXTextField message;
@@ -83,22 +79,10 @@ public class NoteAddController implements Initializable {
      */
     @FXML
     private void addNote(ActionEvent event) throws SQLException {
-        String query = null;
-        switch (this.type) {
-            case "customer":
-                query = INSERT_CUSTOMER_NOTE_QUERY;
-                break;
-            case "employee":
-                query = INSERT_EMPLOYEE_NOTE_QUERY;
-                break;
-        }
 
-        databaseHandler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, this.id);
-        preparedStatement.setString(2, message.getText());
+        String message = this.message.getText();
 
-        if (message.getText().isEmpty()) {
+        if (message.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Dados insuficientes",
                     new String("Por favor insira uma descrição para a nota.".getBytes(),
@@ -110,14 +94,33 @@ public class NoteAddController implements Initializable {
             handleUpdateNote();
             return;
         }
-        if (preparedStatement.executeUpdate() > 0) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Nota adicionada",
-                    "Nota adicionada com sucesso!", true);
+        Note note = null;
+        if (this.type.equals("customer")) {
+            this.noteId = String.valueOf(DatabaseHandler.getCustomerNotesId());
+            note = new Note(this.noteId, message);
+            note.setPersonId(this.id);
+            if (DatabaseHandler.insertCustomerNote(note)) {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Nota adicionada",
+                        "Nota adicionada com sucesso!", true);
+            } else {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Ocorreu um erro",
+                        "Verifique os dados e tente novamente.", false);
+            }
         } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Ocorreu um erro",
-                    "Verifique os dados e tente novamente.", false);
+            this.noteId = String.valueOf(DatabaseHandler.getEmployeeNotesId());
+            note = new Note(this.noteId, message);
+            note.setPersonId(this.id);
+            if (DatabaseHandler.insertEmployeeNote(note)) {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Nota adicionada",
+                        "Nota adicionada com sucesso!", true);
+            } else {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Ocorreu um erro",
+                        "Verifique os dados e tente novamente.", false);
+            }
         }
     }
 
@@ -128,9 +131,10 @@ public class NoteAddController implements Initializable {
      */
     public void inflateUI(Note note) {
         this.message.setText(note.getMessage());
+        this.noteId = note.getId();
+        this.type = note.getPersonType();
 
         this.isInEditMode = Boolean.TRUE;
-        this.id = note.getId();
     }
 
     /**
@@ -144,33 +148,42 @@ public class NoteAddController implements Initializable {
      * Handle customer update
      */
     private void handleUpdateNote() {
-//        Note note = new Note(this.id, message.getText());
-//
-//        // Check if note is empty
-//        if (note.getMessage().isEmpty()) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Dados insuficientes",
-//                    new String("Por favor insira uma descrição para a nota.".getBytes(),
-//                            StandardCharsets.UTF_8), false);
-//            return;
-//        }
-//
-//        // Parse JSON
-//        List<Note> notes = new LinkedList<>(JSONHandler.JSONToNotes(this.localPath));
-//
-//        // Edit note message
-//        notes.set(Integer.parseInt(note.getId()), note);
-//
-//        // Convert notes to JSON and upload to server
-//        if (JSONHandler.notesToJSON(notes, this.localPath)) {
-//            SFTPHandler.uploadFile(this.localPath, this.remotePath);
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Successo",
-//                    "Nota editada com sucesso!", true);
-//        } else {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer,
-//                    new ArrayList<>(), "Ocorreu um erro",
-//                    "Não foi possível atualizar a nota.", false);
-//        }
+
+        String message = this.message.getText();
+
+        // Check if note is empty
+        if (message.isEmpty()) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                    new ArrayList<>(), "Dados insuficientes",
+                    new String("Por favor insira uma descrição para a nota.".getBytes(),
+                            StandardCharsets.UTF_8), false);
+            return;
+        }
+        Note note = null;
+        if (this.type.equals("customer")) {
+            note = new Note(this.noteId, message);
+            boolean result = DatabaseHandler.updateCustomerNote(note);
+            if (result) {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Successo",
+                        "Nota editada com sucesso!", true);
+            } else {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Ocorreu um erro",
+                        "Não foi possível atualizar a nota.", false);
+            }
+        } else {
+            note = new Note(this.noteId, message);
+            boolean result = DatabaseHandler.updateEmployeeNote(note);
+            if (result) {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Successo",
+                        "Nota editada com sucesso!", true);
+            } else {
+                AlertMaker.showMaterialDialog(rootPane, mainContainer,
+                        new ArrayList<>(), "Ocorreu um erro",
+                        "Não foi possível atualizar a nota.", false);
+            }
+        }
     }
 }

@@ -3,10 +3,7 @@ package pt.shop.management.data.database;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pt.shop.management.data.model.Customer;
-import pt.shop.management.data.model.Employee;
-import pt.shop.management.data.model.Invoice;
-import pt.shop.management.data.model.Product;
+import pt.shop.management.data.model.*;
 
 import javax.swing.*;
 import java.nio.charset.StandardCharsets;
@@ -16,7 +13,7 @@ import java.sql.*;
  * Database Handler Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-25
  */
 
 public final class DatabaseHandler {
@@ -31,34 +28,60 @@ public final class DatabaseHandler {
     private static final String DATABASE_PASSWORD = "dbpw";
 
     // Select Queries
-    private static final String GET_CUSTOMER_ID_QUERY = "SELECT COUNT(*) FROM customers";
-    private static final String GET_EMPLOYEE_ID_QUERY = "SELECT COUNT(*) FROM employees";
-    private static final String GET_INVOICE_ID_QUERY = "SELECT COUNT(*) FROM invoices";
-    private static final String GET_PRODUCT_ID_QUERY = "SELECT COUNT(*) FROM products";
-    private static final String GET_CUSTOMER_INVOICE_COUNT = "SELECT COUNT(*) FROM invoices WHERE customer_id=?";
-    private static final String GET_EMPLOYEE_INVOICE_COUNT = "SELECT COUNT(*) FROM invoices WHERE employee_id=?";
+    private static final String GET_CUSTOMER_ID_QUERY =
+            "SELECT COUNT(*) FROM customers";
+    private static final String GET_EMPLOYEE_ID_QUERY =
+            "SELECT COUNT(*) FROM employees";
+    private static final String GET_INVOICE_ID_QUERY =
+            "SELECT COUNT(*) FROM invoices";
+    private static final String GET_CUSTOMER_NOTE_ID_QUERY =
+            "SELECT COUNT(*) FROM notes_customers";
+    private static final String GET_EMPLOYEE_NOTE_ID_QUERY =
+            "SELECT COUNT(*) FROM notes_employees";
+    private static final String GET_PRODUCT_ID_QUERY =
+            "SELECT COUNT(*) FROM products";
+    private static final String GET_CUSTOMER_INVOICE_COUNT =
+            "SELECT COUNT(*) FROM invoices WHERE customer_id=?";
+    private static final String GET_EMPLOYEE_INVOICE_COUNT =
+            "SELECT COUNT(*) FROM invoices WHERE employee_id=?";
 
     // Delete Queries
-    private static final String DELETE_CUSTOMER_QUERY = "DELETE FROM customers WHERE id = ?";
-    private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM employees WHERE id = ?";
-    private static final String DELETE_INVOICE_QUERY = "DELETE FROM invoices WHERE id = ?";
-    private static final String DELETE_PRODUCT_QUERY = "DELETE FROM products WHERE id = ?";
+    private static final String DELETE_CUSTOMER_QUERY =
+            "DELETE FROM customers WHERE id = ?";
+    private static final String DELETE_CUSTOMER_NOTE_QUERY =
+            "DELETE FROM notes_customers WHERE id = ?";
+    private static final String DELETE_EMPLOYEE_QUERY =
+            "DELETE FROM employees WHERE id = ?";
+    private static final String DELETE_EMPLOYEE_NOTE_QUERY =
+            "DELETE FROM notes_employees WHERE id = ?";
+    private static final String DELETE_INVOICE_QUERY =
+            "DELETE FROM invoices WHERE id = ?";
+    private static final String DELETE_PRODUCT_QUERY =
+            "DELETE FROM products WHERE id = ?";
 
     // Insert Queries
-    private final static String INSERT_CUSTOMER_QUERY = "INSERT INTO customers " +
-            "(name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String INSERT_EMPLOYEE_QUERY = "INSERT INTO employees " +
-            "(name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String INSERT_INVOICE_QUERY = "INSERT INTO invoices " +
-            "(customer_id, employee_id, date, products, pdf) VALUES (?, ?, ?, ?, ?)";
-    private final static String INSERT_PRODUCT_QUERY = "INSERT INTO products " +
-            "(name, price, quantity, image) VALUES (?, ?, ?, ?)";
+    private final static String INSERT_CUSTOMER_QUERY =
+            "INSERT INTO customers (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_CUSTOMER_NOTE_QUERY =
+            "INSERT INTO notes_customers (customer_id, message) VALUES (?, ?)";
+    private static final String INSERT_EMPLOYEE_NOTE_QUERY =
+            "INSERT INTO notes_employees (employee_id, message) VALUES (?, ?)";
+    private final static String INSERT_EMPLOYEE_QUERY =
+            "INSERT INTO employees (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
+    private final static String INSERT_INVOICE_QUERY =
+            "INSERT INTO invoices (customer_id, employee_id, date, products, pdf) VALUES (?, ?, ?, ?, ?)";
+    private final static String INSERT_PRODUCT_QUERY =
+            "INSERT INTO products (name, price, supplier_id, quantity, image) VALUES (?, ?, ?, ?, ?)";
 
     // Update Queries
     private static final String UPDATE_CUSTOMER_QUERY =
             "UPDATE customers SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
+    private static final String UPDATE_CUSTOMER_NOTE_QUERY =
+            "UPDATE notes_customers SET message=? WHERE id=?";
     private static final String UPDATE_EMPLOYEE_QUERY =
             "UPDATE employees SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
+    private static final String UPDATE_EMPLOYEE_NOTE_QUERY =
+            "UPDATE notes_employees SET message=? WHERE id=?";
     private static final String UPDATE_INVOICE_QUERY =
             "UPDATE invoices SET customer_id=?, employee_id=?, date=? WHERE id=?";
     private static final String UPDATE_PRODUCT_QUERY =
@@ -294,6 +317,118 @@ public final class DatabaseHandler {
     }
 
     /**
+     * Get customer note new id
+     *
+     * @return new customer note's id
+     */
+    public static int getCustomerNotesId() {
+        ResultSet rs;
+        try {
+            PreparedStatement statement = conn.prepareStatement(GET_CUSTOMER_NOTE_ID_QUERY);
+            rs = statement.executeQuery();
+            //Retrieving the result
+            rs.next();
+            return rs.getInt(1) + 1;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+            return 0;
+        }
+    }
+
+    /**
+     * Insert new customer note
+     *
+     * @param note - note object
+     * @return - true if success, false otherwise
+     */
+    public static boolean insertCustomerNote(Note note) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(INSERT_CUSTOMER_NOTE_QUERY);
+            statement.setString(1, note.getPersonId());
+            statement.setString(2, note.getMessage());
+
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Update customer note at database
+     *
+     * @param note - customer note object
+     * @return - true if success, false otherwise
+     */
+    public static boolean updateCustomerNote(Note note) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(UPDATE_CUSTOMER_NOTE_QUERY);
+            statement.setString(1, note.getMessage());
+            statement.setString(2, note.getId());
+            int res = statement.executeUpdate();
+            return (res > 0);
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Get employee note new id
+     */
+    public static int getEmployeeNotesId() {
+        ResultSet rs;
+        try {
+            PreparedStatement statement = conn.prepareStatement(GET_EMPLOYEE_NOTE_ID_QUERY);
+            rs = statement.executeQuery();
+            //Retrieving the result
+            rs.next();
+            return rs.getInt(1) + 1;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+            return 0;
+        }
+    }
+
+    /**
+     * Insert new employee note
+     *
+     * @param note - note object
+     * @return - true if success, false otherwise
+     */
+    public static boolean insertEmployeeNote(Note note) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(INSERT_EMPLOYEE_NOTE_QUERY);
+            statement.setString(1, note.getPersonId());
+            statement.setString(2, note.getMessage());
+
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Update employee note at database
+     *
+     * @param note - employee note object
+     * @return - true if success, false otherwise
+     */
+    public static boolean updateEmployeeNote(Note note) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(UPDATE_EMPLOYEE_NOTE_QUERY);
+            statement.setString(1, note.getMessage());
+            statement.setString(2, note.getId());
+            int res = statement.executeUpdate();
+            return (res > 0);
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
      * Delete customer from database
      *
      * @param customer - customer object
@@ -449,7 +584,6 @@ public final class DatabaseHandler {
     public boolean updateProduct(Product product) {
         try {
             PreparedStatement statement = conn.prepareStatement(UPDATE_PRODUCT_QUERY);
-            // TODO Update changed fields
             statement.setString(1, product.getName());
             statement.setString(2, product.getPrice());
             statement.setString(3, product.getSupplierId());
@@ -457,6 +591,46 @@ public final class DatabaseHandler {
             statement.setString(5, product.getId());
             int res = statement.executeUpdate();
             return (res > 0);
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Delete customer note from database
+     *
+     * @param note - note object
+     * @return - true if success, false otherwise
+     */
+    public boolean deleteCustomerNote(Note note) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(DELETE_CUSTOMER_NOTE_QUERY);
+            statement.setString(1, note.getId());
+            int res = statement.executeUpdate();
+            if (res == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            printSQLException(ex);
+        }
+        return false;
+    }
+
+    /**
+     * Delete employee note from database
+     *
+     * @param note - note object
+     * @return - true if success, false otherwise
+     */
+    public boolean deleteEmployeeNote(Note note) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(DELETE_EMPLOYEE_NOTE_QUERY);
+            statement.setString(1, note.getId());
+            int res = statement.executeUpdate();
+            if (res == 1) {
+                return true;
+            }
         } catch (SQLException ex) {
             printSQLException(ex);
         }
@@ -514,3 +688,5 @@ public final class DatabaseHandler {
         return conn;
     }
 }
+
+

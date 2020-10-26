@@ -10,6 +10,8 @@ package pt.shop.management.data.model;
 public class Note {
     private String id;
     private String message;
+    private String personId;
+    private String type;
 
     /**
      * Note object constructor
@@ -56,5 +58,41 @@ public class Note {
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    /**
+     * Get note person id
+     *
+     * @return - note person id
+     */
+    public String getPersonId() {
+        return this.personId;
+    }
+
+    /**
+     * Set note person id
+     *
+     * @param id - note person id
+     */
+    public void setPersonId(String id) {
+        this.personId = id;
+    }
+
+    /**
+     * Get note person type
+     *
+     * @return - note person type
+     */
+    public String getPersonType() {
+        return this.type;
+    }
+
+    /**
+     * Set note person type
+     *
+     * @param type - note person type
+     */
+    public void setPersonType(String type) {
+        this.type = type;
     }
 }
