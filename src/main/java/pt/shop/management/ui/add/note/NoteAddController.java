@@ -49,7 +49,6 @@ public class NoteAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
     }
 
     /**
@@ -147,7 +146,7 @@ public class NoteAddController implements Initializable {
     /**
      * Handle customer update
      */
-    private void handleUpdateNote() {
+    private void handleUpdateNote() throws SQLException {
 
         String message = this.message.getText();
 

@@ -9,9 +9,6 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Product;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -23,10 +20,8 @@ import java.util.ResourceBundle;
 
 public class ProductDetailsController implements Initializable {
 
-    // Database query
-    private static final String SELECT_PRODUCT_QUERY = "SELECT * FROM products WHERE id=?";
     // Product data
-    private final String productID;
+    private final Product product;
     // Database handler instance
     DatabaseHandler databaseHandler;
     // UI Content
@@ -39,18 +34,13 @@ public class ProductDetailsController implements Initializable {
     @FXML
     private Label quantity;
 
-    public ProductDetailsController(String id) {
-        this.productID = id;
+    public ProductDetailsController(Product product) {
+        this.product = product;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
-        try {
-            loadData();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.inflateUI(this.product);
     }
 
     /**
@@ -74,27 +64,5 @@ public class ProductDetailsController implements Initializable {
         name.setText("Nome: " + product.getName());
         price.setText("Preço: " + product.getPrice());
         quantity.setText("Quantidade: " + product.getQuantity());
-    }
-
-    /**
-     * Load product details data
-     *
-     * @throws SQLException - database exception
-     */
-    private void loadData() throws SQLException {
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_PRODUCT_QUERY);
-        preparedStatement.setString(1, productID);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-
-        String id = resultSet.getString("id");
-        String name = resultSet.getString("name");
-        String price = resultSet.getString("price");
-        String supplier = resultSet.getString("supplier_id");
-        String quantity = resultSet.getString("quantity");
-        String image = resultSet.getString("image");
-
-        this.inflateUI(new Product(id, name, price, supplier, quantity, image));
     }
 }

@@ -25,8 +25,6 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -41,14 +39,6 @@ import java.util.logging.Logger;
  */
 
 public class EmployeeSearchController implements Initializable {
-
-    // Database queries
-    private static final String SEARCH_ID_QUERY = "SELECT * FROM employees WHERE id=?";
-    private static final String SEARCH_NAME_QUERY = "SELECT * FROM employees WHERE name LIKE ?";
-    private static final String SEARCH_NIF_QUERY = "SELECT * FROM employees WHERE nif=?";
-    private static final String SEARCH_PHONE_QUERY = "SELECT * FROM employees WHERE phone=?";
-    private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM employees WHERE email=?";
-    private static final String SELECT_EMPLOYEES_QUERY = "SELECT * FROM employees";
 
     // Employee list object
     ObservableList<Employee> list = FXCollections.observableArrayList();
@@ -77,7 +67,7 @@ public class EmployeeSearchController implements Initializable {
         this.initCol();
         this.initCombo();
         try {
-            loadData();
+            this.loadData();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
@@ -104,9 +94,9 @@ public class EmployeeSearchController implements Initializable {
 
                             {
                                 btn.setOnAction((ActionEvent event) -> {
-                                    Employee data = getTableView().getItems().get(getIndex());
+                                    Employee employee = getTableView().getItems().get(getIndex());
                                     try {
-                                        showEmployeeDetails(data.getId());
+                                        showEmployeeDetails(employee);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -142,10 +132,10 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Show employee details window
      *
-     * @param id - employee id
+     * @param employee - employee object
      */
-    private void showEmployeeDetails(String id) throws IOException {
-        EmployeeDetailsController controller = new EmployeeDetailsController(id);
+    private void showEmployeeDetails(Employee employee) throws IOException {
+        EmployeeDetailsController controller = new EmployeeDetailsController(employee);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -170,26 +160,9 @@ public class EmployeeSearchController implements Initializable {
      *
      * @throws SQLException - database exception
      */
-    private void loadData() throws SQLException {
-        list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_EMPLOYEES_QUERY);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String address = resultSet.getString("address");
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String nif = resultSet.getString("nif");
-
-                list.add(new Employee(id, name, address, phone, email, nif));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        tableView.setItems(list);
+    public void loadData() throws SQLException {
+        this.list = DatabaseHandler.getEmployeeList();
+        this.tableView.setItems(list);
     }
 
     /**
@@ -198,7 +171,7 @@ public class EmployeeSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleEmployeeDelete(ActionEvent event) {
+    private void handleEmployeeDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
         Employee selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -213,7 +186,7 @@ public class EmployeeSearchController implements Initializable {
         Optional<ButtonType> answer = alert.showAndWait();
 
         if (answer.get() == ButtonType.OK) {
-            boolean result = DatabaseHandler.getInstance().deleteEmployee(selectedForDeletion);
+            boolean result = DatabaseHandler.deleteEmployee(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Empregado apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");
@@ -237,7 +210,19 @@ public class EmployeeSearchController implements Initializable {
      */
     @FXML
     private void handleRefresh(ActionEvent event) throws SQLException {
-        loadData();
+        this.refreshTable();
+    }
+
+    public void refreshTable() throws SQLException {
+        String comboInput = employeeCombo.getSelectionModel().getSelectedItem().getText();
+        String searchInput = employeeSearchInput.getText();
+        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+            this.list.clear();
+            this.list = DatabaseHandler.getEmployeeList();
+            this.tableView.setItems(list);
+        } else {
+            this.searchEmployee();
+        }
     }
 
     /**
@@ -253,45 +238,8 @@ public class EmployeeSearchController implements Initializable {
         } else {
             String comboInput = employeeCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = employeeSearchInput.getText();
-            String query = null;
-            switch (comboInput) {
-                case "ID":
-                    query = SEARCH_ID_QUERY;
-                    break;
-                case "Nome":
-                    query = SEARCH_NAME_QUERY;
-                    searchInput = "%" + searchInput + "%";
-                    break;
-                case "NIF":
-                    query = SEARCH_NIF_QUERY;
-                    break;
-                case "Contacto":
-                    query = SEARCH_PHONE_QUERY;
-                    break;
-                case "E-mail":
-                    query = SEARCH_EMAIL_QUERY;
-                    break;
-            }
-            list.clear();
-            DatabaseHandler handler = DatabaseHandler.getInstance();
-            PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, searchInput);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            try {
-                while (resultSet.next()) {
-                    String id = resultSet.getString("id");
-                    String name = resultSet.getString("name");
-                    String address = resultSet.getString("address");
-                    String phone = resultSet.getString("phone");
-                    String email = resultSet.getString("email");
-                    String nif = resultSet.getString("nif");
-
-                    list.add(new Employee(id, name, address, phone, email, nif));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            tableView.setItems(list);
+            this.list = DatabaseHandler.getEmployeeSearch(comboInput, searchInput);
+            this.tableView.setItems(list);
         }
     }
 
@@ -342,7 +290,7 @@ public class EmployeeSearchController implements Initializable {
             stage.setScene(new Scene(parent));
             ShopManagementUtil.setStageIcon(stage);
             stage.showAndWait();
-            this.loadData();
+            this.refreshTable();
 
             stage.setOnHiding((e) -> {
                 try {

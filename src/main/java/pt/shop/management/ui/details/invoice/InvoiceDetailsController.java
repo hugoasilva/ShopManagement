@@ -9,9 +9,6 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Invoice;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -23,10 +20,8 @@ import java.util.ResourceBundle;
 
 public class InvoiceDetailsController implements Initializable {
 
-    // Database query
-    private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM faturas WHERE id=?";
     // Invoice data
-    private final String invoiceID;
+    private final Invoice invoice;
     // Database handler instance
     DatabaseHandler databaseHandler;
     // UI Content
@@ -43,18 +38,13 @@ public class InvoiceDetailsController implements Initializable {
     @FXML
     private Label pdf;
 
-    public InvoiceDetailsController(String id) {
-        this.invoiceID = id;
+    public InvoiceDetailsController(Invoice invoice) {
+        this.invoice = invoice;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
-        try {
-            loadData();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.inflateUI(this.invoice);
     }
 
     /**
@@ -79,26 +69,5 @@ public class InvoiceDetailsController implements Initializable {
         employee.setText("Empregado: " + invoice.getEmployeeId());
         date.setText("Data: " + invoice.getDate());
         products.setText("Produtos: " + invoice.getProducts());
-    }
-
-    /**
-     * Load customer details data
-     *
-     * @throws SQLException - database exception
-     */
-    private void loadData() throws SQLException {
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_CUSTOMER_QUERY);
-        preparedStatement.setString(1, this.invoiceID);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-
-        String id = resultSet.getString("id");
-        String customerId = resultSet.getString("id_cliente");
-        String employeeId = resultSet.getString("id_empregado");
-        String date = resultSet.getString("data_fatura");
-        String products = resultSet.getString("produtos");
-        String pdf = resultSet.getString("pdf");
-        this.inflateUI(new Invoice(id, customerId, employeeId, date, products, pdf));
     }
 }

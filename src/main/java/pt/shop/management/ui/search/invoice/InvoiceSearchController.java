@@ -26,8 +26,6 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -42,18 +40,6 @@ import java.util.logging.Logger;
  */
 
 public class InvoiceSearchController implements Initializable {
-
-    // Database queries
-    private static final String SEARCH_ID_QUERY = "SELECT * FROM invoices WHERE id=?";
-    private static final String SEARCH_CUSTOMER_QUERY = "SELECT * FROM invoices WHERE customer_id=?";
-    private static final String SEARCH_EMPLOYEE_QUERY = "SELECT * FROM invoices WHERE employee_id=?";
-    private static final String SEARCH_DATE_QUERY = "SELECT * FROM invoices WHERE date=?";
-    private static final String SELECT_INVOICES_QUERY = "SELECT management.invoices.*" +
-            ", customers.name AS customer_name" +
-            ", employees.name AS employee_name " +
-            "FROM invoices " +
-            "INNER JOIN customers ON customers.id=invoices.customer_id " +
-            "INNER JOIN employees ON employees.id=invoices.employee_id";
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Invoice list object
@@ -81,7 +67,7 @@ public class InvoiceSearchController implements Initializable {
         this.initCol();
         this.initCombo();
         try {
-            loadData();
+            this.loadData();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
@@ -133,9 +119,9 @@ public class InvoiceSearchController implements Initializable {
 
                             {
                                 btn.setOnAction((ActionEvent event) -> {
-                                    Invoice data = getTableView().getItems().get(getIndex());
+                                    Invoice invoice = getTableView().getItems().get(getIndex());
                                     try {
-                                        showInvoiceDetails(data.getId());
+                                        showInvoiceDetails(invoice);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -184,8 +170,8 @@ public class InvoiceSearchController implements Initializable {
         ShopManagementUtil.openFile(LOCAL_DOWNLOAD_PATH + fileName);
     }
 
-    private void showInvoiceDetails(String id) throws IOException {
-        InvoiceDetailsController controller = new InvoiceDetailsController(id);
+    private void showInvoiceDetails(Invoice invoice) throws IOException {
+        InvoiceDetailsController controller = new InvoiceDetailsController(invoice);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -210,30 +196,9 @@ public class InvoiceSearchController implements Initializable {
      *
      * @throws SQLException - database exception
      */
-    private void loadData() throws SQLException {
-        list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_INVOICES_QUERY);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-
-                String id = resultSet.getString("id");
-                String customerName = resultSet.getString("customer_name");
-                String employeeName = resultSet.getString("employee_name");
-                String date = resultSet.getString("date");
-                String products = resultSet.getString("products");
-                String pdf = resultSet.getString("pdf");
-
-                Invoice invoice = new Invoice(id, customerName, employeeName, date, products, pdf);
-                invoice.setCustomerName(customerName);
-                invoice.setEmployeeName(employeeName);
-                list.add(invoice);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        tableView.setItems(list);
+    public void loadData() throws SQLException {
+        this.list = DatabaseHandler.getInvoiceList();
+        this.tableView.setItems(list);
     }
 
     /**
@@ -242,7 +207,7 @@ public class InvoiceSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleInvoiceDelete(ActionEvent event) {
+    private void handleInvoiceDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
         Invoice selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -256,8 +221,8 @@ public class InvoiceSearchController implements Initializable {
         alert.setContentText("Tem a certeza que pretende apagar a fatura nr " + selectedForDeletion.getId() + " ?");
         Optional<ButtonType> answer = alert.showAndWait();
 
-        if (answer.get() == ButtonType.OK) {
-            Boolean result = DatabaseHandler.getInstance().deleteInvoice(selectedForDeletion);
+        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+            boolean result = DatabaseHandler.deleteInvoice(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Fatura apagada", "Fatura nr " + selectedForDeletion.getId() +
                         " apagada com sucesso.");
@@ -281,7 +246,19 @@ public class InvoiceSearchController implements Initializable {
      */
     @FXML
     private void handleRefresh(ActionEvent event) throws SQLException {
-        loadData();
+        this.refreshTable();
+    }
+
+    public void refreshTable() throws SQLException {
+        String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
+        String searchInput = invoiceSearchInput.getText();
+        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+            this.list.clear();
+            this.list = DatabaseHandler.getInvoiceList();
+            this.tableView.setItems(list);
+        } else {
+            this.searchInvoice();
+        }
     }
 
     /**
@@ -297,41 +274,8 @@ public class InvoiceSearchController implements Initializable {
         } else {
             String comboInput = invoiceCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = invoiceSearchInput.getText();
-            String query = null;
-            switch (comboInput) {
-                case "ID":
-                    query = SEARCH_ID_QUERY;
-                    break;
-                case "ID Cliente":
-                    query = SEARCH_CUSTOMER_QUERY;
-                    break;
-                case "ID Empregado":
-                    query = SEARCH_EMPLOYEE_QUERY;
-                    break;
-                case "Data":
-                    query = SEARCH_DATE_QUERY;
-                    break;
-            }
-            list.clear();
-            DatabaseHandler handler = DatabaseHandler.getInstance();
-            PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, searchInput);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            try {
-                while (resultSet.next()) {
-                    String id = resultSet.getString("id_fatura");
-                    String customerId = resultSet.getString("id_cliente");
-                    String employeeId = resultSet.getString("id_empregado");
-                    String date = resultSet.getString("data_fatura");
-                    String products = resultSet.getString("produtos");
-                    String pdf = resultSet.getString("pdf");
-
-                    list.add(new Invoice(id, customerId, employeeId, date, products, pdf));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            tableView.setItems(list);
+            this.list = DatabaseHandler.getInvoiceSearch(comboInput, searchInput);
+            this.tableView.setItems(list);
         }
     }
 

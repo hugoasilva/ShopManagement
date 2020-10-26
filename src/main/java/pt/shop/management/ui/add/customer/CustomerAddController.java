@@ -10,9 +10,11 @@ import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.search.customer.CustomerSearchController;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -49,7 +51,6 @@ public class CustomerAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
     }
 
     /**
@@ -69,7 +70,7 @@ public class CustomerAddController implements Initializable {
      * @param event - add customer event
      */
     @FXML
-    private void addCustomer(ActionEvent event) {
+    private void addCustomer(ActionEvent event) throws SQLException {
 
         String customerId = String.valueOf(DatabaseHandler.getCustomerId());
         this.id = customerId;
@@ -136,10 +137,10 @@ public class CustomerAddController implements Initializable {
     /**
      * Handle customer update
      */
-    private void handleUpdateCustomer() {
+    private void handleUpdateCustomer() throws SQLException {
         Customer customer = new Customer(this.editId, name.getText(), address.getText(),
                 phone.getText(), email.getText(), nif.getText());
-        if (DatabaseHandler.getInstance().updateCustomer(customer)) {
+        if (DatabaseHandler.updateCustomer(customer)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de cliente atualizados.", true);

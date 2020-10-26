@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.exceptions.ExceptionUtil;
 import pt.shop.management.util.ShopManagementUtil;
 
@@ -60,9 +59,6 @@ public class Main extends Application {
 
         ShopManagementUtil.setStageIcon(stage);
 
-        new Thread(() -> {
-            ExceptionUtil.init();
-            DatabaseHandler.getInstance();
-        }).start();
+        new Thread(ExceptionUtil::init).start();
     }
 }

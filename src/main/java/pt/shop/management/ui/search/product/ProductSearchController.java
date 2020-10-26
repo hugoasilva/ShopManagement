@@ -25,8 +25,6 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -41,17 +39,6 @@ import java.util.logging.Logger;
  */
 
 public class ProductSearchController implements Initializable {
-
-    // Database queries
-    private static final String SEARCH_ID_QUERY = "SELECT * FROM products WHERE id=?";
-    private static final String SEARCH_NAME_QUERY = "SELECT * FROM products WHERE name LIKE ?";
-    private static final String SEARCH_PRICE_QUERY = "SELECT * FROM products WHERE price=?";
-    private static final String SEARCH_QUANTITY_QUERY = "SELECT * FROM products WHERE quantity=?";
-    private static final String SELECT_PRODUCTS_QUERY = "SELECT management.products.*" +
-            ", suppliers.name AS supplier_name " +
-            "FROM products " +
-            "INNER JOIN suppliers ON suppliers.id=products.supplier_id";
-
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Product list object
@@ -79,7 +66,7 @@ public class ProductSearchController implements Initializable {
         this.initCol();
         this.initCombo();
         try {
-            loadData();
+            this.loadData();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
@@ -104,9 +91,9 @@ public class ProductSearchController implements Initializable {
 
                             {
                                 btn.setOnAction((ActionEvent event) -> {
-                                    Product data = getTableView().getItems().get(getIndex());
+                                    Product product = getTableView().getItems().get(getIndex());
                                     try {
-                                        showProductDetails(data.getId());
+                                        showProductDetails(product);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -139,8 +126,8 @@ public class ProductSearchController implements Initializable {
         productCombo.setPromptText("Tipo de pesquisa...");
     }
 
-    private void showProductDetails(String id) throws IOException {
-        ProductDetailsController controller = new ProductDetailsController(id);
+    private void showProductDetails(Product product) throws IOException {
+        ProductDetailsController controller = new ProductDetailsController(product);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -165,29 +152,8 @@ public class ProductSearchController implements Initializable {
      *
      * @throws SQLException - database exception
      */
-    private void loadData() throws SQLException {
-        list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_PRODUCTS_QUERY);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String price = resultSet.getString("price");
-                String supplierId = resultSet.getString("supplier_id");
-                String supplierName = resultSet.getString("supplier_name");
-                String quantity = resultSet.getString("quantity");
-                String image = resultSet.getString("image");
-
-                Product product = new Product(id, name, price, supplierId, quantity, image);
-                product.setSupplierName(supplierName);
-                list.add(product);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void loadData() throws SQLException {
+        this.list = DatabaseHandler.getProductList();
         tableView.setItems(list);
     }
 
@@ -197,7 +163,7 @@ public class ProductSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleProductDelete(ActionEvent event) {
+    private void handleProductDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
         Product selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -212,7 +178,7 @@ public class ProductSearchController implements Initializable {
         Optional<ButtonType> answer = alert.showAndWait();
 
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
-            boolean result = DatabaseHandler.getInstance().deleteProduct(selectedForDeletion);
+            boolean result = DatabaseHandler.deleteProduct(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Produto apagado", "Produto nr " + selectedForDeletion.getId() +
                         " apagado com sucesso.");
@@ -236,7 +202,19 @@ public class ProductSearchController implements Initializable {
      */
     @FXML
     private void handleRefresh(ActionEvent event) throws SQLException {
-        this.loadData();
+        this.refreshTable();
+    }
+
+    public void refreshTable() throws SQLException {
+        String comboInput = productCombo.getSelectionModel().getSelectedItem().getText();
+        String searchInput = productSearchInput.getText();
+        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+            this.list.clear();
+            this.list = DatabaseHandler.getProductList();
+            this.tableView.setItems(list);
+        } else {
+            this.searchProduct();
+        }
     }
 
     /**
@@ -252,42 +230,8 @@ public class ProductSearchController implements Initializable {
         } else {
             String comboInput = productCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = productSearchInput.getText();
-            String query = null;
-            switch (comboInput) {
-                case "ID":
-                    query = SEARCH_ID_QUERY;
-                    break;
-                case "Nome":
-                    query = SEARCH_NAME_QUERY;
-                    searchInput = "%" + searchInput + "%";
-                    break;
-                case "Preço":
-                    query = SEARCH_PRICE_QUERY;
-                    break;
-                case "Quantidade":
-                    query = SEARCH_QUANTITY_QUERY;
-                    break;
-            }
-            list.clear();
-            DatabaseHandler handler = DatabaseHandler.getInstance();
-            PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, searchInput);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            try {
-                while (resultSet.next()) {
-                    String id = resultSet.getString("id");
-                    String name = resultSet.getString("name");
-                    String price = resultSet.getString("price");
-                    String supplierId = resultSet.getString("supplier_id");
-                    String quantity = resultSet.getString("quantity");
-                    String image = resultSet.getString("image");
-
-                    list.add(new Product(id, name, price, supplierId, quantity, image));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            tableView.setItems(list);
+            this.list = DatabaseHandler.getProductSearch(comboInput, searchInput);
+            this.tableView.setItems(list);
         }
     }
 
@@ -338,7 +282,7 @@ public class ProductSearchController implements Initializable {
             stage.setScene(new Scene(parent));
             ShopManagementUtil.setStageIcon(stage);
             stage.showAndWait();
-            this.loadData();
+            this.refreshTable();
 
             stage.setOnHiding((e) -> {
                 try {

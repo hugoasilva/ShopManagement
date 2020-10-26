@@ -17,14 +17,11 @@ import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.search.invoice.InvoiceSearchController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -40,12 +37,8 @@ import java.util.logging.Logger;
 
 public class EmployeeDetailsController implements Initializable {
 
-    // Database query
-    private static final String SELECT_EMPLOYEE_NOTES_QUERY = "SELECT * FROM notes_employees WHERE employee_id=?";
-    private static final String SELECT_EMPLOYEE_QUERY = "SELECT * FROM employees WHERE id=?";
-
     // Employee data
-    private final String employeeID;
+    private final Employee employee;
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
@@ -69,17 +62,16 @@ public class EmployeeDetailsController implements Initializable {
     @FXML
     private TableColumn<Note, String> messageCol;
 
-    public EmployeeDetailsController(String id) {
-        this.employeeID = id;
+    public EmployeeDetailsController(Employee employee) {
+        this.employee = employee;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
         try {
-            tableView.setPlaceholder(new Label("Nenhuma nota adicionada"));
-            loadData();
-            initCol();
+            this.initCol();
+            this.getEmployeeNotes();
+            this.inflateUI(this.employee);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
@@ -89,7 +81,8 @@ public class EmployeeDetailsController implements Initializable {
      * Init notes table columns
      */
     private void initCol() {
-        messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
+        this.tableView.setPlaceholder(new Label("Nenhuma nota adicionada"));
+        this.messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
     }
 
     /**
@@ -118,46 +111,11 @@ public class EmployeeDetailsController implements Initializable {
     }
 
     /**
-     * Load employee details data
-     *
-     * @throws SQLException - database exception
-     */
-    private void loadData() throws SQLException {
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_EMPLOYEE_QUERY);
-        preparedStatement.setString(1, employeeID);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-
-        String id = resultSet.getString("id");
-        String name = resultSet.getString("name");
-        String address = resultSet.getString("address");
-        String phone = resultSet.getString("phone");
-        String email = resultSet.getString("email");
-        String nif = resultSet.getString("nif");
-        this.getEmployeeNotes();
-        this.inflateUI(new Employee(id, name, address, phone, email, nif));
-    }
-
-    /**
-     * Get employee notes from JSON file
+     * Get employee notes from database
      */
     private void getEmployeeNotes() throws SQLException {
         list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_EMPLOYEE_NOTES_QUERY);
-        preparedStatement.setString(1, employeeID);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String message = resultSet.getString("message");
-
-                list.add(new Note(id, message));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        list = DatabaseHandler.getEmployeeNotes(this.employee);
         tableView.setItems(list);
     }
 
@@ -168,7 +126,7 @@ public class EmployeeDetailsController implements Initializable {
      */
     @FXML
     public void addNoteButtonAction() throws IOException, SQLException {
-        NoteAddController controller = new NoteAddController(this.employeeID, "employee");
+        NoteAddController controller = new NoteAddController(this.employee.getId(), "employee");
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -191,7 +149,7 @@ public class EmployeeDetailsController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleNoteDelete(ActionEvent event) {
+    private void handleNoteDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
         Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -206,7 +164,7 @@ public class EmployeeDetailsController implements Initializable {
         Optional<ButtonType> answer = alert.showAndWait();
 
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
-            boolean result = DatabaseHandler.getInstance().deleteEmployeeNote(selectedForDeletion);
+            boolean result = DatabaseHandler.deleteEmployeeNote(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Nota apagada",
                         "Nota apagada com sucesso.");
@@ -246,7 +204,7 @@ public class EmployeeDetailsController implements Initializable {
         }
         try {
 
-            NoteAddController controller = new NoteAddController(this.employeeID, "employee");
+            NoteAddController controller = new NoteAddController(this.employee.getId(), "employee");
 
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(

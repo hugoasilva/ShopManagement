@@ -25,8 +25,6 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -41,14 +39,6 @@ import java.util.logging.Logger;
  */
 
 public class CustomerSearchController implements Initializable {
-
-    // Database queries
-    private static final String SEARCH_ID_QUERY = "SELECT * FROM customers WHERE id=?";
-    private static final String SEARCH_NAME_QUERY = "SELECT * FROM customers WHERE name LIKE ?";
-    private static final String SEARCH_NIF_QUERY = "SELECT * FROM customers WHERE nif=?";
-    private static final String SEARCH_PHONE_QUERY = "SELECT * FROM customers WHERE phone=?";
-    private static final String SEARCH_EMAIL_QUERY = "SELECT * FROM customers WHERE email=?";
-    private static final String SELECT_CUSTOMERS_QUERY = "SELECT * FROM customers";
 
     // Customer list object
     ObservableList<Customer> list = FXCollections.observableArrayList();
@@ -104,9 +94,9 @@ public class CustomerSearchController implements Initializable {
 
                             {
                                 btn.setOnAction((ActionEvent event) -> {
-                                    Customer data = getTableView().getItems().get(getIndex());
+                                    Customer customer = getTableView().getItems().get(getIndex());
                                     try {
-                                        showCustomerDetails(data.getId());
+                                        showCustomerDetails(customer);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -142,10 +132,10 @@ public class CustomerSearchController implements Initializable {
     /**
      * Show customer details window
      *
-     * @param id - customer id
+     * @param customer - customer object
      */
-    private void showCustomerDetails(String id) throws IOException {
-        CustomerDetailsController controller = new CustomerDetailsController(id);
+    private void showCustomerDetails(Customer customer) throws IOException {
+        CustomerDetailsController controller = new CustomerDetailsController(customer);
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -170,26 +160,9 @@ public class CustomerSearchController implements Initializable {
      *
      * @throws SQLException - database exception
      */
-    private void loadData() throws SQLException {
-        list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_CUSTOMERS_QUERY);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String address = resultSet.getString("address");
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String nif = resultSet.getString("nif");
-
-                list.add(new Customer(id, name, address, phone, email, nif));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        tableView.setItems(list);
+    public void loadData() throws SQLException {
+        this.list = DatabaseHandler.getCustomerList();
+        this.tableView.setItems(list);
     }
 
     /**
@@ -198,7 +171,7 @@ public class CustomerSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleCustomerDelete(ActionEvent event) {
+    private void handleCustomerDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
         Customer selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -213,7 +186,7 @@ public class CustomerSearchController implements Initializable {
         Optional<ButtonType> answer = alert.showAndWait();
 
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
-            boolean result = DatabaseHandler.getInstance().deleteCustomer(selectedForDeletion);
+            boolean result = DatabaseHandler.deleteCustomer(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Cliente apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");
@@ -237,7 +210,20 @@ public class CustomerSearchController implements Initializable {
      */
     @FXML
     private void handleRefresh(ActionEvent event) throws SQLException {
-        this.loadData();
+        this.refreshTable();
+    }
+
+    public void refreshTable() throws SQLException {
+        String comboInput = customerCombo.getSelectionModel().getSelectedItem().getText();
+        String searchInput = customerSearchInput.getText();
+        if (comboInput.isEmpty() && searchInput.isEmpty()) {
+            this.list.clear();
+            this.list = DatabaseHandler.getCustomerList();
+            this.tableView.setItems(list);
+        } else {
+            this.searchCustomer();
+        }
+
     }
 
     /**
@@ -253,44 +239,7 @@ public class CustomerSearchController implements Initializable {
         } else {
             String comboInput = customerCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = customerSearchInput.getText();
-            String query = null;
-            switch (comboInput) {
-                case "ID":
-                    query = SEARCH_ID_QUERY;
-                    break;
-                case "Nome":
-                    query = SEARCH_NAME_QUERY;
-                    searchInput = "%" + searchInput + "%";
-                    break;
-                case "NIF":
-                    query = SEARCH_NIF_QUERY;
-                    break;
-                case "Contacto":
-                    query = SEARCH_PHONE_QUERY;
-                    break;
-                case "E-mail":
-                    query = SEARCH_EMAIL_QUERY;
-                    break;
-            }
-            list.clear();
-            DatabaseHandler handler = DatabaseHandler.getInstance();
-            PreparedStatement preparedStatement = handler.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, searchInput);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            try {
-                while (resultSet.next()) {
-                    String id = resultSet.getString("id");
-                    String name = resultSet.getString("name");
-                    String address = resultSet.getString("address");
-                    String phone = resultSet.getString("phone");
-                    String email = resultSet.getString("email");
-                    String nif = resultSet.getString("nif");
-
-                    list.add(new Customer(id, name, address, phone, email, nif));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.list = DatabaseHandler.getCustomerSearch(comboInput, searchInput);
             tableView.setItems(list);
         }
     }
@@ -342,7 +291,7 @@ public class CustomerSearchController implements Initializable {
             stage.setScene(new Scene(parent));
             ShopManagementUtil.setStageIcon(stage);
             stage.showAndWait();
-            this.loadData();
+            this.refreshTable();
 
             stage.setOnHiding((e) -> {
                 try {

@@ -10,9 +10,11 @@ import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.search.employee.EmployeeSearchController;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -49,7 +51,6 @@ public class EmployeeAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
     }
 
     /**
@@ -69,7 +70,7 @@ public class EmployeeAddController implements Initializable {
      * @param event - add employee event
      */
     @FXML
-    private void addEmployee(ActionEvent event) {
+    private void addEmployee(ActionEvent event) throws SQLException {
         String employeeId = String.valueOf(DatabaseHandler.getEmployeeId());
         this.id = employeeId;
         String employeeName = name.getText();
@@ -135,13 +136,13 @@ public class EmployeeAddController implements Initializable {
     /**
      * Handle employee update
      */
-    private void handleUpdateEmployee() {
+    private void handleUpdateEmployee() throws SQLException {
         Employee employee = new Employee(this.editId, name.getText(), address.getText(),
                 phone.getText(), email.getText(), nif.getText());
-        if (DatabaseHandler.getInstance().updateEmployee(employee)) {
+        if (DatabaseHandler.updateEmployee(employee)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
-                    "Dados de empregado atualizados.", false);
+                    "Dados de empregado atualizados.", true);
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Erro",

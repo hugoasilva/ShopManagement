@@ -17,6 +17,8 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.search.invoice.InvoiceSearchController;
+import pt.shop.management.ui.search.product.ProductSearchController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -24,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -66,7 +69,6 @@ public class ProductAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
     }
 
     /**
@@ -86,7 +88,7 @@ public class ProductAddController implements Initializable {
      * @param event - add product event
      */
     @FXML
-    private void addProduct(ActionEvent event) throws IOException {
+    private void addProduct(ActionEvent event) throws IOException, SQLException {
 
         String productId = String.valueOf(DatabaseHandler.getProductId());
         this.id = productId;
@@ -114,10 +116,9 @@ public class ProductAddController implements Initializable {
             String path = LOCAL_UPLOAD_PATH + this.id + ".png";
             this.imageToPNG(path);
             SFTPHandler.uploadFile(path, productImage);
-
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Produto adicionado",
-                    productName + " adicionado com sucesso!", false);
+                    productName + " adicionado com sucesso!", true);
             clearEntries();
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
@@ -164,9 +165,9 @@ public class ProductAddController implements Initializable {
     /**
      * Handle product update
      */
-    private void handleUpdateProduct() {
+    private void handleUpdateProduct() throws SQLException {
         Product product = new Product(id, name.getText(), price.getText(), supplier.getText(), quantity.getText(), image.getText());
-        if (DatabaseHandler.getInstance().updateProduct(product)) {
+        if (DatabaseHandler.updateProduct(product)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de produto atualizados.", false);

@@ -17,14 +17,11 @@ import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
 import pt.shop.management.ui.alert.AlertMaker;
-import pt.shop.management.ui.search.invoice.InvoiceSearchController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -40,11 +37,10 @@ import java.util.logging.Logger;
 
 public class CustomerDetailsController implements Initializable {
     // Database query
-    private static final String SELECT_CUSTOMER_NOTES_QUERY = "SELECT * FROM notes_customers WHERE customer_id=?";
     private static final String SELECT_CUSTOMER_QUERY = "SELECT * FROM customers WHERE id=?";
 
     // Customer data
-    private final String customerID;
+    private final Customer customer;
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
@@ -68,17 +64,16 @@ public class CustomerDetailsController implements Initializable {
     @FXML
     private TableColumn<Note, String> messageCol;
 
-    public CustomerDetailsController(String id) {
-        this.customerID = id;
+    public CustomerDetailsController(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
         try {
-            tableView.setPlaceholder(new Label("Nenhuma nota adicionada"));
-            loadData();
-            initCol();
+            this.initCol();
+            this.getCustomerNotes();
+            this.inflateUI(this.customer);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
@@ -88,7 +83,8 @@ public class CustomerDetailsController implements Initializable {
      * Init notes table columns
      */
     private void initCol() {
-        messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
+        this.tableView.setPlaceholder(new Label("Nenhuma nota adicionada"));
+        this.messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
     }
 
     /**
@@ -117,46 +113,11 @@ public class CustomerDetailsController implements Initializable {
     }
 
     /**
-     * Load customer details data
-     *
-     * @throws SQLException - database exception
-     */
-    private void loadData() throws SQLException {
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_CUSTOMER_QUERY);
-        preparedStatement.setString(1, customerID);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-
-        String id = resultSet.getString("id");
-        String name = resultSet.getString("name");
-        String address = resultSet.getString("address");
-        String phone = resultSet.getString("phone");
-        String email = resultSet.getString("email");
-        String nif = resultSet.getString("nif");
-        this.getCustomerNotes();
-        this.inflateUI(new Customer(id, name, address, phone, email, nif));
-    }
-
-    /**
      * Get customer notes
      */
     private void getCustomerNotes() throws SQLException {
         list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        PreparedStatement preparedStatement = handler.getConnection().prepareStatement(SELECT_CUSTOMER_NOTES_QUERY);
-        preparedStatement.setString(1, customerID);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        try {
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String message = resultSet.getString("message");
-
-                list.add(new Note(id, message));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        list = DatabaseHandler.getCustomerNotes(this.customer);
         tableView.setItems(list);
     }
 
@@ -167,7 +128,7 @@ public class CustomerDetailsController implements Initializable {
      */
     @FXML
     public void addNoteButtonAction() throws IOException, SQLException {
-        NoteAddController controller = new NoteAddController(this.customerID, "customer");
+        NoteAddController controller = new NoteAddController(this.customer.getId(), "customer");
 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(
@@ -190,7 +151,7 @@ public class CustomerDetailsController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleNoteDelete(ActionEvent event) {
+    private void handleNoteDelete(ActionEvent event) throws SQLException {
         //Fetch the selected row
         Note selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -205,7 +166,7 @@ public class CustomerDetailsController implements Initializable {
         Optional<ButtonType> answer = alert.showAndWait();
 
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
-            boolean result = DatabaseHandler.getInstance().deleteCustomerNote(selectedForDeletion);
+            boolean result = DatabaseHandler.deleteCustomerNote(selectedForDeletion);
             if (result) {
                 AlertMaker.showSimpleAlert("Nota apagada",
                         "Nota apagada com sucesso.");
@@ -245,7 +206,7 @@ public class CustomerDetailsController implements Initializable {
         }
         try {
 
-            NoteAddController controller = new NoteAddController(this.customerID, "customer");
+            NoteAddController controller = new NoteAddController(this.customer.getId(), "customer");
 
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(

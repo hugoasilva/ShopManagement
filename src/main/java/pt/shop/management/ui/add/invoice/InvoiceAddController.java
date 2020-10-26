@@ -18,10 +18,12 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.search.invoice.InvoiceSearchController;
 
 import java.io.File;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -63,7 +65,6 @@ public class InvoiceAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance();
     }
 
     /**
@@ -83,7 +84,7 @@ public class InvoiceAddController implements Initializable {
      * @param event - add invoice event
      */
     @FXML
-    public void addInvoice(ActionEvent event) {
+    public void addInvoice(ActionEvent event) throws SQLException {
 
         String invoiceId = String.valueOf(DatabaseHandler.getInvoiceId());
         this.id = invoiceId;
@@ -148,13 +149,13 @@ public class InvoiceAddController implements Initializable {
     /**
      * Handle invoice update
      */
-    private void handleUpdateInvoice() {
+    private void handleUpdateInvoice() throws SQLException {
         Invoice invoice = new Invoice(id, customer.getText(), employee.getText(),
                 date.getValue().toString(), products.getText(), pdf.getText());
         if (databaseHandler.updateInvoice(invoice)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Successo!",
-                    "Dados de fatura atualizados.", false);
+                    "Dados de fatura atualizados.", true);
         } else {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed",
                     new String("Não foi possível atualizar os dados.".getBytes(),

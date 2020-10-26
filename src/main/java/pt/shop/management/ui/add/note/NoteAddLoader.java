@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class NoteAddLoader extends Application {
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         launch(args);
     }
 
