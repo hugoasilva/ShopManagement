@@ -51,15 +51,15 @@
                 </JFXButton>
             </VBox>
             <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                       minWidth="-Infinity" prefHeight="320.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0"
+                       minWidth="-Infinity" prefHeight="320.0" prefWidth="1123.0" AnchorPane.bottomAnchor="0.0"
                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                 <columns>
                     <TableColumn fx:id="idCol" maxWidth="120.0" prefWidth="50.0" text="ID"/>
                     <TableColumn fx:id="nameCol" prefWidth="175.0" text="Nome"/>
                     <TableColumn fx:id="addressCol" prefWidth="290.0" text="Morada"/>
-                    <TableColumn fx:id="phoneCol" prefWidth="150.0" text="Contacto"/>
+                    <TableColumn fx:id="phoneCol" prefWidth="120.0" text="Contacto"/>
                     <TableColumn fx:id="emailCol" prefWidth="250.0" text="E-mail"/>
-                    <TableColumn fx:id="nifCol" prefWidth="100.0" text="NIF"/>
+                    <TableColumn fx:id="nifCol" prefWidth="120.0" text="NIF"/>
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/>
@@ -78,7 +78,7 @@
                     </ContextMenu>
                 </contextMenu>
                 <VBox.margin>
-                    <Insets left="195.0"/>
+                    <Insets left="40.0"/>
                 </VBox.margin>
             </TableView>
             <padding>

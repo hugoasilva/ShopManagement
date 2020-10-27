@@ -1,7 +1,6 @@
 package pt.shop.management.ui.main;
 
 import com.jfoenix.controls.JFXTabPane;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,7 +8,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -84,44 +82,12 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Handle menu close item
-     *
-     * @param event - click event
-     */
-    @FXML
-    private void handleMenuClose(ActionEvent event) {
-        getStage().close();
-    }
-
-    /**
-     * Handle menu about item
-     *
-     * @param event - click event
-     */
-    @FXML
-    private void handleAboutMenu(ActionEvent event) {
-        ShopManagementUtil.loadWindow(getClass().getResource(
-                "/fxml/about/About.fxml"), "Sobre", null);
-    }
-
-    /**
-     * Handle menu full screen item
-     *
-     * @param event - click event
-     */
-    @FXML
-    private void handleMenuFullScreen(ActionEvent event) {
-        Stage stage = getStage();
-        stage.setFullScreen(!stage.isFullScreen());
-    }
-
-    /**
      * Initialize tab panes
      */
     private void initComponents() {
         this.mainTabPane.tabMinWidthProperty().bind(
                 this.rootAnchorPane.widthProperty().divide(
-                        this.mainTabPane.getTabs().size()).subtract(40));
+                        this.mainTabPane.getTabs().size()).subtract(20));
         this.customerTabPane.tabMinWidthProperty().bind(
                 this.rootAnchorPane.widthProperty().divide(
                         this.customerTabPane.getTabs().size()).subtract(50));

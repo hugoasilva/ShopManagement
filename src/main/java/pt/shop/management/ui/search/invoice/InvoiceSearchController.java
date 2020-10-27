@@ -1,6 +1,7 @@
 package pt.shop.management.ui.search.invoice;
 
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,6 +50,10 @@ public class InvoiceSearchController implements Initializable {
     private JFXComboBox<Label> invoiceCombo;
     @FXML
     private TextField invoiceSearchInput;
+    @FXML
+    private JFXDatePicker initDate;
+    @FXML
+    private JFXDatePicker finalDate;
     @FXML
     private TableView<Invoice> tableView;
     @FXML
@@ -270,6 +275,8 @@ public class InvoiceSearchController implements Initializable {
             AlertMaker.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
+            System.out.println(this.initDate.getValue().toString());
+            System.out.println(this.finalDate.getValue().toString());
             String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = this.invoiceSearchInput.getText();
             this.list = DatabaseHandler.searchInvoice(comboInput, searchInput);

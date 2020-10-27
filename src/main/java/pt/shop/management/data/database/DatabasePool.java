@@ -19,14 +19,13 @@ public class DatabasePool {
 
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(DatabasePool.class.getName());
-    // Data source object
-    private static ComboPooledDataSource dataSource;
-
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url =
             "jdbc:mysql://projecthub.hopto.org:3306/management?useTimezone=true&serverTimezone=UTC";
     private static final String user = "admin";
     private static final String pass = "dbpw";
+    // Data source object
+    private static ComboPooledDataSource dataSource;
 
     static {
         try {
