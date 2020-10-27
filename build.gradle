@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'pt.shop.management'
-version '2.71'
+version '2.8'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -57,5 +57,7 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-core:2.13.3'
     implementation 'org.kordamp.ikonli:ikonli-icomoon-pack:11.5.0'
     implementation 'org.kordamp.ikonli:ikonli-dashicons-pack:11.5.0'
+    implementation 'org.kordamp.ikonli:ikonli-zondicons-pack:11.5.0'
+    implementation 'org.kordamp.ikonli:ikonli-foundation-pack:11.5.0'
     implementation 'org.kordamp.ikonli:ikonli-fontawesome-pack:11.5.0'
 }

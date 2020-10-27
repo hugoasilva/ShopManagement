@@ -4,8 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-           prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1">
+<StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane id="AnchorPane" minWidth="-Infinity" prefHeight="1000.0" prefWidth="500.0" styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">
         <VBox minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0"
@@ -13,7 +13,7 @@
             <padding>
                 <Insets bottom="40.0" left="15.0" right="15.0" top="70.0"/>
             </padding>
-            <VBox minWidth="-Infinity" prefWidth="300.0" styleClass="detailsVBox">
+            <VBox minWidth="-Infinity" prefWidth="400.0" styleClass="detailsVBox">
                 <Label fx:id="name" layoutX="150.0" layoutY="250.0" minHeight="40" minWidth="69"
                        styleClass="detailsLabel">
                     <VBox.margin>
@@ -51,7 +51,7 @@
                     </VBox.margin>
                 </Label>
                 <VBox.margin>
-                    <Insets bottom="20.0" left="75.0" right="175.0" top="50.0"/>
+                    <Insets bottom="20.0" left="20.0" right="150.0" top="50.0"/>
                 </VBox.margin>
             </VBox>
             <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0"
@@ -74,8 +74,8 @@
                 </VBox.margin>
             </TableView>
         </VBox>
-        <FontIcon iconLiteral="fa-user-circle-o" iconSize="60" layoutX="220.0" layoutY="80.0" styleClass="font-icon"
-                  text=""/>
+        <FontIcon iconLiteral="zondi-user-solid-square" iconSize="60" layoutX="220.0" layoutY="80.0"
+                  styleClass="font-icon"/>
         <FontIcon iconLiteral="fa-plus" iconSize="20" layoutX="455.0" layoutY="415.0"
                   onMouseClicked="#addNoteButtonAction" styleClass="font-icon, notesButton"/>
     </AnchorPane>

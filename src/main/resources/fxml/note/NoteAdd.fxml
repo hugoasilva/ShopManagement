@@ -5,8 +5,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="300.0"
-           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1">
+<StackPane fx:id="rootPane" prefHeight="300.0" stylesheets="@../../css/styles.css"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="150.0" prefWidth="490.0" styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">
         <VBox prefHeight="153.0" prefWidth="404.0" spacing="10.0" styleClass="detailsVBox"
@@ -30,7 +30,8 @@
                            prefWidth="100.0" text="Cancelar"/>
             </HBox>
         </VBox>
-        <FontIcon iconLiteral="fa-sticky-note" iconSize="65" layoutX="210.0" layoutY="57.0" styleClass="font-icon"
-                  AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="20.0"/>
+        <FontIcon iconLiteral="fi-comment-quotes" iconSize="80" layoutX="210.0" layoutY="57.0" styleClass="font-icon"
+                  AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="220.0"
+                  AnchorPane.topAnchor="10.0"/>
     </AnchorPane>
 </StackPane>

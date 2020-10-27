@@ -22,14 +22,19 @@ public class DatabasePool {
     // Data source object
     private static ComboPooledDataSource dataSource;
 
+    private static final String driver = "com.mysql.cj.jdbc.Driver";
+    private static final String url =
+            "jdbc:mysql://projecthub.hopto.org:3306/management?useTimezone=true&serverTimezone=UTC";
+    private static final String user = "admin";
+    private static final String pass = "dbpw";
+
     static {
         try {
-
             dataSource = new ComboPooledDataSource();
-            dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
-            dataSource.setJdbcUrl("jdbc:mysql://192.168.0.199:3306/management?useTimezone=true&serverTimezone=UTC");
-            dataSource.setUser("admin");
-            dataSource.setPassword("dbpw");
+            dataSource.setDriverClass(driver);
+            dataSource.setJdbcUrl(url);
+            dataSource.setUser(user);
+            dataSource.setPassword(pass);
             dataSource.setMinPoolSize(100);
             dataSource.setMaxPoolSize(1000);
             dataSource.setMaxIdleTime(10000);
@@ -37,7 +42,7 @@ public class DatabasePool {
             dataSource.setAcquireRetryDelay(500);
             dataSource.setAcquireIncrement(5);
         } catch (PropertyVetoException ex) {
-            LOGGER.log(Level.ERROR, "Exception occurred {}", ex);
+            LOGGER.log(Level.ERROR, "PropertyVetoException occurred {}", ex);
         }
     }
 

@@ -4,9 +4,8 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" stylesheets="@../../css/styles.css"
-           xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.add.supplier.SupplierAddController">
+<StackPane fx:id="rootPane" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.shop.management.ui.add.supplier.SupplierAddController">
     <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="600.0" prefWidth="1200.0" styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">
         <VBox prefHeight="200.0" prefWidth="1000.0" spacing="10.0" styleClass="detailsVBox"
@@ -15,9 +14,9 @@
             <padding>
                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
             </padding>
-            <FontIcon iconLiteral="dashicons-products" iconSize="80" styleClass="font-icon">
+            <FontIcon iconLiteral="icm-truck" iconSize="100" styleClass="font-icon">
                 <VBox.margin>
-                    <Insets left="275.0"/>
+                    <Insets left="300.0"/>
                 </VBox.margin>
             </FontIcon>
             <JFXTextField fx:id="name" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Nome:">
