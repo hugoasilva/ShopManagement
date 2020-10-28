@@ -1,5 +1,7 @@
 package pt.shop.management.ui.details.invoice;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,8 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.data.model.Note;
+import pt.shop.management.data.model.Product;
+import pt.shop.management.ui.details.customer.CustomerDetailsController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +32,11 @@ import java.util.ResourceBundle;
 
 public class InvoiceDetailsController implements Initializable {
 
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(InvoiceDetailsController.class.getName());
+    // Products list
+    @FXML
+    ObservableList<Product> list = FXCollections.observableArrayList();
     // Invoice data
     private Invoice invoice;
     // UI Content
@@ -37,15 +49,15 @@ public class InvoiceDetailsController implements Initializable {
     @FXML
     private Label date;
     @FXML
-    private TableView<Note> tableView;
+    private TableView<Product> tableView;
     @FXML
-    private TableColumn<Note, String> productIdCol;
+    private TableColumn<Product, String> productIdCol;
     @FXML
-    private TableColumn<Note, String> productNameCol;
+    private TableColumn<Product, String> productNameCol;
     @FXML
-    private TableColumn<Note, String> productPriceCol;
+    private TableColumn<Product, String> productPriceCol;
     @FXML
-    private TableColumn<Note, String> productQuantityCol;
+    private TableColumn<Product, String> productQuantityCol;
     @FXML
     private StackPane rootPane;
     @FXML
@@ -87,16 +99,18 @@ public class InvoiceDetailsController implements Initializable {
      * @param invoice - invoice object
      */
     public void inflateUI(Invoice invoice) {
-        this.invoice = invoice;
         this.id.setText("ID: " + invoice.getId());
         this.customer.setText("Cliente: " + invoice.getCustomerId());
         this.employee.setText("Empregado: " + invoice.getEmployeeId());
         this.date.setText("Data: " + invoice.getDate());
+        this.invoice = invoice;
         this.getInvoiceProdutcs();
     }
 
-    // TODO
     private void getInvoiceProdutcs() {
+        this.list.clear();
+        this.list = DatabaseHandler.getInvoiceProductList(this.invoice);
+        this.tableView.setItems(list);
     }
 
     // TODO

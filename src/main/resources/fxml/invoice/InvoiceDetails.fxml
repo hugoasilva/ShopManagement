@@ -1,75 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import java.lang.String?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:id="rootPane"
-           stylesheets="@../../css/styles.css" prefHeight="400.0"
-           prefWidth="800.0"
-           fx:controller="pt.shop.management.ui.details.invoice.InvoiceDetailsController">
-    <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="376.0" prefWidth="490.0" styleClass="custom-pane"
-                stylesheets="@../../css/styles.css">
-        <VBox prefHeight="153.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<?import org.kordamp.ikonli.javafx.*?>
+
+<StackPane fx:id="rootPane" prefHeight="500.0" prefWidth="800.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.shop.management.ui.details.invoice.InvoiceDetailsController">
+    <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="376.0" prefWidth="490.0" styleClass="custom-pane" stylesheets="@../../css/styles.css">
+        <VBox prefHeight="153.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
-                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </padding>
+            <FontIcon iconLiteral="fa-file-text" iconSize="60" styleClass="font-icon">
+            <VBox.margin>
+               <Insets left="350.0" />
+            </VBox.margin></FontIcon>
             <VBox minWidth="-Infinity" prefWidth="300.0" styleClass="detailsVBox">
-                <Label fx:id="id" layoutX="150.0" layoutY="150.0" minHeight="40" minWidth="69" prefHeight="40.0"
-                       prefWidth="127.0" styleClass="detailsLabel">
+                <Label fx:id="id" layoutX="150.0" layoutY="150.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
                     <VBox.margin>
-                        <Insets left="150.0"/>
+                        <Insets left="40.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="customer" layoutX="150.0" layoutY="350.0" minHeight="40" minWidth="69"
-                       styleClass="detailsLabel">
+                <Label fx:id="customer" layoutX="150.0" layoutY="350.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
                     <VBox.margin>
-                        <Insets left="150.0"/>
+                        <Insets left="40.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="employee" layoutX="150.0" layoutY="450.0" minHeight="40" minWidth="69"
-                       styleClass="detailsLabel">
+                <Label fx:id="employee" layoutX="150.0" layoutY="450.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
                     <VBox.margin>
-                        <Insets left="150.0"/>
+                        <Insets left="40.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="date" layoutX="150.0" layoutY="550.0" minHeight="40" minWidth="69"
-                       styleClass="detailsLabel">
+                <Label fx:id="date" layoutX="150.0" layoutY="550.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
                     <VBox.margin>
-                        <Insets left="150.0"/>
+                        <Insets left="40.0" />
                     </VBox.margin>
                 </Label>
+            <VBox.margin>
+               <Insets left="200.0" right="200.0" top="20.0" />
+            </VBox.margin>
             </VBox>
-            <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0"
-                       prefHeight="200.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+            <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0" prefHeight="200.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                 <columns>
-                    <TableColumn fx:id="productIdCol" minWidth="120.0" prefWidth="250.0" text="ID"/>
-                    <TableColumn fx:id="productNameCol" minWidth="175.0" prefWidth="250.0" text="Produto"/>
-                    <TableColumn fx:id="productPriceCol" minWidth="100.0" prefWidth="250.0" text="Preço"/>
-                    <TableColumn fx:id="productQuantityCol" minWidth="350.0" prefWidth="250.0" text="Quantidade"/>
+                    <TableColumn fx:id="productIdCol" minWidth="120.0" prefWidth="75.0" text="ID" />
+                    <TableColumn fx:id="productNameCol" minWidth="175.0" prefWidth="300.0" text="Produto" />
+                    <TableColumn fx:id="productPriceCol" minWidth="100.0" prefWidth="75.0" text="Preço" />
+                    <TableColumn fx:id="productQuantityCol" minWidth="100.0" prefWidth="75.0" text="Quantidade" />
                 </columns>
                 <contextMenu>
                     <ContextMenu>
                         <items>
-                            <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>
-                            <MenuItem mnemonicParsing="false" onAction="#handleProductEdit" text="Editar"/>
-                            <MenuItem mnemonicParsing="false" onAction="#handleProductDelete" text="Apagar"/>
+                            <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleProductEdit" text="Editar" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleProductDelete" text="Apagar" />
                         </items>
                         <styleClass>
-                            <String fx:value="table-context"/>
-                            <String fx:value="colored-context-menu"/>
+                            <String fx:value="table-context" />
+                            <String fx:value="colored-context-menu" />
                         </styleClass>
                     </ContextMenu>
                 </contextMenu>
                 <VBox.margin>
-                    <Insets left="20.0" right="15.0"/>
+                    <Insets left="20.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </TableView>
         </VBox>
-        <FontIcon iconLiteral="fa-file-text" iconSize="60" layoutX="350.0" layoutY="75.0" styleClass="font-icon"/>
+
 
         <!--        <FontAwesomeIconView glyphName="USER" layoutX="250.0" layoutY="75.0" size="40"/>-->
     </AnchorPane>

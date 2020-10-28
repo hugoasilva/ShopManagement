@@ -6,6 +6,17 @@ CREATE TABLE `users`
     PRIMARY KEY (`id`)
 );
 
+Tabela Moradas
+
+CREATE TABLE `addresses`
+(
+    `id`      int(11)        NOT NULL AUTO_INCREMENT,
+    `street`    varchar(255)   NOT NULL,
+    `city` varchar(100)   NOT NULL,
+    `zip`   varchar(9) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
 Tabela Clientes
 
 CREATE TABLE `customers`
@@ -44,8 +55,9 @@ CREATE TABLE `invoices`
     PRIMARY KEY (`id`),
     KEY `customer_id` (`customer_id`),
     KEY `employee_id` (`employee_id`),
-    CONSTRAINT `invoices_customers` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-    CONSTRAINT `invoices_employees` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`)
+    CONSTRAINT `fk_invoices_customers` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+    CONSTRAINT `fk_invoices_employees` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`)
+	ON DELETE CASCADE
 );
 
 Tabela Produtos
@@ -59,9 +71,10 @@ CREATE TABLE `products`
     `quantity`    int(11)      NOT NULL,
     `image`       varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `customer_id` (`customer_id`),
-    CONSTRAINT `products_suppliers` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`)
-);
+    KEY `supplier_id` (`supplier_id`),
+    CONSTRAINT `fk_products_suppliers` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`)
+	ON DELETE CASCADE
+)
 
 CREATE TABLE `notes_customers`
 (
@@ -70,7 +83,8 @@ CREATE TABLE `notes_customers`
     `message`     varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
     KEY `customer_id` (`customer_id`),
-    CONSTRAINT `notes_customers` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
+    CONSTRAINT `fk_notes_customers` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
+	ON DELETE CASCADE
 );
 
 CREATE TABLE `notes_employees`
@@ -80,7 +94,19 @@ CREATE TABLE `notes_employees`
     `message`     varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
     KEY `employee_id` (`employee_id`),
-    CONSTRAINT `notes_employees` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`)
+    CONSTRAINT `fk_notes_employees` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`)
+	ON DELETE CASCADE
+);
+
+CREATE TABLE `notes_suppliers`
+(
+    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `supplier_id` int(11)      NOT NULL,
+    `message`     varchar(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `supplier_id` (`supplier_id`),
+    CONSTRAINT `fk_notes_suppliers` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`)
+	ON DELETE CASCADE
 );
 
 Tabela Fornecedores
@@ -107,8 +133,9 @@ CREATE TABLE `products_invoices`
     PRIMARY KEY (`id`),
     KEY `invoice_id` (`invoice_id`),
     KEY `product_id` (`product_id`),
-    CONSTRAINT `products_invoices` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`),
-    CONSTRAINT `products_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+    CONSTRAINT `fk_products_invoices_invoices` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`),
+    CONSTRAINT `fk_products_invoices_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+	ON DELETE CASCADE
 );
 
 
@@ -211,6 +238,15 @@ VALUES ('Peça 5', 20, 3, 10, 'home/pi/management/products/5.png');
 INSERT INTO products (name, price, supplier_id, quantity, image)
 VALUES ('Peça 6', 100, 2, 5, 'home/pi/management/products/6.png');
 
+Inserir produtos em faturas
+
+INSERT INTO products_invoices (invoice_id, product_id, quantity) VALUES (1, 1, 2);
+INSERT INTO products_invoices (invoice_id, product_id, quantity) VALUES (1, 2, 2);
+INSERT INTO products_invoices (invoice_id, product_id, quantity) VALUES (1, 3, 2);
+INSERT INTO products_invoices (invoice_id, product_id, quantity) VALUES (2, 1, 2);
+INSERT INTO products_invoices (invoice_id, product_id, quantity) VALUES (2, 2, 2);
+INSERT INTO products_invoices (invoice_id, product_id, quantity) VALUES (2, 3, 2);
+
 Insirer Notas Clientes
 
 INSERT INTO notes_customers (customer_id, message)
@@ -231,7 +267,9 @@ VALUES ('Fornecedor 4', 'Rua das Flores', 912354567, 'bla@bla.com', 123456789);
 INSERT INTO suppliers (name, address, phone, email, nif)
 VALUES ('Fornecedor 5', 'Rua das Flores', 912354567, 'bla@bla.com', 123456789);
 
+Seleccionar faturas por data
 
+select * from invoices where date >= '2020-10-09' and date <= '2021-01-01'
 
 Seleccionar todas as faturas com nome de cliente e empregado
 

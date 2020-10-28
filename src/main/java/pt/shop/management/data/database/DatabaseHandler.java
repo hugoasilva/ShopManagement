@@ -126,6 +126,17 @@ public final class DatabaseHandler {
             "SELECT * FROM notes_suppliers WHERE supplier_id=?";
 
     // Product select queries
+    private static final String GET_INVOICE_PRODUCTS_ID_QUERY =
+            "SELECT COUNT(*) FROM products_invoices";
+    private static final String GET_INVOICE_PRODUCTS_QUERY =
+            "SELECT management.products_invoices.* " +
+                    ", products.name " +
+                    ", products.supplier_id " +
+                    ", products.price " +
+                    ", products.image " +
+                    "FROM products_invoices " +
+                    "INNER JOIN products ON products.id = products_invoices.product_id " +
+                    "WHERE invoice_id=?";
     private static final String GET_PRODUCT_ID_QUERY =
             "SELECT COUNT(*) FROM products";
     private static final String GET_PRODUCTS_QUERY =
@@ -2103,6 +2114,48 @@ public final class DatabaseHandler {
                 logSQLException(ex);
             }
         }
+    }
+
+    public static ObservableList<Product> getInvoiceProductList(Invoice invoice) {
+        ObservableList<Product> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(GET_INVOICE_PRODUCTS_QUERY);
+            preparedStatement.setString(1, invoice.getId());
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("product_id");
+                String name = resultSet.getString("name");
+                String price = resultSet.getString("price");
+                String supplier = resultSet.getString("supplier_id");
+                String quantity = resultSet.getString("quantity");
+                String image = resultSet.getString("image");
+
+                list.add(new Product(id, name, price, supplier, quantity, image));
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return list;
     }
 
     /**

@@ -102,13 +102,13 @@ public class CustomerDetailsController implements Initializable {
      * @param customer - customer object
      */
     public void inflateUI(Customer customer) {
-        this.customer = customer;
         this.id.setText("ID: " + customer.getId());
         this.name.setText("Nome: " + customer.getName());
         this.address.setText("Morada: " + customer.getAddress());
         this.phone.setText("Contacto: " + customer.getPhone());
         this.email.setText("E-mail: " + customer.getEmail());
         this.nif.setText("NIF: " + customer.getNif());
+        this.customer = customer;
         this.getCustomerNotes();
     }
 
