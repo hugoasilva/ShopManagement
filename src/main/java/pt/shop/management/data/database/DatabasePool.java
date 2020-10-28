@@ -21,7 +21,7 @@ public class DatabasePool {
     private static final Logger LOGGER = LogManager.getLogger(DatabasePool.class.getName());
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url =
-            "jdbc:mysql://192.168.0.199:3306/management?useTimezone=true&serverTimezone=UTC";
+            "jdbc:mysql://projecthub.hopto.org:3306/management?useTimezone=true&serverTimezone=UTC";
     private static final String user = "admin";
     private static final String pass = "dbpw";
     // Data source object
