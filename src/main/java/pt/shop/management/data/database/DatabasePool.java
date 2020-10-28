@@ -21,7 +21,7 @@ public class DatabasePool {
     private static final Logger LOGGER = LogManager.getLogger(DatabasePool.class.getName());
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url =
-            "jdbc:mysql://projecthub.hopto.org:3306/management?useTimezone=true&serverTimezone=UTC";
+            "jdbc:mysql://192.168.0.199:3306/management?useTimezone=true&serverTimezone=UTC";
     private static final String user = "admin";
     private static final String pass = "dbpw";
     // Data source object
@@ -34,12 +34,9 @@ public class DatabasePool {
             dataSource.setJdbcUrl(url);
             dataSource.setUser(user);
             dataSource.setPassword(pass);
-            dataSource.setMinPoolSize(100);
-            dataSource.setMaxPoolSize(1000);
-            dataSource.setMaxIdleTime(10000);
-            dataSource.setAcquireRetryAttempts(0);
-            dataSource.setAcquireRetryDelay(500);
-            dataSource.setAcquireIncrement(5);
+            dataSource.setMinPoolSize(5);
+            dataSource.setMaxStatements(10);
+            dataSource.setMaxStatementsPerConnection(1);
         } catch (PropertyVetoException ex) {
             LOGGER.log(Level.ERROR, "PropertyVetoException occurred {}", ex);
         }

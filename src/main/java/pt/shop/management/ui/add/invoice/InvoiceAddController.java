@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 
 import java.io.File;
 import java.net.URL;
@@ -92,7 +92,7 @@ public class InvoiceAddController implements Initializable {
 
         if (customerId.isEmpty() || employeeId.isEmpty() || invoiceDate.isEmpty()
                 || invoiceProducts.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            DialogHandler.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
@@ -106,12 +106,12 @@ public class InvoiceAddController implements Initializable {
         Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoicePdf);
         if (DatabaseHandler.insertInvoice(invoice)) {
             SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Nova fatura adicionada",
                     "Fatura nr " + invoiceId + " adicionada com sucesso.", false);
             clearEntries();
         } else {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Erro ao adicionar fatura",
                     "Verifique todos os campos e tente novamente", false);
         }
@@ -149,11 +149,11 @@ public class InvoiceAddController implements Initializable {
                 this.date.getValue().toString(), this.pdf.getText());
         invoice.setProducts(products.getText());
         if (DatabaseHandler.updateInvoice(invoice)) {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de fatura atualizados.", true);
         } else {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer, new ArrayList<>(), "Failed",
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer, new ArrayList<>(), "Failed",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }

@@ -149,24 +149,6 @@
     -fx-background-radius: 5px;
 }
 
-/* Toolbar Styling */
-
-.toolbar-button {
-    -fx-border-color: transparent;
-    -fx-background-color: derive(-fx-primary, 10%);
-    -fx-background-radius: 0px;
-    -fx-border-radius: 0px;
-}
-
-.toolbar-button:hover {
-    -fx-background-color: -fx-secondary;
-    -fx-text-fill: -fx-primary;
-}
-
-.toolbar-button:hover .glyph-icon, .toolbar-button:hover .glyph-icon {
-    -fx-fill: -fx-primary;
-}
-
 /* Search Styling */
 
 .searcHBox, .searchIcon, .searchButton {
@@ -302,17 +284,25 @@
 
 /* Dialog styling */
 
-.dialog-button {
+.material-button {
     -fx-border-color: -fx-blue;
     -fx-text-fill: white;
     -fx-border-radius: 1px;
     -fx-background-radius: 3px;
 }
 
-.dialog-button:hover {
+.material-button:hover {
     -fx-background-color: -fx-blue;
     -fx-border-color: derive(-fx-blue, -20%);
     -fx-text-fill: white;
+}
+
+.material-button:focused  {
+    -fx-border-color: -fx-blue;
+    -fx-background-color: derive(-fx-primary, -5%);
+    -fx-text-fill: white;
+    -fx-border-radius: 1px;
+    -fx-background-radius: 3px;
 }
 
 .jfx-layout-actions {
@@ -423,25 +413,74 @@
     -fx-base: -fx-primary;
 }
 
+/* Material Dialog styling */
+
+.material-alert-overlay{
+    -fx-background-color: #00000011;
+    -fx-padding: 0;
+}
+
+.material-alert-overlay > .depth-container > .material-alert-container,
+.material-alert-overlay > .material-alert-container{
+    -fx-background-color: -fx-primary;
+}
+
+.jfx-alert-overlay {
+    -fx-background-color: -fx-primary;
+}
+
+.jfx-alert-overlay > .depth-container > .jfx-alert-content-container,
+.jfx-alert-overlay > .jfx-alert-content-container{
+    -fx-background-color: -fx-primary;
+}
+
 /* JFXDialog styling */
 
 .jfx-layout-heading {
     -fx-background-color: -fx-blue;
 }
 
-.jfx-layout-heading .label {
-    -fx-text-fill: white;
-    -fx-font-size: 12pt;
+.jfx-dialog-layout > .jfx-layout-heading {
+    -fx-alignment: center-left;
+    -fx-font-weight: BOLD;
+    -fx-padding: 24 24 20 24;
 }
 
-.jfx-layout-body, .jfx-layout-actions {
+.jfx-dialog-layout > .jfx-layout-actions {
+    -fx-alignment: center-right;
+    -fx-hgap: 8;
+    -fx-padding: 8 8 8 8;
+}
+
+.jfx-dialog-layout > .jfx-layout-actions .jfx-button {
+    -fx-pref-height: 36;
+    -fx-max-height: 36;
+    -fx-min-width: 64;
+    -fx-padding: 8;
+}
+
+.jfx-dialog-layout > .jfx-layout-body {
+    -fx-alignment: center-left;
+    -fx-padding: 0 24 24 24;
+    -fx-pref-width: 400;
     -fx-background-color: -fx-primary;
+}
+
+.jfx-dialog-layout > .jfx-layout-body .label {
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+    -fx-wrap-text: true;
 }
 
 .jfx-layout-body .label {
     -fx-text-fill: white;
     -fx-padding: 20px 0 0 0;
 }
+
+.jfx-layout-body, .jfx-layout-actions {
+    -fx-background-color: -fx-primary;
+}
+
 
 /* Checkbox */
 

@@ -12,13 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.add.employee.EmployeeAddController;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.employee.EmployeeDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 
@@ -61,6 +63,10 @@ public class EmployeeSearchController implements Initializable {
     private TableColumn<Employee, String> emailCol;
     @FXML
     private TableColumn<Employee, String> nifCol;
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private AnchorPane mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -175,7 +181,7 @@ public class EmployeeSearchController implements Initializable {
         //Fetch the selected row
         Employee selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhum empregado seleccionado",
+            DialogHandler.showErrorMessage("Nenhum empregado seleccionado",
                     "Por favor seleccione um empregado para apagar.");
             return;
         }
@@ -188,16 +194,16 @@ public class EmployeeSearchController implements Initializable {
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
             boolean result = DatabaseHandler.deleteEmployee(selectedForDeletion);
             if (result) {
-                AlertMaker.showSimpleAlert("Empregado apagado",
+                DialogHandler.showMaterialAlert(this.mainContainer, "Empregado apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");
                 list.remove(selectedForDeletion);
             } else {
-                AlertMaker.showSimpleAlert("Erro!",
+                DialogHandler.showMaterialAlert(this.mainContainer, "Erro!",
                         new String("Não foi possível apagar o empregado ".getBytes(), StandardCharsets.UTF_8) +
                                 selectedForDeletion.getName());
             }
         } else {
-            AlertMaker.showSimpleAlert("Cancelado",
+            DialogHandler.showMaterialAlert(this.mainContainer, "Cancelado",
                     new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
@@ -231,7 +237,7 @@ public class EmployeeSearchController implements Initializable {
     public void searchEmployee() throws SQLException {
         // Check if user input is present
         if (this.employeeCombo.getSelectionModel().isEmpty() || this.employeeSearchInput.getText().isEmpty()) {
-            AlertMaker.showErrorMessage("Erro!",
+            DialogHandler.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput = this.employeeCombo.getSelectionModel().getSelectedItem().getText();
@@ -271,7 +277,7 @@ public class EmployeeSearchController implements Initializable {
         //Fetch the selected row
         Employee selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("Nenhum empregado seleccionado",
+            DialogHandler.showErrorMessage("Nenhum empregado seleccionado",
                     "Por favor seleccione um empregado para editar.");
             return;
         }

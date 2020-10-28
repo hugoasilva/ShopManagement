@@ -9,7 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -78,7 +78,7 @@ public class CustomerAddController implements Initializable {
 
         if (customerName.isEmpty() || customerAddress.isEmpty() || customerPhone.isEmpty()
                 || customerEmail.isEmpty() || customerNif.isEmpty()) {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
@@ -92,12 +92,12 @@ public class CustomerAddController implements Initializable {
         Customer customer = new Customer(customerId, customerName,
                 customerAddress, customerPhone, customerEmail, customerNif);
         if (DatabaseHandler.insertCustomer(customer)) {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Cliente adicionado",
                     customerName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
@@ -137,11 +137,11 @@ public class CustomerAddController implements Initializable {
         Customer customer = new Customer(this.editId, this.name.getText(), this.address.getText(),
                 this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateCustomer(customer)) {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de cliente atualizados.", true);
         } else {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);

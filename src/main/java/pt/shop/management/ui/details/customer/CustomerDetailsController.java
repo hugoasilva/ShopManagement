@@ -10,20 +10,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +40,8 @@ public class CustomerDetailsController implements Initializable {
 
     // Customer data
     private final Customer customer;
+    private static boolean option;
+    private static boolean isChosen;
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
@@ -59,9 +62,18 @@ public class CustomerDetailsController implements Initializable {
     private TableView<Note> tableView;
     @FXML
     private TableColumn<Note, String> messageCol;
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private AnchorPane mainContainer;
 
     public CustomerDetailsController(Customer customer) {
         this.customer = customer;
+    }
+
+    public static void setOption(boolean choice) {
+        option = choice;
+        isChosen = true;
     }
 
     @Override
@@ -147,28 +159,29 @@ public class CustomerDetailsController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleNoteDelete(ActionEvent event) throws SQLException {
+    private void handleNoteDelete(ActionEvent event) throws SQLException, InterruptedException {
         //Fetch the selected row
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+            DialogHandler.showErrorMessage("Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
             return;
         }
+        option = DialogHandler.showMaterialAlertWithCancel(this.mainContainer,
+                "Apagar Nota",
+                "Tem a certeza que pretende apagar a nota?", false);
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Nota");
-        alert.setContentText("Tem a certeza que pretende apagar a nota?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+        System.out.println(option);
+        if(option) {
             boolean result = DatabaseHandler.deleteCustomerNote(selectedForDeletion);
             if (result) {
-                AlertMaker.showSimpleAlert("Nota apagada",
-                        "Nota apagada com sucesso.");
                 this.list.remove(selectedForDeletion);
+                DialogHandler.showMaterialAlert(this.mainContainer,
+                        "Nota apagada",
+                        "Nota apagada com sucesso.");
             } else {
-                AlertMaker.showSimpleAlert("Cancelado",
+                DialogHandler.showMaterialAlert(this.mainContainer,
+                        "Cancelado",
                         new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
             }
         }
@@ -196,7 +209,7 @@ public class CustomerDetailsController implements Initializable {
         selectedForEdit.setPersonType("customer");
 
         if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+            DialogHandler.showErrorMessage("Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
             return;
         }

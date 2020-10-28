@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -20,7 +22,7 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.add.invoice.InvoiceAddController;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.invoice.InvoiceDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 
@@ -66,6 +68,10 @@ public class InvoiceSearchController implements Initializable {
     private TableColumn<Invoice, String> dateCol;
     @FXML
     private TableColumn<Invoice, String> productsCol;
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private AnchorPane mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -216,7 +222,7 @@ public class InvoiceSearchController implements Initializable {
         //Fetch the selected row
         Invoice selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhuma fatura seleccionada",
+            DialogHandler.showErrorMessage("Nenhuma fatura seleccionada",
                     "Por favor seleccione uma fatura para apagar.");
             return;
         }
@@ -229,16 +235,16 @@ public class InvoiceSearchController implements Initializable {
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
             boolean result = DatabaseHandler.deleteInvoice(selectedForDeletion);
             if (result) {
-                AlertMaker.showSimpleAlert("Fatura apagada", "Fatura nr " + selectedForDeletion.getId() +
+                DialogHandler.showMaterialAlert(this.mainContainer, "Fatura apagada", "Fatura nr " + selectedForDeletion.getId() +
                         " apagada com sucesso.");
                 list.remove(selectedForDeletion);
             } else {
-                AlertMaker.showSimpleAlert("Erro!",
+                DialogHandler.showMaterialAlert(this.mainContainer, "Erro!",
                         new String("Não foi possível apagar a fatura nr ".getBytes(), StandardCharsets.UTF_8)
                                 + selectedForDeletion.getId());
             }
         } else {
-            AlertMaker.showSimpleAlert("Cancelado",
+            DialogHandler.showMaterialAlert(this.mainContainer, "Cancelado",
                     new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
@@ -272,11 +278,18 @@ public class InvoiceSearchController implements Initializable {
     public void searchInvoice() throws SQLException {
         // Check if user input is present
         if (this.invoiceCombo.getSelectionModel().isEmpty() || this.invoiceSearchInput.getText().isEmpty()) {
-            AlertMaker.showErrorMessage("Erro!",
+            DialogHandler.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
-            System.out.println(this.initDate.getValue().toString());
-            System.out.println(this.finalDate.getValue().toString());
+            // TODO Pesquisa por data
+            if (this.initDate.getValue() != null) {
+                // TODO Data selecionada até hoje
+                System.out.println(this.initDate.getValue().toString());
+                if (this.finalDate.getValue() != null) {
+                    // TODO Entre as datas seleccionadas
+                    System.out.println(this.finalDate.getValue().toString());
+                }
+            }
             String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = this.invoiceSearchInput.getText();
             this.list = DatabaseHandler.searchInvoice(comboInput, searchInput);
@@ -314,7 +327,7 @@ public class InvoiceSearchController implements Initializable {
         //Fetch the selected row
         Invoice selectedForEdit = tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("Nenhuma fatura seleccionada",
+            DialogHandler.showErrorMessage("Nenhuma fatura seleccionada",
                     "Por favor seleccione uma fatura para editar.");
             return;
         }

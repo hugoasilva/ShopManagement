@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -19,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.add.product.ProductAddController;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.product.ProductDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 
@@ -61,6 +63,10 @@ public class ProductSearchController implements Initializable {
     private TableColumn<Product, String> supplierCol;
     @FXML
     private TableColumn<Product, String> quantityCol;
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private AnchorPane mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -168,7 +174,7 @@ public class ProductSearchController implements Initializable {
         //Fetch the selected row
         Product selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhum produto seleccionado",
+            DialogHandler.showErrorMessage("Nenhum produto seleccionado",
                     "Por favor seleccione um produto para apagar.");
             return;
         }
@@ -181,16 +187,16 @@ public class ProductSearchController implements Initializable {
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
             boolean result = DatabaseHandler.deleteProduct(selectedForDeletion);
             if (result) {
-                AlertMaker.showSimpleAlert("Produto apagado", "Produto nr " + selectedForDeletion.getId() +
+                DialogHandler.showMaterialAlert(this.mainContainer, "Produto apagado", "Produto nr " + selectedForDeletion.getId() +
                         " apagado com sucesso.");
                 list.remove(selectedForDeletion);
             } else {
-                AlertMaker.showSimpleAlert("Erro!",
+                DialogHandler.showMaterialAlert(this.mainContainer,"Erro!",
                         new String("Não foi possível apagar o produto nr ".getBytes(), StandardCharsets.UTF_8)
                                 + selectedForDeletion.getId());
             }
         } else {
-            AlertMaker.showSimpleAlert("Cancelado",
+            DialogHandler.showMaterialAlert(this.mainContainer,"Cancelado",
                     new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
@@ -224,7 +230,7 @@ public class ProductSearchController implements Initializable {
     public void searchProduct() throws SQLException {
         // Check if user input is present
         if (this.productCombo.getSelectionModel().isEmpty() || this.productSearchInput.getText().isEmpty()) {
-            AlertMaker.showErrorMessage("Erro!",
+            DialogHandler.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput =
@@ -265,7 +271,7 @@ public class ProductSearchController implements Initializable {
         //Fetch the selected row
         Product selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("Nenhum produto seleccionado",
+            DialogHandler.showErrorMessage("Nenhum produto seleccionado",
                     "Por favor seleccione um produto para editar.");
             return;
         }

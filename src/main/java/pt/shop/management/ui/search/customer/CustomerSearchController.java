@@ -12,13 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.add.customer.CustomerAddController;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.customer.CustomerDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 
@@ -61,6 +63,10 @@ public class CustomerSearchController implements Initializable {
     private TableColumn<Customer, String> emailCol;
     @FXML
     private TableColumn<Customer, String> nifCol;
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private AnchorPane mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -175,7 +181,7 @@ public class CustomerSearchController implements Initializable {
         //Fetch the selected row
         Customer selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhum cliente seleccionado",
+            DialogHandler.showErrorMessage("Nenhum cliente seleccionado",
                     "Por favor seleccione um cliente para apagar.");
             return;
         }
@@ -188,16 +194,19 @@ public class CustomerSearchController implements Initializable {
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
             boolean result = DatabaseHandler.deleteCustomer(selectedForDeletion);
             if (result) {
-                AlertMaker.showSimpleAlert("Cliente apagado",
+                DialogHandler.showMaterialAlert(this.mainContainer,
+                        "Cliente apagado",
                         selectedForDeletion.getName() + " foi apagado com sucesso.");
                 list.remove(selectedForDeletion);
             } else {
-                AlertMaker.showSimpleAlert("Erro!",
+                DialogHandler.showMaterialAlert(this.mainContainer,
+                        "Erro!",
                         new String("Não foi possível apagar o cliente ".getBytes(), StandardCharsets.UTF_8) +
                                 selectedForDeletion.getName());
             }
         } else {
-            AlertMaker.showSimpleAlert("Cancelado",
+            DialogHandler.showMaterialAlert(this.mainContainer,
+                    "Cancelado",
                     new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
@@ -232,7 +241,7 @@ public class CustomerSearchController implements Initializable {
     public void searchCustomer() throws SQLException {
         // Check if user input is present
         if (this.customerCombo.getSelectionModel().isEmpty() || this.customerSearchInput.getText().isEmpty()) {
-            AlertMaker.showErrorMessage("Erro!",
+            DialogHandler.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput = this.customerCombo.getSelectionModel().getSelectedItem().getText();
@@ -272,7 +281,7 @@ public class CustomerSearchController implements Initializable {
         //Fetch the selected row
         Customer selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("Nenhum cliente seleccionado",
+            DialogHandler.showErrorMessage("Nenhum cliente seleccionado",
                     "Por favor seleccione um cliente para editar.");
             return;
         }

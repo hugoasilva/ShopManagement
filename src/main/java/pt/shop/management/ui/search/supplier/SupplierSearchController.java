@@ -12,13 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.add.supplier.SupplierAddController;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.supplier.SupplierDetailsController;
 import pt.shop.management.util.ShopManagementUtil;
 
@@ -61,6 +63,10 @@ public class SupplierSearchController implements Initializable {
     private TableColumn<Supplier, String> emailCol;
     @FXML
     private TableColumn<Supplier, String> nifCol;
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private AnchorPane mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -169,7 +175,7 @@ public class SupplierSearchController implements Initializable {
         //Fetch the selected row
         Supplier selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhum fornecedor seleccionado",
+            DialogHandler.showErrorMessage("Nenhum fornecedor seleccionado",
                     "Por favor seleccione um fornecedor para apagar.");
             return;
         }
@@ -182,16 +188,16 @@ public class SupplierSearchController implements Initializable {
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
             boolean result = DatabaseHandler.deleteSupplier(selectedForDeletion);
             if (result) {
-                AlertMaker.showSimpleAlert("Fornecedor apagado",
+                DialogHandler.showMaterialAlert(this.mainContainer, "Fornecedor apagado",
                         "Fornecedor nr " + selectedForDeletion.getId() + " apagado com sucesso.");
                 list.remove(selectedForDeletion);
             } else {
-                AlertMaker.showSimpleAlert("Erro!",
+                DialogHandler.showMaterialAlert(this.mainContainer, "Erro!",
                         new String("Não foi possível apagar o fornecedor nr ".getBytes(), StandardCharsets.UTF_8)
                                 + selectedForDeletion.getId());
             }
         } else {
-            AlertMaker.showSimpleAlert("Cancelado",
+            DialogHandler.showMaterialAlert(this.mainContainer, "Cancelado",
                     new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
         }
     }
@@ -225,7 +231,7 @@ public class SupplierSearchController implements Initializable {
     public void searchSupplier() throws SQLException {
         // Check if user input is present
         if (this.supplierCombo.getSelectionModel().isEmpty() || this.supplierSearchInput.getText().isEmpty()) {
-            AlertMaker.showErrorMessage("Erro!",
+            DialogHandler.showErrorMessage("Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput = this.supplierCombo.getSelectionModel().getSelectedItem().getText();
@@ -265,7 +271,7 @@ public class SupplierSearchController implements Initializable {
         //Fetch the selected row
         Supplier selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("Nenhum fornecedor seleccionado",
+            DialogHandler.showErrorMessage("Nenhum fornecedor seleccionado",
                     "Por favor seleccione um fornecedor para editar.");
             return;
         }

@@ -9,7 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -79,7 +79,7 @@ public class SupplierAddController implements Initializable {
 
         if (supplierName.isEmpty() || supplierAddress.isEmpty() || supplierPhone.isEmpty()
                 || supplierEmail.isEmpty() || supplierNif.isEmpty()) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer,
+            DialogHandler.showMaterialDialog(rootPane, mainContainer,
                     new ArrayList<>(), "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
@@ -93,12 +93,12 @@ public class SupplierAddController implements Initializable {
         Supplier supplier = new Supplier(supplierId, supplierName,
                 supplierAddress, supplierPhone, supplierEmail, supplierNif);
         if (DatabaseHandler.insertSupplier(supplier)) {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Fornecedor adicionado",
                     supplierName + " adicionado com sucesso!", true);
             clearEntries();
         } else {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
@@ -138,11 +138,11 @@ public class SupplierAddController implements Initializable {
                 new Supplier(this.id, this.name.getText(), this.address.getText(),
                         this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateSupplier(supplier)) {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Successo!",
                     "Dados de fornecedor atualizados.", false);
         } else {
-            AlertMaker.showMaterialDialog(this.rootPane, this.mainContainer,
+            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
                     new ArrayList<>(), "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);

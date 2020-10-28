@@ -10,13 +10,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
-import pt.shop.management.ui.alert.AlertMaker;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -59,6 +61,10 @@ public class EmployeeDetailsController implements Initializable {
     private TableView<Note> tableView;
     @FXML
     private TableColumn<Note, String> messageCol;
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private AnchorPane mainContainer;
 
     public EmployeeDetailsController(Employee employee) {
         this.employee = employee;
@@ -151,7 +157,7 @@ public class EmployeeDetailsController implements Initializable {
         //Fetch the selected row
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+            DialogHandler.showErrorMessage("Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
             return;
         }
@@ -164,11 +170,11 @@ public class EmployeeDetailsController implements Initializable {
         if (answer.isPresent() && answer.get() == ButtonType.OK) {
             boolean result = DatabaseHandler.deleteEmployeeNote(selectedForDeletion);
             if (result) {
-                AlertMaker.showSimpleAlert("Nota apagada",
+                DialogHandler.showMaterialAlert(this.mainContainer,"Nota apagada",
                         "Nota apagada com sucesso.");
                 list.remove(selectedForDeletion);
             } else {
-                AlertMaker.showSimpleAlert("Cancelado",
+                DialogHandler.showMaterialAlert(this.mainContainer,"Cancelado",
                         new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
             }
         }
@@ -196,7 +202,7 @@ public class EmployeeDetailsController implements Initializable {
         selectedForEdit.setPersonType("employee");
 
         if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("Nenhuma nota seleccionada",
+            DialogHandler.showErrorMessage("Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
             return;
         }
