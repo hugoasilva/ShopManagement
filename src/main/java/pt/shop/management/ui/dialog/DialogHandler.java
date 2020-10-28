@@ -8,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import pt.shop.management.ui.dialog.dialog.MaterialDialog;
 import pt.shop.management.ui.dialog.button.MaterialButton;
+import pt.shop.management.ui.dialog.dialog.MaterialDialog;
 import pt.shop.management.ui.dialog.dialog.MaterialDialogLayout;
 import pt.shop.management.util.ShopManagementUtil;
 
@@ -40,10 +40,11 @@ public class DialogHandler {
 
     /**
      * Show material information dialog
+     *
      * @param nodeToBeBlurred - parent window to be blurred
-     * @param header - dialog header text
-     * @param body - dialog body text
-     * @param closeParent - close parent window
+     * @param header          - dialog header text
+     * @param body            - dialog body text
+     * @param closeParent     - close parent window
      */
     public static void showMaterialInformationDialog(Node nodeToBeBlurred,
                                                      String header, String body, boolean closeParent) {
@@ -56,6 +57,7 @@ public class DialogHandler {
         // Buttons get added into the actions section of the layout.
         MaterialButton okButton = new MaterialButton("OK");
         okButton.setDefaultButton(true);
+        okButton.setDisableVisualFocus(true);
         okButton.setOnAction(addEvent -> {
             // When the button is clicked, we set the result
             if (closeParent) {
@@ -66,7 +68,6 @@ public class DialogHandler {
             alert.hideWithAnimation();
             nodeToBeBlurred.setEffect(null);
         });
-
         dialogLayout.setHeading(new Label(header));
         dialogLayout.setBody(new Label(body));
         dialogLayout.setActions(okButton);
@@ -78,9 +79,10 @@ public class DialogHandler {
 
     /**
      * Show material confirmation dialog
+     *
      * @param nodeToBeBlurred - parent window to be blurred
-     * @param header - dialog header text
-     * @param body - dialog body text
+     * @param header          - dialog header text
+     * @param body            - dialog body text
      */
     public static boolean showMaterialConfirmationDialog(Node nodeToBeBlurred, String header, String body) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
@@ -92,6 +94,7 @@ public class DialogHandler {
         // Buttons get added into the actions section of the layout.
         MaterialButton okButton = new MaterialButton("OK");
         okButton.setDefaultButton(true);
+        okButton.setDisableVisualFocus(true);
         okButton.setOnAction(addEvent -> {
             // When the button is clicked, we set the result accordingly
             alert.setResult("true");
@@ -100,6 +103,7 @@ public class DialogHandler {
 
         MaterialButton cancelButton = new MaterialButton("Cancelar");
         cancelButton.setCancelButton(true);
+        cancelButton.setDisableVisualFocus(true);
         cancelButton.setOnAction(closeEvent -> {
             alert.setResult("false");
             alert.hideWithAnimation();

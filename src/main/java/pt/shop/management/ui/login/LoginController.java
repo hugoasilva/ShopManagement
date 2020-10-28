@@ -19,7 +19,6 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -50,7 +49,7 @@ public class LoginController implements Initializable {
      * @param event - login event
      */
     @FXML
-    private void handleLoginButtonAction(ActionEvent event) throws SQLException {
+    private void handleLoginButtonAction(ActionEvent event) {
 
         String username = this.username.getText();
         String password = this.password.getText();

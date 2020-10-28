@@ -7,6 +7,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.io.File;
@@ -17,25 +20,30 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Shop Management Util Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-28
  */
 
 public class ShopManagementUtil {
 
+
     //Resources
     public static final String ICON_IMAGE_LOC = "/img/icon.png";
-
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(ShopManagementUtil.class.getName());
     // Date and time formats
     private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
+    /**
+     * Set stage icon
+     *
+     * @param stage - window stage
+     */
     public static void setStageIcon(Stage stage) {
         stage.getIcons().add(new Image(ICON_IMAGE_LOC));
     }
@@ -64,7 +72,7 @@ public class ShopManagementUtil {
             stage.show();
             setStageIcon(stage);
         } catch (IOException ex) {
-            Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
         return controller;
     }
@@ -92,7 +100,7 @@ public class ShopManagementUtil {
             Desktop desktop = Desktop.getDesktop();
             desktop.open(file);
         } catch (IOException ex) {
-            Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -109,8 +117,7 @@ public class ShopManagementUtil {
             // Create downloads folder
             Files.createDirectories(path);
         } catch (IOException e) {
-            Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.INFO,
-                    "Não foi possível criar a pasta de transferências");
+            LOGGER.log(Level.INFO, "Não foi possível criar a pasta de transferências");
         }
         try {
             Path path = Paths.get("uploads/");
@@ -121,8 +128,7 @@ public class ShopManagementUtil {
             // Create uploads folder
             Files.createDirectories(path);
         } catch (IOException e) {
-            Logger.getLogger(ShopManagementUtil.class.getName()).log(Level.INFO,
-                    "Não foi possível criar a pasta de carregamentos");
+            LOGGER.log(Level.INFO, "Não foi possível criar a pasta de carregamentos");
         }
     }
 }

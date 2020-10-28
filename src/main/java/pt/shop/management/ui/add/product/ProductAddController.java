@@ -24,8 +24,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -43,7 +41,7 @@ public class ProductAddController implements Initializable {
     private final static String LOCAL_UPLOAD_PATH = "uploads/";
     private final static String REMOTE_PRODUCT_PATH = "/home/pi/management/products/";
     // Product data
-    private String id;
+    private Product product;
     private String imagePath;
     private Boolean isInEditMode = Boolean.FALSE;
     ;
@@ -84,17 +82,16 @@ public class ProductAddController implements Initializable {
      * @param event - add product event
      */
     @FXML
-    private void addProduct(ActionEvent event) throws IOException, SQLException {
+    private void addProduct(ActionEvent event) {
         String productId = String.valueOf(DatabaseHandler.getProductId());
-        this.id = productId;
         String productName = name.getText();
         String productPrice = price.getText();
         String productSupplierId = supplier.getText();
         String productQuantity = quantity.getText();
-        String productImage = REMOTE_PRODUCT_PATH + this.id + ".png";
+        String productImage = REMOTE_PRODUCT_PATH + productId + ".png";
 
         if (productName.isEmpty() || productPrice.isEmpty() || productQuantity.isEmpty()) {
-            DialogHandler.showMaterialInformationDialog( this.mainContainer, "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
         }
@@ -107,7 +104,7 @@ public class ProductAddController implements Initializable {
         Product product = new Product(productId, productName,
                 productPrice, productSupplierId, productQuantity, productImage);
         if (DatabaseHandler.insertProduct(product)) {
-            String path = LOCAL_UPLOAD_PATH + this.id + ".png";
+            String path = LOCAL_UPLOAD_PATH + productId + ".png";
             this.imageToPNG(path);
             SFTPHandler.uploadFile(path, productImage);
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Produto adicionado",
@@ -121,15 +118,17 @@ public class ProductAddController implements Initializable {
 
     /**
      * Read chosen image and save it as PNG
-     *
-     * @throws IOException - IO Exception
      */
-    private void imageToPNG(String image) throws IOException {
-        // Read image
-        BufferedImage bufferedImage = ImageIO.read(new File(this.imagePath));
-        // Save image
-        File localImage = new File(image);
-        ImageIO.write(bufferedImage, "png", localImage);
+    private void imageToPNG(String image) {
+        try {
+            // Read image
+            BufferedImage bufferedImage = ImageIO.read(new File(this.imagePath));
+            // Save image
+            File localImage = new File(image);
+            ImageIO.write(bufferedImage, "png", localImage);
+        } catch (IOException ex) {
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
+        }
     }
 
     /**
@@ -142,6 +141,7 @@ public class ProductAddController implements Initializable {
         this.price.setText(product.getPrice());
         this.supplier.setText(product.getSupplierId());
         this.quantity.setText(product.getQuantity());
+        this.product = product;
 
         this.isInEditMode = Boolean.TRUE;
     }
@@ -159,19 +159,24 @@ public class ProductAddController implements Initializable {
     /**
      * Handle product update
      */
-    private void handleUpdateProduct() throws SQLException {
-        Product product = new Product(this.id, this.name.getText(), this.price.getText(),
+    private void handleUpdateProduct() {
+        Product product = new Product(this.product.getId(), this.name.getText(), this.price.getText(),
                 this.supplier.getText(), this.quantity.getText(), this.image.getText());
         if (DatabaseHandler.updateProduct(product)) {
-            DialogHandler.showMaterialInformationDialog( this.mainContainer, "Successo!",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo!",
                     "Dados de produto atualizados.", false);
         } else {
-            DialogHandler.showMaterialInformationDialog( this.mainContainer, "Erro",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }
     }
 
+    /**
+     * Choose product image
+     *
+     * @param actionEvent - choose image event
+     */
     public void chooseImage(ActionEvent actionEvent) {
         // Open File Chooser
         FileChooser fileChooser = new FileChooser();

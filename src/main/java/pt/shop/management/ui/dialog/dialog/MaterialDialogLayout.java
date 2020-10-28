@@ -18,21 +18,20 @@ import java.util.List;
  */
 
 public class MaterialDialogLayout extends VBox {
+    private static final String DEFAULT_STYLE_CLASS = "material-dialog-layout";
     private StackPane heading = new StackPane();
     private StackPane body = new StackPane();
     private FlowPane actions = new FlowPane();
-
-    private static final String DEFAULT_STYLE_CLASS = "jfx-dialog-layout";
 
     /**
      * Create empty dialog layout
      */
     public MaterialDialogLayout() {
         initialize();
-        heading.getStyleClass().addAll("jfx-layout-heading", "title");
-        body.getStyleClass().add("jfx-layout-body");
+        heading.getStyleClass().addAll("material-layout-heading", "title");
+        body.getStyleClass().add("material-layout-body");
         VBox.setVgrow(body, Priority.ALWAYS);
-        actions.getStyleClass().add("jfx-layout-actions");
+        actions.getStyleClass().add("material-layout-actions");
         getChildren().setAll(heading, body, actions);
     }
 

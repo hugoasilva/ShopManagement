@@ -16,20 +16,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.add.note.NoteAddController;
 import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.search.product.ProductSearchController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Supplier Details Controller Class
@@ -40,12 +40,14 @@ import java.util.logging.Logger;
 
 public class SupplierDetailsController implements Initializable {
 
-    // Supplier data
-    private Supplier supplier;
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(ProductSearchController.class.getName());
     private static boolean option;
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
+    // Supplier data
+    private Supplier supplier;
     // UI content
     @FXML
     private Label id;
@@ -115,22 +117,18 @@ public class SupplierDetailsController implements Initializable {
      * Get supplier notes
      */
     private void getSupplierNotes() {
-        try {
-            this.list.clear();
-            this.list = DatabaseHandler.getSupplierNotesList(this.supplier);
-            this.tableView.setItems(list);
-        } catch (SQLException ex) {
-            Logger.getLogger(SupplierDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.list.clear();
+        this.list = DatabaseHandler.getSupplierNotesList(this.supplier);
+        this.tableView.setItems(list);
     }
 
     /**
      * Show add note window
      *
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
     @FXML
-    public void addNoteButtonAction() throws SQLException {
+    public void addNoteButtonAction() {
         try {
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(
@@ -148,7 +146,7 @@ public class SupplierDetailsController implements Initializable {
             stage.showAndWait();
             this.getSupplierNotes();
         } catch (IOException ex) {
-            Logger.getLogger(SupplierDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(org.apache.logging.log4j.Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -158,7 +156,7 @@ public class SupplierDetailsController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleNoteDelete(ActionEvent event) throws SQLException, InterruptedException {
+    private void handleNoteDelete(ActionEvent event) {
         //Fetch the selected row
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -189,7 +187,7 @@ public class SupplierDetailsController implements Initializable {
      * @param event - refresh event
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
+    private void handleRefresh(ActionEvent event) {
         this.getSupplierNotes();
     }
 
@@ -225,7 +223,7 @@ public class SupplierDetailsController implements Initializable {
             this.getSupplierNotes();
 
         } catch (IOException ex) {
-            Logger.getLogger(SupplierDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(org.apache.logging.log4j.Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 }

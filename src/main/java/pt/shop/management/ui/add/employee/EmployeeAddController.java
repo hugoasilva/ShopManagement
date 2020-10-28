@@ -13,8 +13,6 @@ import pt.shop.management.ui.dialog.DialogHandler;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -27,8 +25,7 @@ import java.util.ResourceBundle;
 public class EmployeeAddController implements Initializable {
 
     // Employee data
-    private String id;
-    private String editId;
+    private Employee employee;
     private Boolean isInEditMode = false;
     // UI Content
     @FXML
@@ -67,9 +64,8 @@ public class EmployeeAddController implements Initializable {
      * @param event - add employee event
      */
     @FXML
-    private void addEmployee(ActionEvent event) throws SQLException {
+    private void addEmployee(ActionEvent event) {
         String employeeId = String.valueOf(DatabaseHandler.getEmployeeId());
-        this.id = employeeId;
         String employeeName = name.getText();
         String employeeAddress = address.getText();
         String employeePhone = phone.getText();
@@ -106,12 +102,12 @@ public class EmployeeAddController implements Initializable {
      * @param employee - employee object
      */
     public void inflateUI(Employee employee) {
-        this.editId = employee.getId();
         this.name.setText(employee.getName());
         this.address.setText(employee.getAddress());
         this.phone.setText(employee.getPhone());
         this.email.setText(employee.getEmail());
         this.nif.setText(employee.getNif());
+        this.employee = employee;
 
         this.isInEditMode = Boolean.TRUE;
     }
@@ -130,8 +126,8 @@ public class EmployeeAddController implements Initializable {
     /**
      * Handle employee update
      */
-    private void handleUpdateEmployee() throws SQLException {
-        Employee employee = new Employee(this.editId, this.name.getText(), this.address.getText(),
+    private void handleUpdateEmployee() {
+        Employee employee = new Employee(this.employee.getId(), this.name.getText(), this.address.getText(),
                 this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateEmployee(employee)) {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo!",

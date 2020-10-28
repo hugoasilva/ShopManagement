@@ -5,8 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import java.lang.String?>
-<StackPane fx:id="rootPane" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
-           xmlns:fx="http://javafx.com/fxml/1"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:id="rootPane"
+           stylesheets="@../../css/styles.css" prefHeight="400.0"
+           prefWidth="800.0"
            fx:controller="pt.shop.management.ui.details.invoice.InvoiceDetailsController">
     <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="376.0" prefWidth="490.0" styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">

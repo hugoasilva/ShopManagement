@@ -13,8 +13,6 @@ import pt.shop.management.ui.dialog.DialogHandler;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -81,7 +79,7 @@ public class NoteAddController implements Initializable {
      * @param event - add note event
      */
     @FXML
-    private void addNote(ActionEvent event) throws SQLException {
+    private void addNote(ActionEvent event) {
 
         String message = this.message.getText();
 
@@ -162,13 +160,13 @@ public class NoteAddController implements Initializable {
     /**
      * Handle note update
      */
-    private void handleUpdateNote() throws SQLException {
+    private void handleUpdateNote() {
 
         String message = this.message.getText();
 
         // Check if note is empty
         if (message.isEmpty()) {
-            DialogHandler.showMaterialInformationDialog( this.mainContainer, "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
                     new String("Por favor insira uma descrição para a nota.".getBytes(),
                             StandardCharsets.UTF_8), false);
             return;

@@ -23,23 +23,18 @@ import java.util.List;
 
 public class MaterialButton extends Button {
 
-    private ObjectProperty<Paint> ripplerFill = new SimpleObjectProperty<>(null);
-
     private static final String DEFAULT_STYLE_CLASS = "material-button";
     private static final String USER_AGENT_STYLESHEET = JFoenixResources.load("/css/styles.css").toExternalForm();
-
-    public enum ButtonType {FLAT, RAISED}
-
+    private ObjectProperty<Paint> ripplerFill = new SimpleObjectProperty<>(null);
     private StyleableObjectProperty<ButtonType> buttonType = new SimpleStyleableObjectProperty<>(
             StyleableProperties.BUTTON_TYPE,
             this,
             "buttonType",
             ButtonType.FLAT);
-
     private StyleableBooleanProperty disableVisualFocus = new SimpleStyleableBooleanProperty(StyleableProperties.DISABLE_VISUAL_FOCUS,
             this,
             "disableVisualFocus",
-            false);
+            true);
 
     /**
      * Material button constructor
@@ -70,6 +65,10 @@ public class MaterialButton extends Button {
     public MaterialButton(String text, Node graphic) {
         super(text, graphic);
         initialize();
+    }
+
+    public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+        return StyleableProperties.CHILD_STYLEABLES;
     }
 
     private void initialize() {
@@ -131,21 +130,21 @@ public class MaterialButton extends Button {
     }
 
     /**
-     * Get button type
-     *
-     * @return - button type
-     */
-    public StyleableObjectProperty<ButtonType> buttonTypeProperty() {
-        return this.buttonType;
-    }
-
-    /**
      * Set button type
      *
      * @param type - button type
      */
     public void setButtonType(ButtonType type) {
         this.buttonType.set(type);
+    }
+
+    /**
+     * Get button type
+     *
+     * @return - button type
+     */
+    public StyleableObjectProperty<ButtonType> buttonTypeProperty() {
+        return this.buttonType;
     }
 
     /**
@@ -174,6 +173,13 @@ public class MaterialButton extends Button {
     public final void setDisableVisualFocus(final Boolean disabled) {
         this.disableVisualFocusProperty().set(disabled);
     }
+
+    @Override
+    public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
+        return getClassCssMetaData();
+    }
+
+    public enum ButtonType {FLAT, RAISED}
 
     /**
      * Styleable Properties Class
@@ -215,15 +221,6 @@ public class MaterialButton extends Button {
             Collections.addAll(styleables, BUTTON_TYPE, DISABLE_VISUAL_FOCUS);
             CHILD_STYLEABLES = Collections.unmodifiableList(styleables);
         }
-    }
-
-    @Override
-    public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-        return getClassCssMetaData();
-    }
-
-    public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
-        return StyleableProperties.CHILD_STYLEABLES;
     }
 
 

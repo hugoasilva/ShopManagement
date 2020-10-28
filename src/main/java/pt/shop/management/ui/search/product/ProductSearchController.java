@@ -18,31 +18,32 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.add.product.ProductAddController;
 import pt.shop.management.ui.details.product.ProductDetailsController;
 import pt.shop.management.ui.dialog.DialogHandler;
-import pt.shop.management.ui.search.invoice.InvoiceSearchController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Product Search Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-10-28
  */
 
 public class ProductSearchController implements Initializable {
 
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(ProductSearchController.class.getName());
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Product list object
     ObservableList<Product> list = FXCollections.observableArrayList();
@@ -72,11 +73,7 @@ public class ProductSearchController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
         this.initCombo();
-        try {
-            this.loadData();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.loadData();
     }
 
     /**
@@ -145,7 +142,7 @@ public class ProductSearchController implements Initializable {
             stage.show();
             ShopManagementUtil.setStageIcon(stage);
         } catch (IOException ex) {
-            Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -156,9 +153,9 @@ public class ProductSearchController implements Initializable {
     /**
      * Load product table data
      *
-     * @throws SQLException - database exception
+     * @ - database exception
      */
-    public void loadData() throws SQLException {
+    public void loadData() {
         this.list = DatabaseHandler.getProductList();
         tableView.setItems(list);
     }
@@ -169,7 +166,7 @@ public class ProductSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleProductDelete(ActionEvent event) throws SQLException {
+    private void handleProductDelete(ActionEvent event) {
         //Fetch the selected row
         Product selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -202,14 +199,14 @@ public class ProductSearchController implements Initializable {
      * Refresh handler
      *
      * @param event - refresh event
-     * @throws SQLException - database exception
+     * @ - database exception
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
+    private void handleRefresh(ActionEvent event) {
         this.refreshTable();
     }
 
-    public void refreshTable() throws SQLException {
+    public void refreshTable() {
         if (this.productCombo.getValue() == null && this.productSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getProductList();
@@ -222,9 +219,9 @@ public class ProductSearchController implements Initializable {
     /**
      * Search product operation
      *
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void searchProduct() throws SQLException {
+    public void searchProduct() {
         // Check if user input is present
         if (this.productCombo.getSelectionModel().isEmpty() || this.productSearchInput.getText().isEmpty()) {
             DialogHandler.showErrorMessage("Erro!",
@@ -242,9 +239,9 @@ public class ProductSearchController implements Initializable {
      * Handle search product key press
      *
      * @param event - key event
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void handleSearchProductKeyPress(KeyEvent event) throws SQLException {
+    public void handleSearchProductKeyPress(KeyEvent event) {
         this.searchProduct();
     }
 
@@ -252,9 +249,9 @@ public class ProductSearchController implements Initializable {
      * Handle search product key press
      *
      * @param event - key event
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void handleSearchProductButtonPress(ActionEvent event) throws SQLException {
+    public void handleSearchProductButtonPress(ActionEvent event) {
         this.searchProduct();
     }
 
@@ -287,15 +284,9 @@ public class ProductSearchController implements Initializable {
             stage.showAndWait();
             this.refreshTable();
 
-            stage.setOnHiding((e) -> {
-                try {
-                    this.handleRefresh(new ActionEvent());
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            });
-        } catch (IOException | SQLException ex) {
-            Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            stage.setOnHiding((e) -> this.handleRefresh(new ActionEvent()));
+        } catch (IOException ex) {
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 

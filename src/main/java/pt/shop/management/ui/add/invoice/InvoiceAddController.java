@@ -22,7 +22,6 @@ import pt.shop.management.ui.dialog.DialogHandler;
 import java.io.File;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -40,7 +39,7 @@ public class InvoiceAddController implements Initializable {
     // Directory paths
     private final static String REMOTE_INVOICE_PATH = "/home/pi/gestao/faturas/";
     // Invoice data
-    private String id;
+    private Invoice invoice;
     private String invoicePath;
     private Boolean isInEditMode = Boolean.FALSE;
     // UI content
@@ -80,14 +79,13 @@ public class InvoiceAddController implements Initializable {
      * @param event - add invoice event
      */
     @FXML
-    public void addInvoice(ActionEvent event) throws SQLException {
+    public void addInvoice(ActionEvent event) {
         String invoiceId = String.valueOf(DatabaseHandler.getInvoiceId());
-        this.id = invoiceId;
         String customerId = customer.getText();
         String employeeId = employee.getText();
         String invoiceDate = date.getValue().toString();
         String invoiceProducts = products.getText();
-        String invoicePdf = REMOTE_INVOICE_PATH + this.id + ".pdf";
+        String invoicePdf = REMOTE_INVOICE_PATH + invoiceId + ".pdf";
 
         if (customerId.isEmpty() || employeeId.isEmpty() || invoiceDate.isEmpty()
                 || invoiceProducts.isEmpty()) {
@@ -124,6 +122,7 @@ public class InvoiceAddController implements Initializable {
         this.date.setValue(LocalDate.parse(invoice.getDate()));
         this.products.setText(invoice.getProducts());
         this.pdf.setText(invoice.getPdf());
+        this.invoice = invoice;
 
         this.isInEditMode = Boolean.TRUE;
     }
@@ -140,8 +139,8 @@ public class InvoiceAddController implements Initializable {
     /**
      * Handle invoice update
      */
-    private void handleUpdateInvoice() throws SQLException {
-        Invoice invoice = new Invoice(id, this.customer.getText(), this.employee.getText(),
+    private void handleUpdateInvoice() {
+        Invoice invoice = new Invoice(this.invoice.getId(), this.customer.getText(), this.employee.getText(),
                 this.date.getValue().toString(), this.pdf.getText());
         invoice.setProducts(products.getText());
         if (DatabaseHandler.updateInvoice(invoice)) {

@@ -99,9 +99,11 @@ public class Note {
     public boolean isCustomer() {
         return this.type.equals("customer");
     }
+
     public boolean isEmployee() {
         return this.type.equals("employee");
     }
+
     public boolean isSupplier() {
         return this.type.equals("supplier");
     }

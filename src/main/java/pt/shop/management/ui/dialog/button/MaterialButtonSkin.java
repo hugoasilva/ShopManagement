@@ -4,11 +4,7 @@ import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.transitions.CachedTransition;
 import com.jfoenix.utils.JFXNodeUtils;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.animation.Transition;
+import javafx.animation.*;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.skin.ButtonSkin;
@@ -17,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
 import pt.shop.management.ui.dialog.button.MaterialButton.ButtonType;
 
 /**

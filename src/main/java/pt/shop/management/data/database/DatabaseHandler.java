@@ -256,9 +256,8 @@ public final class DatabaseHandler {
      * @param username - username
      * @param password - password
      * @return - true if correct, false otherwise
-     * @throws SQLException - SQL exception
      */
-    public static boolean login(String username, String password) throws SQLException {
+    public static boolean login(String username, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -276,14 +275,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -294,7 +297,7 @@ public final class DatabaseHandler {
      *
      * @return new customer's id
      */
-    public static int getCustomerId() throws SQLException {
+    public static int getCustomerId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -310,14 +313,18 @@ public final class DatabaseHandler {
             logSQLException(ex);
             return 0;
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
     }
@@ -328,7 +335,7 @@ public final class DatabaseHandler {
      * @param customer - customer object
      * @return - true if success, false otherwise
      */
-    public static boolean insertCustomer(Customer customer) throws SQLException {
+    public static boolean insertCustomer(Customer customer) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -345,11 +352,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -361,7 +372,7 @@ public final class DatabaseHandler {
      * @param customer - customer object
      * @return - true if success, false otherwise
      */
-    public static boolean deleteCustomer(Customer customer) throws SQLException {
+    public static boolean deleteCustomer(Customer customer) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -374,11 +385,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -390,7 +405,7 @@ public final class DatabaseHandler {
      * @param customer - customer object
      * @return - true if success, false otherwise
      */
-    public static boolean updateCustomer(Customer customer) throws SQLException {
+    public static boolean updateCustomer(Customer customer) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -408,11 +423,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -422,9 +441,9 @@ public final class DatabaseHandler {
      * Get customer list from database
      *
      * @return - customer list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Customer> getCustomerList() throws SQLException {
+    public static ObservableList<Customer> getCustomerList() {
         ObservableList<Customer> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -448,14 +467,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -467,9 +490,9 @@ public final class DatabaseHandler {
      * @param combo  - user selected input
      * @param search - user input
      * @return - customer search list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Customer> searchCustomer(String combo, String search) throws SQLException {
+    public static ObservableList<Customer> searchCustomer(String combo, String search) {
         ObservableList<Customer> list = FXCollections.observableArrayList();
         String query = null;
         switch (combo) {
@@ -514,14 +537,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -532,7 +559,7 @@ public final class DatabaseHandler {
      *
      * @return new employee's id
      */
-    public static int getEmployeeId() throws SQLException {
+    public static int getEmployeeId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -549,14 +576,18 @@ public final class DatabaseHandler {
             logSQLException(ex);
             return 0;
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
     }
@@ -567,7 +598,7 @@ public final class DatabaseHandler {
      * @param employee - employee object
      * @return - true if success, false otherwise
      */
-    public static boolean insertEmployee(Employee employee) throws SQLException {
+    public static boolean insertEmployee(Employee employee) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -584,11 +615,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -600,7 +635,7 @@ public final class DatabaseHandler {
      * @param employee - employee object
      * @return - true if success, false otherwise
      */
-    public static boolean deleteEmployee(Employee employee) throws SQLException {
+    public static boolean deleteEmployee(Employee employee) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -613,11 +648,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -629,7 +668,7 @@ public final class DatabaseHandler {
      * @param employee - employee object
      * @return - true if success, false otherwise
      */
-    public static boolean updateEmployee(Employee employee) throws SQLException {
+    public static boolean updateEmployee(Employee employee) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -647,11 +686,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -661,9 +704,9 @@ public final class DatabaseHandler {
      * Get employee list from database
      *
      * @return - employee list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Employee> getEmployeeList() throws SQLException {
+    public static ObservableList<Employee> getEmployeeList() {
         ObservableList<Employee> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -687,14 +730,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -706,9 +753,9 @@ public final class DatabaseHandler {
      * @param combo  - user selected input
      * @param search - user input
      * @return - employee search list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Employee> searchEmployee(String combo, String search) throws SQLException {
+    public static ObservableList<Employee> searchEmployee(String combo, String search) {
         ObservableList<Employee> list = FXCollections.observableArrayList();
         String query = null;
         switch (combo) {
@@ -756,14 +803,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -774,7 +825,7 @@ public final class DatabaseHandler {
      *
      * @return new invoice's id
      */
-    public static int getInvoiceId() throws SQLException {
+    public static int getInvoiceId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -790,14 +841,18 @@ public final class DatabaseHandler {
             logSQLException(ex);
             return 0;
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
     }
@@ -808,7 +863,7 @@ public final class DatabaseHandler {
      * @param invoice - invoice object
      * @return - true if success, false otherwise
      */
-    public static boolean insertInvoice(Invoice invoice) throws SQLException {
+    public static boolean insertInvoice(Invoice invoice) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -824,11 +879,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -840,7 +899,7 @@ public final class DatabaseHandler {
      * @param invoice - invoice object
      * @return - true if success, false otherwise
      */
-    public static boolean deleteInvoice(Invoice invoice) throws SQLException {
+    public static boolean deleteInvoice(Invoice invoice) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -853,11 +912,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -867,9 +930,9 @@ public final class DatabaseHandler {
      * Get invoice list from database
      *
      * @return - invoice list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Invoice> getInvoiceList() throws SQLException {
+    public static ObservableList<Invoice> getInvoiceList() {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -895,14 +958,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -914,9 +978,9 @@ public final class DatabaseHandler {
      * @param combo  - user selected input
      * @param search - user input
      * @return - invoice search list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Invoice> searchInvoice(String combo, String search) throws SQLException {
+    public static ObservableList<Invoice> searchInvoice(String combo, String search) {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
         String query = null;
         switch (combo) {
@@ -963,14 +1027,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -981,7 +1049,7 @@ public final class DatabaseHandler {
      *
      * @return new customer note's id
      */
-    public static int getCustomerNotesId() throws SQLException {
+    public static int getCustomerNotesId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -997,14 +1065,18 @@ public final class DatabaseHandler {
             logSQLException(ex);
             return 0;
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
     }
@@ -1015,7 +1087,7 @@ public final class DatabaseHandler {
      * @param note - note object
      * @return - true if success, false otherwise
      */
-    public static boolean insertCustomerNote(Note note) throws SQLException {
+    public static boolean insertCustomerNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1029,11 +1101,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1045,7 +1121,7 @@ public final class DatabaseHandler {
      * @param note - note object
      * @return - true if success, false otherwise
      */
-    public static boolean deleteCustomerNote(Note note) throws SQLException {
+    public static boolean deleteCustomerNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1058,11 +1134,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1074,7 +1154,7 @@ public final class DatabaseHandler {
      * @param note - customer note object
      * @return - true if success, false otherwise
      */
-    public static boolean updateCustomerNote(Note note) throws SQLException {
+    public static boolean updateCustomerNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1088,11 +1168,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1103,9 +1187,9 @@ public final class DatabaseHandler {
      *
      * @param customer - customer object
      * @return - customer notes list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Note> getCustomerNotesList(Customer customer) throws SQLException {
+    public static ObservableList<Note> getCustomerNotesList(Customer customer) {
         ObservableList<Note> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -1126,14 +1210,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -1142,7 +1230,7 @@ public final class DatabaseHandler {
     /**
      * Get employee note new id
      */
-    public static int getEmployeeNotesId() throws SQLException {
+    public static int getEmployeeNotesId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -1158,14 +1246,18 @@ public final class DatabaseHandler {
             logSQLException(ex);
             return 0;
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
     }
@@ -1176,7 +1268,7 @@ public final class DatabaseHandler {
      * @param note - note object
      * @return - true if success, false otherwise
      */
-    public static boolean insertEmployeeNote(Note note) throws SQLException {
+    public static boolean insertEmployeeNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1190,11 +1282,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1206,7 +1302,7 @@ public final class DatabaseHandler {
      * @param note - note object
      * @return - true if success, false otherwise
      */
-    public static boolean deleteEmployeeNote(Note note) throws SQLException {
+    public static boolean deleteEmployeeNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1219,11 +1315,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1235,7 +1335,7 @@ public final class DatabaseHandler {
      * @param note - employee note object
      * @return - true if success, false otherwise
      */
-    public static boolean updateEmployeeNote(Note note) throws SQLException {
+    public static boolean updateEmployeeNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1249,11 +1349,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1264,9 +1368,9 @@ public final class DatabaseHandler {
      *
      * @param employee - employee object
      * @return - employee notes list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Note> getEmployeeNotesList(Employee employee) throws SQLException {
+    public static ObservableList<Note> getEmployeeNotesList(Employee employee) {
         ObservableList<Note> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -1287,25 +1391,30 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
     }
+
     /**
      * Insert new supplier note
      *
      * @param note - note object
      * @return - true if success, false otherwise
      */
-    public static boolean insertSupplierNote(Note note) throws SQLException {
+    public static boolean insertSupplierNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1319,11 +1428,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1335,7 +1448,7 @@ public final class DatabaseHandler {
      * @param note - note object
      * @return - true if success, false otherwise
      */
-    public static boolean deleteSupplierNote(Note note) throws SQLException {
+    public static boolean deleteSupplierNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1348,11 +1461,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1364,7 +1481,7 @@ public final class DatabaseHandler {
      * @param note - note object
      * @return - true if success, false otherwise
      */
-    public static boolean updateSupplierNote(Note note) throws SQLException {
+    public static boolean updateSupplierNote(Note note) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1378,17 +1495,21 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
     }
 
-    public static ObservableList<Note> getSupplierNotesList(Supplier supplier) throws SQLException {
+    public static ObservableList<Note> getSupplierNotesList(Supplier supplier) {
         ObservableList<Note> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -1409,19 +1530,22 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
     }
-
 
 
     /**
@@ -1429,7 +1553,7 @@ public final class DatabaseHandler {
      *
      * @return new product's id
      */
-    public static int getProductId() throws SQLException {
+    public static int getProductId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -1445,14 +1569,18 @@ public final class DatabaseHandler {
             logSQLException(ex);
             return 0;
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
     }
@@ -1463,7 +1591,7 @@ public final class DatabaseHandler {
      * @param product - product object
      * @return - true if success, false otherwise
      */
-    public static boolean insertProduct(Product product) throws SQLException {
+    public static boolean insertProduct(Product product) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1479,11 +1607,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1493,9 +1625,9 @@ public final class DatabaseHandler {
      * Get product list from database
      *
      * @return - product notes list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Product> getProductList() throws SQLException {
+    public static ObservableList<Product> getProductList() {
         ObservableList<Product> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -1522,14 +1654,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -1541,9 +1677,9 @@ public final class DatabaseHandler {
      * @param combo  - user selected input
      * @param search - user input
      * @return - product search list
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public static ObservableList<Product> searchProduct(String combo, String search) throws SQLException {
+    public static ObservableList<Product> searchProduct(String combo, String search) {
         ObservableList<Product> list = FXCollections.observableArrayList();
         String query = null;
         switch (combo) {
@@ -1588,14 +1724,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
@@ -1607,7 +1747,7 @@ public final class DatabaseHandler {
      * @param product - product object
      * @return - true if success, false otherwise
      */
-    public static boolean deleteProduct(Product product) throws SQLException {
+    public static boolean deleteProduct(Product product) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1620,11 +1760,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1636,7 +1780,7 @@ public final class DatabaseHandler {
      * @param product - product object
      * @return - true if success, false otherwise
      */
-    public static boolean updateProduct(Product product) throws SQLException {
+    public static boolean updateProduct(Product product) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1653,11 +1797,15 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
@@ -1669,7 +1817,7 @@ public final class DatabaseHandler {
      * @param invoice - invoice object
      * @return - true if success, false otherwise
      */
-    public static boolean updateInvoice(Invoice invoice) throws SQLException {
+    public static boolean updateInvoice(Invoice invoice) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1685,17 +1833,21 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
     }
 
-    public static ObservableList<Supplier> getSupplierList() throws SQLException {
+    public static ObservableList<Supplier> getSupplierList() {
         ObservableList<Supplier> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -1719,20 +1871,24 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
     }
 
-    public static ObservableList<Supplier> searchSupplier(String combo, String search) throws SQLException {
+    public static ObservableList<Supplier> searchSupplier(String combo, String search) {
         ObservableList<Supplier> list = FXCollections.observableArrayList();
         String query = null;
         switch (combo) {
@@ -1778,20 +1934,24 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return list;
     }
 
-    public static boolean deleteSupplier(Supplier supplier) throws SQLException {
+    public static boolean deleteSupplier(Supplier supplier) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1804,17 +1964,21 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
     }
 
-    public static boolean insertSupplier(Supplier supplier) throws SQLException {
+    public static boolean insertSupplier(Supplier supplier) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1831,17 +1995,21 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
     }
 
-    public static boolean updateSupplier(Supplier supplier) throws SQLException {
+    public static boolean updateSupplier(Supplier supplier) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -1859,17 +2027,21 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return false;
     }
 
-    public static int getSupplierId() throws SQLException {
+    public static int getSupplierId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -1885,19 +2057,23 @@ public final class DatabaseHandler {
             logSQLException(ex);
             return 0;
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
     }
 
-    public static int getSupplierNotesId() throws SQLException {
+    public static int getSupplierNotesId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -1913,14 +2089,18 @@ public final class DatabaseHandler {
             logSQLException(ex);
             return 0;
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
     }
@@ -1931,7 +2111,7 @@ public final class DatabaseHandler {
      * @param customer - customer object
      * @return - invoice count
      */
-    public int getCustomerInvoiceCount(Customer customer) throws SQLException {
+    public int getCustomerInvoiceCount(Customer customer) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -1948,14 +2128,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return 0;
@@ -1967,7 +2151,7 @@ public final class DatabaseHandler {
      * @param employee - employee object
      * @return - invoice count
      */
-    public int getEmployeeInvoiceCount(Employee employee) throws SQLException {
+    public int getEmployeeInvoiceCount(Employee employee) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -1985,14 +2169,18 @@ public final class DatabaseHandler {
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
             }
         }
         return 0;

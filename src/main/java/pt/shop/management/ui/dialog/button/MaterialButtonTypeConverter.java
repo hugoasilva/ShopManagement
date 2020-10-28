@@ -3,9 +3,10 @@ package pt.shop.management.ui.dialog.button;
 import javafx.css.ParsedValue;
 import javafx.css.StyleConverter;
 import javafx.scene.text.Font;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.ui.dialog.button.MaterialButton.ButtonType;
-
-import java.util.logging.Logger;
 
 /**
  * Material Button Type Converter Class
@@ -16,8 +17,31 @@ import java.util.logging.Logger;
 
 public class MaterialButtonTypeConverter extends StyleConverter<String, ButtonType> {
 
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(MaterialButtonTypeConverter.class.getName());
+
     private MaterialButtonTypeConverter() {
         super();
+    }
+
+    public static StyleConverter<String, ButtonType> getInstance() {
+        return MaterialButtonTypeConverter.Holder.INSTANCE;
+    }
+
+    @Override
+    public ButtonType convert(ParsedValue<String, ButtonType> value, Font notUsedFont) {
+        String string = value.getValue();
+        try {
+            return ButtonType.valueOf(string);
+        } catch (IllegalArgumentException | NullPointerException exception) {
+            LOGGER.log(Level.ERROR, "{}", "Material Button Exception: " + String.format("Invalid button type value '%s'", string));
+            return ButtonType.FLAT;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ButtonTypeConverter";
     }
 
     // lazy, thread-safe instantiation
@@ -27,26 +51,5 @@ public class MaterialButtonTypeConverter extends StyleConverter<String, ButtonTy
         private Holder() {
             throw new IllegalAccessError("Holder class");
         }
-    }
-
-    public static StyleConverter<String, ButtonType> getInstance() {
-        return MaterialButtonTypeConverter.Holder.INSTANCE;
-    }
-
-
-    @Override
-    public ButtonType convert(ParsedValue<String, ButtonType> value, Font notUsedFont) {
-        String string = value.getValue();
-        try {
-            return ButtonType.valueOf(string);
-        } catch (IllegalArgumentException | NullPointerException exception) {
-            Logger.getLogger(MaterialButtonTypeConverter.class.getName()).info(String.format("Invalid button type value '%s'", string));
-            return ButtonType.FLAT;
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "ButtonTypeConverter";
     }
 }

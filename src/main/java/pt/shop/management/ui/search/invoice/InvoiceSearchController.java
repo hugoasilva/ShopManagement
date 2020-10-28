@@ -18,6 +18,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
@@ -29,10 +32,7 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Invoice Search Controller Class
@@ -42,6 +42,9 @@ import java.util.logging.Logger;
  */
 
 public class InvoiceSearchController implements Initializable {
+
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(InvoiceSearchController.class.getName());
 
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Invoice list object
@@ -76,11 +79,7 @@ public class InvoiceSearchController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
         this.initCombo();
-        try {
-            this.loadData();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.loadData();
     }
 
     /**
@@ -192,7 +191,7 @@ public class InvoiceSearchController implements Initializable {
             stage.show();
             ShopManagementUtil.setStageIcon(stage);
         } catch (IOException ex) {
-            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -203,9 +202,9 @@ public class InvoiceSearchController implements Initializable {
     /**
      * Load invoice search table data
      *
-     * @throws SQLException - database exception
+     * @ - database exception
      */
-    public void loadData() throws SQLException {
+    public void loadData() {
         this.list = DatabaseHandler.getInvoiceList();
         this.tableView.setItems(list);
     }
@@ -216,7 +215,7 @@ public class InvoiceSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleInvoiceDelete(ActionEvent event) throws SQLException {
+    private void handleInvoiceDelete(ActionEvent event) {
         //Fetch the selected row
         Invoice selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -249,14 +248,14 @@ public class InvoiceSearchController implements Initializable {
      * Refresh handler
      *
      * @param event - refresh event
-     * @throws SQLException - database exception
+     * @ - database exception
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
+    private void handleRefresh(ActionEvent event) {
         this.refreshTable();
     }
 
-    public void refreshTable() throws SQLException {
+    public void refreshTable() {
         if (this.invoiceCombo.getValue() == null && this.invoiceSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getInvoiceList();
@@ -269,9 +268,9 @@ public class InvoiceSearchController implements Initializable {
     /**
      * Search invoice operation
      *
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void searchInvoice() throws SQLException {
+    public void searchInvoice() {
         // Check if user input is present
         if (this.invoiceCombo.getSelectionModel().isEmpty() || this.invoiceSearchInput.getText().isEmpty()) {
             DialogHandler.showErrorMessage("Erro!",
@@ -297,9 +296,9 @@ public class InvoiceSearchController implements Initializable {
      * Handle search invoice key press
      *
      * @param event - key event
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void handleSearchInvoiceKeyPress(KeyEvent event) throws SQLException {
+    public void handleSearchInvoiceKeyPress(KeyEvent event) {
         this.searchInvoice();
     }
 
@@ -307,9 +306,9 @@ public class InvoiceSearchController implements Initializable {
      * Handle search invoice key press
      *
      * @param event - key event
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void handleSearchInvoiceButtonPress(ActionEvent event) throws SQLException {
+    public void handleSearchInvoiceButtonPress(ActionEvent event) {
         this.searchInvoice();
     }
 
@@ -341,15 +340,9 @@ public class InvoiceSearchController implements Initializable {
             stage.show();
             ShopManagementUtil.setStageIcon(stage);
 
-            stage.setOnHiding((e) -> {
-                try {
-                    handleRefresh(new ActionEvent());
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            });
+            stage.setOnHiding((e) -> handleRefresh(new ActionEvent()));
         } catch (IOException ex) {
-            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 

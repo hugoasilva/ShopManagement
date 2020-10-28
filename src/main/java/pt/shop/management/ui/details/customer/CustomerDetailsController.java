@@ -16,6 +16,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.data.model.Note;
@@ -26,26 +29,24 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Customer Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-10-28
  */
 
 public class CustomerDetailsController implements Initializable {
 
-    // Customer data
-    private Customer customer;
-    private static boolean isChosen;
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(CustomerDetailsController.class.getName());
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
+    // Customer data
+    private Customer customer;
     // UI content
     @FXML
     private Label id;
@@ -114,23 +115,19 @@ public class CustomerDetailsController implements Initializable {
     /**
      * Get customer notes
      */
-    private void getCustomerNotes()  {
-        try {
-            this.list.clear();
-            this.list = DatabaseHandler.getCustomerNotesList(this.customer);
-            this.tableView.setItems(list);
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void getCustomerNotes() {
+        this.list.clear();
+        this.list = DatabaseHandler.getCustomerNotesList(this.customer);
+        this.tableView.setItems(list);
     }
 
     /**
      * Show add note window
      *
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
     @FXML
-    public void addNoteButtonAction() throws SQLException {
+    public void addNoteButtonAction() {
         try {
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(
@@ -149,7 +146,7 @@ public class CustomerDetailsController implements Initializable {
             stage.showAndWait();
             this.getCustomerNotes();
         } catch (IOException ex) {
-            Logger.getLogger(CustomerDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -159,7 +156,7 @@ public class CustomerDetailsController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleNoteDelete(ActionEvent event) throws SQLException, InterruptedException {
+    private void handleNoteDelete(ActionEvent event) {
         //Fetch the selected row
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -190,7 +187,7 @@ public class CustomerDetailsController implements Initializable {
      * @param event - refresh event
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
+    private void handleRefresh(ActionEvent event) {
         this.getCustomerNotes();
     }
 
@@ -226,7 +223,7 @@ public class CustomerDetailsController implements Initializable {
             stage.showAndWait();
             this.getCustomerNotes();
         } catch (IOException ex) {
-            Logger.getLogger(CustomerDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 }

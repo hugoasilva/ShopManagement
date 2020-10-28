@@ -17,6 +17,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.add.employee.EmployeeAddController;
@@ -27,19 +30,19 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Employee Search Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-10-28
  */
 
 public class EmployeeSearchController implements Initializable {
+
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(EmployeeSearchController.class.getName());
 
     // Employee list object
     ObservableList<Employee> list = FXCollections.observableArrayList();
@@ -71,11 +74,7 @@ public class EmployeeSearchController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
         this.initCombo();
-        try {
-            this.loadData();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.loadData();
     }
 
     /**
@@ -151,9 +150,8 @@ public class EmployeeSearchController implements Initializable {
             stage.showAndWait();
             ShopManagementUtil.setStageIcon(stage);
         } catch (IOException ex) {
-            Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
-
     }
 
     private Stage getStage() {
@@ -163,9 +161,9 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Load employee table data
      *
-     * @throws SQLException - database exception
+     * @ - database exception
      */
-    public void loadData() throws SQLException {
+    public void loadData() {
         this.list = DatabaseHandler.getEmployeeList();
         this.tableView.setItems(list);
     }
@@ -176,7 +174,7 @@ public class EmployeeSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleEmployeeDelete(ActionEvent event) throws SQLException {
+    private void handleEmployeeDelete(ActionEvent event) {
         //Fetch the selected row
         Employee selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -208,14 +206,14 @@ public class EmployeeSearchController implements Initializable {
      * Refresh handler
      *
      * @param event - refresh event
-     * @throws SQLException - database exception
+     * @ - database exception
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
+    private void handleRefresh(ActionEvent event) {
         this.refreshTable();
     }
 
-    public void refreshTable() throws SQLException {
+    public void refreshTable() {
         if (this.employeeCombo.getValue() == null && this.employeeSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getEmployeeList();
@@ -228,9 +226,9 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Search employee operation
      *
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void searchEmployee() throws SQLException {
+    public void searchEmployee() {
         // Check if user input is present
         if (this.employeeCombo.getSelectionModel().isEmpty() || this.employeeSearchInput.getText().isEmpty()) {
             DialogHandler.showErrorMessage("Erro!",
@@ -247,9 +245,9 @@ public class EmployeeSearchController implements Initializable {
      * Handle search employee key press
      *
      * @param event - key event
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void handleSearchEmployeeKeyPress(KeyEvent event) throws SQLException {
+    public void handleSearchEmployeeKeyPress(KeyEvent event) {
         this.searchEmployee();
     }
 
@@ -257,9 +255,9 @@ public class EmployeeSearchController implements Initializable {
      * Handle search employee button press
      *
      * @param event - button click event
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void handleSearchEmployeeButtonPress(ActionEvent event) throws SQLException {
+    public void handleSearchEmployeeButtonPress(ActionEvent event) {
         this.searchEmployee();
     }
 
@@ -292,15 +290,9 @@ public class EmployeeSearchController implements Initializable {
             stage.showAndWait();
             this.refreshTable();
 
-            stage.setOnHiding((e) -> {
-                try {
-                    this.handleRefresh(new ActionEvent());
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            });
-        } catch (IOException | SQLException ex) {
-            Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            stage.setOnHiding((e) -> this.handleRefresh(new ActionEvent()));
+        } catch (IOException ex) {
+            LOGGER.log(org.apache.logging.log4j.Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 

@@ -17,6 +17,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.add.supplier.SupplierAddController;
@@ -27,20 +30,19 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Supplier Search Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-10-28
  */
 
 public class SupplierSearchController implements Initializable {
 
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(SupplierSearchController.class.getName());
     // Supplier list object
     ObservableList<Supplier> list = FXCollections.observableArrayList();
     // UI Content
@@ -71,11 +73,7 @@ public class SupplierSearchController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
         this.initCombo();
-        try {
-            this.loadData();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.loadData();
     }
 
     /**
@@ -145,7 +143,7 @@ public class SupplierSearchController implements Initializable {
             stage.show();
             ShopManagementUtil.setStageIcon(stage);
         } catch (IOException ex) {
-            Logger.getLogger(SupplierSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -156,9 +154,9 @@ public class SupplierSearchController implements Initializable {
     /**
      * Load supplier table data
      *
-     * @throws SQLException - database exception
+     * @ - database exception
      */
-    public void loadData() throws SQLException {
+    public void loadData() {
         this.list = DatabaseHandler.getSupplierList();
         this.tableView.setItems(list);
     }
@@ -169,7 +167,7 @@ public class SupplierSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleSupplierDelete(ActionEvent event) throws SQLException {
+    private void handleSupplierDelete(ActionEvent event) {
         //Fetch the selected row
         Supplier selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -202,14 +200,14 @@ public class SupplierSearchController implements Initializable {
      * Refresh handler
      *
      * @param event - refresh event
-     * @throws SQLException - database exception
+     * @ - database exception
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
+    private void handleRefresh(ActionEvent event) {
         this.refreshTable();
     }
 
-    public void refreshTable() throws SQLException {
+    public void refreshTable() {
         if (this.supplierCombo.getValue() == null && this.supplierSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getSupplierList();
@@ -222,9 +220,9 @@ public class SupplierSearchController implements Initializable {
     /**
      * Search supplier operation
      *
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void searchSupplier() throws SQLException {
+    public void searchSupplier() {
         // Check if user input is present
         if (this.supplierCombo.getSelectionModel().isEmpty() || this.supplierSearchInput.getText().isEmpty()) {
             DialogHandler.showErrorMessage("Erro!",
@@ -241,9 +239,9 @@ public class SupplierSearchController implements Initializable {
      * Handle search supplier key press
      *
      * @param event - key event
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void handleSearchSupplierKeyPress(KeyEvent event) throws SQLException {
+    public void handleSearchSupplierKeyPress(KeyEvent event) {
         this.searchSupplier();
     }
 
@@ -251,9 +249,9 @@ public class SupplierSearchController implements Initializable {
      * Handle search supplier key press
      *
      * @param event - key event
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void handleSearchSupplierButtonPress(ActionEvent event) throws SQLException {
+    public void handleSearchSupplierButtonPress(ActionEvent event) {
         this.searchSupplier();
     }
 
@@ -286,15 +284,9 @@ public class SupplierSearchController implements Initializable {
             stage.showAndWait();
             this.refreshTable();
 
-            stage.setOnHiding((e) -> {
-                try {
-                    handleRefresh(new ActionEvent());
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            });
-        } catch (IOException | SQLException ex) {
-            Logger.getLogger(SupplierSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            stage.setOnHiding((e) -> handleRefresh(new ActionEvent()));
+        } catch (IOException ex) {
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 

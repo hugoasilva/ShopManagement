@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import pt.shop.management.exceptions.ExceptionUtil;
 import pt.shop.management.util.ShopManagementUtil;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -50,20 +51,23 @@ public class Main extends Application {
      * Show login window
      *
      * @param stage - app's stage
-     * @throws Exception - exception
+     * @ - exception
      */
     @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login/Login.fxml"));
+    public void start(Stage stage) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/login/Login.fxml"));
+            Scene scene = new Scene(root);
 
-        Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
 
-        stage.setScene(scene);
-        stage.show();
-        stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
+            ShopManagementUtil.setStageIcon(stage);
 
-        ShopManagementUtil.setStageIcon(stage);
-
-        new Thread(ExceptionUtil::init).start();
+            new Thread(ExceptionUtil::init).start();
+        } catch (IOException ex) {
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
+        }
     }
 }

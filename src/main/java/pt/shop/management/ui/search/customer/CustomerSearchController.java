@@ -17,6 +17,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.add.customer.CustomerAddController;
@@ -27,10 +30,7 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Customer Search Controller Class
@@ -41,6 +41,8 @@ import java.util.logging.Logger;
 
 public class CustomerSearchController implements Initializable {
 
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(CustomerDetailsController.class.getName());
     // Customer list object
     ObservableList<Customer> list = FXCollections.observableArrayList();
     // UI Content
@@ -71,11 +73,7 @@ public class CustomerSearchController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
         this.initCombo();
-        try {
-            loadData();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.loadData();
     }
 
     /**
@@ -151,7 +149,7 @@ public class CustomerSearchController implements Initializable {
             stage.show();
             ShopManagementUtil.setStageIcon(stage);
         } catch (IOException ex) {
-            Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -162,9 +160,9 @@ public class CustomerSearchController implements Initializable {
     /**
      * Load customer table data
      *
-     * @throws SQLException - database exception
+     * @ - database exception
      */
-    public void loadData() throws SQLException {
+    public void loadData() {
         this.list = DatabaseHandler.getCustomerList();
         this.tableView.setItems(list);
     }
@@ -175,7 +173,7 @@ public class CustomerSearchController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleCustomerDelete(ActionEvent event) throws SQLException {
+    private void handleCustomerDelete(ActionEvent event) {
         //Fetch the selected row
         Customer selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -207,14 +205,14 @@ public class CustomerSearchController implements Initializable {
      * Refresh handler
      *
      * @param event - refresh event
-     * @throws SQLException - database exception
+     * @ - database exception
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
+    private void handleRefresh(ActionEvent event) {
         this.refreshTable();
     }
 
-    public void refreshTable() throws SQLException {
+    public void refreshTable() {
         if (this.customerCombo.getValue() == null && this.customerSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getCustomerList();
@@ -228,9 +226,9 @@ public class CustomerSearchController implements Initializable {
     /**
      * Search customer operation
      *
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
-    public void searchCustomer() throws SQLException {
+    public void searchCustomer() {
         // Check if user input is present
         if (this.customerCombo.getSelectionModel().isEmpty() || this.customerSearchInput.getText().isEmpty()) {
             DialogHandler.showErrorMessage("Erro!",
@@ -247,9 +245,9 @@ public class CustomerSearchController implements Initializable {
      * Handle search customer key press
      *
      * @param event - key event
-     * @throws IOException - IO exception
+     * @ - IO exception
      */
-    public void handleSearchCustomerKeyPress(KeyEvent event) throws IOException, SQLException {
+    public void handleSearchCustomerKeyPress(KeyEvent event) {
         this.searchCustomer();
     }
 
@@ -257,9 +255,9 @@ public class CustomerSearchController implements Initializable {
      * Handle search customer button press
      *
      * @param event - button click event
-     * @throws IOException - IO exception
+     * @ - IO exception
      */
-    public void handleSearchCustomerButtonPress(ActionEvent event) throws IOException, SQLException {
+    public void handleSearchCustomerButtonPress(ActionEvent event) {
         this.searchCustomer();
     }
 
@@ -292,15 +290,9 @@ public class CustomerSearchController implements Initializable {
             stage.showAndWait();
             this.refreshTable();
 
-            stage.setOnHiding((e) -> {
-                try {
-                    this.handleRefresh(new ActionEvent());
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            });
-        } catch (IOException | SQLException ex) {
-            Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            stage.setOnHiding((e) -> this.handleRefresh(new ActionEvent()));
+        } catch (IOException ex) {
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 

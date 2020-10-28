@@ -11,11 +11,8 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.dialog.DialogHandler;
 
-import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -28,7 +25,7 @@ import java.util.ResourceBundle;
 public class SupplierAddController implements Initializable {
 
     // Supplier data
-    private String id;
+    private Supplier supplier;
     private Boolean isInEditMode = Boolean.FALSE;
     ;
     // UI Content
@@ -68,9 +65,8 @@ public class SupplierAddController implements Initializable {
      * @param event - add supplier event
      */
     @FXML
-    private void addSupplier(ActionEvent event) throws IOException, SQLException {
+    private void addSupplier(ActionEvent event) {
         String supplierId = String.valueOf(DatabaseHandler.getSupplierId());
-        this.id = supplierId;
         String supplierName = name.getText();
         String supplierAddress = address.getText();
         String supplierPhone = phone.getText();
@@ -112,6 +108,7 @@ public class SupplierAddController implements Initializable {
         this.phone.setText(supplier.getPhone());
         this.email.setText(supplier.getEmail());
         this.nif.setText(supplier.getNif());
+        this.supplier = supplier;
 
         this.isInEditMode = Boolean.TRUE;
     }
@@ -130,9 +127,9 @@ public class SupplierAddController implements Initializable {
     /**
      * Handle supplier update
      */
-    private void handleUpdateSupplier() throws SQLException {
+    private void handleUpdateSupplier() {
         Supplier supplier =
-                new Supplier(this.id, this.name.getText(), this.address.getText(),
+                new Supplier(this.supplier.getId(), this.name.getText(), this.address.getText(),
                         this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateSupplier(supplier)) {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo!",

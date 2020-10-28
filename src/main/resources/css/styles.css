@@ -285,7 +285,16 @@
 /* Dialog styling */
 
 .material-button {
+    -fx-background-color: -fx-primary;
     -fx-border-color: -fx-blue;
+    -fx-text-fill: white;
+    -fx-border-radius: 1px;
+    -fx-background-radius: 3px;
+}
+
+.material-button:focused {
+    -fx-border-color: -fx-blue;
+    -fx-background-color: -fx-primary;
     -fx-text-fill: white;
     -fx-border-radius: 1px;
     -fx-background-radius: 3px;
@@ -295,14 +304,7 @@
     -fx-background-color: -fx-blue;
     -fx-border-color: derive(-fx-blue, -20%);
     -fx-text-fill: white;
-}
-
-.material-button:focused  {
-    -fx-border-color: -fx-blue;
-    -fx-background-color: -fx-primary;
-    -fx-text-fill: white;
-    -fx-border-radius: 1px;
-    -fx-background-radius: 3px;
+    -fx-cursor: hand;
 }
 
 .jfx-layout-actions {
@@ -410,70 +412,59 @@
 
 /* Material Dialog styling */
 
-.material-alert-overlay{
+.material-dialog-overlay {
     -fx-background-color: #00000011;
     -fx-padding: 0;
 }
 
-.material-alert-overlay > .depth-container > .material-alert-container,
-.material-alert-overlay > .material-alert-container{
+.material-dialog-overlay > .depth-container > .material-dialog-content-container,
+.material-dialog-overlay > .material-dialog-content-container {
     -fx-background-color: -fx-primary;
 }
 
-.jfx-alert-overlay {
-    -fx-background-color: -fx-primary;
-}
-
-.jfx-alert-overlay > .depth-container > .jfx-alert-content-container,
-.jfx-alert-overlay > .jfx-alert-content-container{
-    -fx-background-color: -fx-primary;
-}
-
-/* JFXDialog styling */
-
-.jfx-layout-heading {
+.material-layout-heading {
     -fx-background-color: -fx-blue;
     -fx-text-fill: -fx-primaryText;
 }
 
-.jfx-dialog-layout > .jfx-layout-heading {
+.material-dialog-layout > .material-layout-heading {
     -fx-alignment: center-left;
     -fx-font-weight: BOLD;
     -fx-padding: 24 24 20 24;
 }
 
-.jfx-dialog-layout > .jfx-layout-actions {
+.material-dialog-layout > .material-layout-actions {
     -fx-alignment: center-right;
     -fx-hgap: 8;
     -fx-padding: 8 8 8 8;
 }
 
-.jfx-dialog-layout > .jfx-layout-actions .jfx-button {
+.material-dialog-layout > .material-layout-actions .material-button {
     -fx-pref-height: 36;
     -fx-max-height: 36;
     -fx-min-width: 64;
     -fx-padding: 8;
 }
 
-.jfx-dialog-layout > .jfx-layout-body {
+.material-dialog-layout > .material-layout-body {
     -fx-alignment: center-left;
     -fx-padding: 0 24 24 24;
     -fx-pref-width: 400;
     -fx-background-color: -fx-primary;
 }
 
-.jfx-dialog-layout > .jfx-layout-body .label {
+.material-dialog-layout > .material-layout-body .label {
     -fx-text-fill: white;
     -fx-font-size: 12pt;
     -fx-wrap-text: true;
 }
 
-.jfx-layout-body .label {
+.material-layout-body .label {
     -fx-text-fill: white;
     -fx-padding: 20px 0 0 0;
 }
 
-.jfx-layout-body, .jfx-layout-actions {
+.material-layout-body, .material-layout-actions {
     -fx-background-color: -fx-primary;
 }
 
@@ -484,38 +475,6 @@
     -fx-text-fill: -fx-secondary;
     -jfx-checked-color: -fx-primary;
     -fx-font-size: 10pt;
-}
-
-/* Alert Dialog */
-
-.custom-alert {
-    -fx-background-color: -fx-primary;
-    -fx-text-fill: white;
-}
-
-.custom-alert > *.button-bar > *.container {
-    -fx-background-color: -fx-primary;
-}
-
-.custom-alert > *.label.content {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-}
-
-.custom-alert:header *.header-panel {
-    -fx-background-color: -fx-blue;
-}
-
-.custom-alert:header .header-panel .label {
-    -fx-font-style: normal;
-    -fx-text-fill: white;
-}
-
-.custom-alert:header *.header-panel *.label {
-    -fx-font-size: 18px;
-    -fx-font-style: italic;
-    -fx-fill: -fx-primary;
 }
 
 /* Context menu */

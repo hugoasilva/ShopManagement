@@ -29,15 +29,21 @@ public class SFTPHandler {
      * Setup SFTP server connection
      *
      * @return - SFTPChannel object
-     * @throws JSchException - JSch exception
+     * @ - JSch exception
      */
-    private static ChannelSftp setupSFTP() throws JSchException {
-        JSch jsch = new JSch();
-        JSch.setConfig("StrictHostKeyChecking", "no");
-        Session jschSession = jsch.getSession(SFTP_SERVER_USERNAME, SFTP_SERVER_URL);
-        jschSession.setPassword(SFTP_SERVER_PASSWORD);
-        jschSession.connect();
-        return (ChannelSftp) jschSession.openChannel("sftp");
+    private static ChannelSftp setupSFTP() {
+        ChannelSftp channel = null;
+        try {
+            JSch jsch = new JSch();
+            JSch.setConfig("StrictHostKeyChecking", "no");
+            Session jschSession = jsch.getSession(SFTP_SERVER_USERNAME, SFTP_SERVER_URL);
+            jschSession.setPassword(SFTP_SERVER_PASSWORD);
+            jschSession.connect();
+            channel = (ChannelSftp) jschSession.openChannel("sftp");
+        } catch (JSchException e) {
+            printJSchException(e);
+        }
+        return channel;
     }
 
     /**

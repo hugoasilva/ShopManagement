@@ -16,6 +16,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
@@ -26,25 +29,24 @@ import pt.shop.management.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Employee Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-10-28
  */
 
 public class EmployeeDetailsController implements Initializable {
 
-    // Employee data
-    private Employee employee;
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(EmployeeDetailsController.class.getName());
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
+    // Employee data
+    private Employee employee;
     // UI content
     @FXML
     private Label id;
@@ -114,22 +116,18 @@ public class EmployeeDetailsController implements Initializable {
      * Get employee notes from database
      */
     private void getEmployeeNotes() {
-        try {
-            this.list.clear();
-            this.list = DatabaseHandler.getEmployeeNotesList(this.employee);
-            this.tableView.setItems(list);
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.list.clear();
+        this.list = DatabaseHandler.getEmployeeNotesList(this.employee);
+        this.tableView.setItems(list);
     }
 
     /**
      * Show add note window
      *
-     * @throws SQLException - SQL exception
+     * @ - SQL exception
      */
     @FXML
-    public void addNoteButtonAction() throws SQLException {
+    public void addNoteButtonAction() {
         try {
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(
@@ -148,7 +146,7 @@ public class EmployeeDetailsController implements Initializable {
             stage.showAndWait();
             this.getEmployeeNotes();
         } catch (IOException ex) {
-            Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -158,7 +156,7 @@ public class EmployeeDetailsController implements Initializable {
      * @param event - delete event
      */
     @FXML
-    private void handleNoteDelete(ActionEvent event) throws SQLException {
+    private void handleNoteDelete(ActionEvent event) {
         //Fetch the selected row
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
@@ -189,7 +187,7 @@ public class EmployeeDetailsController implements Initializable {
      * @param event - refresh event
      */
     @FXML
-    private void handleRefresh(ActionEvent event) throws SQLException {
+    private void handleRefresh(ActionEvent event) {
         this.getEmployeeNotes();
     }
 
@@ -224,7 +222,7 @@ public class EmployeeDetailsController implements Initializable {
             stage.showAndWait();
             this.getEmployeeNotes();
         } catch (IOException ex) {
-            Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 }

@@ -41,12 +41,24 @@ import java.util.List;
 public class MaterialDialog<R> extends Dialog<R> {
 
     private final StackPane contentContainer;
+    private final EventHandlerManager eventHandlerManager = new EventHandlerManager(this);
     private InvalidationListener widthListener;
     private InvalidationListener heightListener;
     private InvalidationListener xListener;
     private InvalidationListener yListener;
-
     private boolean animateClosing = true;
+    private Animation transition = null;
+    /**
+     * indicates whether the dialog will close when clicking on the overlay or not
+     */
+    private BooleanProperty overlayClose = new SimpleBooleanProperty(true);
+    /**
+     * specify the animation when showing / hiding the dialog
+     * by default it's set to {@link JFXAlertAnimation#CENTER_ANIMATION}
+     */
+    private ObjectProperty<JFXAlertAnimation> animation = new SimpleObjectProperty<>
+            (JFXAlertAnimation.CENTER_ANIMATION);
+    private BooleanProperty hideOnEscape = new SimpleBooleanProperty(this, "hideOnEscape", true);
 
     public MaterialDialog() {
         this(null);
@@ -55,8 +67,7 @@ public class MaterialDialog<R> extends Dialog<R> {
     public MaterialDialog(Window window) {
         // create content
         contentContainer = new StackPane();
-
-        contentContainer.getStyleClass().addAll("material-alert-container");
+        contentContainer.getStyleClass().addAll("material-dialog-content-container");
         // add depth effect
         final Node materialNode = JFXDepthManager.createMaterialNode(contentContainer, 2);
         materialNode.setPickOnBounds(false);
@@ -129,7 +140,7 @@ public class MaterialDialog<R> extends Dialog<R> {
                 return null;
             }
         };
-        dialogPane.getStyleClass().add("material-alert-overlay");
+        dialogPane.getStyleClass().add("material-dialog-overlay");
         dialogPane.setContent(materialNode);
         setDialogPane(dialogPane);
         dialogPane.getScene().setFill(Color.TRANSPARENT);
@@ -244,9 +255,6 @@ public class MaterialDialog<R> extends Dialog<R> {
         setX(stage.getX() + stage.getScene().getX());
     }
 
-
-    private Animation transition = null;
-
     /**
      * play the hide animation for the dialog, as the java hide method is set to final
      * so it can not be overridden
@@ -271,8 +279,6 @@ public class MaterialDialog<R> extends Dialog<R> {
         }
     }
 
-    private final EventHandlerManager eventHandlerManager = new EventHandlerManager(this);
-
     /**
      * {@inheritDoc}
      */
@@ -285,55 +291,40 @@ public class MaterialDialog<R> extends Dialog<R> {
         contentContainer.getChildren().setAll(content);
     }
 
-    /**
-     * indicates whether the dialog will close when clicking on the overlay or not
-     */
-    private BooleanProperty overlayClose = new SimpleBooleanProperty(true);
-
     public boolean isOverlayClose() {
         return overlayClose.get();
-    }
-
-    public BooleanProperty overlayCloseProperty() {
-        return overlayClose;
     }
 
     public void setOverlayClose(boolean overlayClose) {
         this.overlayClose.set(overlayClose);
     }
 
-
-    /**
-     * specify the animation when showing / hiding the dialog
-     * by default it's set to {@link JFXAlertAnimation#CENTER_ANIMATION}
-     */
-    private ObjectProperty<JFXAlertAnimation> animation = new SimpleObjectProperty<>
-            (JFXAlertAnimation.CENTER_ANIMATION);
+    public BooleanProperty overlayCloseProperty() {
+        return overlayClose;
+    }
 
     public JFXAlertAnimation getAnimation() {
         return animation.get();
-    }
-
-    public ObjectProperty<JFXAlertAnimation> animationProperty() {
-        return animation;
     }
 
     public void setAnimation(JFXAlertAnimation animation) {
         this.animation.set(animation);
     }
 
+    public ObjectProperty<JFXAlertAnimation> animationProperty() {
+        return animation;
+    }
+
     public void setSize(double prefWidth, double prefHeight) {
         contentContainer.setPrefSize(prefWidth, prefHeight);
     }
 
-    private BooleanProperty hideOnEscape = new SimpleBooleanProperty(this, "hideOnEscape", true);
+    public final boolean isHideOnEscape() {
+        return hideOnEscape.get();
+    }
 
     public final void setHideOnEscape(boolean value) {
         hideOnEscape.set(value);
-    }
-
-    public final boolean isHideOnEscape() {
-        return hideOnEscape.get();
     }
 
     public final BooleanProperty hideOnEscapeProperty() {

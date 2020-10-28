@@ -13,8 +13,6 @@ import pt.shop.management.ui.dialog.DialogHandler;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -27,8 +25,7 @@ import java.util.ResourceBundle;
 public class CustomerAddController implements Initializable {
 
     // Customer data
-    private String id;
-    private String editId;
+    private Customer customer;
     private Boolean isInEditMode = false;
     // UI content
     @FXML
@@ -67,9 +64,8 @@ public class CustomerAddController implements Initializable {
      * @param event - add customer event
      */
     @FXML
-    private void addCustomer(ActionEvent event) throws SQLException {
+    private void addCustomer(ActionEvent event) {
         String customerId = String.valueOf(DatabaseHandler.getCustomerId());
-        this.id = customerId;
         String customerName = name.getText();
         String customerAddress = address.getText();
         String customerPhone = phone.getText();
@@ -106,12 +102,12 @@ public class CustomerAddController implements Initializable {
      * @param customer - customer object
      */
     public void inflateUI(Customer customer) {
-        this.editId = customer.getId();
         this.name.setText(customer.getName());
         this.address.setText(customer.getAddress());
         this.phone.setText(customer.getPhone());
         this.email.setText(customer.getEmail());
         this.nif.setText(customer.getNif());
+        this.customer = customer;
 
         this.isInEditMode = Boolean.TRUE;
     }
@@ -130,8 +126,8 @@ public class CustomerAddController implements Initializable {
     /**
      * Handle customer update
      */
-    private void handleUpdateCustomer() throws SQLException {
-        Customer customer = new Customer(this.editId, this.name.getText(), this.address.getText(),
+    private void handleUpdateCustomer() {
+        Customer customer = new Customer(this.customer.getId(), this.name.getText(), this.address.getText(),
                 this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateCustomer(customer)) {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo!",
