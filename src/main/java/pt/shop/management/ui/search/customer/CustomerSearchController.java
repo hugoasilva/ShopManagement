@@ -20,15 +20,14 @@ import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.add.customer.CustomerAddController;
-import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.customer.CustomerDetailsController;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,11 +100,7 @@ public class CustomerSearchController implements Initializable {
                             {
                                 btn.setOnAction((ActionEvent event) -> {
                                     Customer customer = getTableView().getItems().get(getIndex());
-                                    try {
-                                        showCustomerDetails(customer);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    showCustomerDetails(customer);
                                 });
                             }
 
@@ -140,21 +135,24 @@ public class CustomerSearchController implements Initializable {
      *
      * @param customer - customer object
      */
-    private void showCustomerDetails(Customer customer) throws IOException {
-        CustomerDetailsController controller = new CustomerDetailsController(customer);
+    private void showCustomerDetails(Customer customer) {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/customer/CustomerDetails.fxml"));
+            Parent parent = loader.load();
 
-        FXMLLoader loader =
-                new FXMLLoader(getClass().getResource(
-                        "/fxml/customer/CustomerDetails.fxml"));
-        loader.setController(controller);
+            CustomerDetailsController controller = loader.getController();
+            controller.inflateUI(customer);
 
-        Parent parent = loader.load();
-
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("Ficha de Cliente");
-        stage.setScene(new Scene(parent));
-        stage.show();
-        ShopManagementUtil.setStageIcon(stage);
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Ficha de Cliente");
+            stage.setScene(new Scene(parent));
+            stage.show();
+            ShopManagementUtil.setStageIcon(stage);
+        } catch (IOException ex) {
+            Logger.getLogger(CustomerSearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Stage getStage() {
@@ -185,29 +183,23 @@ public class CustomerSearchController implements Initializable {
                     "Por favor seleccione um cliente para apagar.");
             return;
         }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Cliente");
-        alert.setContentText("Tem a certeza que pretende apagar o cliente " + selectedForDeletion.getName() + "?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+        boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
+                "Apagar Cliente",
+                "Tem a certeza que pretende apagar o cliente " + selectedForDeletion.getName() + "?");
+        if (option) {
             boolean result = DatabaseHandler.deleteCustomer(selectedForDeletion);
             if (result) {
-                DialogHandler.showMaterialAlert(this.mainContainer,
-                        "Cliente apagado",
-                        selectedForDeletion.getName() + " foi apagado com sucesso.");
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cliente apagado",
+                        selectedForDeletion.getName() + " foi apagado com sucesso.", false);
                 list.remove(selectedForDeletion);
             } else {
-                DialogHandler.showMaterialAlert(this.mainContainer,
-                        "Erro!",
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro!",
                         new String("Não foi possível apagar o cliente ".getBytes(), StandardCharsets.UTF_8) +
-                                selectedForDeletion.getName());
+                                selectedForDeletion.getName(), false);
             }
         } else {
-            DialogHandler.showMaterialAlert(this.mainContainer,
-                    "Cancelado",
-                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8), false);
         }
     }
 

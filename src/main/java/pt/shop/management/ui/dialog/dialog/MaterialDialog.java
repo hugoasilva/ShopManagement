@@ -1,682 +1,343 @@
 package pt.shop.management.ui.dialog.dialog;
 
-import com.jfoenix.controls.events.JFXDialogEvent;
+import com.jfoenix.animation.alert.JFXAlertAnimation;
+import com.jfoenix.assets.JFoenixResources;
 import com.jfoenix.effects.JFXDepthManager;
-import com.jfoenix.transitions.CachedTransition;
-import javafx.animation.*;
-import javafx.beans.DefaultProperty;
+import com.sun.javafx.event.EventHandlerManager;
+import javafx.animation.Animation;
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ObjectPropertyBase;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.css.*;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.CacheHint;
+import javafx.event.EventDispatchChain;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogEvent;
+import javafx.scene.control.DialogPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * Note: for JFXDialog to work properly, the root node <b>MUST</b>
- * be of type {@link StackPane}
+ * Material Dialog Class
  *
- * @author Shadi Shaheen
- * @version 1.0
- * @since 2016-03-09
+ * @author Hugo Silva
+ * @version 2020-10-28
  */
-@DefaultProperty(value = "content")
-public class MaterialDialog extends StackPane {
 
-    //	public static enum JFXDialogLayout{PLAIN, HEADING, ACTIONS, BACKDROP};
-    public enum MaterialDialogTransition {
-        CENTER, TOP, RIGHT, BOTTOM, LEFT, NONE
-    }
+public class MaterialDialog<R> extends Dialog<R> {
 
-    private StackPane contentHolder;
+    private final StackPane contentContainer;
+    private InvalidationListener widthListener;
+    private InvalidationListener heightListener;
+    private InvalidationListener xListener;
+    private InvalidationListener yListener;
 
-    private double offsetX = 0;
-    private double offsetY = 0;
+    private boolean animateClosing = true;
 
-    private StackPane dialogContainer;
-    private Region content;
-    private Transition animation;
-
-    EventHandler<? super MouseEvent> closeHandler = e -> close();
-
-    /**
-     * creates empty JFXDialog control with CENTER animation type
-     */
     public MaterialDialog() {
-        this(null, null, MaterialDialogTransition.CENTER);
+        this(null);
     }
 
-    /**
-     * creates JFXDialog control with a specified animation type, the animation type
-     * can be one of the following:
-     * <ul>
-     * <li>CENTER</li>
-     * <li>TOP</li>
-     * <li>RIGHT</li>
-     * <li>BOTTOM</li>
-     * <li>LEFT</li>
-     * </ul>
-     *
-     * @param dialogContainer is the parent of the dialog, it
-     * @param content         the content of dialog
-     * @param transitionType  the animation type
-     */
+    public MaterialDialog(Window window) {
+        // create content
+        contentContainer = new StackPane();
 
-    public MaterialDialog(StackPane dialogContainer, Region content, MaterialDialogTransition transitionType) {
-        initialize();
-        setContent(content);
-        setDialogContainer(dialogContainer);
-        this.transitionType.set(transitionType);
-        // init change listeners
-        initChangeListeners();
-    }
+        contentContainer.getStyleClass().addAll("material-alert-container");
+        // add depth effect
+        final Node materialNode = JFXDepthManager.createMaterialNode(contentContainer, 2);
+        materialNode.setPickOnBounds(false);
+        materialNode.addEventHandler(MouseEvent.MOUSE_CLICKED, Event::consume);
 
-    /**
-     * creates JFXDialog control with a specified animation type that
-     * is closed when clicking on the overlay, the animation type
-     * can be one of the following:
-     * <ul>
-     * <li>CENTER</li>
-     * <li>TOP</li>
-     * <li>RIGHT</li>
-     * <li>BOTTOM</li>
-     * <li>LEFT</li>
-     * </ul>
-     *
-     * @param dialogContainer
-     * @param content
-     * @param transitionType
-     * @param overlayClose
-     */
-    public MaterialDialog(StackPane dialogContainer, Region content,
-                          MaterialDialogTransition transitionType, boolean overlayClose) {
-        setOverlayClose(overlayClose);
-        initialize();
-        setContent(content);
-        setDialogContainer(dialogContainer);
-        this.transitionType.set(transitionType);
-        // init change listeners
-        initChangeListeners();
-    }
+        // create custom dialog pane (will layout children in center)
+        final DialogPane dialogPane = new DialogPane() {
+            private boolean performingLayout = false;
 
-    private void initChangeListeners() {
-        overlayCloseProperty().addListener((o, oldVal, newVal) -> {
-            if (newVal) {
-                this.addEventHandler(MouseEvent.MOUSE_PRESSED, closeHandler);
-            } else {
-                this.removeEventHandler(MouseEvent.MOUSE_PRESSED, closeHandler);
+            {
+                getButtonTypes().add(ButtonType.CLOSE);
+                Node closeButton = this.lookupButton(ButtonType.CLOSE);
+                closeButton.managedProperty().bind(closeButton.visibleProperty());
+                closeButton.setVisible(false);
+            }
+
+            @Override
+            protected double computePrefHeight(double width) {
+                Window owner = getOwner();
+                if (owner != null) {
+                    return owner.getHeight();
+                } else {
+                    return super.computePrefHeight(width);
+                }
+            }
+
+            @Override
+            protected double computePrefWidth(double height) {
+                Window owner = getOwner();
+                if (owner != null) {
+                    return owner.getWidth();
+                } else {
+                    return super.computePrefWidth(height);
+                }
+            }
+
+            @Override
+            public void requestLayout() {
+                if (performingLayout) {
+                    return;
+                }
+                super.requestLayout();
+            }
+
+            @Override
+            protected void layoutChildren() {
+                performingLayout = true;
+                List<Node> managed = getManagedChildren();
+                final double width = getWidth();
+                double height = getHeight();
+                double top = getInsets().getTop();
+                double right = getInsets().getRight();
+                double left = getInsets().getLeft();
+                double bottom = getInsets().getBottom();
+                double contentWidth = width - left - right;
+                double contentHeight = height - top - bottom;
+                for (Node child : managed) {
+                    layoutInArea(child, left, top, contentWidth, contentHeight,
+                            0, Insets.EMPTY, HPos.CENTER, VPos.CENTER);
+                }
+                performingLayout = false;
+            }
+
+            public String getUserAgentStylesheet() {
+                return JFoenixResources.load("/css/styles.css").toExternalForm();
+            }
+
+            @Override
+            protected Node createButtonBar() {
+                return null;
+            }
+        };
+        dialogPane.getStyleClass().add("material-alert-overlay");
+        dialogPane.setContent(materialNode);
+        setDialogPane(dialogPane);
+        dialogPane.getScene().setFill(Color.TRANSPARENT);
+
+        if (window != null) {
+            // set the window to transparent
+            initStyle(StageStyle.TRANSPARENT);
+            initOwner(window);
+
+            // init style for overlay
+            dialogPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (this.isOverlayClose()) {
+                    hide();
+                }
+            });
+            // bind dialog position to window position
+            widthListener = observable -> updateWidth();
+            heightListener = observable -> updateHeight();
+            xListener = observable -> updateX();
+            yListener = observable -> updateY();
+        }
+
+        // handle animation / owner window layout changes
+        eventHandlerManager.addEventHandler(DialogEvent.DIALOG_SHOWING, event -> {
+            addLayoutListeners();
+            JFXAlertAnimation currentAnimation = getCurrentAnimation();
+            currentAnimation.initAnimation(contentContainer.getParent(), dialogPane);
+        });
+        eventHandlerManager.addEventHandler(DialogEvent.DIALOG_SHOWN, event -> {
+            if (getOwner() != null) {
+                updateLayout();
+            }
+            animateClosing = true;
+            JFXAlertAnimation currentAnimation = getCurrentAnimation();
+            Animation animation = currentAnimation.createShowingAnimation(dialogPane.getContent(), dialogPane);
+            if (animation != null) {
+                animation.play();
+            }
+        });
+
+        eventHandlerManager.addEventHandler(DialogEvent.DIALOG_CLOSE_REQUEST, event -> {
+            if (animateClosing) {
+                event.consume();
+                hideWithAnimation();
+            }
+        });
+        eventHandlerManager.addEventHandler(DialogEvent.DIALOG_HIDDEN, event -> removeLayoutListeners());
+
+        getDialogPane().getScene().getWindow().addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                if (!isHideOnEscape()) {
+                    keyEvent.consume();
+                }
             }
         });
     }
 
-    private void initialize() {
-        this.setVisible(false);
-        this.getStyleClass().add(DEFAULT_STYLE_CLASS);
-        this.transitionType.addListener((o, oldVal, newVal) -> {
-            animation = getShowAnimation(transitionType.get());
-        });
-
-        contentHolder = new StackPane();
-        contentHolder.setBackground(new Background(
-                new BackgroundFill(Color.WHITE, new CornerRadii(2), null)));
-        JFXDepthManager.setDepth(contentHolder, 4);
-        contentHolder.setPickOnBounds(false);
-        // ensure stackpane is never resized beyond it's preferred size
-        contentHolder.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-        this.getChildren().add(contentHolder);
-        this.getStyleClass().add("jfx-dialog-overlay-pane");
-        StackPane.setAlignment(contentHolder, Pos.CENTER);
-        this.setBackground(new Background(new BackgroundFill(
-                Color.rgb(0, 0, 0, 0.1), null, null)));
-        // close the dialog if clicked on the overlay pane
-        if (overlayClose.get()) {
-            this.addEventHandler(MouseEvent.MOUSE_PRESSED, closeHandler);
-        }
-        // prevent propagating the events to overlay pane
-        contentHolder.addEventHandler(MouseEvent.ANY, e -> e.consume());
+    // this method ensure not null value for current animation
+    private JFXAlertAnimation getCurrentAnimation() {
+        JFXAlertAnimation usedAnimation = getAnimation();
+        usedAnimation = usedAnimation == null ? JFXAlertAnimation.NO_ANIMATION : usedAnimation;
+        return usedAnimation;
     }
 
-    /***************************************************************************
-     *                                                                         *
-     * Setters / Getters                                                       *
-     *                                                                         *
-     **************************************************************************/
-
-    /**
-     * @return the dialog container
-     */
-    public StackPane getDialogContainer() {
-        return dialogContainer;
-    }
-
-    /**
-     * set the dialog container
-     * Note: the dialog container must be StackPane, its the container for the dialog to be shown in.
-     *
-     * @param dialogContainer
-     */
-    public void setDialogContainer(StackPane dialogContainer) {
-        if (dialogContainer != null) {
-            this.dialogContainer = dialogContainer;
-            // FIXME: need to be improved to consider only the parent boundary
-            offsetX = dialogContainer.getBoundsInLocal().getWidth();
-            offsetY = dialogContainer.getBoundsInLocal().getHeight();
-            animation = getShowAnimation(transitionType.get());
+    private void removeLayoutListeners() {
+        Window stage = getOwner();
+        if (stage != null) {
+            stage.getScene().widthProperty().removeListener(widthListener);
+            stage.getScene().heightProperty().removeListener(heightListener);
+            stage.xProperty().removeListener(xListener);
+            stage.yProperty().removeListener(yListener);
         }
     }
 
-    /**
-     * @return dialog content node
-     */
-    public Region getContent() {
-        return content;
+    private void addLayoutListeners() {
+        Window stage = getOwner();
+        if (stage != null) {
+            if (widthListener == null) {
+                throw new RuntimeException("Owner can only be set using the constructor");
+            }
+            stage.getScene().widthProperty().addListener(widthListener);
+            stage.getScene().heightProperty().addListener(heightListener);
+            stage.xProperty().addListener(xListener);
+            stage.yProperty().addListener(yListener);
+        }
     }
 
+    private void updateLayout() {
+        updateX();
+        updateY();
+        updateWidth();
+        updateHeight();
+    }
+
+    private void updateHeight() {
+        Window stage = getOwner();
+        setHeight(stage.getScene().getHeight());
+    }
+
+    private void updateWidth() {
+        Window stage = getOwner();
+        setWidth(stage.getScene().getWidth());
+    }
+
+    private void updateY() {
+        Window stage = getOwner();
+        setY(stage.getY() + stage.getScene().getY());
+    }
+
+    private void updateX() {
+        Window stage = getOwner();
+        setX(stage.getX() + stage.getScene().getX());
+    }
+
+
+    private Animation transition = null;
+
     /**
-     * set the content of the dialog
-     *
-     * @param content
+     * play the hide animation for the dialog, as the java hide method is set to final
+     * so it can not be overridden
      */
-    public void setContent(Region content) {
-        if (content != null) {
-            this.content = content;
-            this.content.setPickOnBounds(false);
-            contentHolder.getChildren().setAll(content);
+    public void hideWithAnimation() {
+        if (transition == null || transition.getStatus().equals(Animation.Status.STOPPED)) {
+            JFXAlertAnimation currentAnimation = getCurrentAnimation();
+            Animation animation = currentAnimation.createHidingAnimation(getDialogPane().getContent(), getDialogPane());
+            if (animation != null) {
+                transition = animation;
+                animation.setOnFinished(finish -> {
+                    animateClosing = false;
+                    hide();
+                    transition = null;
+                });
+                animation.play();
+            } else {
+                animateClosing = false;
+                transition = null;
+                Platform.runLater(this::hide);
+            }
         }
+    }
+
+    private final EventHandlerManager eventHandlerManager = new EventHandlerManager(this);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EventDispatchChain buildEventDispatchChain(EventDispatchChain tail) {
+        return super.buildEventDispatchChain(tail).prepend(eventHandlerManager);
+    }
+
+    public void setContent(Node... content) {
+        contentContainer.getChildren().setAll(content);
     }
 
     /**
      * indicates whether the dialog will close when clicking on the overlay or not
-     *
-     * @return
      */
     private BooleanProperty overlayClose = new SimpleBooleanProperty(true);
 
-    public final BooleanProperty overlayCloseProperty() {
-        return this.overlayClose;
+    public boolean isOverlayClose() {
+        return overlayClose.get();
     }
 
-    public final boolean isOverlayClose() {
-        return this.overlayCloseProperty().get();
+    public BooleanProperty overlayCloseProperty() {
+        return overlayClose;
     }
 
-    public final void setOverlayClose(final boolean overlayClose) {
-        this.overlayCloseProperty().set(overlayClose);
+    public void setOverlayClose(boolean overlayClose) {
+        this.overlayClose.set(overlayClose);
     }
+
 
     /**
-     * if sets to true, the content of dialog container will be cached and replaced with an image
-     * when displaying the dialog (better performance).
-     * this is recommended if the content behind the dialog will not change during the showing
-     * period
+     * specify the animation when showing / hiding the dialog
+     * by default it's set to {@link JFXAlertAnimation#CENTER_ANIMATION}
      */
-    private BooleanProperty cacheContainer = new SimpleBooleanProperty(false);
+    private ObjectProperty<JFXAlertAnimation> animation = new SimpleObjectProperty<>
+            (JFXAlertAnimation.CENTER_ANIMATION);
 
-    public boolean isCacheContainer() {
-        return cacheContainer.get();
+    public JFXAlertAnimation getAnimation() {
+        return animation.get();
     }
 
-    public BooleanProperty cacheContainerProperty() {
-        return cacheContainer;
-    }
-
-    public void setCacheContainer(boolean cacheContainer) {
-        this.cacheContainer.set(cacheContainer);
-    }
-
-    /**
-     * it will show the dialog in the specified container
-     *
-     * @param dialogContainer
-     */
-    public void show(StackPane dialogContainer) {
-        this.setDialogContainer(dialogContainer);
-        showDialog();
-    }
-
-    private ArrayList<Node> tempContent;
-
-    /**
-     * show the dialog inside its parent container
-     */
-    public void show() {
-        this.setDialogContainer(dialogContainer);
-        showDialog();
-    }
-
-    private void showDialog() {
-        if (dialogContainer == null) {
-            throw new RuntimeException("ERROR: JFXDialog container is not set!");
-        }
-        if (isCacheContainer()) {
-            tempContent = new ArrayList<>(dialogContainer.getChildren());
-
-            SnapshotParameters snapShotparams = new SnapshotParameters();
-            snapShotparams.setFill(Color.TRANSPARENT);
-            WritableImage temp = dialogContainer.snapshot(snapShotparams,
-                    new WritableImage((int) dialogContainer.getWidth(),
-                            (int) dialogContainer.getHeight()));
-            ImageView tempImage = new ImageView(temp);
-            tempImage.setCache(true);
-            tempImage.setCacheHint(CacheHint.SPEED);
-            dialogContainer.getChildren().setAll(tempImage, this);
-        } else {
-            //prevent error if opening an already opened dialog
-            dialogContainer.getChildren().remove(this);
-            tempContent = null;
-            dialogContainer.getChildren().add(this);
-        }
-
-        if (animation != null) {
-            animation.play();
-        } else {
-            setVisible(true);
-            setOpacity(1);
-            Event.fireEvent(MaterialDialog.this, new JFXDialogEvent(JFXDialogEvent.OPENED));
-        }
-    }
-
-    /**
-     * close the dialog
-     */
-    public void close() {
-        if (animation != null) {
-            animation.setRate(-1);
-            animation.play();
-            animation.setOnFinished(e -> {
-                closeDialog();
-            });
-        } else {
-            setOpacity(0);
-            setVisible(false);
-            closeDialog();
-        }
-
-    }
-
-    private void closeDialog() {
-        resetProperties();
-        Event.fireEvent(this, new JFXDialogEvent(JFXDialogEvent.CLOSED));
-        if (tempContent == null) {
-            dialogContainer.getChildren().remove(this);
-        } else {
-            dialogContainer.getChildren().setAll(tempContent);
-        }
-    }
-
-    /***************************************************************************
-     *                                                                         *
-     * Transitions                                                             *
-     *                                                                         *
-     **************************************************************************/
-
-    private Transition getShowAnimation(MaterialDialogTransition transitionType) {
-        Transition animation = null;
-        if (contentHolder != null) {
-            switch (transitionType) {
-                case LEFT:
-                    contentHolder.setScaleX(1);
-                    contentHolder.setScaleY(1);
-                    contentHolder.setTranslateX(-offsetX);
-                    animation = new LeftTransition();
-                    break;
-                case RIGHT:
-                    contentHolder.setScaleX(1);
-                    contentHolder.setScaleY(1);
-                    contentHolder.setTranslateX(offsetX);
-                    animation = new RightTransition();
-                    break;
-                case TOP:
-                    contentHolder.setScaleX(1);
-                    contentHolder.setScaleY(1);
-                    contentHolder.setTranslateY(-offsetY);
-                    animation = new TopTransition();
-                    break;
-                case BOTTOM:
-                    contentHolder.setScaleX(1);
-                    contentHolder.setScaleY(1);
-                    contentHolder.setTranslateY(offsetY);
-                    animation = new BottomTransition();
-                    break;
-                case CENTER:
-                    contentHolder.setScaleX(0);
-                    contentHolder.setScaleY(0);
-                    animation = new CenterTransition();
-                    break;
-                default:
-                    animation = null;
-                    contentHolder.setScaleX(1);
-                    contentHolder.setScaleY(1);
-                    contentHolder.setTranslateX(0);
-                    contentHolder.setTranslateY(0);
-                    break;
-            }
-        }
-        if (animation != null) {
-            animation.setOnFinished(finish ->
-                    Event.fireEvent(this, new JFXDialogEvent(JFXDialogEvent.OPENED)));
-        }
+    public ObjectProperty<JFXAlertAnimation> animationProperty() {
         return animation;
     }
 
-    private void resetProperties() {
-        this.setVisible(false);
-        contentHolder.setTranslateX(0);
-        contentHolder.setTranslateY(0);
-        contentHolder.setScaleX(1);
-        contentHolder.setScaleY(1);
+    public void setAnimation(JFXAlertAnimation animation) {
+        this.animation.set(animation);
     }
 
-    private class LeftTransition extends CachedTransition {
-        LeftTransition() {
-            super(contentHolder, new Timeline(
-                    new KeyFrame(Duration.ZERO,
-                            new KeyValue(
-                                    contentHolder.translateXProperty(), -offsetX, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), false, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(10),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), true, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 0, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(1000),
-                            new KeyValue(
-                                    contentHolder.translateXProperty(), 0, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 1, Interpolator.EASE_BOTH)
-                    ))
-            );
-            // reduce the number to increase the shifting , increase number to reduce shifting
-            setCycleDuration(Duration.seconds(0.4));
-            setDelay(Duration.seconds(0));
-        }
+    public void setSize(double prefWidth, double prefHeight) {
+        contentContainer.setPrefSize(prefWidth, prefHeight);
     }
 
-    private class RightTransition extends CachedTransition {
-        RightTransition() {
-            super(contentHolder, new Timeline(
-                    new KeyFrame(Duration.ZERO,
-                            new KeyValue(contentHolder.translateXProperty(), offsetX, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), false, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(10),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), true, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 0, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(1000),
-                            new KeyValue(
-                                    contentHolder.translateXProperty(), 0, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 1, Interpolator.EASE_BOTH)))
-            );
-            // reduce the number to increase the shifting , increase number to reduce shifting
-            setCycleDuration(Duration.seconds(0.4));
-            setDelay(Duration.seconds(0));
-        }
+    private BooleanProperty hideOnEscape = new SimpleBooleanProperty(this, "hideOnEscape", true);
+
+    public final void setHideOnEscape(boolean value) {
+        hideOnEscape.set(value);
     }
 
-    private class TopTransition extends CachedTransition {
-        TopTransition() {
-            super(contentHolder, new Timeline(
-                    new KeyFrame(Duration.ZERO,
-                            new KeyValue(
-                                    contentHolder.translateYProperty(), -offsetY, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), false, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(10),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), true, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 0, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(1000),
-                            new KeyValue(
-                                    contentHolder.translateYProperty(), 0, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 1, Interpolator.EASE_BOTH)))
-            );
-            // reduce the number to increase the shifting , increase number to reduce shifting
-            setCycleDuration(Duration.seconds(0.4));
-            setDelay(Duration.seconds(0));
-        }
+    public final boolean isHideOnEscape() {
+        return hideOnEscape.get();
     }
 
-    private class BottomTransition extends CachedTransition {
-        BottomTransition() {
-            super(contentHolder, new Timeline(
-                    new KeyFrame(Duration.ZERO,
-                            new KeyValue(
-                                    contentHolder.translateYProperty(), offsetY, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), false, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(10),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), true, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 0, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(1000),
-                            new KeyValue(
-                                    contentHolder.translateYProperty(), 0, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 1, Interpolator.EASE_BOTH)))
-            );
-            // reduce the number to increase the shifting , increase number to reduce shifting
-            setCycleDuration(Duration.seconds(0.4));
-            setDelay(Duration.seconds(0));
-        }
+    public final BooleanProperty hideOnEscapeProperty() {
+        return hideOnEscape;
     }
 
-    private class CenterTransition extends CachedTransition {
-        CenterTransition() {
-            super(contentHolder, new Timeline(
-                    new KeyFrame(Duration.ZERO,
-                            new KeyValue(
-                                    contentHolder.scaleXProperty(), 0, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    contentHolder.scaleYProperty(), 0, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), false, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(10),
-                            new KeyValue(
-                                    MaterialDialog.this.visibleProperty(), true, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 0, Interpolator.EASE_BOTH)
-                    ),
-                    new KeyFrame(Duration.millis(1000),
-                            new KeyValue(
-                                    contentHolder.scaleXProperty(), 1, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    contentHolder.scaleYProperty(), 1, Interpolator.EASE_BOTH),
-                            new KeyValue(
-                                    MaterialDialog.this.opacityProperty(), 1, Interpolator.EASE_BOTH)
-                    ))
-            );
-            // reduce the number to increase the shifting , increase number to reduce shifting
-            setCycleDuration(Duration.seconds(0.4));
-            setDelay(Duration.seconds(0));
-        }
-    }
-
-
-    /***************************************************************************
-     *                                                                         *
-     * Stylesheet Handling                                                     *
-     *                                                                         *
-     **************************************************************************/
-    /**
-     * Initialize the style class to 'jfx-dialog'.
-     * <p>
-     * This is the selector class from which CSS can be used to style
-     * this control.
-     */
-    private static final String DEFAULT_STYLE_CLASS = "jfx-dialog";
-
-    /**
-     * dialog transition type property, it can be one of the following:
-     * <ul>
-     * <li>CENTER</li>
-     * <li>TOP</li>
-     * <li>RIGHT</li>
-     * <li>BOTTOM</li>
-     * <li>LEFT</li>
-     * <li>NONE</li>
-     * </ul>
-     */
-    private StyleableObjectProperty<MaterialDialogTransition> transitionType =
-            new SimpleStyleableObjectProperty<>(
-                    StyleableProperties.DIALOG_TRANSITION,
-                    this,
-                    "dialogTransition",
-                    MaterialDialogTransition.CENTER);
-
-    public MaterialDialogTransition getTransitionType() {
-        return transitionType == null ? MaterialDialogTransition.CENTER : transitionType.get();
-    }
-
-    public StyleableObjectProperty<MaterialDialogTransition> transitionTypeProperty() {
-        return this.transitionType;
-    }
-
-    public void setTransitionType(MaterialDialogTransition transition) {
-        this.transitionType.set(transition);
-    }
-
-    private static class StyleableProperties {
-        private static final CssMetaData<MaterialDialog, MaterialDialogTransition> DIALOG_TRANSITION =
-                new CssMetaData<MaterialDialog, MaterialDialogTransition>("-jfx-dialog-transition",
-                        MaterialDialogTransitionConverter.getInstance(),
-                        MaterialDialogTransition.CENTER) {
-                    @Override
-                    public boolean isSettable(MaterialDialog control) {
-                        return control.transitionType == null || !control.transitionType.isBound();
-                    }
-
-                    @Override
-                    public StyleableProperty<MaterialDialogTransition>
-                    getStyleableProperty(MaterialDialog control) {
-                        return control.transitionTypeProperty();
-                    }
-                };
-
-        private static final List<CssMetaData<? extends Styleable, ?>> CHILD_STYLEABLES;
-
-        static {
-            final List<CssMetaData<? extends Styleable, ?>> styleables =
-                    new ArrayList<>(StackPane.getClassCssMetaData());
-            Collections.addAll(styleables,
-                    DIALOG_TRANSITION
-            );
-            CHILD_STYLEABLES = Collections.unmodifiableList(styleables);
-        }
-    }
-
-    @Override
-    public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-        return getClassCssMetaData();
-    }
-
-    public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
-        return StyleableProperties.CHILD_STYLEABLES;
-    }
-
-
-    /***************************************************************************
-     *                                                                         *
-     * Custom Events                                                           *
-     *                                                                         *
-     **************************************************************************/
-
-    private final ObjectProperty<EventHandler<? super JFXDialogEvent>> onDialogClosedProperty =
-            new ObjectPropertyBase<EventHandler<? super JFXDialogEvent>>() {
-        @Override
-        protected void invalidated() {
-            setEventHandler(JFXDialogEvent.CLOSED, get());
-        }
-
-        @Override
-        public Object getBean() {
-            return this;
-        }
-
-        @Override
-        public String getName() {
-            return "onClosed";
-        }
-    };
-
-    /**
-     * Defines a function to be called when the dialog is closed.
-     * Note: it will be triggered after the close animation is finished.
-     */
-    public ObjectProperty<EventHandler<? super JFXDialogEvent>> onDialogClosedProperty() {
-        return onDialogClosedProperty;
-    }
-
-    public void setOnDialogClosed(EventHandler<? super JFXDialogEvent> handler) {
-        onDialogClosedProperty().set(handler);
-    }
-
-    public EventHandler<? super JFXDialogEvent> getOnDialogClosed() {
-        return onDialogClosedProperty().get();
-    }
-
-
-    private ObjectProperty<EventHandler<? super JFXDialogEvent>> onDialogOpenedProperty =
-            new ObjectPropertyBase<EventHandler<? super JFXDialogEvent>>() {
-        @Override
-        protected void invalidated() {
-            setEventHandler(JFXDialogEvent.OPENED, get());
-        }
-
-        @Override
-        public Object getBean() {
-            return this;
-        }
-
-        @Override
-        public String getName() {
-            return "onOpened";
-        }
-    };
-
-    /**
-     * Defines a function to be called when the dialog is opened.
-     * Note: it will be triggered after the show animation is finished.
-     */
-    public ObjectProperty<EventHandler<? super JFXDialogEvent>> onDialogOpenedProperty() {
-        return onDialogOpenedProperty;
-    }
-
-    public void setOnDialogOpened(EventHandler<? super JFXDialogEvent> handler) {
-        onDialogOpenedProperty().set(handler);
-    }
-
-    public EventHandler<? super JFXDialogEvent> getOnDialogOpened() {
-        return onDialogOpenedProperty().get();
-    }
 }

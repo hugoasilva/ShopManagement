@@ -4,9 +4,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-           prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1">
-    <AnchorPane id="AnchorPane" fx:id="mainContainer" minWidth="-Infinity" prefHeight="1000.0" prefWidth="500.0" styleClass="custom-pane"
+<?import java.lang.String?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="700.0"
+           prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="pt.shop.management.ui.details.customer.CustomerDetailsController">
+<AnchorPane id="AnchorPane" fx:id="mainContainer" minWidth="-Infinity" prefHeight="1000.0" prefWidth="500.0"
+                styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">
         <VBox minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -67,6 +71,10 @@
                             <MenuItem mnemonicParsing="false" onAction="#handleNoteEdit" text="Editar"/>
                             <MenuItem mnemonicParsing="false" onAction="#handleNoteDelete" text="Apagar"/>
                         </items>
+                        <styleClass>
+                            <String fx:value="table-context"/>
+                            <String fx:value="colored-context-menu"/>
+                        </styleClass>
                     </ContextMenu>
                 </contextMenu>
                 <VBox.margin>

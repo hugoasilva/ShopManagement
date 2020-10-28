@@ -21,15 +21,15 @@ import org.apache.commons.lang3.StringUtils;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.add.product.ProductAddController;
-import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.product.ProductDetailsController;
+import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.search.invoice.InvoiceSearchController;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,11 +99,7 @@ public class ProductSearchController implements Initializable {
                             {
                                 btn.setOnAction((ActionEvent event) -> {
                                     Product product = getTableView().getItems().get(getIndex());
-                                    try {
-                                        showProductDetails(product);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    showProductDetails(product);
                                 });
                             }
 
@@ -133,21 +129,24 @@ public class ProductSearchController implements Initializable {
         productCombo.setPromptText("Tipo de pesquisa...");
     }
 
-    private void showProductDetails(Product product) throws IOException {
-        ProductDetailsController controller = new ProductDetailsController(product);
+    private void showProductDetails(Product product) {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/product/ProductDetails.fxml"));
+            Parent parent = loader.load();
 
-        FXMLLoader loader =
-                new FXMLLoader(getClass().getResource(
-                        "/fxml/product/ProductDetails.fxml"));
-        loader.setController(controller);
+            ProductDetailsController controller = loader.getController();
+            controller.inflateUI(product);
 
-        Parent parent = loader.load();
-
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("Ficha de Produto");
-        stage.setScene(new Scene(parent));
-        stage.show();
-        ShopManagementUtil.setStageIcon(stage);
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Ficha de Produto");
+            stage.setScene(new Scene(parent));
+            stage.show();
+            ShopManagementUtil.setStageIcon(stage);
+        } catch (IOException ex) {
+            Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Stage getStage() {
@@ -178,26 +177,24 @@ public class ProductSearchController implements Initializable {
                     "Por favor seleccione um produto para apagar.");
             return;
         }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Produto");
-        alert.setContentText("Tem a certeza que pretende apagar o produto nr " + selectedForDeletion.getId() + " ?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+        boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
+                "Apagar Produto",
+                "Tem a certeza que pretende apagar o produto " + selectedForDeletion.getName() + "?");
+        if (option) {
             boolean result = DatabaseHandler.deleteProduct(selectedForDeletion);
             if (result) {
-                DialogHandler.showMaterialAlert(this.mainContainer, "Produto apagado", "Produto nr " + selectedForDeletion.getId() +
-                        " apagado com sucesso.");
+                DialogHandler.showMaterialInformationDialog(this.mainContainer,
+                        "Produto apagado", "Produto nr " + selectedForDeletion.getId() +
+                                " apagado com sucesso.", false);
                 list.remove(selectedForDeletion);
             } else {
-                DialogHandler.showMaterialAlert(this.mainContainer,"Erro!",
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro!",
                         new String("Não foi possível apagar o produto nr ".getBytes(), StandardCharsets.UTF_8)
-                                + selectedForDeletion.getId());
+                                + selectedForDeletion.getId(), false);
             }
         } else {
-            DialogHandler.showMaterialAlert(this.mainContainer,"Cancelado",
-                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8), false);
         }
     }
 

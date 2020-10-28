@@ -21,12 +21,12 @@ import javafx.util.Duration;
 import pt.shop.management.ui.dialog.button.MaterialButton.ButtonType;
 
 /**
- * <h1>Material Design Button Skin</h1>
+ * Material Button Skin Class
  *
- * @author Shadi Shaheen
- * @version 1.0
- * @since 2016-03-09
+ * @author Hugo Silva
+ * @version 2020-10-28
  */
+
 public class MaterialButtonSkin extends ButtonSkin {
 
     private Transition clickedAnimation;

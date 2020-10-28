@@ -94,8 +94,7 @@ public class ProductAddController implements Initializable {
         String productImage = REMOTE_PRODUCT_PATH + this.id + ".png";
 
         if (productName.isEmpty() || productPrice.isEmpty() || productQuantity.isEmpty()) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog( this.mainContainer, "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
         }
@@ -111,13 +110,11 @@ public class ProductAddController implements Initializable {
             String path = LOCAL_UPLOAD_PATH + this.id + ".png";
             this.imageToPNG(path);
             SFTPHandler.uploadFile(path, productImage);
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Produto adicionado",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Produto adicionado",
                     productName + " adicionado com sucesso!", true);
             clearEntries();
         } else {
-            DialogHandler.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Ocorreu um erro",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
     }
@@ -166,12 +163,10 @@ public class ProductAddController implements Initializable {
         Product product = new Product(this.id, this.name.getText(), this.price.getText(),
                 this.supplier.getText(), this.quantity.getText(), this.image.getText());
         if (DatabaseHandler.updateProduct(product)) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Successo!",
+            DialogHandler.showMaterialInformationDialog( this.mainContainer, "Successo!",
                     "Dados de produto atualizados.", false);
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Erro",
+            DialogHandler.showMaterialInformationDialog( this.mainContainer, "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }

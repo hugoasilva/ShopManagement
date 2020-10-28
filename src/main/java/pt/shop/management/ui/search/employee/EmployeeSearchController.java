@@ -20,15 +20,14 @@ import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.add.employee.EmployeeAddController;
-import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.employee.EmployeeDetailsController;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,11 +100,7 @@ public class EmployeeSearchController implements Initializable {
                             {
                                 btn.setOnAction((ActionEvent event) -> {
                                     Employee employee = getTableView().getItems().get(getIndex());
-                                    try {
-                                        showEmployeeDetails(employee);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    showEmployeeDetails(employee);
                                 });
                             }
 
@@ -140,21 +135,25 @@ public class EmployeeSearchController implements Initializable {
      *
      * @param employee - employee object
      */
-    private void showEmployeeDetails(Employee employee) throws IOException {
-        EmployeeDetailsController controller = new EmployeeDetailsController(employee);
+    private void showEmployeeDetails(Employee employee) {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/employee/EmployeeDetails.fxml"));
+            Parent parent = loader.load();
 
-        FXMLLoader loader =
-                new FXMLLoader(getClass().getResource(
-                        "/fxml/employee/EmployeeDetails.fxml"));
-        loader.setController(controller);
+            EmployeeDetailsController controller = loader.getController();
+            controller.inflateUI(employee);
 
-        Parent parent = loader.load();
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Ficha de Empregado");
+            stage.setScene(new Scene(parent));
+            stage.showAndWait();
+            ShopManagementUtil.setStageIcon(stage);
+        } catch (IOException ex) {
+            Logger.getLogger(EmployeeSearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("Ficha de Empregado");
-        stage.setScene(new Scene(parent));
-        stage.showAndWait();
-        ShopManagementUtil.setStageIcon(stage);
     }
 
     private Stage getStage() {
@@ -185,26 +184,23 @@ public class EmployeeSearchController implements Initializable {
                     "Por favor seleccione um empregado para apagar.");
             return;
         }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Empregado");
-        alert.setContentText("Tem a certeza que pretende apagar o empregado " + selectedForDeletion.getName() + "?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+        boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
+                "Apagar Empregado",
+                "Tem a certeza que pretende apagar o empregado " + selectedForDeletion.getName() + "?");
+        if (option) {
             boolean result = DatabaseHandler.deleteEmployee(selectedForDeletion);
             if (result) {
-                DialogHandler.showMaterialAlert(this.mainContainer, "Empregado apagado",
-                        selectedForDeletion.getName() + " foi apagado com sucesso.");
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Empregado apagado",
+                        selectedForDeletion.getName() + " foi apagado com sucesso.", false);
                 list.remove(selectedForDeletion);
             } else {
-                DialogHandler.showMaterialAlert(this.mainContainer, "Erro!",
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro!",
                         new String("Não foi possível apagar o empregado ".getBytes(), StandardCharsets.UTF_8) +
-                                selectedForDeletion.getName());
+                                selectedForDeletion.getName(), false);
             }
         } else {
-            DialogHandler.showMaterialAlert(this.mainContainer, "Cancelado",
-                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8), false);
         }
     }
 
@@ -251,7 +247,7 @@ public class EmployeeSearchController implements Initializable {
      * Handle search employee key press
      *
      * @param event - key event
-     * @throws IOException - IO exception
+     * @throws SQLException - SQL exception
      */
     public void handleSearchEmployeeKeyPress(KeyEvent event) throws SQLException {
         this.searchEmployee();
@@ -261,7 +257,7 @@ public class EmployeeSearchController implements Initializable {
      * Handle search employee button press
      *
      * @param event - button click event
-     * @throws IOException - IO exception
+     * @throws SQLException - SQL exception
      */
     public void handleSearchEmployeeButtonPress(ActionEvent event) throws SQLException {
         this.searchEmployee();

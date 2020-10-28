@@ -24,7 +24,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -92,8 +91,7 @@ public class InvoiceAddController implements Initializable {
 
         if (customerId.isEmpty() || employeeId.isEmpty() || invoiceDate.isEmpty()
                 || invoiceProducts.isEmpty()) {
-            DialogHandler.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
         }
@@ -106,13 +104,11 @@ public class InvoiceAddController implements Initializable {
         Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoicePdf);
         if (DatabaseHandler.insertInvoice(invoice)) {
             SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Nova fatura adicionada",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Nova fatura adicionada",
                     "Fatura nr " + invoiceId + " adicionada com sucesso.", false);
             clearEntries();
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Erro ao adicionar fatura",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro ao adicionar fatura",
                     "Verifique todos os campos e tente novamente", false);
         }
     }
@@ -149,11 +145,10 @@ public class InvoiceAddController implements Initializable {
                 this.date.getValue().toString(), this.pdf.getText());
         invoice.setProducts(products.getText());
         if (DatabaseHandler.updateInvoice(invoice)) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Successo!",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo!",
                     "Dados de fatura atualizados.", true);
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer, new ArrayList<>(), "Failed",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }

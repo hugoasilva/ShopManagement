@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 public class ProductDetailsController implements Initializable {
 
     // Product data
-    private final Product product;
+    private Product product;
     // UI Content
     @FXML
     private Label id;
@@ -31,13 +31,11 @@ public class ProductDetailsController implements Initializable {
     @FXML
     private Label quantity;
 
-    public ProductDetailsController(Product product) {
-        this.product = product;
+    public ProductDetailsController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.inflateUI(this.product);
     }
 
     /**
@@ -57,6 +55,7 @@ public class ProductDetailsController implements Initializable {
      * @param product - product object
      */
     public void inflateUI(Product product) {
+        this.product = product;
         this.id.setText("ID: " + product.getId());
         this.name.setText("Nome: " + product.getName());
         this.price.setText("Preço: " + product.getPrice());

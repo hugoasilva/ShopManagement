@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -39,8 +41,7 @@ import java.util.logging.Logger;
 public class CustomerDetailsController implements Initializable {
 
     // Customer data
-    private final Customer customer;
-    private static boolean option;
+    private Customer customer;
     private static boolean isChosen;
     // Notes list
     @FXML
@@ -67,24 +68,12 @@ public class CustomerDetailsController implements Initializable {
     @FXML
     private AnchorPane mainContainer;
 
-    public CustomerDetailsController(Customer customer) {
-        this.customer = customer;
-    }
-
-    public static void setOption(boolean choice) {
-        option = choice;
-        isChosen = true;
+    public CustomerDetailsController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            this.initCol();
-            this.getCustomerNotes();
-            this.inflateUI(this.customer);
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.initCol();
     }
 
     /**
@@ -112,45 +101,56 @@ public class CustomerDetailsController implements Initializable {
      * @param customer - customer object
      */
     public void inflateUI(Customer customer) {
+        this.customer = customer;
         this.id.setText("ID: " + customer.getId());
         this.name.setText("Nome: " + customer.getName());
         this.address.setText("Morada: " + customer.getAddress());
         this.phone.setText("Contacto: " + customer.getPhone());
         this.email.setText("E-mail: " + customer.getEmail());
         this.nif.setText("NIF: " + customer.getNif());
+        this.getCustomerNotes();
     }
 
     /**
      * Get customer notes
      */
-    private void getCustomerNotes() throws SQLException {
-        this.list.clear();
-        this.list = DatabaseHandler.getCustomerNotesList(this.customer);
-        this.tableView.setItems(list);
+    private void getCustomerNotes()  {
+        try {
+            this.list.clear();
+            this.list = DatabaseHandler.getCustomerNotesList(this.customer);
+            this.tableView.setItems(list);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
      * Show add note window
      *
-     * @throws IOException - IO exception
+     * @throws SQLException - SQL exception
      */
     @FXML
-    public void addNoteButtonAction() throws IOException, SQLException {
-        NoteAddController controller = new NoteAddController(this.customer.getId(), "customer");
+    public void addNoteButtonAction() throws SQLException {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/note/NoteAdd.fxml"));
+            Parent parent = loader.load();
 
-        FXMLLoader loader =
-                new FXMLLoader(getClass().getResource(
-                        "/fxml/note/NoteAdd.fxml"));
-        loader.setController(controller);
+            NoteAddController controller = loader.getController();
 
-        Parent parent = loader.load();
+            controller.setPersonId(this.customer.getId());
+            controller.setPersontype("customer");
 
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("Adicionar Nota");
-        stage.setScene(new Scene(parent));
-        ShopManagementUtil.setStageIcon(stage);
-        stage.showAndWait();
-        this.getCustomerNotes();
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Adicionar Nota");
+            stage.setScene(new Scene(parent));
+            ShopManagementUtil.setStageIcon(stage);
+            stage.showAndWait();
+            this.getCustomerNotes();
+        } catch (IOException ex) {
+            Logger.getLogger(CustomerDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -167,22 +167,19 @@ public class CustomerDetailsController implements Initializable {
                     "Por favor seleccione uma nota para editar.");
             return;
         }
-        option = DialogHandler.showMaterialAlertWithCancel(this.mainContainer,
+        boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
                 "Apagar Nota",
-                "Tem a certeza que pretende apagar a nota?", false);
-
-        System.out.println(option);
-        if(option) {
+                "Tem a certeza que pretende apagar a nota?");
+        if (option) {
             boolean result = DatabaseHandler.deleteCustomerNote(selectedForDeletion);
             if (result) {
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Nota apagada",
+                        "Nota apagada com sucesso.", false);
                 this.list.remove(selectedForDeletion);
-                DialogHandler.showMaterialAlert(this.mainContainer,
-                        "Nota apagada",
-                        "Nota apagada com sucesso.");
             } else {
-                DialogHandler.showMaterialAlert(this.mainContainer,
-                        "Cancelado",
-                        new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cancelado",
+                        new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8),
+                        false);
             }
         }
     }
@@ -206,23 +203,19 @@ public class CustomerDetailsController implements Initializable {
     public void handleNoteEdit(ActionEvent event) {
         //Fetch the selected row
         Note selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
-        selectedForEdit.setPersonType("customer");
-
         if (selectedForEdit == null) {
             DialogHandler.showErrorMessage("Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
             return;
         }
+        selectedForEdit.setPersonType("customer");
         try {
-
-            NoteAddController controller = new NoteAddController(this.customer.getId(), "customer");
-
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(
                             "/fxml/note/NoteAdd.fxml"));
-            loader.setController(controller);
-
             Parent parent = loader.load();
+
+            NoteAddController controller = loader.getController();
 
             controller.inflateUI(selectedForEdit);
 
@@ -232,8 +225,7 @@ public class CustomerDetailsController implements Initializable {
             ShopManagementUtil.setStageIcon(stage);
             stage.showAndWait();
             this.getCustomerNotes();
-
-        } catch (IOException | SQLException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(CustomerDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

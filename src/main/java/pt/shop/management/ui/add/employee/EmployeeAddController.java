@@ -78,8 +78,7 @@ public class EmployeeAddController implements Initializable {
 
         if (employeeName.isEmpty() || employeeAddress.isEmpty() || employeePhone.isEmpty()
                 || employeeEmail.isEmpty() || employeeNif.isEmpty()) {
-            DialogHandler.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
         }
@@ -92,13 +91,11 @@ public class EmployeeAddController implements Initializable {
         Employee employee = new Employee(employeeId, employeeName, employeeAddress,
                 employeePhone, employeeEmail, employeeNif);
         if (DatabaseHandler.insertEmployee(employee)) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Empregado adicionado",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Empregado adicionado",
                     employeeName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Ocorreu um erro",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
     }
@@ -137,12 +134,10 @@ public class EmployeeAddController implements Initializable {
         Employee employee = new Employee(this.editId, this.name.getText(), this.address.getText(),
                 this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateEmployee(employee)) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Successo!",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo!",
                     "Dados de empregado atualizados.", true);
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Erro",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }

@@ -15,18 +15,34 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * MaterialButton is the material design implementation of a button.
- * it contains ripple effect , the effect color is set according to text fill of the button 1st
- * or the text fill of graphic node (if it was set to Label) 2nd.
+ * Material Button Class
  *
- * @author Shadi Shaheen
- * @version 1.0
- * @since 2016-03-09
+ * @author Hugo Silva
+ * @version 2020-10-28
  */
+
 public class MaterialButton extends Button {
 
+    private ObjectProperty<Paint> ripplerFill = new SimpleObjectProperty<>(null);
+
+    private static final String DEFAULT_STYLE_CLASS = "material-button";
+    private static final String USER_AGENT_STYLESHEET = JFoenixResources.load("/css/styles.css").toExternalForm();
+
+    public enum ButtonType {FLAT, RAISED}
+
+    private StyleableObjectProperty<ButtonType> buttonType = new SimpleStyleableObjectProperty<>(
+            StyleableProperties.BUTTON_TYPE,
+            this,
+            "buttonType",
+            ButtonType.FLAT);
+
+    private StyleableBooleanProperty disableVisualFocus = new SimpleStyleableBooleanProperty(StyleableProperties.DISABLE_VISUAL_FOCUS,
+            this,
+            "disableVisualFocus",
+            false);
+
     /**
-     * {@inheritDoc}
+     * Material button constructor
      */
     public MaterialButton() {
         initialize();
@@ -41,7 +57,7 @@ public class MaterialButton extends Button {
     }
 
     /**
-     * {@inheritDoc}
+     * Material button with text constructor
      */
     public MaterialButton(String text) {
         super(text);
@@ -49,7 +65,7 @@ public class MaterialButton extends Button {
     }
 
     /**
-     * {@inheritDoc}
+     * Material button with text and image constructor
      */
     public MaterialButton(String text, Node graphic) {
         super(text, graphic);
@@ -61,7 +77,9 @@ public class MaterialButton extends Button {
     }
 
     /**
-     * {@inheritDoc}
+     * Create new material button skin
+     *
+     * @return - material button skin
      */
     @Override
     protected Skin<?> createDefaultSkin() {
@@ -69,120 +87,97 @@ public class MaterialButton extends Button {
     }
 
     /**
-     * {@inheritDoc}
+     * Get CSS file
      */
     @Override
     public String getUserAgentStylesheet() {
         return USER_AGENT_STYLESHEET;
     }
 
-
-    /***************************************************************************
-     *                                                                         *
-     * Properties                                                              *
-     *                                                                         *
-     **************************************************************************/
     /**
-     * the ripple color property of MaterialButton.
+     * Get ripple color
+     *
+     * @return - ripple color
      */
-    private ObjectProperty<Paint> ripplerFill = new SimpleObjectProperty<>(null);
-
     public final ObjectProperty<Paint> ripplerFillProperty() {
         return this.ripplerFill;
     }
 
     /**
-     * @return the ripple color
+     * Get ripple color
+     *
+     * @return - ripple color
      */
     public final Paint getRipplerFill() {
         return this.ripplerFillProperty().get();
     }
 
     /**
-     * set the ripple color
+     * Set ripple color
      *
-     * @param ripplerFill the color of the ripple effect
+     * @param ripplerFill - color of the ripple effect
      */
     public final void setRipplerFill(final Paint ripplerFill) {
         this.ripplerFillProperty().set(ripplerFill);
     }
 
-
-    /***************************************************************************
-     *                                                                         *
-     * Stylesheet Handling                                                     *
-     *                                                                         *
-     **************************************************************************/
-
     /**
-     * Initialize the style class to 'jfx-button'.
-     * <p>
-     * This is the selector class from which CSS can be used to style
-     * this control.
+     * Get button type
+     *
+     * @return - button type
      */
-    private static final String DEFAULT_STYLE_CLASS = "material-button";
-    private static final String USER_AGENT_STYLESHEET = JFoenixResources.load("/css/styles.css").toExternalForm();
-
-    public enum ButtonType {FLAT, RAISED}
-
-    /**
-     * according to material design the button has two types:
-     * - flat : only shows the ripple effect upon clicking the button
-     * - raised : shows the ripple effect and change in depth upon clicking the button
-     */
-    private StyleableObjectProperty<ButtonType> buttonType = new SimpleStyleableObjectProperty<>(
-            StyleableProperties.BUTTON_TYPE,
-            this,
-            "buttonType",
-            ButtonType.FLAT);
-
     public ButtonType getButtonType() {
         return buttonType == null ? ButtonType.FLAT : buttonType.get();
     }
 
+    /**
+     * Get button type
+     *
+     * @return - button type
+     */
     public StyleableObjectProperty<ButtonType> buttonTypeProperty() {
         return this.buttonType;
     }
 
+    /**
+     * Set button type
+     *
+     * @param type - button type
+     */
     public void setButtonType(ButtonType type) {
         this.buttonType.set(type);
     }
 
     /**
-     * Disable the visual indicator for focus
-     */
-    private StyleableBooleanProperty disableVisualFocus = new SimpleStyleableBooleanProperty(StyleableProperties.DISABLE_VISUAL_FOCUS,
-            this,
-            "disableVisualFocus",
-            false);
-
-    /**
-     * Setting this property disables this {@link MaterialButton} from showing keyboard focus.
+     * Disable button from showing keyboard focus
      *
-     * @return A property that will disable visual focus if true and enable it if false.
+     * @return - property to disable focus
      */
     public final StyleableBooleanProperty disableVisualFocusProperty() {
         return this.disableVisualFocus;
     }
 
     /**
-     * Indicates whether or not this {@link MaterialButton} will show focus when it receives keyboard focus.
+     * Indicate if button will show keyboard focus
      *
-     * @return False if this {@link MaterialButton} will show visual focus and true if it will not.
+     * @return true if button has focus disabled, false otherwise
      */
     public final Boolean isDisableVisualFocus() {
         return disableVisualFocus != null && this.disableVisualFocusProperty().get();
     }
 
     /**
-     * Setting this to true will disable this {@link MaterialButton} from showing focus when it receives keyboard focus.
+     * Set keyboard focus for button
      *
-     * @param disabled True to disable visual focus and false to enable it.
+     * @param disabled - true if disabled, false otherwise
      */
     public final void setDisableVisualFocus(final Boolean disabled) {
         this.disableVisualFocusProperty().set(disabled);
     }
 
+    /**
+     * Styleable Properties Class
+     */
     private static class StyleableProperties {
         private static final CssMetaData<MaterialButton, ButtonType> BUTTON_TYPE =
                 new CssMetaData<MaterialButton, ButtonType>("-jfx-button-type",

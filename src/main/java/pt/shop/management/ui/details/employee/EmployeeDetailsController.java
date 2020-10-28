@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -25,7 +27,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +41,7 @@ import java.util.logging.Logger;
 public class EmployeeDetailsController implements Initializable {
 
     // Employee data
-    private final Employee employee;
+    private Employee employee;
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
@@ -66,19 +67,12 @@ public class EmployeeDetailsController implements Initializable {
     @FXML
     private AnchorPane mainContainer;
 
-    public EmployeeDetailsController(Employee employee) {
-        this.employee = employee;
+    public EmployeeDetailsController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            this.initCol();
-            this.getEmployeeNotes();
-            this.inflateUI(this.employee);
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+        this.initCol();
     }
 
     /**
@@ -106,45 +100,56 @@ public class EmployeeDetailsController implements Initializable {
      * @param employee - employee object
      */
     public void inflateUI(Employee employee) {
+        this.employee = employee;
         this.id.setText("ID: " + employee.getId());
         this.name.setText("Nome: " + employee.getName());
         this.address.setText("Morada: " + employee.getAddress());
         this.phone.setText("Contacto: " + employee.getPhone());
         this.email.setText("E-mail: " + employee.getEmail());
         this.nif.setText("NIF: " + employee.getNif());
+        this.getEmployeeNotes();
     }
 
     /**
      * Get employee notes from database
      */
-    private void getEmployeeNotes() throws SQLException {
-        this.list.clear();
-        this.list = DatabaseHandler.getEmployeeNotesList(this.employee);
-        this.tableView.setItems(list);
+    private void getEmployeeNotes() {
+        try {
+            this.list.clear();
+            this.list = DatabaseHandler.getEmployeeNotesList(this.employee);
+            this.tableView.setItems(list);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
      * Show add note window
      *
-     * @throws IOException - IO exception
+     * @throws SQLException - SQL exception
      */
     @FXML
-    public void addNoteButtonAction() throws IOException, SQLException {
-        NoteAddController controller = new NoteAddController(this.employee.getId(), "employee");
+    public void addNoteButtonAction() throws SQLException {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/note/NoteAdd.fxml"));
+            Parent parent = loader.load();
 
-        FXMLLoader loader =
-                new FXMLLoader(getClass().getResource(
-                        "/fxml/note/NoteAdd.fxml"));
-        loader.setController(controller);
+            NoteAddController controller = loader.getController();
 
-        Parent parent = loader.load();
+            controller.setPersonId(this.employee.getId());
+            controller.setPersontype("employee");
 
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("Adicionar Nota");
-        stage.setScene(new Scene(parent));
-        ShopManagementUtil.setStageIcon(stage);
-        stage.showAndWait();
-        this.getEmployeeNotes();
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Adicionar Nota");
+            stage.setScene(new Scene(parent));
+            ShopManagementUtil.setStageIcon(stage);
+            stage.showAndWait();
+            this.getEmployeeNotes();
+        } catch (IOException ex) {
+            Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -161,21 +166,19 @@ public class EmployeeDetailsController implements Initializable {
                     "Por favor seleccione uma nota para editar.");
             return;
         }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Nota");
-        alert.setContentText("Tem a certeza que pretende apagar a nota?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+        boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
+                "Apagar Nota",
+                "Tem a certeza que pretende apagar a nota?");
+        if (option) {
             boolean result = DatabaseHandler.deleteEmployeeNote(selectedForDeletion);
             if (result) {
-                DialogHandler.showMaterialAlert(this.mainContainer,"Nota apagada",
-                        "Nota apagada com sucesso.");
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Nota apagada",
+                        "Nota apagada com sucesso.", false);
                 list.remove(selectedForDeletion);
             } else {
-                DialogHandler.showMaterialAlert(this.mainContainer,"Cancelado",
-                        new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cancelado",
+                        new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8),
+                        false);
             }
         }
     }
@@ -199,24 +202,19 @@ public class EmployeeDetailsController implements Initializable {
     public void handleNoteEdit(ActionEvent event) {
         //Fetch the selected row
         Note selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
-        selectedForEdit.setPersonType("employee");
-
         if (selectedForEdit == null) {
             DialogHandler.showErrorMessage("Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
             return;
         }
+        selectedForEdit.setPersonType("employee");
         try {
-
-            NoteAddController controller = new NoteAddController(this.employee.getId(), "employee");
-
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(
                             "/fxml/note/NoteAdd.fxml"));
-            loader.setController(controller);
-
             Parent parent = loader.load();
 
+            NoteAddController controller = loader.getController();
             controller.inflateUI(selectedForEdit);
 
             Stage stage = new Stage(StageStyle.DECORATED);
@@ -225,8 +223,7 @@ public class EmployeeDetailsController implements Initializable {
             ShopManagementUtil.setStageIcon(stage);
             stage.showAndWait();
             this.getEmployeeNotes();
-
-        } catch (IOException | SQLException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(EmployeeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

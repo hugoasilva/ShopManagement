@@ -116,10 +116,14 @@ public final class DatabaseHandler {
             "SELECT COUNT(*) FROM notes_customers";
     private static final String GET_CUSTOMER_NOTES_QUERY =
             "SELECT * FROM notes_customers WHERE customer_id=?";
-    private static final String GET_EMPLOYEE_NOTES_QUERY =
-            "SELECT * FROM notes_employees WHERE employee_id=?";
     private static final String GET_EMPLOYEE_NOTE_ID_QUERY =
             "SELECT COUNT(*) FROM notes_employees";
+    private static final String GET_EMPLOYEE_NOTES_QUERY =
+            "SELECT * FROM notes_employees WHERE employee_id=?";
+    private static final String GET_SUPPLIER_NOTE_ID_QUERY =
+            "SELECT COUNT(*) FROM notes_suppliers";
+    private static final String GET_SUPPLIER_NOTES_QUERY =
+            "SELECT * FROM notes_suppliers WHERE supplier_id=?";
 
     // Product select queries
     private static final String GET_PRODUCT_ID_QUERY =
@@ -154,8 +158,7 @@ public final class DatabaseHandler {
                     "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
                     "WHERE products.quantity=?";
 
-    // Supplier queries
-    // Customer select queries
+    // Supplier select queries
     private static final String GET_SUPPLIER_ID_QUERY =
             "SELECT COUNT(*) FROM suppliers";
     private static final String GET_SUPPLIERS_QUERY =
@@ -186,23 +189,27 @@ public final class DatabaseHandler {
             "DELETE FROM products WHERE id = ?";
     private static final String DELETE_SUPPLIER_QUERY =
             "DELETE FROM suppliers WHERE id = ?";
+    private static final String DELETE_SUPPLIER_NOTE_QUERY =
+            "DELETE FROM notes_customers WHERE id = ?";
 
     // Insert queries
     private final static String INSERT_CUSTOMER_QUERY =
             "INSERT INTO customers (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
     private static final String INSERT_CUSTOMER_NOTE_QUERY =
             "INSERT INTO notes_customers (customer_id, message) VALUES (?, ?)";
-    private static final String INSERT_EMPLOYEE_NOTE_QUERY =
-            "INSERT INTO notes_employees (employee_id, message) VALUES (?, ?)";
     private final static String INSERT_EMPLOYEE_QUERY =
             "INSERT INTO employees (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
     // TODO change invoice table structure (Remove products)
+    private static final String INSERT_EMPLOYEE_NOTE_QUERY =
+            "INSERT INTO notes_employees (employee_id, message) VALUES (?, ?)";
     private final static String INSERT_INVOICE_QUERY =
             "INSERT INTO invoices (customer_id, employee_id, date, pdf) VALUES (?, ?, ?, ?)";
     private final static String INSERT_PRODUCT_QUERY =
             "INSERT INTO products (name, price, supplier_id, quantity, image) VALUES (?, ?, ?, ?, ?)";
     private final static String INSERT_SUPPLIER_QUERY =
             "INSERT INTO suppliers (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_SUPPLIER_NOTE_QUERY =
+            "INSERT INTO notes_suppliers (supplier_id, message) VALUES (?, ?)";
 
     // Update queries
     private static final String UPDATE_CUSTOMER_QUERY =
@@ -219,6 +226,8 @@ public final class DatabaseHandler {
             "UPDATE products SET name=?, price=?, supplier_id=?, quantity=? WHERE id=?";
     private static final String UPDATE_SUPPLIER_QUERY =
             "UPDATE suppliers SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
+    private static final String UPDATE_SUPPLIER_NOTE_QUERY =
+            "UPDATE notes_suppliers SET message=? WHERE id=?";
 
     /**
      * Log SQL Exception
@@ -1290,6 +1299,130 @@ public final class DatabaseHandler {
         }
         return list;
     }
+    /**
+     * Insert new supplier note
+     *
+     * @param note - note object
+     * @return - true if success, false otherwise
+     */
+    public static boolean insertSupplierNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_SUPPLIER_NOTE_QUERY);
+            preparedStatement.setString(1, note.getPersonId());
+            preparedStatement.setString(2, note.getMessage());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Delete supplier note from database
+     *
+     * @param note - note object
+     * @return - true if success, false otherwise
+     */
+    public static boolean deleteSupplierNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_SUPPLIER_NOTE_QUERY);
+            preparedStatement.setString(1, note.getId());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Update supplier note at database
+     *
+     * @param note - note object
+     * @return - true if success, false otherwise
+     */
+    public static boolean updateSupplierNote(Note note) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE_NOTE_QUERY);
+            preparedStatement.setString(1, note.getMessage());
+            preparedStatement.setString(2, note.getId());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return false;
+    }
+
+    public static ObservableList<Note> getSupplierNotesList(Supplier supplier) throws SQLException {
+        ObservableList<Note> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(GET_SUPPLIER_NOTES_QUERY);
+            preparedStatement.setString(1, supplier.getId());
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String message = resultSet.getString("message");
+
+                list.add(new Note(id, message));
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return list;
+    }
+
+
 
     /**
      * Get new product id
@@ -1744,6 +1877,34 @@ public final class DatabaseHandler {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(GET_SUPPLIER_ID_QUERY);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1) + 1;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+            return 0;
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public static int getSupplierNotesId() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(GET_SUPPLIER_NOTE_ID_QUERY);
             // Execute query
             resultSet = preparedStatement.executeQuery();
             resultSet.next();

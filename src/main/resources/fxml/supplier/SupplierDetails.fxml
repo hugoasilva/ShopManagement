@@ -3,29 +3,34 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="400.0" prefWidth="600.0"
-           xmlns="http://javafx.com/javafx/11.0.1">
-    <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="1000.0" prefWidth="490.0" styleClass="custom-pane"
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.lang.String?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="700.0"
+           prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="pt.shop.management.ui.details.supplier.SupplierDetailsController">
+<AnchorPane id="AnchorPane" fx:id="mainContainer" minWidth="-Infinity" prefHeight="1000.0" prefWidth="500.0"
+                styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">
-        <VBox minWidth="-Infinity" prefHeight="153.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0"
+        <VBox minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
                 <Insets bottom="40.0" left="15.0" right="15.0" top="70.0"/>
             </padding>
-            <VBox minWidth="-Infinity" prefWidth="300.0" styleClass="detailsVBox">
+            <VBox minWidth="-Infinity" prefWidth="400.0" styleClass="detailsVBox">
+                <Label fx:id="name" layoutX="150.0" layoutY="250.0" minHeight="40" minWidth="69"
+                       styleClass="detailsLabel">
+                    <VBox.margin>
+                        <Insets left="20.0"/>
+                    </VBox.margin>
+                </Label>
                 <Label fx:id="id" layoutX="150.0" layoutY="150.0" minHeight="40" minWidth="69"
                        styleClass="detailsLabel">
                     <VBox.margin>
                         <Insets left="20.0"/>
                     </VBox.margin>
                 </Label>
-                <Label fx:id="name" layoutX="150.0" layoutY="350.0" minHeight="40" minWidth="69"
-                       styleClass="detailsLabel">
-                    <VBox.margin>
-                        <Insets left="20.0"/>
-                    </VBox.margin>
-                </Label>
-                <Label fx:id="address" layoutX="150.0" layoutY="450.0" minHeight="40" minWidth="69"
+                <Label fx:id="address" layoutX="150.0" layoutY="350.0" minHeight="40" minWidth="69"
                        styleClass="detailsLabel">
                     <VBox.margin>
                         <Insets left="20.0"/>
@@ -43,14 +48,43 @@
                         <Insets left="20.0"/>
                     </VBox.margin>
                 </Label>
-                <Label fx:id="nif" layoutX="150.0" layoutY="550.0" minHeight="40" minWidth="69"
+                <Label fx:id="nif" layoutX="150.0" layoutY="650.0" minHeight="40" minWidth="69"
                        styleClass="detailsLabel">
                     <VBox.margin>
                         <Insets left="20.0"/>
                     </VBox.margin>
                 </Label>
+                <VBox.margin>
+                    <Insets bottom="20.0" left="20.0" right="150.0" top="50.0"/>
+                </VBox.margin>
             </VBox>
+            <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0"
+                       prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                <columns>
+                    <TableColumn fx:id="messageCol" minWidth="350.0" prefWidth="250.0" text="Descrição"/>
+                </columns>
+                <contextMenu>
+                    <ContextMenu>
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>
+                            <MenuItem mnemonicParsing="false" onAction="#handleNoteEdit" text="Editar"/>
+                            <MenuItem mnemonicParsing="false" onAction="#handleNoteDelete" text="Apagar"/>
+                        </items>
+                        <styleClass>
+                            <String fx:value="table-context"/>
+                            <String fx:value="colored-context-menu"/>
+                        </styleClass>
+                    </ContextMenu>
+                </contextMenu>
+                <VBox.margin>
+                    <Insets left="20.0" right="15.0"/>
+                </VBox.margin>
+            </TableView>
         </VBox>
-        <!--        <FontAwesomeIconView glyphName="USER_CIRCLE" layoutX="280.0" layoutY="80.0" size="80"/>-->
+        <FontIcon iconLiteral="zondi-user-solid-square" iconSize="60" layoutX="220.0" layoutY="80.0"
+                  styleClass="font-icon"/>
+        <FontIcon iconLiteral="fa-plus" iconSize="20" layoutX="455.0" layoutY="415.0"
+                  onMouseClicked="#addNoteButtonAction" styleClass="font-icon, notesButton"/>
     </AnchorPane>
 </StackPane>

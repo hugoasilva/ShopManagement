@@ -8,13 +8,12 @@ import pt.shop.management.ui.dialog.button.MaterialButton.ButtonType;
 import java.util.logging.Logger;
 
 /**
- * Converts the CSS for -fx-button-type items into ButtonType.
- * it's used in JFXButton
+ * Material Button Type Converter Class
  *
- * @author Shadi Shaheen
- * @version 1.0
- * @since 2016-03-09
+ * @author Hugo Silva
+ * @version 2020-10-28
  */
+
 public class MaterialButtonTypeConverter extends StyleConverter<String, ButtonType> {
 
     private MaterialButtonTypeConverter() {

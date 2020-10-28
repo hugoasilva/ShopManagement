@@ -299,7 +299,7 @@
 
 .material-button:focused  {
     -fx-border-color: -fx-blue;
-    -fx-background-color: derive(-fx-primary, -5%);
+    -fx-background-color: -fx-primary;
     -fx-text-fill: white;
     -fx-border-radius: 1px;
     -fx-background-radius: 3px;
@@ -307,11 +307,6 @@
 
 .jfx-layout-actions {
     -fx-hgap: 8;
-}
-
-/* About window */
-.about-text {
-    -fx-fill: -fx-secondary;
 }
 
 /* Custom window background */
@@ -438,6 +433,7 @@
 
 .jfx-layout-heading {
     -fx-background-color: -fx-blue;
+    -fx-text-fill: -fx-primaryText;
 }
 
 .jfx-dialog-layout > .jfx-layout-heading {

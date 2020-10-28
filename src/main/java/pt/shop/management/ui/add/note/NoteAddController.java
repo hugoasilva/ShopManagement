@@ -27,9 +27,9 @@ import java.util.ResourceBundle;
 public class NoteAddController implements Initializable {
 
     // Note data
-    private final String id;
-    private String noteId;
-    private String type;
+    private Note note;
+    private String personId;
+    private String personType;
     private Boolean isInEditMode = false;
     // UI Content
     @FXML
@@ -39,9 +39,7 @@ public class NoteAddController implements Initializable {
     @FXML
     private AnchorPane mainContainer;
 
-    public NoteAddController(String id, String type) {
-        this.id = id;
-        this.type = type;
+    public NoteAddController() {
     }
 
 
@@ -69,6 +67,14 @@ public class NoteAddController implements Initializable {
         stage.close();
     }
 
+    public void setPersonId(String id) {
+        this.personId = id;
+    }
+
+    public void setPersontype(String type) {
+        this.personType = type;
+    }
+
     /**
      * Add note
      *
@@ -80,8 +86,7 @@ public class NoteAddController implements Initializable {
         String message = this.message.getText();
 
         if (message.isEmpty()) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
                     new String("Por favor insira uma descrição para a nota.".getBytes(),
                             StandardCharsets.UTF_8), false);
             return;
@@ -92,32 +97,46 @@ public class NoteAddController implements Initializable {
             return;
         }
         Note note = null;
-        if (this.type.equals("customer")) {
-            this.noteId = String.valueOf(DatabaseHandler.getCustomerNotesId());
-            note = new Note(this.noteId, message);
-            note.setPersonId(this.id);
-            if (DatabaseHandler.insertCustomerNote(note)) {
-                DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                        new ArrayList<>(), "Nota adicionada",
-                        "Nota adicionada com sucesso!", true);
-            } else {
-                DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                        new ArrayList<>(), "Ocorreu um erro",
-                        "Verifique os dados e tente novamente.", false);
-            }
-        } else {
-            this.noteId = String.valueOf(DatabaseHandler.getEmployeeNotesId());
-            note = new Note(this.noteId, message);
-            note.setPersonId(this.id);
-            if (DatabaseHandler.insertEmployeeNote(note)) {
-                DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                        new ArrayList<>(), "Nota adicionada",
-                        "Nota adicionada com sucesso!", true);
-            } else {
-                DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                        new ArrayList<>(), "Ocorreu um erro",
-                        "Verifique os dados e tente novamente.", false);
-            }
+        switch (this.personType) {
+            case "customer":
+                String noteId = String.valueOf(DatabaseHandler.getCustomerNotesId());
+                note = new Note(noteId, message);
+                note.setPersonId(this.personId);
+                note.setPersonType(this.personType);
+                if (DatabaseHandler.insertCustomerNote(note)) {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Nota adicionada",
+                            "Nota adicionada com sucesso!", true);
+                } else {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
+                            "Verifique os dados e tente novamente.", false);
+                }
+                break;
+            case "employee":
+                noteId = String.valueOf(DatabaseHandler.getEmployeeNotesId());
+                note = new Note(noteId, message);
+                note.setPersonId(this.personId);
+                note.setPersonType(this.personType);
+                if (DatabaseHandler.insertEmployeeNote(note)) {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Nota adicionada",
+                            "Nota adicionada com sucesso!", true);
+                } else {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
+                            "Verifique os dados e tente novamente.", false);
+                }
+                break;
+            case "supplier":
+                noteId = String.valueOf(DatabaseHandler.getSupplierNotesId());
+                note = new Note(noteId, message);
+                note.setPersonId(this.personId);
+                note.setPersonType(this.personType);
+                if (DatabaseHandler.insertSupplierNote(note)) {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Nota adicionada",
+                            "Nota adicionada com sucesso!", true);
+                } else {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
+                            "Verifique os dados e tente novamente.", false);
+                }
+                break;
         }
     }
 
@@ -128,8 +147,7 @@ public class NoteAddController implements Initializable {
      */
     public void inflateUI(Note note) {
         this.message.setText(note.getMessage());
-        this.noteId = note.getId();
-        this.type = note.getPersonType();
+        this.note = note;
 
         this.isInEditMode = Boolean.TRUE;
     }
@@ -142,7 +160,7 @@ public class NoteAddController implements Initializable {
     }
 
     /**
-     * Handle customer update
+     * Handle note update
      */
     private void handleUpdateNote() throws SQLException {
 
@@ -150,37 +168,45 @@ public class NoteAddController implements Initializable {
 
         // Check if note is empty
         if (message.isEmpty()) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog( this.mainContainer, "Dados insuficientes",
                     new String("Por favor insira uma descrição para a nota.".getBytes(),
                             StandardCharsets.UTF_8), false);
             return;
         }
-        Note note = null;
-        if (this.type.equals("customer")) {
-            note = new Note(this.noteId, message);
-            boolean result = DatabaseHandler.updateCustomerNote(note);
-            if (result) {
-                DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                        new ArrayList<>(), "Successo",
-                        "Nota editada com sucesso!", true);
-            } else {
-                DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                        new ArrayList<>(), "Ocorreu um erro",
-                        "Não foi possível atualizar a nota.", false);
-            }
-        } else {
-            note = new Note(this.noteId, message);
-            boolean result = DatabaseHandler.updateEmployeeNote(note);
-            if (result) {
-                DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                        new ArrayList<>(), "Successo",
-                        "Nota editada com sucesso!", true);
-            } else {
-                DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                        new ArrayList<>(), "Ocorreu um erro",
-                        "Não foi possível atualizar a nota.", false);
-            }
+        switch (this.note.getPersonType()) {
+            case "customer":
+                note = new Note(this.note.getId(), message);
+                boolean result = DatabaseHandler.updateCustomerNote(note);
+                if (result) {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo",
+                            "Nota editada com sucesso!", true);
+                } else {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
+                            "Não foi possível atualizar a nota.", false);
+                }
+                break;
+            case "employee":
+                note = new Note(this.note.getId(), message);
+                result = DatabaseHandler.updateEmployeeNote(note);
+                if (result) {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo",
+                            "Nota editada com sucesso!", true);
+                } else {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
+                            "Não foi possível atualizar a nota.", false);
+                }
+                break;
+            case "supplier":
+                note = new Note(this.note.getId(), message);
+                result = DatabaseHandler.updateSupplierNote(note);
+                if (result) {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo",
+                            "Nota editada com sucesso!", true);
+                } else {
+                    DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
+                            "Não foi possível atualizar a nota.", false);
+                }
+                break;
         }
     }
 }

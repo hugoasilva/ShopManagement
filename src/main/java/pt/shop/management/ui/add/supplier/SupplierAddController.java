@@ -79,8 +79,7 @@ public class SupplierAddController implements Initializable {
 
         if (supplierName.isEmpty() || supplierAddress.isEmpty() || supplierPhone.isEmpty()
                 || supplierEmail.isEmpty() || supplierNif.isEmpty()) {
-            DialogHandler.showMaterialDialog(rootPane, mainContainer,
-                    new ArrayList<>(), "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
         }
@@ -93,13 +92,11 @@ public class SupplierAddController implements Initializable {
         Supplier supplier = new Supplier(supplierId, supplierName,
                 supplierAddress, supplierPhone, supplierEmail, supplierNif);
         if (DatabaseHandler.insertSupplier(supplier)) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Fornecedor adicionado",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Fornecedor adicionado",
                     supplierName + " adicionado com sucesso!", true);
             clearEntries();
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Ocorreu um erro",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
     }
@@ -138,12 +135,10 @@ public class SupplierAddController implements Initializable {
                 new Supplier(this.id, this.name.getText(), this.address.getText(),
                         this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateSupplier(supplier)) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Successo!",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo!",
                     "Dados de fornecedor atualizados.", false);
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Erro",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }

@@ -11,19 +11,21 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 
 /**
- * Default dialog layout according to material design guidelines.
+ * Material Dialog Layout Class
  *
- * @author Shadi Shaheen
- * @version 1.0
- * @since 2016-03-09
+ * @author Hugo Silva
+ * @version 2020-10-28
  */
+
 public class MaterialDialogLayout extends VBox {
     private StackPane heading = new StackPane();
     private StackPane body = new StackPane();
     private FlowPane actions = new FlowPane();
 
+    private static final String DEFAULT_STYLE_CLASS = "jfx-dialog-layout";
+
     /**
-     * creates empty dialog layout
+     * Create empty dialog layout
      */
     public MaterialDialogLayout() {
         initialize();
@@ -34,76 +36,80 @@ public class MaterialDialogLayout extends VBox {
         getChildren().setAll(heading, body, actions);
     }
 
-    /***************************************************************************
-     *                                                                         *
-     * Setters / Getters                                                       *
-     *                                                                         *
-     **************************************************************************/
-
+    /**
+     * Get dialog header note
+     *
+     * @return - heading node list
+     */
     public ObservableList<Node> getHeading() {
         return heading.getChildren();
     }
 
     /**
-     * set header node
+     * Set dialog header node
      *
-     * @param titleContent
+     * @param titleContent - header node
      */
     public void setHeading(Node... titleContent) {
         this.heading.getChildren().setAll(titleContent);
     }
 
+    /**
+     * Get dialog body node
+     *
+     * @return - dialog body node list
+     */
     public ObservableList<Node> getBody() {
         return body.getChildren();
     }
 
     /**
-     * set body node
+     * Set dialog body node
      *
-     * @param body
+     * @param body - body node
      */
     public void setBody(Node... body) {
         this.body.getChildren().setAll(body);
     }
 
+    /**
+     * Get dialog actions
+     *
+     * @return - dialog actions node list
+     */
     public ObservableList<Node> getActions() {
         return actions.getChildren();
     }
 
     /**
-     * set actions of the dialog (Accept, Cancel,...)
+     * Set actions of the dialog (Accept, Cancel,...)
      *
-     * @param actions
+     * @param actions - actions node
      */
     public void setActions(Node... actions) {
         this.actions.getChildren().setAll(actions);
     }
 
+    /**
+     * Set actions of the dialog (Accept, Cancel,...)
+     *
+     * @param actions - actions node list
+     */
     public void setActions(List<? extends Node> actions) {
         this.actions.getChildren().setAll(actions);
     }
 
-    /***************************************************************************
-     *                                                                         *
-     * Stylesheet Handling                                                     *
-     *                                                                         *
-     **************************************************************************/
     /**
-     * Initialize the style class to 'jfx-dialog-layout'.
-     * <p>
-     * This is the selector class from which CSS can be used to style
-     * this control.
-     */
-    private static final String DEFAULT_STYLE_CLASS = "jfx-dialog-layout";
-
-    /**
-     * {@inheritDoc}
+     * Get CSS file
      */
     @Override
     public String getUserAgentStylesheet() {
         return JFoenixResources.load("/css/styles.css").toExternalForm();
     }
 
+    /**
+     * Initialize style class
+     */
     private void initialize() {
         this.getStyleClass().add(DEFAULT_STYLE_CLASS);
     }

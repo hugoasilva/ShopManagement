@@ -22,15 +22,14 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.add.invoice.InvoiceAddController;
-import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.invoice.InvoiceDetailsController;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -131,11 +130,7 @@ public class InvoiceSearchController implements Initializable {
                             {
                                 btn.setOnAction((ActionEvent event) -> {
                                     Invoice invoice = getTableView().getItems().get(getIndex());
-                                    try {
-                                        showInvoiceDetails(invoice);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    showInvoiceDetails(invoice);
                                 });
                             }
 
@@ -181,21 +176,24 @@ public class InvoiceSearchController implements Initializable {
         ShopManagementUtil.openFile(LOCAL_DOWNLOAD_PATH + fileName);
     }
 
-    private void showInvoiceDetails(Invoice invoice) throws IOException {
-        InvoiceDetailsController controller = new InvoiceDetailsController(invoice);
+    private void showInvoiceDetails(Invoice invoice) {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/invoice/InvoiceDetails.fxml"));
+            Parent parent = loader.load();
 
-        FXMLLoader loader =
-                new FXMLLoader(getClass().getResource(
-                        "/fxml/invoice/InvoiceDetails.fxml"));
-        loader.setController(controller);
+            InvoiceDetailsController controller = loader.getController();
+            controller.inflateUI(invoice);
 
-        Parent parent = loader.load();
-
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("Ficha de Fatura");
-        stage.setScene(new Scene(parent));
-        stage.show();
-        ShopManagementUtil.setStageIcon(stage);
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Ficha de Fatura");
+            stage.setScene(new Scene(parent));
+            stage.show();
+            ShopManagementUtil.setStageIcon(stage);
+        } catch (IOException ex) {
+            Logger.getLogger(InvoiceSearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Stage getStage() {
@@ -226,26 +224,24 @@ public class InvoiceSearchController implements Initializable {
                     "Por favor seleccione uma fatura para apagar.");
             return;
         }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Fatura");
-        alert.setContentText("Tem a certeza que pretende apagar a fatura nr " + selectedForDeletion.getId() + " ?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+        boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
+                "Apagar Fatura",
+                "Tem a certeza que pretende apagar a fatura nr " + selectedForDeletion.getId() + "?");
+        if (option) {
             boolean result = DatabaseHandler.deleteInvoice(selectedForDeletion);
             if (result) {
-                DialogHandler.showMaterialAlert(this.mainContainer, "Fatura apagada", "Fatura nr " + selectedForDeletion.getId() +
-                        " apagada com sucesso.");
+                DialogHandler.showMaterialInformationDialog(this.mainContainer,
+                        "Fatura apagada", "Fatura nr " + selectedForDeletion.getId() +
+                                " apagada com sucesso.", false);
                 list.remove(selectedForDeletion);
             } else {
-                DialogHandler.showMaterialAlert(this.mainContainer, "Erro!",
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro!",
                         new String("Não foi possível apagar a fatura nr ".getBytes(), StandardCharsets.UTF_8)
-                                + selectedForDeletion.getId());
+                                + selectedForDeletion.getId(), false);
             }
         } else {
-            DialogHandler.showMaterialAlert(this.mainContainer, "Cancelado",
-                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8), false);
         }
     }
 

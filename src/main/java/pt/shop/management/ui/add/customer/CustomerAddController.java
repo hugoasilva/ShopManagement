@@ -78,8 +78,7 @@ public class CustomerAddController implements Initializable {
 
         if (customerName.isEmpty() || customerAddress.isEmpty() || customerPhone.isEmpty()
                 || customerEmail.isEmpty() || customerNif.isEmpty()) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Dados insuficientes",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
                     "Por favor insira dados em todos os campos.", false);
             return;
         }
@@ -92,13 +91,11 @@ public class CustomerAddController implements Initializable {
         Customer customer = new Customer(customerId, customerName,
                 customerAddress, customerPhone, customerEmail, customerNif);
         if (DatabaseHandler.insertCustomer(customer)) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Cliente adicionado",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cliente adicionado",
                     customerName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Ocorreu um erro",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
         }
     }
@@ -137,12 +134,10 @@ public class CustomerAddController implements Initializable {
         Customer customer = new Customer(this.editId, this.name.getText(), this.address.getText(),
                 this.phone.getText(), this.email.getText(), this.nif.getText());
         if (DatabaseHandler.updateCustomer(customer)) {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Successo!",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo!",
                     "Dados de cliente atualizados.", true);
         } else {
-            DialogHandler.showMaterialDialog(this.rootPane, this.mainContainer,
-                    new ArrayList<>(), "Erro",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro",
                     new String("Não foi possível atualizar os dados.".getBytes(),
                             StandardCharsets.UTF_8), false);
         }

@@ -20,15 +20,14 @@ import javafx.util.Callback;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.add.supplier.SupplierAddController;
-import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.ui.details.supplier.SupplierDetailsController;
+import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,11 +99,7 @@ public class SupplierSearchController implements Initializable {
                             {
                                 btn.setOnAction((ActionEvent event) -> {
                                     Supplier supplier = getTableView().getItems().get(getIndex());
-                                    try {
-                                        showSupplierDetails(supplier);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    showSupplierDetails(supplier);
                                 });
                             }
 
@@ -134,21 +129,24 @@ public class SupplierSearchController implements Initializable {
         this.supplierCombo.setPromptText("Tipo de pesquisa...");
     }
 
-    private void showSupplierDetails(Supplier supplier) throws IOException {
-        SupplierDetailsController controller = new SupplierDetailsController(supplier);
+    private void showSupplierDetails(Supplier supplier) {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/supplier/SupplierDetails.fxml"));
+            Parent parent = loader.load();
 
-        FXMLLoader loader =
-                new FXMLLoader(getClass().getResource(
-                        "/fxml/supplier/SupplierDetails.fxml"));
-        loader.setController(controller);
+            SupplierDetailsController controller = loader.getController();
+            controller.inflateUI(supplier);
 
-        Parent parent = loader.load();
-
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("Ficha de Fornecedor");
-        stage.setScene(new Scene(parent));
-        stage.show();
-        ShopManagementUtil.setStageIcon(stage);
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Ficha de Fornecedor");
+            stage.setScene(new Scene(parent));
+            stage.show();
+            ShopManagementUtil.setStageIcon(stage);
+        } catch (IOException ex) {
+            Logger.getLogger(SupplierSearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Stage getStage() {
@@ -179,26 +177,24 @@ public class SupplierSearchController implements Initializable {
                     "Por favor seleccione um fornecedor para apagar.");
             return;
         }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apagar Fornecedor");
-        alert.setContentText("Tem a certeza que pretende apagar o fornecedor nr " + selectedForDeletion.getId() + " ?");
-        Optional<ButtonType> answer = alert.showAndWait();
-
-        if (answer.isPresent() && answer.get() == ButtonType.OK) {
+        boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
+                "Apagar Fornecedor",
+                "Tem a certeza que pretende apagar o fornecedor " + selectedForDeletion.getName() + "?");
+        if (option) {
             boolean result = DatabaseHandler.deleteSupplier(selectedForDeletion);
             if (result) {
-                DialogHandler.showMaterialAlert(this.mainContainer, "Fornecedor apagado",
-                        "Fornecedor nr " + selectedForDeletion.getId() + " apagado com sucesso.");
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Fornecedor apagado",
+                        "Fornecedor nr " + selectedForDeletion.getId() +
+                                " apagado com sucesso.", false);
                 list.remove(selectedForDeletion);
             } else {
-                DialogHandler.showMaterialAlert(this.mainContainer, "Erro!",
-                        new String("Não foi possível apagar o fornecedor nr ".getBytes(), StandardCharsets.UTF_8)
-                                + selectedForDeletion.getId());
+                DialogHandler.showMaterialInformationDialog(this.mainContainer, "Erro!",
+                        new String("Não foi possível apagar o fornecedor nr ".getBytes(),
+                                StandardCharsets.UTF_8) + selectedForDeletion.getId(), false);
             }
         } else {
-            DialogHandler.showMaterialAlert(this.mainContainer, "Cancelado",
-                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8));
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Cancelado",
+                    new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8), false);
         }
     }
 
