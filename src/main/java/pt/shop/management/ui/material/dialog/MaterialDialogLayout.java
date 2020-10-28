@@ -2,10 +2,12 @@ package pt.shop.management.ui.material.dialog;
 
 import com.jfoenix.assets.JFoenixResources;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.util.List;
 
@@ -32,12 +34,32 @@ public class MaterialDialogLayout extends VBox {
         VBox.setVgrow(body, Priority.ALWAYS);
         actions.getStyleClass().add("material-layout-actions");
 
+
         if (error) {
             GridPane grid = new GridPane();
             grid.setMaxHeight(20);
             grid.setPrefHeight(20);
-            ImageView customImage = new ImageView(new Image("/img/error2.png", 45, 45, true, true));
-            grid.add(customImage, 2, 0);
+            ColumnConstraints graphicColumn = new ColumnConstraints();
+            graphicColumn.setFillWidth(false);
+            graphicColumn.setHgrow(Priority.NEVER);
+            ColumnConstraints textColumn = new ColumnConstraints();
+            textColumn.setFillWidth(true);
+            textColumn.setHgrow(Priority.ALWAYS);
+            grid.getColumnConstraints().setAll(graphicColumn, textColumn);
+            // Error icon
+            FontIcon icon = new FontIcon("enty-squared-cross");
+            icon.setIconSize(60);
+            icon.setIconColor(Color.valueOf("#B33A3A"));
+            StackPane stackPane = new StackPane(icon);
+            stackPane.setAlignment(Pos.CENTER);
+            grid.add(stackPane, 2, 0);
+            // Error title
+            Label headerLabel = new Label("Erro!");
+            headerLabel.setWrapText(true);
+            headerLabel.setAlignment(Pos.CENTER_RIGHT);
+            headerLabel.setMaxWidth(Double.MAX_VALUE);
+            headerLabel.setMaxHeight(Double.MAX_VALUE);
+            grid.add(headerLabel, 0, 0);
 
             this.setHeading(grid);
         }

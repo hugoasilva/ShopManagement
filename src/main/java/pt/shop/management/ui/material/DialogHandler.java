@@ -32,12 +32,10 @@ public class DialogHandler {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.setOverlayClose(false);
 
-        // Buttons get added into the actions section of the layout.
         MaterialButton okButton = new MaterialButton("OK");
         okButton.setDefaultButton(true);
         okButton.setDisableVisualFocus(true);
         okButton.setOnAction(addEvent -> {
-            // When the button is clicked, we set the result accordingly
             alert.setResult("true");
             alert.hideWithAnimation();
         });
@@ -76,12 +74,10 @@ public class DialogHandler {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.setOverlayClose(false);
 
-        // Buttons get added into the actions section of the layout.
         MaterialButton okButton = new MaterialButton("OK");
         okButton.setDefaultButton(true);
         okButton.setDisableVisualFocus(true);
         okButton.setOnAction(addEvent -> {
-            // When the button is clicked, we set the result
             alert.close();
             alert.hideWithAnimation();
             nodeToBeBlurred.setEffect(null);
@@ -102,20 +98,18 @@ public class DialogHandler {
      * @param body            - dialog body text
      * @param closeParent     - close parent window
      */
-    public static void showMaterialInformationDialog(Node nodeToBeBlurred,
-                                                     String header, String body, boolean closeParent) {
+    public static void showMaterialInformationDialog(
+            Node nodeToBeBlurred, String header, String body, boolean closeParent) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
         MaterialDialogLayout dialogLayout = new MaterialDialogLayout(false);
         MaterialDialog<String> alert = new MaterialDialog<>(nodeToBeBlurred.getScene().getWindow());
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.setOverlayClose(false);
 
-        // Buttons get added into the actions section of the layout.
         MaterialButton okButton = new MaterialButton("OK");
         okButton.setDefaultButton(true);
         okButton.setDisableVisualFocus(true);
         okButton.setOnAction(addEvent -> {
-            // When the button is clicked, we set the result
             if (closeParent) {
                 Stage stage = (Stage) nodeToBeBlurred.getScene().getWindow();
                 stage.close();
@@ -132,6 +126,4 @@ public class DialogHandler {
         alert.showAndWait();
         alert.setOnCloseRequest(event1 -> nodeToBeBlurred.setEffect(null));
     }
-
-
 }
