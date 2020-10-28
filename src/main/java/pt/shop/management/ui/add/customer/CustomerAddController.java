@@ -9,7 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
-import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.material.DialogHandler;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;

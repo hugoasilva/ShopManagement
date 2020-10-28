@@ -24,7 +24,7 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
 import pt.shop.management.ui.add.customer.CustomerAddController;
 import pt.shop.management.ui.details.customer.CustomerDetailsController;
-import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.material.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -177,7 +177,7 @@ public class CustomerSearchController implements Initializable {
         //Fetch the selected row
         Customer selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showErrorMessage("Nenhum cliente seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum cliente seleccionado",
                     "Por favor seleccione um cliente para apagar.");
             return;
         }
@@ -231,7 +231,7 @@ public class CustomerSearchController implements Initializable {
     public void searchCustomer() {
         // Check if user input is present
         if (this.customerCombo.getSelectionModel().isEmpty() || this.customerSearchInput.getText().isEmpty()) {
-            DialogHandler.showErrorMessage("Erro!",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput = this.customerCombo.getSelectionModel().getSelectedItem().getText();
@@ -271,7 +271,7 @@ public class CustomerSearchController implements Initializable {
         //Fetch the selected row
         Customer selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showErrorMessage("Nenhum cliente seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum cliente seleccionado",
                     "Por favor seleccione um cliente para editar.");
             return;
         }

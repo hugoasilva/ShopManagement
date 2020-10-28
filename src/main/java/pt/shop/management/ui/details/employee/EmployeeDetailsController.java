@@ -23,7 +23,7 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.ui.add.note.NoteAddController;
-import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.material.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -160,7 +160,7 @@ public class EmployeeDetailsController implements Initializable {
         //Fetch the selected row
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showErrorMessage("Nenhuma nota seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
             return;
         }
@@ -201,7 +201,7 @@ public class EmployeeDetailsController implements Initializable {
         //Fetch the selected row
         Note selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showErrorMessage("Nenhuma nota seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma nota seleccionada",
                     "Por favor seleccione uma nota para editar.");
             return;
         }

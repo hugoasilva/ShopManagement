@@ -103,16 +103,33 @@
 
 .jfx-tab-pane .control-buttons-tab .tab-down-button {
     -fx-background-color: -fx-secondary;
+    -fx-cursor: hand;
 }
 
 .tab:selected .tab-label {
+    -fx-cursor: hand;
     -fx-alignment: CENTER;
     -fx-text-fill: -fx-primary;
 }
 
 .jfx-tab-pane .tab:selected {
+    -fx-cursor: hand;
     -fx-background-color: -fx-secondary;
+
+    -fx-border-color: -fx-blue;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+    -fx-border-radius: 100000px;
+
     -fx-background-radius: 100000px;
+
+}
+
+.jfx-tab-pane .tab:hover {
+    -fx-cursor: hand;
+    -fx-background-color: -fx-primary;
+    -fx-background-radius: 100000px;
+    -fx-background-color: -fx-blue;
 }
 
 .jfx-tab-pane .tab-header-area {
@@ -120,9 +137,7 @@
 }
 
 .jfx-tab-pane .tab-header-area .jfx-rippler {
-    -jfx-rippler-fill: -fx-blue;
-    -fx-stroke-width: 3pt;
-
+    -jfx-rippler-disabled: TRUE;
 }
 
 /* Menu bar Styling */
@@ -136,17 +151,6 @@
     -fx-background-color: derive(-fx-primary, 20%);
     -fx-font-size: 14;
     -fx-min-width: 150px;
-}
-
-/* Hamburger Icon Styling */
-
-.jfx-hamburger-icon {
-    -fx-spacing: 7;
-}
-
-.jfx-hamburger-icon StackPane {
-    -fx-background-color: -fx-secondary;
-    -fx-background-radius: 5px;
 }
 
 /* Search Styling */
@@ -468,6 +472,9 @@
     -fx-background-color: -fx-primary;
 }
 
+.errorGrid {
+    -fx-background-color: -fx-blue;
+}
 
 /* Checkbox */
 

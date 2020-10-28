@@ -24,7 +24,7 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.add.supplier.SupplierAddController;
 import pt.shop.management.ui.details.supplier.SupplierDetailsController;
-import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.material.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -171,7 +171,7 @@ public class SupplierSearchController implements Initializable {
         //Fetch the selected row
         Supplier selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showErrorMessage("Nenhum fornecedor seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum fornecedor seleccionado",
                     "Por favor seleccione um fornecedor para apagar.");
             return;
         }
@@ -225,7 +225,7 @@ public class SupplierSearchController implements Initializable {
     public void searchSupplier() {
         // Check if user input is present
         if (this.supplierCombo.getSelectionModel().isEmpty() || this.supplierSearchInput.getText().isEmpty()) {
-            DialogHandler.showErrorMessage("Erro!",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput = this.supplierCombo.getSelectionModel().getSelectedItem().getText();
@@ -265,7 +265,7 @@ public class SupplierSearchController implements Initializable {
         //Fetch the selected row
         Supplier selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showErrorMessage("Nenhum fornecedor seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum fornecedor seleccionado",
                     "Por favor seleccione um fornecedor para editar.");
             return;
         }

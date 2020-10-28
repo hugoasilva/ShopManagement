@@ -25,7 +25,7 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.add.product.ProductAddController;
 import pt.shop.management.ui.details.product.ProductDetailsController;
-import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.material.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -170,7 +170,7 @@ public class ProductSearchController implements Initializable {
         //Fetch the selected row
         Product selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showErrorMessage("Nenhum produto seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum produto seleccionado",
                     "Por favor seleccione um produto para apagar.");
             return;
         }
@@ -224,7 +224,7 @@ public class ProductSearchController implements Initializable {
     public void searchProduct() {
         // Check if user input is present
         if (this.productCombo.getSelectionModel().isEmpty() || this.productSearchInput.getText().isEmpty()) {
-            DialogHandler.showErrorMessage("Erro!",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput =
@@ -265,7 +265,7 @@ public class ProductSearchController implements Initializable {
         //Fetch the selected row
         Product selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showErrorMessage("Nenhum produto seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum produto seleccionado",
                     "Por favor seleccione um produto para editar.");
             return;
         }

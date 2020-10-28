@@ -24,7 +24,7 @@ import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.add.employee.EmployeeAddController;
 import pt.shop.management.ui.details.employee.EmployeeDetailsController;
-import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.material.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -178,7 +178,7 @@ public class EmployeeSearchController implements Initializable {
         //Fetch the selected row
         Employee selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showErrorMessage("Nenhum empregado seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum empregado seleccionado",
                     "Por favor seleccione um empregado para apagar.");
             return;
         }
@@ -231,7 +231,7 @@ public class EmployeeSearchController implements Initializable {
     public void searchEmployee() {
         // Check if user input is present
         if (this.employeeCombo.getSelectionModel().isEmpty() || this.employeeSearchInput.getText().isEmpty()) {
-            DialogHandler.showErrorMessage("Erro!",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
                     "Insira dados em todos os campos.");
         } else {
             String comboInput = this.employeeCombo.getSelectionModel().getSelectedItem().getText();
@@ -271,7 +271,7 @@ public class EmployeeSearchController implements Initializable {
         //Fetch the selected row
         Employee selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showErrorMessage("Nenhum empregado seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum empregado seleccionado",
                     "Por favor seleccione um empregado para editar.");
             return;
         }

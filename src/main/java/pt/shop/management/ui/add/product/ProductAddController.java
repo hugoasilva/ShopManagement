@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Product;
-import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.material.DialogHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

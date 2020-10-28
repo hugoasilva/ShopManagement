@@ -26,7 +26,7 @@ import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.add.invoice.InvoiceAddController;
 import pt.shop.management.ui.details.invoice.InvoiceDetailsController;
-import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.ui.material.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -219,7 +219,7 @@ public class InvoiceSearchController implements Initializable {
         //Fetch the selected row
         Invoice selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showErrorMessage("Nenhuma fatura seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma fatura seleccionada",
                     "Por favor seleccione uma fatura para apagar.");
             return;
         }
@@ -273,7 +273,7 @@ public class InvoiceSearchController implements Initializable {
     public void searchInvoice() {
         // Check if user input is present
         if (this.invoiceCombo.getSelectionModel().isEmpty() || this.invoiceSearchInput.getText().isEmpty()) {
-            DialogHandler.showErrorMessage("Erro!",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
                     "Insira dados em todos os campos.");
         } else {
             // TODO Pesquisa por data
@@ -322,7 +322,7 @@ public class InvoiceSearchController implements Initializable {
         //Fetch the selected row
         Invoice selectedForEdit = tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showErrorMessage("Nenhuma fatura seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma fatura seleccionada",
                     "Por favor seleccione uma fatura para editar.");
             return;
         }
