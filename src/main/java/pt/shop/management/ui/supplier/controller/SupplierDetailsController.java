@@ -21,8 +21,8 @@ import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Note;
 import pt.shop.management.data.model.Supplier;
-import pt.shop.management.ui.note.NoteAddController;
 import pt.shop.management.ui.material.DialogHandler;
+import pt.shop.management.ui.note.NoteAddController;
 import pt.shop.management.ui.product.ProductSearchController;
 import pt.shop.management.util.ShopManagementUtil;
 

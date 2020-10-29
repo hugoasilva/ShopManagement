@@ -27,6 +27,7 @@ public class CustomerAddController implements Initializable {
     // Customer data
     private Customer customer;
     private Boolean isInEditMode = false;
+    private boolean close = false;
     // UI content
     @FXML
     private JFXTextField name;
@@ -54,8 +55,10 @@ public class CustomerAddController implements Initializable {
      */
     @FXML
     private void cancel(ActionEvent event) {
-        Stage stage = (Stage) name.getScene().getWindow();
-        stage.close();
+        if (this.close) {
+            Stage stage = (Stage) name.getScene().getWindow();
+            stage.close();
+        }
     }
 
     /**
@@ -108,7 +111,7 @@ public class CustomerAddController implements Initializable {
         this.email.setText(customer.getEmail());
         this.nif.setText(customer.getNif());
         this.customer = customer;
-
+        this.close = true;
         this.isInEditMode = Boolean.TRUE;
     }
 

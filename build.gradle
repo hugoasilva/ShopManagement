@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'pt.shop.management'
-version '3.2'
+version '3.3'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -57,8 +57,10 @@ dependencies {
     implementation 'org.kordamp.ikonli:ikonli-entypo-pack:11.5.0'
     implementation 'org.kordamp.ikonli:ikonli-elusive-pack:11.5.0'
     implementation 'org.kordamp.ikonli:ikonli-icomoon-pack:11.5.0'
+    implementation 'org.kordamp.ikonli:ikonli-ionicons-pack:11.5.0'
     implementation 'org.kordamp.ikonli:ikonli-dashicons-pack:11.5.0'
     implementation 'org.kordamp.ikonli:ikonli-zondicons-pack:11.5.0'
     implementation 'org.kordamp.ikonli:ikonli-foundation-pack:11.5.0'
     implementation 'org.kordamp.ikonli:ikonli-fontawesome-pack:11.5.0'
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign-pack:11.5.0'
 }
