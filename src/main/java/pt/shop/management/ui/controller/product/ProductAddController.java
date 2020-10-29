@@ -116,6 +116,7 @@ public class ProductAddController implements Initializable {
         }
     }
 
+    // TODO Move to Util
     /**
      * Read chosen image and save it as PNG
      */

@@ -65,9 +65,7 @@ public class EmployeeDetailsController implements Initializable {
     @FXML
     private TableColumn<Note, String> messageCol;
     @FXML
-    private StackPane rootPane;
-    @FXML
-    private AnchorPane mainContainer;
+    private StackPane mainContainer;
 
     public EmployeeDetailsController() {
     }

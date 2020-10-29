@@ -64,11 +64,9 @@ public class SupplierDetailsController implements Initializable {
     @FXML
     private TableView<Note> tableView;
     @FXML
-    private TableColumn<Note, String> messageCol;
+    private TableColumn<Note, String> messageCol;;
     @FXML
-    private StackPane rootPane;
-    @FXML
-    private AnchorPane mainContainer;
+    private StackPane mainContainer;
 
     public SupplierDetailsController() {
     }

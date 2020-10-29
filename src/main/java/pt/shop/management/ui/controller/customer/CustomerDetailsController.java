@@ -65,9 +65,7 @@ public class CustomerDetailsController implements Initializable {
     @FXML
     private TableColumn<Note, String> messageCol;
     @FXML
-    private StackPane rootPane;
-    @FXML
-    private AnchorPane mainContainer;
+    private StackPane mainContainer;
 
     public CustomerDetailsController() {
     }
@@ -102,7 +100,7 @@ public class CustomerDetailsController implements Initializable {
      * @param customer - customer object
      */
     public void inflateUI(Customer customer) {
-        this.id.setText("ID: " + customer.getId());
+        this.id.setText("Cliente nr: " + customer.getId());
         this.name.setText("Nome: " + customer.getName());
         this.address.setText("Morada: " + customer.getAddress());
         this.phone.setText("Contacto: " + customer.getPhone());
