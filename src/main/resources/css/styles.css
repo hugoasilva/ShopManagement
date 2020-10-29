@@ -320,7 +320,7 @@
 .jfx-combo-box {
     -fx-background-color: derive(-fx-primary, 10%);
     -fx-prompt-text-fill: -fx-secondary;
-    -fx-font-weight: 15pt;
+    -fx-font-size: 15pt;
 }
 
 .label {

@@ -2,7 +2,9 @@ package pt.shop.management.ui.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,10 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
+import pt.shop.management.ui.material.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
@@ -94,6 +98,19 @@ public class LoginController implements Initializable {
             stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
             stage.setScene(new Scene(parent));
             stage.setMaximized(true);
+            Platform.setImplicitExit(false);
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    event.consume();
+                    boolean close = DialogHandler.showMaterialConfirmationDialog(
+                            parent, "Sair", "Tem a certeza que pretende sair?");
+                    if (close) {
+                        Platform.exit();
+                        System.exit(0);
+                    }
+                }
+            });
             stage.show();
             ShopManagementUtil.setStageIcon(stage);
         } catch (IOException ex) {

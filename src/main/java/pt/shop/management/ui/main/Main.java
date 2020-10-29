@@ -58,13 +58,10 @@ public class Main extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/login/Login.fxml"));
             Scene scene = new Scene(root);
-
             stage.setScene(scene);
             stage.show();
             stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
-
             ShopManagementUtil.setStageIcon(stage);
-
             new Thread(ExceptionUtil::init).start();
         } catch (IOException ex) {
             LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());

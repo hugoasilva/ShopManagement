@@ -8,7 +8,7 @@
            minHeight="-Infinity"
            minWidth="-Infinity" prefHeight="280.0" prefWidth="450.0" styleClass="main-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.note.NoteAddController">
+           fx:controller="pt.shop.management.ui.controller.NoteAddController">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           nodeOrientation="RIGHT_TO_LEFT" prefHeight="150.0" prefWidth="360.0" styleClass="main-back">
         <opaqueInsets>
