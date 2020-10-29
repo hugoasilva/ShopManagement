@@ -1,5 +1,6 @@
 package pt.shop.management.ui.employee.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,6 +22,7 @@ import javafx.util.Callback;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.kordamp.ikonli.javafx.FontIcon;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
 import pt.shop.management.ui.material.DialogHandler;
@@ -92,9 +95,13 @@ public class EmployeeSearchController implements Initializable {
                     @Override
                     public TableCell<Employee, Void> call(final TableColumn<Employee, Void> param) {
                         return new TableCell<>() {
-                            private final Button btn = new Button("Abrir Ficha");
+                            private final JFXButton btn = new JFXButton();
 
                             {
+                                FontIcon icon = new FontIcon("mdi-file-document");
+                                icon.setIconSize(30);
+                                btn.setGraphic(icon);
+                                btn.setAlignment(Pos.CENTER);
                                 btn.setOnAction((ActionEvent event) -> {
                                     Employee employee = getTableView().getItems().get(getIndex());
                                     showEmployeeDetails(employee);
@@ -113,7 +120,8 @@ public class EmployeeSearchController implements Initializable {
                         };
                     }
                 };
-        detailsCol.setPrefWidth(80);
+        detailsCol.setPrefWidth(60);
+        detailsCol.setStyle("-fx-alignment: CENTER;");
         detailsCol.setCellFactory(cellFactory);
         this.tableView.getColumns().add(detailsCol);
     }

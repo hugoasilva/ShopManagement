@@ -2,40 +2,61 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="300.0"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="261.0" prefWidth="400.0" styleClass="main-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="pt.shop.management.ui.note.NoteAddController">
-    <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="150.0" prefWidth="490.0" styleClass="custom-pane"
-                stylesheets="@../../css/styles.css">
-        <VBox prefHeight="153.0" prefWidth="404.0" spacing="10.0" styleClass="detailsVBox"
-              AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0"
-              AnchorPane.topAnchor="100.0">
-            <padding>
-                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
-            </padding>
-            <JFXTextField fx:id="message" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Descrição:">
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          nodeOrientation="RIGHT_TO_LEFT" prefHeight="150.0" prefWidth="350.0" styleClass="main-back">
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+        <StackPane.margin>
+            <Insets bottom="100.0" top="15.0"/>
+        </StackPane.margin>
+        <FontIcon iconLiteral="fi-comment-quotes" iconSize="63" styleClass="font-icon">
+            <HBox.margin>
+                <Insets top="-80.0"/>
+            </HBox.margin>
+        </FontIcon>
+    </HBox>
+    <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                prefHeight="170.0" prefWidth="370.0" styleClass="custom-pane"
+                stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1">
+        <VBox layoutY="8.0" prefHeight="256.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="112.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <JFXTextField fx:id="message" labelFloat="true" layoutX="20.0" layoutY="30.0" maxWidth="-Infinity"
+                          prefWidth="300.0" promptText="Descrição:">
                 <VBox.margin>
-                    <Insets left="10.0" right="10.0" top="20.0"/>
+                    <Insets left="35.0" right="20.0" top="30.0"/>
                 </VBox.margin>
             </JFXTextField>
-            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="404.0" spacing="30.0">
+            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="404.0" spacing="20.0">
                 <VBox.margin>
                     <Insets top="20.0"/>
                 </VBox.margin>
-                <JFXButton minHeight="-Infinity" onAction="#addNote" prefHeight="40.0" prefWidth="100.0"
-                           text="Guardar"/>
-                <JFXButton layoutX="10.0" layoutY="10.0" minHeight="-Infinity" onAction="#cancel" prefHeight="40.0"
-                           prefWidth="100.0" text="Cancelar"/>
+                <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#addNote" prefHeight="66.0"
+                           prefWidth="120.0">
+                    <graphic>
+                        <FontIcon iconLiteral="mdi-content-save" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                </JFXButton>
+                <JFXButton alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0"
+                           onAction="#cancel" prefHeight="66.0" prefWidth="120.0">
+                    <graphic>
+                        <FontIcon iconLiteral="enty-squared-cross" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                </JFXButton>
+                <VBox.margin>
+                    <Insets top="20.0"/>
+                </VBox.margin>
             </HBox>
         </VBox>
-        <FontIcon iconLiteral="fi-comment-quotes" iconSize="80" layoutX="210.0" layoutY="57.0" styleClass="font-icon"
-                  AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="220.0"
-                  AnchorPane.topAnchor="10.0"/>
+        <StackPane.margin>
+            <Insets left="15.0" right="15.0" top="65.0"/>
+        </StackPane.margin>
     </AnchorPane>
-    <StackPane.margin>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-    </StackPane.margin>
 </StackPane>

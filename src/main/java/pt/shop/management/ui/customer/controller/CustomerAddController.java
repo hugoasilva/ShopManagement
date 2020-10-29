@@ -58,6 +58,8 @@ public class CustomerAddController implements Initializable {
         if (this.close) {
             Stage stage = (Stage) name.getScene().getWindow();
             stage.close();
+        } else {
+            this.clearEntries();
         }
     }
 

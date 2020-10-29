@@ -5,7 +5,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity"
            minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="main-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="pt.shop.management.ui.main.MainController">

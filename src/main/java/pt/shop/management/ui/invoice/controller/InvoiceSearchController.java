@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,6 +22,7 @@ import javafx.util.Callback;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.kordamp.ikonli.javafx.FontIcon;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Invoice;
@@ -95,9 +97,13 @@ public class InvoiceSearchController implements Initializable {
                     @Override
                     public TableCell<Invoice, Void> call(final TableColumn<Invoice, Void> param) {
                         return new TableCell<>() {
-                            private final Button btn = new Button("Abrir PDF");
+                            private final Button btn = new Button();
 
                             {
+                                FontIcon icon = new FontIcon("mdi-file-pdf");
+                                icon.setIconSize(30);
+                                btn.setGraphic(icon);
+                                btn.setAlignment(Pos.CENTER);
                                 btn.setOnAction((ActionEvent event) -> {
                                     Invoice data = getTableView().getItems().get(getIndex());
                                     showInvoicePDF(data.getId(), data.getPdf());
@@ -122,9 +128,13 @@ public class InvoiceSearchController implements Initializable {
                     @Override
                     public TableCell<Invoice, Void> call(final TableColumn<Invoice, Void> param) {
                         return new TableCell<>() {
-                            private final Button btn = new Button("Abrir Ficha");
+                            private final Button btn = new Button();
 
                             {
+                                FontIcon icon = new FontIcon("mdi-file-document");
+                                icon.setIconSize(30);
+                                btn.setGraphic(icon);
+                                btn.setAlignment(Pos.CENTER);
                                 btn.setOnAction((ActionEvent event) -> {
                                     Invoice invoice = getTableView().getItems().get(getIndex());
                                     showInvoiceDetails(invoice);

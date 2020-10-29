@@ -93,6 +93,7 @@ public class LoginController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(new String("Sistema de Gestão de Loja".getBytes(), StandardCharsets.UTF_8));
             stage.setScene(new Scene(parent));
+            stage.setMaximized(true);
             stage.show();
             ShopManagementUtil.setStageIcon(stage);
         } catch (IOException ex) {

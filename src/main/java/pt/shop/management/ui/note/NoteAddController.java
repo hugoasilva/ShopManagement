@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
@@ -35,7 +34,7 @@ public class NoteAddController implements Initializable {
     @FXML
     private StackPane rootPane;
     @FXML
-    private AnchorPane mainContainer;
+    private StackPane mainContainer;
 
     public NoteAddController() {
     }

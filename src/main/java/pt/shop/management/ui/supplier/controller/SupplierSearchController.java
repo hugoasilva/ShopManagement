@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,6 +21,7 @@ import javafx.util.Callback;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.kordamp.ikonli.javafx.FontIcon;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
 import pt.shop.management.ui.material.DialogHandler;
@@ -90,9 +92,13 @@ public class SupplierSearchController implements Initializable {
                     @Override
                     public TableCell<Supplier, Void> call(final TableColumn<Supplier, Void> param) {
                         return new TableCell<>() {
-                            private final Button btn = new Button("Abrir Ficha");
+                            private final Button btn = new Button();
 
                             {
+                                FontIcon icon = new FontIcon("mdi-file-document");
+                                icon.setIconSize(30);
+                                btn.setGraphic(icon);
+                                btn.setAlignment(Pos.CENTER);
                                 btn.setOnAction((ActionEvent event) -> {
                                     Supplier supplier = getTableView().getItems().get(getIndex());
                                     showSupplierDetails(supplier);
@@ -111,7 +117,8 @@ public class SupplierSearchController implements Initializable {
                         };
                     }
                 };
-        detailsCol.setPrefWidth(80);
+        detailsCol.setPrefWidth(60);
+        detailsCol.setStyle("-fx-alignment: CENTER;");
         detailsCol.setCellFactory(cellFactoryDetails);
         this.tableView.getColumns().add(detailsCol);
     }
