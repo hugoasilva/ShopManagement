@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -8,87 +7,111 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import java.lang.String?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity"
-           stylesheets="@../../css/styles.css"
-           xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.product.ProductSearchController">
-    <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="500.0" prefWidth="1200.0"
-                styleClass="custom-pane"
-                stylesheets="@../../css/styles.css">
-        <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="557.0"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0"
+           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="pt.shop.management.ui.product.controller.ProductSearchController">
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="350.0" styleClass="main-back">
+        <StackPane.margin>
+            <Insets bottom="530.0"/>
+        </StackPane.margin>
+    </HBox>
+    <FontIcon iconLiteral="zondi-search" iconSize="80" styleClass="font-icon">
+        <StackPane.margin>
+            <Insets bottom="630.0"/>
+        </StackPane.margin>
+    </FontIcon>
+    <AnchorPane id="AnchorPane" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                prefHeight="150.0" styleClass="custom-pane" stylesheets="@../../css/styles.css">
+        <VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0">
-            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                  minWidth="-Infinity" prefHeight="200.0" prefWidth="825.0" styleClass="detailsVBox">
+            <VBox.margin>
+                <Insets bottom="20.0" left="180.0" top="40.0"/>
+            </VBox.margin>
+            <HBox prefHeight="92.0" prefWidth="534.0" spacing="20.0">
+                <padding>
+                    <Insets left="-50.0" top="10.0"/>
+                </padding>
                 <VBox.margin>
-                    <Insets bottom="20.0" left="180.0" top="40.0"/>
+                    <Insets top="15.0"/>
                 </VBox.margin>
-                <FontIcon iconLiteral="icm-search" iconSize="80" styleClass="font-icon">
-                    <VBox.margin>
-                        <Insets top="20.0"/>
-                    </VBox.margin>
-                </FontIcon>
-                <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="10.0" prefWidth="788.0" spacing="20.0"
-                      styleClass="searcHBox">
+                <JFXComboBox fx:id="productCombo" labelFloat="true" prefHeight="26.0" prefWidth="200.0"
+                             promptText="Tipo de Pesquisa:" styleClass="searchCombo">
                     <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="200.0"/>
+                        <Insets/>
                     </HBox.margin>
-                    <JFXComboBox fx:id="productCombo" labelFloat="true" prefHeight="26.0" prefWidth="230.0"
-                                 promptText="Tipo de Pesquisa:" styleClass="searchCombo">
-                        <HBox.margin>
-                            <Insets left="40.0"/>
-                        </HBox.margin>
-                    </JFXComboBox>
-                    <JFXTextField fx:id="productSearchInput" labelFloat="true" prefWidth="500.0"
-                                  promptText="Pesquisar..." styleClass="searchInput">
-                        <HBox.margin>
-                            <Insets right="40.0"/>
-                        </HBox.margin>
-                    </JFXTextField>
-                </HBox>
-                <JFXButton onAction="#handleSearchProductButtonPress" onKeyPressed="#handleSearchProductKeyPress"
-                           prefHeight="44.0" prefWidth="151.0" text="Pesquisar">
-                    <VBox.margin>
-                        <Insets bottom="20.0" top="50.0"/>
-                    </VBox.margin>
-                </JFXButton>
-            </VBox>
-            <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                       minWidth="-Infinity" prefHeight="320.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0"
-                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-                <columns>
-                    <TableColumn fx:id="idCol" maxWidth="120.0" prefWidth="50.0" text="ID"/>
-                    <TableColumn fx:id="nameCol" prefWidth="175.0" text="Nome"/>
-                    <TableColumn fx:id="priceCol" prefWidth="100.0" text="Preço"/>
-                    <TableColumn fx:id="supplierCol" prefWidth="150.0" text="Fornecedor"/>
-                    <TableColumn fx:id="quantityCol" prefWidth="100.0" text="Quantidade"/>
-                </columns>
-                <columnResizePolicy>
-                    <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/>
-                </columnResizePolicy>
-                <contextMenu>
-                    <ContextMenu>
-                        <items>
-                            <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>
-                            <MenuItem mnemonicParsing="false" onAction="#handleProductEdit" text="Editar"/>
-                            <MenuItem mnemonicParsing="false" onAction="#handleProductDelete" text="Apagar"/>
-                        </items>
-                        <styleClass>
-                            <String fx:value="table-context"/>
-                            <String fx:value="colored-context-menu"/>
-                        </styleClass>
-                    </ContextMenu>
-                </contextMenu>
+                    <padding>
+                        <Insets left="-20.0"/>
+                    </padding>
+                </JFXComboBox>
+                <JFXTextField fx:id="productSearchInput" labelFloat="true" maxWidth="-Infinity"
+                              minWidth="-Infinity" prefWidth="300.0" promptText="Pesquisar..."
+                              styleClass="searchInput">
+                    <HBox.margin>
+                        <Insets top="4.0"/>
+                    </HBox.margin>
+                </JFXTextField>
+            </HBox>
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleSearchProductButtonPress"
+                       onKeyPressed="#handleSearchProductKeyPress" prefHeight="44.0" prefWidth="151.0">
+                <graphic>
+                    <FontIcon iconLiteral="gmi-search" iconSize="35" styleClass="font-icon"/>
+                </graphic>
                 <VBox.margin>
-                    <Insets left="195.0"/>
+                    <Insets left="120.0" top="-20.0"/>
                 </VBox.margin>
-            </TableView>
+            </JFXButton>
             <padding>
-                <Insets bottom="10.0"/>
+                <Insets left="100.0"/>
             </padding>
         </VBox>
+        <StackPane.margin>
+            <Insets bottom="390.0"/>
+        </StackPane.margin>
     </AnchorPane>
+    <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+               prefHeight="320.0" prefWidth="660.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+        <columns>
+            <TableColumn fx:id="idCol" maxWidth="120.0" prefWidth="50.0" text="ID"/>
+            <TableColumn fx:id="nameCol" prefWidth="175.0" text="Nome"/>
+            <TableColumn fx:id="priceCol" prefWidth="100.0" text="Preço"/>
+            <TableColumn fx:id="supplierCol" prefWidth="150.0" text="Fornecedor"/>
+            <TableColumn fx:id="quantityCol" prefWidth="100.0" text="Quantidade"/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+        <contextMenu>
+            <ContextMenu>
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleProductEdit" text="Editar"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleProductDelete" text="Apagar"/>
+                </items>
+                <styleClass>
+                    <String fx:value="table-context"/>
+                    <String fx:value="colored-context-menu"/>
+                </styleClass>
+            </ContextMenu>
+        </contextMenu>
+        <VBox.margin>
+            <Insets left="45.0" right="50.0"/>
+        </VBox.margin>
+        <StackPane.margin>
+            <Insets top="150.0"/>
+        </StackPane.margin>
+    </TableView>
+    <padding>
+        <Insets bottom="10.0"/>
+    </padding>
     <StackPane.margin>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
     </StackPane.margin>
+    <padding>
+        <Insets top="100.0"/>
+    </padding>
 </StackPane>

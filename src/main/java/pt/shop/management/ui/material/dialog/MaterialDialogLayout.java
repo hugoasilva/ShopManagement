@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class MaterialDialogLayout extends VBox {
             grid.add(stackPane, 2, 0);
             // Error title
             Label headerLabel = new Label("Erro!");
+            headerLabel.setFont(new Font(20));
             headerLabel.setWrapText(true);
             headerLabel.setAlignment(Pos.CENTER_RIGHT);
             headerLabel.setMaxWidth(Double.MAX_VALUE);

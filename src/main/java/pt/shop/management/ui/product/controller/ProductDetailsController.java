@@ -1,4 +1,4 @@
-package pt.shop.management.ui.product;
+package pt.shop.management.ui.product.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

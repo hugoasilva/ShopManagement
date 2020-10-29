@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -66,9 +65,7 @@ public class CustomerSearchController implements Initializable {
     @FXML
     private TableColumn<Customer, String> nifCol;
     @FXML
-    private StackPane rootPane;
-    @FXML
-    private AnchorPane mainContainer;
+    private StackPane mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

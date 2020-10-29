@@ -1,4 +1,4 @@
-package pt.shop.management.ui.product;
+package pt.shop.management.ui.product.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;

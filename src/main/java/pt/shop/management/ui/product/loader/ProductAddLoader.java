@@ -1,4 +1,4 @@
-package pt.shop.management.ui.product;
+package pt.shop.management.ui.product.loader;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,16 +12,15 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 /**
- * Invoice Search Loader Class
+ * Product Add Loader Class
  *
  * @author Hugo Silva
- * @version 2020-10-28
+ * @version 2020-10-23
  */
-
-public class ProductSearchLoader extends Application {
+public class ProductAddLoader extends Application {
 
     // Logger
-    private static final Logger LOGGER = LogManager.getLogger(ProductSearchLoader.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(ProductAddLoader.class.getName());
 
     public static void main(String[] args) {
         launch(args);
@@ -30,15 +29,12 @@ public class ProductSearchLoader extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/product/ProductSearch.fxml"));
-
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/product/ProductAdd.fxml"));
             Scene scene = new Scene(root);
-
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
             LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
-
 }

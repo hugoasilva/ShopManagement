@@ -42,6 +42,10 @@
     -fx-cursor: hand;
 }
 
+.button:focused .font-icon {
+    -fx-fill: -fx-primary;
+    -fx-cursor: hand;
+}
 
 .jfx-text-field {
     -jfx-focus-color: -fx-secondary;

@@ -1,4 +1,4 @@
-package pt.shop.management.ui.product;
+package pt.shop.management.ui.product.loader;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,15 +12,15 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 /**
- * Product Add Loader Class
+ * Product Details Loader Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-10-28
  */
-public class ProductAddLoader extends Application {
+public class ProductDetailsLoader extends Application {
 
     // Logger
-    private static final Logger LOGGER = LogManager.getLogger(ProductAddLoader.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(ProductDetailsLoader.class.getName());
 
     public static void main(String[] args) {
         launch(args);
@@ -29,7 +29,7 @@ public class ProductAddLoader extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/product/ProductAdd.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/product/ProductDetails.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

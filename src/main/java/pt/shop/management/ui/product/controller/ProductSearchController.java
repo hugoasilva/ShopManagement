@@ -1,5 +1,6 @@
-package pt.shop.management.ui.product;
+package pt.shop.management.ui.product.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,13 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -21,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.kordamp.ikonli.javafx.FontIcon;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.material.DialogHandler;
@@ -63,8 +65,6 @@ public class ProductSearchController implements Initializable {
     @FXML
     private TableColumn<Product, String> quantityCol;
     @FXML
-    private StackPane rootPane;
-    @FXML
     private AnchorPane mainContainer;
 
     @Override
@@ -89,9 +89,13 @@ public class ProductSearchController implements Initializable {
                     @Override
                     public TableCell<Product, Void> call(final TableColumn<Product, Void> param) {
                         return new TableCell<>() {
-                            private final Button btn = new Button("Abrir Ficha");
+                            private final JFXButton btn = new JFXButton();
 
                             {
+                                FontIcon icon = new FontIcon("mdi-file-document");
+                                icon.setIconSize(30);
+                                btn.setGraphic(icon);
+                                btn.setAlignment(Pos.CENTER);
                                 btn.setOnAction((ActionEvent event) -> {
                                     Product product = getTableView().getItems().get(getIndex());
                                     showProductDetails(product);
@@ -110,7 +114,8 @@ public class ProductSearchController implements Initializable {
                         };
                     }
                 };
-        detailsCol.setPrefWidth(80);
+        detailsCol.setPrefWidth(60);
+        detailsCol.setStyle("-fx-alignment: CENTER;");
         detailsCol.setCellFactory(cellFactoryDetails);
         tableView.getColumns().add(detailsCol);
     }
@@ -155,7 +160,7 @@ public class ProductSearchController implements Initializable {
      */
     public void loadData() {
         this.list = DatabaseHandler.getProductList();
-        tableView.setItems(list);
+        this.tableView.setItems(this.list);
     }
 
     /**
@@ -166,7 +171,7 @@ public class ProductSearchController implements Initializable {
     @FXML
     private void handleProductDelete(ActionEvent event) {
         //Fetch the selected row
-        Product selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        Product selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum produto seleccionado",
                     "Por favor seleccione um produto para apagar.");

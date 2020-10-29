@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" stylesheets="@../../css/styles.css" prefHeight="400.0"
            prefWidth="600.0"
            xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.product.ProductDetailsController">
+           fx:controller="pt.shop.management.ui.product.controller.ProductDetailsController">
     <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="1000.0" prefWidth="490.0" styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">
         <VBox minWidth="-Infinity" prefHeight="153.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0"

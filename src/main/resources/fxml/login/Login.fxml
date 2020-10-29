@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -7,7 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity"
            minWidth="-Infinity" prefHeight="261.0" prefWidth="350.0" styleClass="main-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="pt.shop.management.ui.login.LoginController">
@@ -25,7 +25,8 @@
             </HBox.margin>
         </FontIcon>
     </HBox>
-    <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+    <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+                minHeight="-Infinity"
                 prefHeight="181.0" prefWidth="310.0" styleClass="custom-pane"
                 stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1">
         <VBox layoutY="8.0" prefHeight="256.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="112.0"

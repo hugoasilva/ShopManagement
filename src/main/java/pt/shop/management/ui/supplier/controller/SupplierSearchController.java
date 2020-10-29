@@ -1,5 +1,6 @@
 package pt.shop.management.ui.supplier.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -92,7 +93,7 @@ public class SupplierSearchController implements Initializable {
                     @Override
                     public TableCell<Supplier, Void> call(final TableColumn<Supplier, Void> param) {
                         return new TableCell<>() {
-                            private final Button btn = new Button();
+                            private final JFXButton btn = new JFXButton();
 
                             {
                                 FontIcon icon = new FontIcon("mdi-file-document");
