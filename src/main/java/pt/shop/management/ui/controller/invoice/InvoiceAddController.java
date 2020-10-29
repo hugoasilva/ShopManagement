@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.SFTPHandler;
+import pt.shop.management.util.ShopManagementUtil;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.dialog.DialogHandler;
 
@@ -101,7 +101,7 @@ public class InvoiceAddController implements Initializable {
 
         Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoicePdf);
         if (DatabaseHandler.insertInvoice(invoice)) {
-            SFTPHandler.uploadFile(this.invoicePath, invoicePdf);
+            ShopManagementUtil.uploadFile(this.invoicePath, invoicePdf);
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Nova fatura adicionada",
                     "Fatura nr " + invoiceId + " adicionada com sucesso.", false);
             clearEntries();

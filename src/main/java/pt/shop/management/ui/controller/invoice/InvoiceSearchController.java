@@ -23,10 +23,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.SFTPHandler;
+import pt.shop.management.util.ShopManagementUtil;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.dialog.DialogHandler;
-import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -174,7 +173,7 @@ public  class InvoiceSearchController implements Initializable {
      */
     private void showInvoicePDF(String id, String pdfPath) {
         String fileName = id + ".pdf";
-        SFTPHandler.downloadFile(pdfPath, fileName);
+        ShopManagementUtil.downloadFile(pdfPath, fileName);
 
         // Open file
         ShopManagementUtil.openFile(LOCAL_DOWNLOAD_PATH + fileName);

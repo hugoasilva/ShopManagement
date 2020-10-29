@@ -1,4 +1,4 @@
-package pt.shop.management.ui.login;
+package pt.shop.management.ui.controller;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;

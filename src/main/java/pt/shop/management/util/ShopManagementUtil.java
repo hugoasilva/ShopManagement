@@ -1,5 +1,6 @@
 package pt.shop.management.util;
 
+import com.jcraft.jsch.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,6 +36,12 @@ public class ShopManagementUtil {
     public static final String ICON_IMAGE_LOC = "/img/icon.png";
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(ShopManagementUtil.class.getName());
+    // SFTP server details
+    private static final String SFTP_SERVER_URL = "projecthub.hopto.org";
+    private static final String SFTP_SERVER_USERNAME = "pi";
+    private static final String SFTP_SERVER_PASSWORD = "server";
+    // Path constant
+    private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Date and time formats
     private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
@@ -129,6 +136,103 @@ public class ShopManagementUtil {
             Files.createDirectories(path);
         } catch (IOException e) {
             LOGGER.log(Level.INFO, "Não foi possível criar a pasta de carregamentos");
+        }
+    }
+
+    /**
+     * Setup SFTP server connection
+     *
+     * @return - SFTPChannel object
+     * @ - JSch exception
+     */
+    private static ChannelSftp setupSFTP() {
+        ChannelSftp channel = null;
+        try {
+            JSch jsch = new JSch();
+            JSch.setConfig("StrictHostKeyChecking", "no");
+            Session jschSession = jsch.getSession(SFTP_SERVER_USERNAME, SFTP_SERVER_URL);
+            jschSession.setPassword(SFTP_SERVER_PASSWORD);
+            jschSession.connect();
+            channel = (ChannelSftp) jschSession.openChannel("sftp");
+        } catch (JSchException e) {
+            printJSchException(e);
+        }
+        return channel;
+    }
+
+    /**
+     * Log JSch exception
+     *
+     * @param e - JSch exception
+     */
+    private static void printJSchException(JSchException e) {
+        if (e != null) {
+            e.printStackTrace(System.err);
+            LOGGER.log(Level.ERROR, "{}", "JSch Error: " + e.getMessage());
+            Throwable t = e.getCause();
+            while (t != null) {
+                LOGGER.log(Level.ERROR, "{}", "Cause: " + t);
+                t = t.getCause();
+            }
+        }
+    }
+
+    /**
+     * Log SFTP exception
+     *
+     * @param e - SFTP exception
+     */
+    private static void printSFTPException(SftpException e) {
+        if (e != null) {
+            e.printStackTrace(System.err);
+            LOGGER.log(Level.ERROR, "{}", "SFTP Error: " + e.getMessage());
+            Throwable t = e.getCause();
+            while (t != null) {
+                LOGGER.log(Level.ERROR, "{}", "Cause: " + t);
+                t = t.getCause();
+            }
+        }
+    }
+
+    /**
+     * Download file from SFTP Server
+     *
+     * @param path     - remote file path
+     * @param fileName - local file name
+     */
+    public static void downloadFile(String path, String fileName) {
+        try {
+            ChannelSftp channelSftp = setupSFTP();
+            channelSftp.connect();
+
+            // Download file and close connection
+            channelSftp.get(path, LOCAL_DOWNLOAD_PATH + fileName);
+            channelSftp.exit();
+        } catch (SftpException e) {
+            printSFTPException(e);
+        } catch (JSchException e) {
+            printJSchException(e);
+        }
+    }
+
+    /**
+     * Upload file to SFTP Server
+     *
+     * @param localPath  - local file path
+     * @param remotePath - remote file path
+     */
+    public static void uploadFile(String localPath, String remotePath) {
+        try {
+            ChannelSftp channelSftp = setupSFTP();
+            channelSftp.connect();
+
+            // Upload file and close connection
+            channelSftp.put(localPath, remotePath);
+            channelSftp.exit();
+        } catch (SftpException e) {
+            printSFTPException(e);
+        } catch (JSchException e) {
+            printJSchException(e);
         }
     }
 }

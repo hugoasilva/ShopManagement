@@ -14,9 +14,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.data.files.SFTPHandler;
 import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.util.ShopManagementUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -106,7 +106,7 @@ public class ProductAddController implements Initializable {
         if (DatabaseHandler.insertProduct(product)) {
             String path = LOCAL_UPLOAD_PATH + productId + ".png";
             this.imageToPNG(path);
-            SFTPHandler.uploadFile(path, productImage);
+            ShopManagementUtil.uploadFile(path, productImage);
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Produto adicionado",
                     productName + " adicionado com sucesso!", true);
             clearEntries();
