@@ -35,4 +35,7 @@
                   AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="220.0"
                   AnchorPane.topAnchor="10.0"/>
     </AnchorPane>
+    <StackPane.margin>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </StackPane.margin>
 </StackPane>
