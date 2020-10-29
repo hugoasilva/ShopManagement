@@ -8,7 +8,7 @@
            minHeight="-Infinity" minWidth="-Infinity"
            prefHeight="700.0"
            prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.controller.SupplierDetailsController">
+           fx:controller="pt.shop.management.ui.controller.supplier.SupplierDetailsController">
     <AnchorPane id="AnchorPane" fx:id="mainContainer" minWidth="-Infinity" prefHeight="1000.0" prefWidth="500.0"
                 styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">

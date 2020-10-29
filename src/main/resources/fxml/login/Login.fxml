@@ -7,7 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity"
            prefHeight="350.0" prefWidth="480.0" styleClass="main-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="pt.shop.management.ui.login.LoginController">
@@ -25,7 +26,8 @@
             </HBox.margin>
         </FontIcon>
     </HBox>
-    <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+    <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+                minHeight="-Infinity"
                 prefHeight="190.0" prefWidth="400.0" styleClass="custom-pane"
                 stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1">
         <VBox layoutY="8.0" prefHeight="256.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="112.0"
