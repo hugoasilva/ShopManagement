@@ -8,7 +8,7 @@
     -fx-primaryDark: #191919;
     -fx-secondary: #ffffff;
     -fx-primaryText: #ffffff;
-    -fx-blue: #191919;
+    -fx-black: derive(#191919, 10%);
     -fx-red: #CF6679;
 }
 
@@ -27,7 +27,7 @@
     -fx-border-color: -fx-secondary;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
-    -fx-font-size: 12pt;
+    -fx-font-size: 14pt;
 }
 
 .button:hover, .button:focused {
@@ -415,14 +415,14 @@
 
 .material-button {
     -fx-background-color: -fx-primary;
-    -fx-border-color: -fx-blue;
+    -fx-border-color: -fx-black;
     -fx-text-fill: white;
     -fx-border-radius: 1px;
     -fx-background-radius: 3px;
 }
 
 .material-button:focused {
-    -fx-border-color: -fx-blue;
+    -fx-border-color: -fx-black;
     -fx-background-color: -fx-primary;
     -fx-text-fill: white;
     -fx-border-radius: 1px;
@@ -430,8 +430,8 @@
 }
 
 .material-button:hover {
-    -fx-background-color: -fx-blue;
-    -fx-border-color: derive(-fx-blue, -20%);
+    -fx-background-color: -fx-black;
+    -fx-border-color: derive(-fx-black, -20%);
     -fx-text-fill: white;
     -fx-cursor: hand;
 }
@@ -448,7 +448,7 @@
 }
 
 .login-back {
-    -fx-background-color: derive(-fx-primaryDark, 15%);
+    -fx-background-color: derive(-fx-primaryDark, 10%);
     -fx-background-radius: 20px;
 }
 
@@ -564,7 +564,7 @@
 }
 
 .material-layout-heading {
-    -fx-background-color: -fx-blue;
+    -fx-background-color: -fx-black;
     -fx-text-fill: -fx-primaryText;
 }
 
@@ -610,7 +610,7 @@
 }
 
 .errorGrid {
-    -fx-background-color: -fx-blue;
+    -fx-background-color: -fx-black;
 }
 
 /* Checkbox */

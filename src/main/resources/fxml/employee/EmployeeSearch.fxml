@@ -10,7 +10,7 @@
 <?import java.lang.String?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" stylesheets="@../../css/styles.css"
            xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.search.employee.EmployeeSearchController">
+           fx:controller="pt.shop.management.ui.employee.controller.EmployeeSearchController">
     <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="600.0" prefWidth="1200.0"
                 styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">

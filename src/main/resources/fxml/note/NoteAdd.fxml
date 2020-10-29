@@ -7,7 +7,7 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="300.0"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.add.note.NoteAddController">
+           fx:controller="pt.shop.management.ui.note.NoteAddController">
     <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="150.0" prefWidth="490.0" styleClass="custom-pane"
                 stylesheets="@../../css/styles.css">
         <VBox prefHeight="153.0" prefWidth="404.0" spacing="10.0" styleClass="detailsVBox"
