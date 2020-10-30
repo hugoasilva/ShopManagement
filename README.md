@@ -14,7 +14,7 @@ This is a shop management software developed using JavaFX programming language.
 ### Screenshots
 * Login
 ![Old Login](https://imgur.com/fodSYzQ.png)
-![New Login](https://i.imgur.com/14H8ORR.png)
+![New Login](https://imgur.com/14H8ORR.png)
 
 * Main
 ![Old Main](https://imgur.com/mWtFuA6.png)
