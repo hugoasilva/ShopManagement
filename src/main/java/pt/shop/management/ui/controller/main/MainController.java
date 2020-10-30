@@ -1,4 +1,4 @@
-package pt.shop.management.ui.controller;
+package pt.shop.management.ui.controller.main;
 
 import com.jfoenix.controls.JFXTabPane;
 import javafx.fxml.FXML;
@@ -8,6 +8,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import pt.shop.management.ui.loader.invoice.InvoiceAddLoader;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +25,9 @@ import java.util.ResourceBundle;
  */
 
 public class MainController implements Initializable {
+
+    // Logger
+    private static final Logger LOGGER = LogManager.getLogger(MainController.class.getName());
 
     // Pane
     @FXML
@@ -129,8 +136,8 @@ public class MainController implements Initializable {
                     "/fxml/supplier/SupplierAdd.fxml")));
             this.supplierSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/supplier/SupplierSearch.fxml")));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 }

@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
            minWidth="-Infinity"
            prefHeight="350.0" prefWidth="480.0" styleClass="main-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.controller.LoginController">
+           fx:controller="pt.shop.management.ui.controller.main.LoginController">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           nodeOrientation="RIGHT_TO_LEFT" prefHeight="150.0" prefWidth="360.0" styleClass="main-back">
         <opaqueInsets>

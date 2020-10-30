@@ -88,8 +88,8 @@ public class ProductAddController implements Initializable {
         String productImage = REMOTE_PRODUCT_PATH + productId + ".png";
 
         if (productName.isEmpty() || productPrice.isEmpty() || productQuantity.isEmpty()) {
-            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
-                    "Por favor insira dados em todos os campos.", false);
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Dados insuficientes",
+                    "Por favor insira dados em todos os campos.");
             return;
         }
 

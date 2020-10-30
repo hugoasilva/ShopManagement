@@ -74,8 +74,8 @@ public class EmployeeAddController implements Initializable {
 
         if (employeeName.isEmpty() || employeeAddress.isEmpty() || employeePhone.isEmpty()
                 || employeeEmail.isEmpty() || employeeNif.isEmpty()) {
-            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
-                    "Por favor insira dados em todos os campos.", false);
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Dados insuficientes",
+                    "Por favor insira dados em todos os campos.");
             return;
         }
 

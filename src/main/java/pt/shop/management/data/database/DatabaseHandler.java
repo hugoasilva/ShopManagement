@@ -248,7 +248,6 @@ public final class DatabaseHandler {
     public static void logSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
                 LOGGER.log(Level.ERROR, "{}", "SQLState: " + ((SQLException) e).getSQLState());
                 LOGGER.log(Level.ERROR, "{}", "Error Code: " + ((SQLException) e).getErrorCode());
                 LOGGER.log(Level.ERROR, "{}", "Message: " + e.getMessage());
@@ -268,7 +267,7 @@ public final class DatabaseHandler {
      * @param password - password
      * @return - true if correct, false otherwise
      */
-    public static boolean login(String username, String password) {
+    public static String login(String username, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -281,10 +280,14 @@ public final class DatabaseHandler {
             // Execute query
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return true;
+                return "success";
+            }
+            else {
+                return "error";
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            logSQLException(ex);
+            return "dberror";
         } finally {
             try {
                 if (resultSet != null) {
@@ -300,7 +303,6 @@ public final class DatabaseHandler {
                 logSQLException(ex);
             }
         }
-        return false;
     }
 
     /**

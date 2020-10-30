@@ -79,8 +79,8 @@ public class CustomerAddController implements Initializable {
 
         if (customerName.isEmpty() || customerAddress.isEmpty() || customerPhone.isEmpty()
                 || customerEmail.isEmpty() || customerNif.isEmpty()) {
-            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
-                    "Por favor insira dados em todos os campos.", false);
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Dados insuficientes",
+                    "Por favor insira dados em todos os campos.");
             return;
         }
 

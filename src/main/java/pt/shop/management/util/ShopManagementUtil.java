@@ -169,7 +169,6 @@ public class ShopManagementUtil {
      */
     private static void printJSchException(JSchException e) {
         if (e != null) {
-            e.printStackTrace(System.err);
             LOGGER.log(Level.ERROR, "{}", "JSch Error: " + e.getMessage());
             Throwable t = e.getCause();
             while (t != null) {
@@ -186,7 +185,6 @@ public class ShopManagementUtil {
      */
     private static void printSFTPException(SftpException e) {
         if (e != null) {
-            e.printStackTrace(System.err);
             LOGGER.log(Level.ERROR, "{}", "SFTP Error: " + e.getMessage());
             Throwable t = e.getCause();
             while (t != null) {

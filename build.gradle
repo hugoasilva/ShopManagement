@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'edu.sc.seis.launch4j' version '2.4.8'
     id 'org.openjfx.javafxplugin' version '0.0.8'
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
@@ -16,7 +17,7 @@ repositories {
     jcenter()
 }
 
-mainClassName = "pt.shop.management.ui.main.Start"
+mainClassName = 'pt.shop.management.ui.main.Start'
 
 shadowJar {
     manifest {
@@ -25,9 +26,23 @@ shadowJar {
     mergeServiceFiles()
 }
 
+launch4j {
+    version = project.version
+    outputDir = 'libs'
+    copyright = 'Hugo Silva'
+    outfile = 'Gestão Loja.exe'
+    textVersion = 'Versão alpha'
+    language = "PORTUGUESE_PORTUGAL"
+    productName = 'Sistema de Gestão de Loja'
+    fileDescription = 'Sistema de Gestão de Loja'
+    mainClassName = 'pt.shop.management.ui.main.Start'
+    icon = "${projectDir}/src/main/resources/img/icon.ico"
+    jar = 'Shop-Management-JDK11-' + project.version + '-all.jar'
+    downloadUrl = 'https://drive.google.com/file/d/1j7uxYs9R5VAgyFy4Y9LGDHebs5jZS-Db/view?usp=sharing'
+}
+
 run {
     jvmArgs = [
-            "-Djava.net.preferIPv4Stack=true",
             "--add-modules=javafx.controls,javafx.fxml,javafx.graphics",
             "--add-reads=javafx.base=ALL-UNNAMED",
             "--add-reads=javafx.graphics=ALL-UNNAMED",

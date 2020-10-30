@@ -12,7 +12,7 @@ import java.beans.PropertyVetoException;
  * Database Pool Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-10-28
  */
 
 public class DatabasePool {
