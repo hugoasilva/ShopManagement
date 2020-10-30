@@ -1,7 +1,7 @@
 # Material Design Shop Management Software using JavaFX
 This is a shop management software developed using JavaFX programming language.   
 ### Last updated
-* 2020-10-29
+* 2020-10-30
 
 ### Software Used
   * [Ikonli v11.5.0](https://github.com/kordamp/ikonli) - JavaFX Icon library.
@@ -12,4 +12,22 @@ This is a shop management software developed using JavaFX programming language.
   * [MySQL Connector v8.0.22](https://github.com/mysql/mysql-connector-j) - MySQL Connection Library. Used to send queries to database.
 
 ### Screenshots
-* In development
+* Login
+![Old Login](https://imgur.com/fodSYzQ.png)
+![New Login](https://i.imgur.com/14H8ORR.png)
+
+* Main
+![Old Main](https://imgur.com/mWtFuA6.png)
+![New Main](https://imgur.com/2Y7oQqR.png)
+
+* Old list
+![Old List](https://imgur.com/t2HnhJ4.png)
+
+* Add
+![New Add](https://imgur.com/2Y7oQqR.png)
+
+* Search
+![New Search](https://imgur.com/x7oon6T.png)
+
+
+
