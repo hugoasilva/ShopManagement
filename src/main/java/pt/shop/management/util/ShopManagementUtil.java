@@ -12,7 +12,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -235,4 +237,22 @@ public class ShopManagementUtil {
             printJSchException(e);
         }
     }
+
+    /**
+     * Convert image to png and upload it
+     */
+    public static void uploadImage(String localPath, String remotePath) {
+        try {
+            // Read image
+            BufferedImage bufferedImage = ImageIO.read(new File(localPath));
+            // Save image
+            File localImage = new File(localPath);
+            ImageIO.write(bufferedImage, "png", localImage);
+            uploadFile(localImage.getAbsolutePath(), remotePath);
+        } catch (IOException ex) {
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
+        }
+    }
+
+
 }

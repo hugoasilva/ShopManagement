@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -57,9 +56,7 @@ public class InvoiceDetailsController implements Initializable {
     @FXML
     private TableColumn<Product, String> productQuantityCol;
     @FXML
-    private StackPane rootPane;
-    @FXML
-    private AnchorPane mainContainer;
+    private StackPane mainContainer;
 
     public InvoiceDetailsController() {
     }
@@ -97,7 +94,7 @@ public class InvoiceDetailsController implements Initializable {
      * @param invoice - invoice object
      */
     public void inflateUI(Invoice invoice) {
-        this.id.setText("ID: " + invoice.getId());
+        this.id.setText("Fatura nr: " + invoice.getId());
         this.customer.setText("Cliente: " + invoice.getCustomerId());
         this.employee.setText("Empregado: " + invoice.getEmployeeId());
         this.date.setText("Data: " + invoice.getDate());

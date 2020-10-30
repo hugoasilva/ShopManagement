@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -101,7 +100,7 @@ public class EmployeeDetailsController implements Initializable {
      */
     public void inflateUI(Employee employee) {
         this.employee = employee;
-        this.id.setText("ID: " + employee.getId());
+        this.id.setText("Empregado nr: " + employee.getId());
         this.name.setText("Nome: " + employee.getName());
         this.address.setText("Morada: " + employee.getAddress());
         this.phone.setText("Contacto: " + employee.getPhone());

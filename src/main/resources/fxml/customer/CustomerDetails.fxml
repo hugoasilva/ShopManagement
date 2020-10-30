@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import java.lang.String?>
-<StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="450.0" prefWidth="900.0" stylesheets="@../../css/styles.css"
-           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="450.0" prefWidth="900.0"
+           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="pt.shop.management.ui.controller.customer.CustomerDetailsController">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="350.0" styleClass="main-back">
@@ -30,8 +30,8 @@
             <Insets bottom="600.0" right="200.0"/>
         </StackPane.margin>
     </FontIcon>
-    <AnchorPane id="AnchorPane" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="300.0"
-                styleClass="custom-pane" stylesheets="@../../css/styles.css">
+    <AnchorPane id="AnchorPane" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="300.0" styleClass="custom-pane"
+                stylesheets="@../../css/styles.css">
         <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="385.0" spacing="10.0"
               AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
               AnchorPane.topAnchor="10.0">
@@ -91,7 +91,7 @@
             </ContextMenu>
         </contextMenu>
         <StackPane.margin>
-            <Insets bottom="300.0" left="430.0"/>
+            <Insets bottom="200.0" left="430.0"/>
         </StackPane.margin>
     </TableView>
     <StackPane.margin>

@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -64,7 +63,8 @@ public class SupplierDetailsController implements Initializable {
     @FXML
     private TableView<Note> tableView;
     @FXML
-    private TableColumn<Note, String> messageCol;;
+    private TableColumn<Note, String> messageCol;
+    ;
     @FXML
     private StackPane mainContainer;
 
@@ -102,7 +102,7 @@ public class SupplierDetailsController implements Initializable {
      */
     public void inflateUI(Supplier supplier) {
         this.supplier = supplier;
-        this.id.setText("ID: " + supplier.getId());
+        this.id.setText("Fornecedor nr: " + supplier.getId());
         this.name.setText("Nome: " + supplier.getName());
         this.address.setText("Morada: " + supplier.getAddress());
         this.phone.setText("Contacto: " + supplier.getPhone());

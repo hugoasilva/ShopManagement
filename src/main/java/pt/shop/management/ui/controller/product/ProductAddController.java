@@ -18,10 +18,7 @@ import pt.shop.management.data.model.Product;
 import pt.shop.management.ui.dialog.DialogHandler;
 import pt.shop.management.util.ShopManagementUtil;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
@@ -101,34 +98,17 @@ public class ProductAddController implements Initializable {
             return;
         }
 
+        // TODO Set default image if no image was selected
         Product product = new Product(productId, productName,
                 productPrice, productSupplierId, productQuantity, productImage);
         if (DatabaseHandler.insertProduct(product)) {
-            String path = LOCAL_UPLOAD_PATH + productId + ".png";
-            this.imageToPNG(path);
-            ShopManagementUtil.uploadFile(path, productImage);
+            ShopManagementUtil.uploadImage(this.imagePath, productImage);
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Produto adicionado",
-                    productName + " adicionado com sucesso!", true);
+                    productName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                     "Verifique os dados e tente novamente.", false);
-        }
-    }
-
-    // TODO Move to Util
-    /**
-     * Read chosen image and save it as PNG
-     */
-    private void imageToPNG(String image) {
-        try {
-            // Read image
-            BufferedImage bufferedImage = ImageIO.read(new File(this.imagePath));
-            // Save image
-            File localImage = new File(image);
-            ImageIO.write(bufferedImage, "png", localImage);
-        } catch (IOException ex) {
-            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 
@@ -138,12 +118,11 @@ public class ProductAddController implements Initializable {
      * @param product - product object
      */
     public void inflateUI(Product product) {
+        this.product = product;
         this.name.setText(product.getName());
         this.price.setText(product.getPrice());
         this.supplier.setText(product.getSupplierId());
         this.quantity.setText(product.getQuantity());
-        this.product = product;
-
         this.isInEditMode = Boolean.TRUE;
     }
 

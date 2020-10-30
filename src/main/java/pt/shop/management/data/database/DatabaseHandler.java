@@ -1611,8 +1611,9 @@ public final class DatabaseHandler {
             preparedStatement = connection.prepareStatement(INSERT_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getPrice());
-            preparedStatement.setString(3, product.getQuantity());
-            preparedStatement.setString(4, product.getImage());
+            preparedStatement.setString(3, product.getSupplierId());
+            preparedStatement.setString(4, product.getQuantity());
+            preparedStatement.setString(5, product.getImage());
             // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {

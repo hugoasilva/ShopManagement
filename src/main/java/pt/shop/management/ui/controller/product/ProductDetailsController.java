@@ -4,32 +4,46 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.model.Product;
+import pt.shop.management.util.ShopManagementUtil;
 
+import java.io.File;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 /**
  * Product Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-10-30
  */
 
 public class ProductDetailsController implements Initializable {
 
-    // Product data
+    private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
+
+    // Product object
     private Product product;
     // UI Content
+    @FXML
+    private ImageView imageView;
     @FXML
     private Label id;
     @FXML
     private Label name;
     @FXML
+    private Label supplier;
+    @FXML
     private Label price;
     @FXML
     private Label quantity;
+    @FXML
+    private StackPane mainContainer;
 
     public ProductDetailsController() {
     }
@@ -56,9 +70,23 @@ public class ProductDetailsController implements Initializable {
      */
     public void inflateUI(Product product) {
         this.product = product;
-        this.id.setText("ID: " + product.getId());
+        this.id.setText("Produto nr: " + product.getId());
         this.name.setText("Nome: " + product.getName());
-        this.price.setText("Preço: " + product.getPrice());
+        this.price.setText(new String("Preço: ".getBytes(), StandardCharsets.UTF_8) + product.getPrice());
+        this.supplier.setText("Fornecedor: " + product.getSupplierName());
         this.quantity.setText("Quantidade: " + product.getQuantity());
+        this.setImage();
+    }
+
+    private void setImage() {
+        // Download image
+        String fileName = id + ".png";
+        System.out.println(this.product.getImage());
+        ShopManagementUtil.downloadFile(this.product.getImage(), fileName);
+
+        // Set image
+        File file = new File(LOCAL_DOWNLOAD_PATH + fileName);
+        Image image = new Image(file.toURI().toString());
+        this.imageView.setImage(image);
     }
 }

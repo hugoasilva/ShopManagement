@@ -23,9 +23,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 import pt.shop.management.data.database.DatabaseHandler;
-import pt.shop.management.util.ShopManagementUtil;
 import pt.shop.management.data.model.Invoice;
 import pt.shop.management.ui.dialog.DialogHandler;
+import pt.shop.management.util.ShopManagementUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,7 +39,7 @@ import java.util.ResourceBundle;
  * @version 2020-10-25
  */
 
-public  class InvoiceSearchController implements Initializable {
+public class InvoiceSearchController implements Initializable {
 
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(InvoiceSearchController.class.getName());
