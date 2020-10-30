@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0"
+           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="pt.shop.management.ui.controller.product.ProductDetailsController">
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          nodeOrientation="RIGHT_TO_LEFT" prefHeight="300.0" prefWidth="350.0" styleClass="main-back">
+        <StackPane.margin>
+            <Insets bottom="150.0"/>
+        </StackPane.margin>
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+        <Label fx:id="id" minHeight="40" minWidth="120.0" styleClass="detailsLabel">
+            <HBox.margin>
+                <Insets bottom="250.0"/>
+            </HBox.margin>
+        </Label>
+    </HBox>
+    <ImageView fx:id="imageView" fitHeight="180.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+        <StackPane.margin>
+            <Insets bottom="160.0"/>
+        </StackPane.margin>
+    </ImageView>
+    <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="200.0"
+                styleClass="custom-pane" stylesheets="@../../css/styles.css">
+        <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="385.0" spacing="10.0"
+              AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+              AnchorPane.topAnchor="10.0">
+            <padding>
+                <Insets bottom="200.0"/>
+            </padding>
+            <Label fx:id="name" layoutX="150.0" layoutY="250.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="price" layoutX="150.0" layoutY="350.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="supplier" layoutX="150.0" layoutY="450.0" minHeight="40" minWidth="69"
+                   styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="quantity" layoutX="150.0" layoutY="550.0" minHeight="40" minWidth="69"
+                   styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+        </VBox>
+        <StackPane.margin>
+            <Insets top="260.0"/>
+        </StackPane.margin>
+    </AnchorPane>
+</StackPane>

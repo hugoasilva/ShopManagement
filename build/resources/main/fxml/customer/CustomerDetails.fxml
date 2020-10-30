@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.lang.String?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="450.0" prefWidth="900.0"
+           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="pt.shop.management.ui.controller.customer.CustomerDetailsController">
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="350.0" styleClass="main-back">
+        <StackPane.margin>
+            <Insets bottom="500.0" right="430.0"/>
+        </StackPane.margin>
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+        <children>
+            <Label fx:id="id" minHeight="40" minWidth="120.0" styleClass="detailsLabel">
+                <HBox.margin>
+                    <Insets bottom="100.0" left="200.0"/>
+                </HBox.margin>
+            </Label>
+        </children>
+    </HBox>
+    <FontIcon iconLiteral="zondi-user-solid-square" iconSize="80" styleClass="font-icon">
+        <StackPane.margin>
+            <Insets bottom="600.0" right="200.0"/>
+        </StackPane.margin>
+    </FontIcon>
+    <AnchorPane id="AnchorPane" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="300.0" styleClass="custom-pane"
+                stylesheets="@../../css/styles.css">
+        <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="385.0" spacing="10.0"
+              AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+              AnchorPane.topAnchor="10.0">
+            <padding>
+                <Insets bottom="200.0"/>
+            </padding>
+            <Label fx:id="name" layoutX="150.0" layoutY="250.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="address" layoutX="150.0" layoutY="350.0" minHeight="40" minWidth="69"
+                   styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="phone" layoutX="150.0" layoutY="450.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="email" layoutX="150.0" layoutY="550.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+            <Label fx:id="nif" layoutX="150.0" layoutY="650.0" minHeight="40" minWidth="69" styleClass="detailsLabel">
+                <VBox.margin>
+                    <Insets left="20.0"/>
+                </VBox.margin>
+            </Label>
+            <VBox.margin>
+                <Insets bottom="20.0" left="20.0" right="150.0" top="50.0"/>
+            </VBox.margin>
+        </VBox>
+        <StackPane.margin>
+            <Insets bottom="420.0" right="430.0" top="220.0"/>
+        </StackPane.margin>
+    </AnchorPane>
+    <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0"
+               prefHeight="200.0" prefWidth="400.0">
+        <columns>
+            <TableColumn fx:id="messageCol" minWidth="350.0" prefWidth="250.0" text="Descrição"/>
+        </columns>
+        <contextMenu>
+            <ContextMenu>
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleNoteEdit" text="Editar"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleNoteDelete" text="Apagar"/>
+                </items>
+                <styleClass>
+                    <String fx:value="table-context"/>
+                    <String fx:value="colored-context-menu"/>
+                </styleClass>
+            </ContextMenu>
+        </contextMenu>
+        <StackPane.margin>
+            <Insets bottom="200.0" left="430.0"/>
+        </StackPane.margin>
+    </TableView>
+    <StackPane.margin>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </StackPane.margin>
+    <padding>
+        <Insets top="300.0"/>
+    </padding>
+</StackPane>

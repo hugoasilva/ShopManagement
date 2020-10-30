@@ -1,0 +1,642 @@
+/*
+    Author     : Hugo Silva
+    Version    : 2020-10-12
+*/
+
+* {
+    -fx-primary: #363636;
+    -fx-primaryDark: #191919;
+    -fx-secondary: #ffffff;
+    -fx-primaryText: #ffffff;
+    -fx-black: derive(#191919, 10%);
+    -fx-red: #CF6679;
+}
+
+.root {
+    -fx-background-color: -fx-primary;
+}
+
+.font-icon {
+    -fx-fill: -fx-secondary;
+    -fx-font-family: "Segoe UI";
+}
+
+.button {
+    -fx-text-fill: -fx-primaryText;
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-secondary;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-font-size: 14pt;
+}
+
+.button:focused, .button:hover {
+    -fx-background-color: -fx-secondary;
+    -fx-fill: -fx-primary;
+    -fx-text-fill: -fx-primary;
+    -fx-cursor: hand;
+}
+
+.button:hover .font-icon {
+    -fx-fill: -fx-primary;
+    -fx-cursor: hand;
+}
+
+.button:focused .font-icon {
+    -fx-fill: -fx-primary;
+    -fx-cursor: hand;
+}
+
+.jfx-text-field {
+    -jfx-focus-color: -fx-secondary;
+    -jfx-unfocus-color: -fx-secondary;
+    -fx-padding: 0.333333em 0 0.333333em 0;
+}
+
+.jfx-text-field > .input-line {
+    -fx-background-color: -jfx-unfocus-color;
+    -fx-pref-height: 1px;
+    -fx-translate-y: 1px;
+}
+
+.jfx-text-field > .input-focused-line {
+    -fx-background-color: -jfx-focus-color;
+    -fx-pref-height: 2px;
+}
+
+.jfx-text-field,
+.jfx-text-field:focused {
+    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT;
+    -fx-prompt-text-fill: -fx-secondary;
+}
+
+.wrong-credentials {
+    -jfx-focus-color: #D34336;
+    -jfx-unfocus-color: #D34336;
+}
+
+.jfx-text-field .error-label {
+    -fx-text-fill: #D34336;
+}
+
+.jfx-text-field .error-icon {
+    -fx-fill: #D34336;
+}
+
+
+.text-field {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI";
+    -jfx-focus-color: -fx-secondary;
+    -jfx-unfocus-color: -fx-secondary;
+    -fx-text-fill: derive(-fx-secondary, 20%);
+}
+
+/* Invoice Styling */
+
+.invoiceButton {
+    -fx-padding: 20 0 00 0;
+}
+
+/* Login Screen Styling */
+
+.wrong-credentials {
+    -jfx-unfocus-color: #ef5350;
+    -jfx-focus-color: #ef5350;
+}
+
+.loginField {
+    -fx-font-size: 14pt;
+    -fx-prompt-text-fill: -fx-secondary;
+    -fx-font-family: "Segoe UI";
+    -jfx-focus-color: -fx-secondary;
+    -jfx-unfocus-color: -fx-secondary;
+    -fx-padding: 00 20 00 20;
+}
+
+/* Main Screen CSS Styling */
+
+/* TabPane styling */
+
+.tab {
+    -fx-background-color: -fx-primary;
+}
+
+.tab-header-background {
+    -fx-background-color: -fx-primary;
+}
+
+.tab-label {
+    -fx-font-size: 14pt;
+}
+
+.tab-main {
+    -fx-pref-height: 50;
+}
+
+.settings-tab {
+    -fx-background-color: derive(-fx-primary, 20%);
+    -fx-padding: 5px 20px 5px 20px;
+}
+
+.settings-tab:selected {
+    -fx-background-color: -fx-secondary;
+}
+
+.settings-tab:selected .tab-label {
+    -fx-text-fill: -fx-primary;
+}
+
+.settings-tab .tab-header-background {
+    -fx-background-color: derive(-fx-primary, 30%);
+}
+
+.jfx-tab-pane .tab-selected-line {
+    -fx-background-color: -fx-primaryText;
+    -fx-pref-height: 0px;
+}
+
+.jfx-tab-pane .control-buttons-tab .tab-down-button {
+    -fx-background-color: -fx-secondary;
+    -fx-cursor: hand;
+}
+
+.jfx-tab-pane .tab .tab-label {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 17pt;
+    -fx-font-family: "Segoe UI";
+}
+
+.tab:selected .tab-label {
+    -fx-cursor: hand;
+    -fx-alignment: CENTER;
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+}
+
+.jfx-tab-pane .tab:selected {
+    -fx-cursor: hand;
+    -fx-alignment: CENTER;
+    -fx-text-fill: -fx-secondary;
+    -fx-border-color: -fx-secondary;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+    -fx-border-radius: 100000px;
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+}
+
+.jfx-tab-pane .tab:hover {
+    -fx-cursor: hand;
+    -fx-background-color: -fx-secondary;
+    -fx-background-radius: 100000px;
+    -fx-text-fill: -fx-primary;
+}
+
+.jfx-tab-pane .tab:hover .tab-label .font-icon {
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+    -fx-fill: -fx-primary;
+}
+
+.jfx-tab-pane .tab:hover .tab-label {
+    -fx-text-fill: -fx-primary;
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+    -fx-fill: -fx-primary;
+}
+
+.jfx-tab-pane .tab-header-area {
+    -fx-padding: 0 -50 20 50;
+}
+
+.jfx-tab-pane .tab-header-area .jfx-rippler {
+    -jfx-rippler-disabled: TRUE;
+}
+
+
+/* Menu bar Styling */
+.menu-bar {
+    -fx-font-size: 15;
+    -fx-base: -fx-primary;
+    -fx-background-color: -fx-primary;
+}
+
+.context-menu {
+    -fx-background-color: derive(-fx-primary, 20%);
+    -fx-font-size: 14;
+    -fx-min-width: 150px;
+}
+
+/* Search Styling */
+
+.searcHBox, .searchIcon, .searchButton {
+    -fx-padding: 50 0 0 0;
+}
+
+.searchInput {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 14pt;
+    -jfx-focus-color: -fx-secondary;
+}
+
+.searchCombo {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 14pt;
+    -jfx-focus-color: -fx-secondary;
+}
+
+.list-view .list-cell {
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-secondary;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-radius: 5 5 5 5;
+}
+
+
+.jfx-combo-box {
+    -jfx-focus-color: -fx-secondary;
+    -jfx-unfocus-color: -fx-secondary;
+    -fx-prompt-text-fill: -fx-secondary;
+}
+
+.jfx-combo-box > .input-line {
+    -fx-background-color: -jfx-unfocus-color;
+    -fx-pref-height: 1px;
+    -fx-translate-y: 1px;
+}
+
+.jfx-combo-box > .input-focused-line {
+    -fx-background-color: -jfx-focus-color;
+    -fx-pref-height: 2px;
+}
+
+.jfx-combo-box > .prompt-container {
+    -fx-alignment: center-left;
+}
+
+.jfx-combo-box,
+.jfx-combo-box:focused,
+.jfx-combo-box:editable,
+.jfx-combo-box:editable:focused {
+    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT;
+    -fx-background-radius: 3px;
+    -fx-background-insets: 0px;
+}
+
+.jfx-combo-box .combo-box-button-container {
+    -fx-background-color: TRANSPARENT;
+}
+
+.jfx-combo-box > .arrow-button,
+.jfx-combo-box:editable > .arrow-button,
+.jfx-combo-box:editable:focused > .arrow-button {
+    -fx-background-color: TRANSPARENT;
+}
+
+.jfx-combo-box:error {
+    -jfx-focus-color: #D34336;
+    -jfx-unfocus-color: #D34336;
+}
+
+.jfx-combo-box .error-label {
+    -fx-text-fill: #D34336;
+}
+
+.jfx-combo-box .error-icon {
+    -fx-fill: #D34336;
+}
+
+
+.combo-box .combo-box-popup .list-cell:hover {
+    -fx-background-color: derive(-fx-primary, 30%);
+    -fx-text-fill: -fx-secondary;
+    -fx-cursor: hand;
+}
+
+.jfx-combo-box {
+    -fx-background-color: derive(-fx-primary, 10%);
+    -fx-prompt-text-fill: -fx-secondary;
+    -fx-font-size: 15pt;
+}
+
+.label {
+    -fx-text-fill: -fx-secondary;
+}
+
+/* Text styling */
+
+.main-text {
+    -fx-fill: -fx-secondary;
+    -fx-font-size: 14pt;
+    -fx-text-alignment: center;
+}
+
+.submission-container {
+    -fx-background-color: derive(-fx-primary, 10%);
+}
+
+/* Label Styling */
+.detailsLabel {
+    -fx-text-fill: -fx-primaryText;
+    -fx-font-size: 14pt;
+}
+
+/* Details Styling */
+
+.detailsVBox {
+    -fx-border-color: -fx-secondary;
+    -fx-border-width: 2;
+    -fx-border-radius: 15px;
+}
+
+/* Date Picker Styling */
+
+.date-cell.selected {
+    -fx-background-color: -fx-secondary;
+    -fx-background-radius: 100;
+    -fx-font-family: "Andalus";
+    -fx-font-size: 16.0;
+    -fx-text-fill: -fx-primary;
+}
+
+.jfx-date-picker .date-picker-popup .calendar-grid .day-cell:hover,
+.jfx-date-picker .data-picker-list-cell:hover {
+    -fx-background-color: -fx-secondary;
+    -fx-background-radius: 100;
+    -fx-font-family: "Andalus";
+    -fx-font-size: 16.0;
+    -fx-text-fill: -fx-primary;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.data-picker-list-cell {
+    -fx-text-fill: rgb(20, 20, 20);
+    -fx-font-weight: bold;
+}
+
+
+.day-name-cell.date-cell, .week-number-cell.date-cell {
+    -fx-text-fill: -fx-primaryText;
+}
+
+.date-cell {
+    -fx-text-fill: -fx-secondary;
+}
+
+.date-cell:selected, .date-cell:focused, .date-cell:hover {
+    -fx-background-color: -fx-secondary;
+    -fx-background-radius: 100;
+    -fx-font-family: "Andalus";
+    -fx-font-size: 16.0;
+    -fx-text-fill: -fx-primary;
+    -fx-font-weight: bold;
+}
+
+.spinner-label {
+    -fx-text-fill: -fx-secondary;
+}
+
+.jfx-date-picker .month-year-pane {
+    -fx-background-color: -fx-primary;
+}
+
+.jfx-date-picker > .arrow-button > .jfx-svg-glyph {
+    -fx-background-color: -fx-secondary;
+}
+
+.date-picker-popup .left-button .jfx-svg-glyph,
+.date-picker-popup .right-button .jfx-svg-glyph {
+    -fx-background-color: -fx-primaryText;
+}
+
+/* Notes Button */
+
+.notesButton:hover {
+    -fx-cursor: hand;
+}
+
+/* Dialog styling */
+
+.material-button {
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-black;
+    -fx-text-fill: white;
+    -fx-border-radius: 1px;
+    -fx-background-radius: 3px;
+}
+
+.material-button:focused {
+    -fx-border-color: -fx-black;
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+    -fx-border-radius: 1px;
+    -fx-background-radius: 3px;
+}
+
+.material-button:hover {
+    -fx-background-color: -fx-black;
+    -fx-border-color: derive(-fx-black, -20%);
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.jfx-layout-actions {
+    -fx-hgap: 8;
+}
+
+/* Custom window background */
+.custom-pane {
+    -fx-background-color: derive(-fx-primary, 10%);
+    -fx-background-radius: 20px;
+    -fx-border-width: 5px;
+}
+
+.main-back {
+    -fx-background-color: derive(-fx-primaryDark, 10%);
+    -fx-background-radius: 20px;
+}
+
+/* Main window background */
+.main-pane {
+    -fx-background-color: derive(-fx-primaryDark, 20%);
+}
+
+/* TableView Default */
+
+.table-view {
+    -fx-background-color: derive(-fx-primary, 10%);
+    -fx-font-size: 16px;
+    -fx-border-color: derive(-fx-secondary, -60%);
+}
+
+.table-view:focused {
+    -fx-background-color: derive(-fx-primary, 20%);
+}
+
+.table-row-cell {
+    -fx-cell-size: 40px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -fx-primary;
+}
+
+.table-view .column-header-background .label {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: white;
+}
+
+.table-row-cell:focused, .table-cell:focused {
+    -fx-text-fill: -fx-primary;
+}
+
+.table-row-cell {
+    -fx-background-color: -fx-primary;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+}
+
+.table-row-cell:even {
+    -fx-background-color: derive(-fx-primary, 10%);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+    -fx-background-insets: 0;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: -fx-primary;
+}
+
+.placeholder .label {
+    -fx-text-fill: white;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view > .virtual-flow > .scroll-bar > .increment-button,
+.table-view > .virtual-flow > .scroll-bar > .decrement-button {
+    -fx-text-fill: white;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color: derive(-fx-primary, 60%);
+    -fx-border-color: transparent;
+    -fx-background-radius: 5em;
+}
+
+.table-view .filler {
+    -fx-fill: -fx-primary;
+    -fx-background-color: -fx-primary;
+}
+
+.table-context {
+    -fx-base: -fx-primary;
+}
+
+/* Material Dialog styling */
+
+.material-dialog-overlay {
+    -fx-background-color: #00000011;
+    -fx-padding: 0;
+}
+
+.material-dialog-overlay > .depth-container > .material-dialog-content-container,
+.material-dialog-overlay > .material-dialog-content-container {
+    -fx-background-color: -fx-primary;
+}
+
+.material-layout-heading {
+    -fx-background-color: -fx-black;
+    -fx-text-fill: -fx-primaryText;
+}
+
+.material-dialog-layout > .material-layout-heading {
+    -fx-alignment: center-left;
+    -fx-font-weight: BOLD;
+    -fx-padding: 24 24 20 24;
+}
+
+.material-dialog-layout > .material-layout-actions {
+    -fx-alignment: center-right;
+    -fx-hgap: 8;
+    -fx-padding: 8 8 8 8;
+}
+
+.material-dialog-layout > .material-layout-actions .material-button {
+    -fx-pref-height: 36;
+    -fx-max-height: 36;
+    -fx-min-width: 64;
+    -fx-padding: 8;
+}
+
+.material-dialog-layout > .material-layout-body {
+    -fx-alignment: center-left;
+    -fx-padding: 0 24 24 24;
+    -fx-pref-width: 400;
+    -fx-background-color: -fx-primary;
+}
+
+.material-dialog-layout > .material-layout-body .label {
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+    -fx-wrap-text: true;
+}
+
+.material-layout-body .label {
+    -fx-text-fill: white;
+    -fx-padding: 20px 0 0 0;
+}
+
+.material-layout-body, .material-layout-actions {
+    -fx-background-color: -fx-primary;
+}
+
+.errorGrid {
+    -fx-background-color: -fx-black;
+}
+
+/* Checkbox */
+
+.checkbox-main {
+    -fx-text-fill: -fx-secondary;
+    -jfx-checked-color: -fx-primary;
+    -fx-font-size: 10pt;
+}
+
+/* Context menu */
+
+.colored-context-menu .menu-item:focused {
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: black;
+}
+
+.colored-context-menu .menu-item:focused .label {
+    -fx-text-fill: black;
+}

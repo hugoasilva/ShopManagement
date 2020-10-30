@@ -1,7 +1,10 @@
 .gitignore
 .gradle/
 .idea/
-build/
+build/classes/
+build/generated/
+build/launch4j/
+build/tmp/
 downloads
 gradle/
 logs

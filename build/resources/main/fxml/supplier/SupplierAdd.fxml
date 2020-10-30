@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0"
+           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="pt.shop.management.ui.controller.supplier.SupplierAddController">
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="350.0" styleClass="main-back">
+        <StackPane.margin>
+            <Insets bottom="410.0"/>
+        </StackPane.margin>
+    </HBox>
+    <FontIcon iconLiteral="icm-truck" iconSize="90" styleClass="font-icon">
+        <StackPane.margin>
+            <Insets bottom="500.0"/>
+        </StackPane.margin>
+    </FontIcon>
+    <AnchorPane id="AnchorPane" fx:id="mainContainer" maxWidth="-Infinity" styleClass="custom-pane"
+                stylesheets="@../../css/styles.css">
+        <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="385.0" spacing="10.0"
+              AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+              AnchorPane.topAnchor="10.0">
+            <padding>
+                <Insets bottom="15.0" top="15.0"/>
+            </padding>
+            <JFXTextField fx:id="name" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Nome:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="address" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Morada:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="phone" labelFloat="true" layoutX="10.0" layoutY="62.0" promptText="Contacto:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="email" labelFloat="true" layoutX="10.0" layoutY="62.0" promptText="Email:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="nif" labelFloat="true" layoutX="10.0" layoutY="62.0" promptText="NIF:">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="20.0"/>
+                </VBox.margin>
+            </JFXTextField>
+            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="404.0" spacing="20.0">
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
+                <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#addSupplier" prefHeight="66.0"
+                           prefWidth="120.0">
+                    <graphic>
+                        <FontIcon iconLiteral="enty-save" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                </JFXButton>
+                <JFXButton alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0"
+                           onAction="#cancel" prefHeight="66.0" prefWidth="120.0">
+                    <graphic>
+                        <FontIcon iconLiteral="enty-squared-cross" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                </JFXButton>
+            </HBox>
+        </VBox>
+        <StackPane.margin>
+            <Insets bottom="20.0" top="80.0"/>
+        </StackPane.margin>
+    </AnchorPane>
+    <StackPane.margin>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </StackPane.margin>
+    <padding>
+        <Insets top="50.0"/>
+    </padding>
+</StackPane>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="main-pane"
+           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="pt.shop.management.ui.controller.main.MainController">
+    <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0">
+        <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                    AnchorPane.topAnchor="25.0">
+            <JFXTabPane fx:id="mainTabPane" layoutY="-25.0" prefHeight="720.0" prefWidth="1200.0"
+                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                        AnchorPane.topAnchor="-25.0">
+                <Tab closable="false" styleClass="tab-main" text="Clientes">
+                    <graphic>
+                        <FontIcon disable="true" iconLiteral="zondi-user-solid-square" iconSize="35"
+                                  styleClass="font-icon"/>
+                    </graphic>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0">
+                        <JFXTabPane fx:id="customerTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="customerAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-plus" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="customerSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-search" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                        </JFXTabPane>
+                    </AnchorPane>
+                </Tab>
+                <Tab closable="false" styleClass="tab-main" text="Empregados">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-black-tie" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <JFXTabPane fx:id="employeeTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="employeeAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-plus" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="employeeSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-search" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                        </JFXTabPane>
+                    </AnchorPane>
+                </Tab>
+                <Tab closable="false" styleClass="tab-main" text="Faturas">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-file-text" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <JFXTabPane fx:id="invoiceTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="invoiceAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-plus" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="invoiceSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-search" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                        </JFXTabPane>
+                    </AnchorPane>
+                </Tab>
+                <Tab closable="false" styleClass="tab-main" text="Produtos">
+                    <graphic>
+                        <FontIcon iconLiteral="zondi-box" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <JFXTabPane fx:id="productTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="productAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-plus" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="productSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-search" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                        </JFXTabPane>
+                    </AnchorPane>
+                </Tab>
+                <Tab closable="false" styleClass="tab-main" text="Fornecedores">
+                    <graphic>
+                        <FontIcon iconLiteral="icm-truck" iconSize="35" styleClass="font-icon"/>
+                    </graphic>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <JFXTabPane fx:id="supplierTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <Tab fx:id="supplierAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-plus" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="supplierSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
+                                <graphic>
+                                    <FontIcon iconLiteral="icm-search" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                        </JFXTabPane>
+                    </AnchorPane>
+                </Tab>
+            </JFXTabPane>
+        </AnchorPane>
+    </AnchorPane>
+    <StackPane.margin>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </StackPane.margin>
+</StackPane>
