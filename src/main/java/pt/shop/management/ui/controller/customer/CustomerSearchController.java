@@ -95,6 +95,7 @@ public class CustomerSearchController implements Initializable {
 
                             {
                                 FontIcon icon = new FontIcon("mdi-file-document");
+                                icon.getStyleClass().add("font-icon-button");
                                 icon.setIconSize(30);
                                 btn.setGraphic(icon);
                                 btn.setAlignment(Pos.CENTER);

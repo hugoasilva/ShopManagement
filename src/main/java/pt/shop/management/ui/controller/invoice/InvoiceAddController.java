@@ -37,7 +37,7 @@ public class InvoiceAddController implements Initializable {
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(InvoiceAddController.class.getName());
     // Directory paths
-    private final static String REMOTE_INVOICE_PATH = "/home/pi/gestao/faturas/";
+    private final static String REMOTE_INVOICE_PATH = "/home/pi/management/invoices/";
     // Invoice data
     private Invoice invoice;
     private String invoicePath;
@@ -102,7 +102,7 @@ public class InvoiceAddController implements Initializable {
         Invoice invoice = new Invoice(invoiceId, customerId, employeeId, invoiceDate, invoicePdf);
         if (DatabaseHandler.insertInvoice(invoice)) {
             ShopManagementUtil.uploadFile(this.invoicePath, invoicePdf);
-            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Nova fatura adicionada",
+            DialogHandler.showMaterialInformationDialog(this.mainContainer, "Fatura adicionada",
                     "Fatura nr " + invoiceId + " adicionada com sucesso.", false);
             clearEntries();
         } else {

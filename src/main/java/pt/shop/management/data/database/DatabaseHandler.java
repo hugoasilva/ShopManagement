@@ -281,8 +281,7 @@ public final class DatabaseHandler {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return "success";
-            }
-            else {
+            } else {
                 return "error";
             }
         } catch (SQLException ex) {

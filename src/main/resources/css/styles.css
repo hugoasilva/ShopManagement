@@ -10,6 +10,8 @@
     -fx-primaryText: #ffffff;
     -fx-black: derive(#191919, 10%);
     -fx-red: #CF6679;
+    -fx-blue: #3f9bff;
+
 }
 
 .root {
@@ -18,7 +20,24 @@
 
 .font-icon {
     -fx-fill: -fx-secondary;
-    -fx-font-family: "Segoe UI";
+}
+
+.font-icon-button {
+    -fx-fill: -fx-secondary;
+}
+
+.font-icon-button:hover {
+    -fx-cursor: hand;
+    -fx-fill: -fx-blue;
+}
+
+.notes-button {
+    -fx-fill: -fx-secondary;
+}
+
+.notes-button:hover {
+    -fx-cursor: hand;
+    -fx-fill: -fx-blue;
 }
 
 .button {
@@ -37,12 +56,12 @@
     -fx-cursor: hand;
 }
 
-.button:hover .font-icon {
+.button:hover .font-icon-button {
     -fx-fill: -fx-primary;
     -fx-cursor: hand;
 }
 
-.button:focused .font-icon {
+.button:focused .font-icon-button {
     -fx-fill: -fx-primary;
     -fx-cursor: hand;
 }
@@ -412,12 +431,6 @@
 .date-picker-popup .left-button .jfx-svg-glyph,
 .date-picker-popup .right-button .jfx-svg-glyph {
     -fx-background-color: -fx-primaryText;
-}
-
-/* Notes Button */
-
-.notesButton:hover {
-    -fx-cursor: hand;
 }
 
 /* Dialog styling */

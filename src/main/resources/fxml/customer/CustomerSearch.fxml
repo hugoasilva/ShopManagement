@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import java.lang.String?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity"
            minWidth="-Infinity" prefHeight="600.0" prefWidth="1500.0"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="pt.shop.management.ui.controller.customer.CustomerSearchController">
@@ -59,7 +60,7 @@
                 <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleSearchCustomerButtonPress"
                            onKeyPressed="#handleSearchCustomerKeyPress" prefHeight="44.0" prefWidth="151.0">
                     <graphic>
-                        <FontIcon iconLiteral="gmi-search" iconSize="35" styleClass="font-icon"/>
+                        <FontIcon iconLiteral="gmi-search" iconSize="35" styleClass="font-icon-button"/>
                     </graphic>
                     <VBox.margin>
                         <Insets left="60.0" top="25.0"/>

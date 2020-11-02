@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pt.shop.management.ui.loader.invoice.InvoiceAddLoader;
 
 import java.io.IOException;
 import java.net.URL;
@@ -94,7 +93,7 @@ public class MainController implements Initializable {
     private void initComponents() {
         this.mainTabPane.tabMinWidthProperty().bind(
                 this.rootAnchorPane.widthProperty().divide(
-                        this.mainTabPane.getTabs().size()).subtract(20));
+                        this.mainTabPane.getTabs().size()).subtract(22));
         this.customerTabPane.tabMinWidthProperty().bind(
                 this.rootAnchorPane.widthProperty().divide(
                         this.customerTabPane.getTabs().size()).subtract(50));

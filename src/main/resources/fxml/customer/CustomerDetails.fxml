@@ -17,13 +17,11 @@
         <opaqueInsets>
             <Insets/>
         </opaqueInsets>
-        <children>
-            <Label fx:id="id" minHeight="40" minWidth="120.0" styleClass="detailsLabel">
-                <HBox.margin>
-                    <Insets bottom="100.0" left="200.0"/>
-                </HBox.margin>
-            </Label>
-        </children>
+        <Label fx:id="id" minHeight="40" minWidth="120.0" styleClass="detailsLabel">
+            <HBox.margin>
+                <Insets bottom="100.0" left="200.0"/>
+            </HBox.margin>
+        </Label>
     </HBox>
     <FontIcon iconLiteral="zondi-user-solid-square" iconSize="80" styleClass="font-icon">
         <StackPane.margin>
@@ -72,6 +70,11 @@
             <Insets bottom="420.0" right="430.0" top="220.0"/>
         </StackPane.margin>
     </AnchorPane>
+    <FontIcon iconLiteral="ri-circleadd" iconSize="35" styleClass="notes-button" onMouseClicked="#addNoteButtonAction">
+        <StackPane.margin>
+            <Insets bottom="520.0" left="750.0"/>
+        </StackPane.margin>
+    </FontIcon>
     <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0"
                prefHeight="200.0" prefWidth="400.0">
         <columns>

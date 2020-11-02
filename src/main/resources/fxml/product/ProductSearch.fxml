@@ -58,7 +58,7 @@
             <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleSearchProductButtonPress"
                        onKeyPressed="#handleSearchProductKeyPress" prefHeight="44.0" prefWidth="151.0">
                 <graphic>
-                    <FontIcon iconLiteral="gmi-search" iconSize="35" styleClass="font-icon"/>
+                    <FontIcon iconLiteral="gmi-search" iconSize="35" styleClass="font-icon-button"/>
                 </graphic>
                 <VBox.margin>
                     <Insets left="120.0" top="-20.0"/>

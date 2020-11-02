@@ -86,7 +86,7 @@ public class InvoiceSearchController implements Initializable {
         this.customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         this.employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         this.dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-        this.productsCol.setCellValueFactory(new PropertyValueFactory<>("products"));
+        this.productsCol.setText("Produtos???"); //setCellValueFactory(new PropertyValueFactory<>("products"));
         TableColumn<Invoice, Void> pdfCol = new TableColumn<>("PDF");
         Callback<TableColumn<Invoice, Void>, TableCell<Invoice, Void>> cellFactoryPDF =
                 new Callback<>() {
@@ -97,6 +97,7 @@ public class InvoiceSearchController implements Initializable {
 
                             {
                                 FontIcon icon = new FontIcon("mdi-file-pdf");
+                                icon.getStyleClass().add("font-icon-button");
                                 icon.setIconSize(30);
                                 btn.setGraphic(icon);
                                 btn.setAlignment(Pos.CENTER);
@@ -128,6 +129,7 @@ public class InvoiceSearchController implements Initializable {
 
                             {
                                 FontIcon icon = new FontIcon("mdi-file-document");
+                                icon.getStyleClass().add("font-icon-button");
                                 icon.setIconSize(30);
                                 btn.setGraphic(icon);
                                 btn.setAlignment(Pos.CENTER);

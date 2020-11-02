@@ -59,13 +59,13 @@
                 <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#addCustomer" prefHeight="66.0"
                            prefWidth="120.0">
                     <graphic>
-                        <FontIcon iconLiteral="mdi-content-save" iconSize="35" styleClass="font-icon"/>
+                        <FontIcon iconLiteral="mdi-content-save" iconSize="35" styleClass="font-icon-button"/>
                     </graphic>
                 </JFXButton>
                 <JFXButton alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0"
                            onAction="#cancel" prefHeight="66.0" prefWidth="120.0">
                     <graphic>
-                        <FontIcon iconLiteral="enty-squared-cross" iconSize="35" styleClass="font-icon"/>
+                        <FontIcon iconLiteral="enty-squared-cross" iconSize="35" styleClass="font-icon-button"/>
                     </graphic>
                 </JFXButton>
             </HBox>

@@ -89,7 +89,7 @@ public class SupplierAddController implements Initializable {
                 supplierAddress, supplierPhone, supplierEmail, supplierNif);
         if (DatabaseHandler.insertSupplier(supplier)) {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Fornecedor adicionado",
-                    supplierName + " adicionado com sucesso!", true);
+                    supplierName + " adicionado com sucesso!", false);
             clearEntries();
         } else {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
