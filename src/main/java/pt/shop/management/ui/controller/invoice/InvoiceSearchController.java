@@ -1,5 +1,6 @@
 package pt.shop.management.ui.controller.invoice;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.collections.FXCollections;
@@ -93,7 +94,7 @@ public class InvoiceSearchController implements Initializable {
                     @Override
                     public TableCell<Invoice, Void> call(final TableColumn<Invoice, Void> param) {
                         return new TableCell<>() {
-                            private final Button btn = new Button();
+                            private final JFXButton btn = new JFXButton();
 
                             {
                                 FontIcon icon = new FontIcon("mdi-file-pdf");
@@ -125,7 +126,7 @@ public class InvoiceSearchController implements Initializable {
                     @Override
                     public TableCell<Invoice, Void> call(final TableColumn<Invoice, Void> param) {
                         return new TableCell<>() {
-                            private final Button btn = new Button();
+                            private final JFXButton btn = new JFXButton();
 
                             {
                                 FontIcon icon = new FontIcon("mdi-file-document");

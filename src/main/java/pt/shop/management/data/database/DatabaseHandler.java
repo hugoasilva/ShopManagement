@@ -16,7 +16,7 @@ import java.sql.SQLException;
  * Database Handler Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-11-01
  */
 
 public final class DatabaseHandler {
@@ -243,7 +243,7 @@ public final class DatabaseHandler {
     /**
      * Log SQL Exception
      *
-     * @param ex - SQLException object
+     * @param ex SQLException object
      */
     public static void logSQLException(SQLException ex) {
         for (Throwable e : ex) {
@@ -263,9 +263,9 @@ public final class DatabaseHandler {
     /**
      * Check login credentials
      *
-     * @param username - username
-     * @param password - password
-     * @return - true if correct, false otherwise
+     * @param username username
+     * @param password password
+     * @return true if correct, false otherwise
      */
     public static String login(String username, String password) {
         Connection connection = null;
@@ -344,8 +344,8 @@ public final class DatabaseHandler {
     /**
      * Insert new customer
      *
-     * @param customer - customer object
-     * @return - true if success, false otherwise
+     * @param customer customer object
+     * @return true if success, false otherwise
      */
     public static boolean insertCustomer(Customer customer) {
         Connection connection = null;
@@ -381,8 +381,8 @@ public final class DatabaseHandler {
     /**
      * Delete customer from database
      *
-     * @param customer - customer object
-     * @return - true if success, false otherwise
+     * @param customer customer object
+     * @return true if success, false otherwise
      */
     public static boolean deleteCustomer(Customer customer) {
         Connection connection = null;
@@ -414,8 +414,8 @@ public final class DatabaseHandler {
     /**
      * Update customer data at database
      *
-     * @param customer - customer object
-     * @return - true if success, false otherwise
+     * @param customer customer object
+     * @return true if success, false otherwise
      */
     public static boolean updateCustomer(Customer customer) {
         Connection connection = null;
@@ -452,8 +452,7 @@ public final class DatabaseHandler {
     /**
      * Get customer list from database
      *
-     * @return - customer list
-     * @ - SQL exception
+     * @return customer list
      */
     public static ObservableList<Customer> getCustomerList() {
         ObservableList<Customer> list = FXCollections.observableArrayList();
@@ -499,10 +498,9 @@ public final class DatabaseHandler {
     /**
      * Search customer in database
      *
-     * @param combo  - user selected input
-     * @param search - user input
-     * @return - customer search list
-     * @ - SQL exception
+     * @param combo  user selected input
+     * @param search user input
+     * @return customer search list
      */
     public static ObservableList<Customer> searchCustomer(String combo, String search) {
         ObservableList<Customer> list = FXCollections.observableArrayList();
@@ -607,8 +605,8 @@ public final class DatabaseHandler {
     /**
      * Insert new employee
      *
-     * @param employee - employee object
-     * @return - true if success, false otherwise
+     * @param employee employee object
+     * @return true if success, false otherwise
      */
     public static boolean insertEmployee(Employee employee) {
         Connection connection = null;
@@ -644,8 +642,8 @@ public final class DatabaseHandler {
     /**
      * Delete employee from database
      *
-     * @param employee - employee object
-     * @return - true if success, false otherwise
+     * @param employee employee object
+     * @return true if success, false otherwise
      */
     public static boolean deleteEmployee(Employee employee) {
         Connection connection = null;
@@ -677,8 +675,8 @@ public final class DatabaseHandler {
     /**
      * Update employee data at database
      *
-     * @param employee - employee object
-     * @return - true if success, false otherwise
+     * @param employee employee object
+     * @return true if success, false otherwise
      */
     public static boolean updateEmployee(Employee employee) {
         Connection connection = null;
@@ -715,8 +713,7 @@ public final class DatabaseHandler {
     /**
      * Get employee list from database
      *
-     * @return - employee list
-     * @ - SQL exception
+     * @return employee list
      */
     public static ObservableList<Employee> getEmployeeList() {
         ObservableList<Employee> list = FXCollections.observableArrayList();
@@ -762,10 +759,9 @@ public final class DatabaseHandler {
     /**
      * Search employee in database
      *
-     * @param combo  - user selected input
-     * @param search - user input
-     * @return - employee search list
-     * @ - SQL exception
+     * @param combo  user selected input
+     * @param search user input
+     * @return employee search list
      */
     public static ObservableList<Employee> searchEmployee(String combo, String search) {
         ObservableList<Employee> list = FXCollections.observableArrayList();
@@ -872,8 +868,8 @@ public final class DatabaseHandler {
     /**
      * Insert new invoice
      *
-     * @param invoice - invoice object
-     * @return - true if success, false otherwise
+     * @param invoice invoice object
+     * @return true if success, false otherwise
      */
     public static boolean insertInvoice(Invoice invoice) {
         Connection connection = null;
@@ -908,8 +904,8 @@ public final class DatabaseHandler {
     /**
      * Delete invoice from database
      *
-     * @param invoice - invoice object
-     * @return - true if success, false otherwise
+     * @param invoice invoice object
+     * @return true if success, false otherwise
      */
     public static boolean deleteInvoice(Invoice invoice) {
         Connection connection = null;
@@ -941,8 +937,7 @@ public final class DatabaseHandler {
     /**
      * Get invoice list from database
      *
-     * @return - invoice list
-     * @ - SQL exception
+     * @return invoice list
      */
     public static ObservableList<Invoice> getInvoiceList() {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
@@ -987,10 +982,9 @@ public final class DatabaseHandler {
     /**
      * Search invoice in database
      *
-     * @param combo  - user selected input
-     * @param search - user input
-     * @return - invoice search list
-     * @ - SQL exception
+     * @param combo  user selected input
+     * @param search user input
+     * @return invoice search list
      */
     public static ObservableList<Invoice> searchInvoice(String combo, String search) {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
@@ -1096,8 +1090,8 @@ public final class DatabaseHandler {
     /**
      * Insert new customer note
      *
-     * @param note - note object
-     * @return - true if success, false otherwise
+     * @param note note object
+     * @return true if success, false otherwise
      */
     public static boolean insertCustomerNote(Note note) {
         Connection connection = null;
@@ -1130,8 +1124,8 @@ public final class DatabaseHandler {
     /**
      * Delete customer note from database
      *
-     * @param note - note object
-     * @return - true if success, false otherwise
+     * @param note note object
+     * @return true if success, false otherwise
      */
     public static boolean deleteCustomerNote(Note note) {
         Connection connection = null;
@@ -1163,8 +1157,8 @@ public final class DatabaseHandler {
     /**
      * Update customer note at database
      *
-     * @param note - customer note object
-     * @return - true if success, false otherwise
+     * @param note customer note object
+     * @return true if success, false otherwise
      */
     public static boolean updateCustomerNote(Note note) {
         Connection connection = null;
@@ -1197,9 +1191,8 @@ public final class DatabaseHandler {
     /**
      * Get customer notes list from database
      *
-     * @param customer - customer object
-     * @return - customer notes list
-     * @ - SQL exception
+     * @param customer customer object
+     * @return customer notes list
      */
     public static ObservableList<Note> getCustomerNotesList(Customer customer) {
         ObservableList<Note> list = FXCollections.observableArrayList();
@@ -1277,8 +1270,8 @@ public final class DatabaseHandler {
     /**
      * Insert new employee note
      *
-     * @param note - note object
-     * @return - true if success, false otherwise
+     * @param note note object
+     * @return true if success, false otherwise
      */
     public static boolean insertEmployeeNote(Note note) {
         Connection connection = null;
@@ -1311,8 +1304,8 @@ public final class DatabaseHandler {
     /**
      * Delete employee note from database
      *
-     * @param note - note object
-     * @return - true if success, false otherwise
+     * @param note note object
+     * @return true if success, false otherwise
      */
     public static boolean deleteEmployeeNote(Note note) {
         Connection connection = null;
@@ -1344,8 +1337,8 @@ public final class DatabaseHandler {
     /**
      * Update employee note at database
      *
-     * @param note - employee note object
-     * @return - true if success, false otherwise
+     * @param note employee note object
+     * @return true if success, false otherwise
      */
     public static boolean updateEmployeeNote(Note note) {
         Connection connection = null;
@@ -1378,9 +1371,8 @@ public final class DatabaseHandler {
     /**
      * Get employee notes list from database
      *
-     * @param employee - employee object
-     * @return - employee notes list
-     * @ - SQL exception
+     * @param employee employee object
+     * @return employee notes list
      */
     public static ObservableList<Note> getEmployeeNotesList(Employee employee) {
         ObservableList<Note> list = FXCollections.observableArrayList();
@@ -1423,8 +1415,8 @@ public final class DatabaseHandler {
     /**
      * Insert new supplier note
      *
-     * @param note - note object
-     * @return - true if success, false otherwise
+     * @param note note object
+     * @return true if success, false otherwise
      */
     public static boolean insertSupplierNote(Note note) {
         Connection connection = null;
@@ -1457,8 +1449,8 @@ public final class DatabaseHandler {
     /**
      * Delete supplier note from database
      *
-     * @param note - note object
-     * @return - true if success, false otherwise
+     * @param note note object
+     * @return true if success, false otherwise
      */
     public static boolean deleteSupplierNote(Note note) {
         Connection connection = null;
@@ -1490,8 +1482,8 @@ public final class DatabaseHandler {
     /**
      * Update supplier note at database
      *
-     * @param note - note object
-     * @return - true if success, false otherwise
+     * @param note note object
+     * @return true if success, false otherwise
      */
     public static boolean updateSupplierNote(Note note) {
         Connection connection = null;
@@ -1600,8 +1592,8 @@ public final class DatabaseHandler {
     /**
      * Insert new product
      *
-     * @param product - product object
-     * @return - true if success, false otherwise
+     * @param product product object
+     * @return true if success, false otherwise
      */
     public static boolean insertProduct(Product product) {
         Connection connection = null;
@@ -1637,8 +1629,7 @@ public final class DatabaseHandler {
     /**
      * Get product list from database
      *
-     * @return - product notes list
-     * @ - SQL exception
+     * @return product notes list
      */
     public static ObservableList<Product> getProductList() {
         ObservableList<Product> list = FXCollections.observableArrayList();
@@ -1687,10 +1678,9 @@ public final class DatabaseHandler {
     /**
      * Search product in database
      *
-     * @param combo  - user selected input
-     * @param search - user input
-     * @return - product search list
-     * @ - SQL exception
+     * @param combo  user selected input
+     * @param search user input
+     * @return product search list
      */
     public static ObservableList<Product> searchProduct(String combo, String search) {
         ObservableList<Product> list = FXCollections.observableArrayList();
@@ -1757,8 +1747,8 @@ public final class DatabaseHandler {
     /**
      * Delete product from database
      *
-     * @param product - product object
-     * @return - true if success, false otherwise
+     * @param product product object
+     * @return true if success, false otherwise
      */
     public static boolean deleteProduct(Product product) {
         Connection connection = null;
@@ -1790,8 +1780,8 @@ public final class DatabaseHandler {
     /**
      * Update product data at database
      *
-     * @param product - product object
-     * @return - true if success, false otherwise
+     * @param product product object
+     * @return true if success, false otherwise
      */
     public static boolean updateProduct(Product product) {
         Connection connection = null;
@@ -1827,8 +1817,8 @@ public final class DatabaseHandler {
     /**
      * Update invoice data at database
      *
-     * @param invoice - invoice object
-     * @return - true if success, false otherwise
+     * @param invoice invoice object
+     * @return true if success, false otherwise
      */
     public static boolean updateInvoice(Invoice invoice) {
         Connection connection = null;
@@ -1860,6 +1850,7 @@ public final class DatabaseHandler {
         return false;
     }
 
+    // TODO Comment following methods and organize class
     public static ObservableList<Supplier> getSupplierList() {
         ObservableList<Supplier> list = FXCollections.observableArrayList();
         Connection connection = null;
@@ -2163,8 +2154,8 @@ public final class DatabaseHandler {
     /**
      * Get customer invoice count at database
      *
-     * @param customer - customer object
-     * @return - invoice count
+     * @param customer customer object
+     * @return invoice count
      */
     public int getCustomerInvoiceCount(Customer customer) {
         Connection connection = null;
@@ -2203,8 +2194,8 @@ public final class DatabaseHandler {
     /**
      * Get employee invoice count at database
      *
-     * @param employee - employee object
-     * @return - invoice count
+     * @param employee employee object
+     * @return invoice count
      */
     public int getEmployeeInvoiceCount(Employee employee) {
         Connection connection = null;
