@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pt.shop.management.exceptions.ExceptionUtil;
 import pt.shop.management.util.ShopManagementUtil;
+import pt.shop.management.util.exceptions.ExceptionUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

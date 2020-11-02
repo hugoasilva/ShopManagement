@@ -942,7 +942,7 @@ public final class DatabaseHandler {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();

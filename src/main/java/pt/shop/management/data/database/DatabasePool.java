@@ -38,7 +38,7 @@ public class DatabasePool {
             dataSource.setMaxStatements(10);
             dataSource.setMaxStatementsPerConnection(1);
         } catch (PropertyVetoException ex) {
-            LOGGER.log(Level.ERROR, "PropertyVetoException occurred {}", ex);
+            LOGGER.log(Level.ERROR, "PropertyVetoException occurred " + ex);
         }
     }
 
