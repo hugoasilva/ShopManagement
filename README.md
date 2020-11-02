@@ -4,6 +4,8 @@ This is a shop management software developed using JavaFX programming language.
 * 2020-10-30
 
 ### Software Used
+  * [C3P0 v0.9.0.4](https://github.com/swaldman/c3p0) - Database Connection Pooling Library
+  * [CalendarFX v11.8.3](https://github.com/dlsc-software-consulting-gmbh/CalendarFX) - JavaFX Calendar Library
   * [Ikonli v11.5.0](https://github.com/kordamp/ikonli) - JavaFX Icon library.
   * [JDK v11.0.8](https://github.com/openjdk/jdk) - Java Development Kit.
   * [JavaFX v11.0.2](https://github.com/openjdk/jfx) - Java GUI Library. Used to design interface.
