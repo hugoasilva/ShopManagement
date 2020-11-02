@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
  * Product Search Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-28
+ * @version 2020-11-01
  */
 
 public class ProductSearchController implements Initializable {
@@ -150,14 +150,17 @@ public class ProductSearchController implements Initializable {
         }
     }
 
+    /**
+     * Get window stage
+     *
+     * @return window stage object
+     */
     private Stage getStage() {
         return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
      * Load product table data
-     *
-     * @ - database exception
      */
     public void loadData() {
         this.list = DatabaseHandler.getProductList();
@@ -202,8 +205,7 @@ public class ProductSearchController implements Initializable {
     /**
      * Refresh handler
      *
-     * @param event - refresh event
-     * @ - database exception
+     * @param event refresh event
      */
     @FXML
     private void handleRefresh(ActionEvent event) {
@@ -222,8 +224,6 @@ public class ProductSearchController implements Initializable {
 
     /**
      * Search product operation
-     *
-     * @ - SQL exception
      */
     public void searchProduct() {
         // Check if user input is present
@@ -242,8 +242,7 @@ public class ProductSearchController implements Initializable {
     /**
      * Handle search product key press
      *
-     * @param event - key event
-     * @ - SQL exception
+     * @param event key event
      */
     public void handleSearchProductKeyPress(KeyEvent event) {
         this.searchProduct();
@@ -252,8 +251,7 @@ public class ProductSearchController implements Initializable {
     /**
      * Handle search product key press
      *
-     * @param event - key event
-     * @ - SQL exception
+     * @param event key event
      */
     public void handleSearchProductButtonPress(ActionEvent event) {
         this.searchProduct();
@@ -262,7 +260,7 @@ public class ProductSearchController implements Initializable {
     /**
      * Product edit handler
      *
-     * @param event - edit event
+     * @param event edit event
      */
     @FXML
     private void handleProductEdit(ActionEvent event) {
@@ -297,7 +295,7 @@ public class ProductSearchController implements Initializable {
     /**
      * Close current window
      *
-     * @param event - close event
+     * @param event close event
      */
     @FXML
     private void closeStage(ActionEvent event) {

@@ -135,7 +135,7 @@ public class CustomerSearchController implements Initializable {
     /**
      * Show customer details window
      *
-     * @param customer - customer object
+     * @param customer customer object
      */
     private void showCustomerDetails(Customer customer) {
         try {
@@ -157,14 +157,17 @@ public class CustomerSearchController implements Initializable {
         }
     }
 
+    /**
+     * Get window stage
+     *
+     * @return window stage object
+     */
     private Stage getStage() {
         return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
      * Load customer table data
-     *
-     * @ - database exception
      */
     public void loadData() {
         this.list = DatabaseHandler.getCustomerList();
@@ -174,7 +177,7 @@ public class CustomerSearchController implements Initializable {
     /**
      * Customer delete handler
      *
-     * @param event - delete event
+     * @param event delete event
      */
     @FXML
     private void handleCustomerDelete(ActionEvent event) {
@@ -208,8 +211,7 @@ public class CustomerSearchController implements Initializable {
     /**
      * Refresh handler
      *
-     * @param event - refresh event
-     * @ - database exception
+     * @param event refresh event
      */
     @FXML
     private void handleRefresh(ActionEvent event) {
@@ -229,8 +231,6 @@ public class CustomerSearchController implements Initializable {
 
     /**
      * Search customer operation
-     *
-     * @ - SQL exception
      */
     public void searchCustomer() {
         // Check if user input is present
@@ -248,8 +248,7 @@ public class CustomerSearchController implements Initializable {
     /**
      * Handle search customer key press
      *
-     * @param event - key event
-     * @ - IO exception
+     * @param event key event
      */
     public void handleSearchCustomerKeyPress(KeyEvent event) {
         this.searchCustomer();
@@ -258,8 +257,7 @@ public class CustomerSearchController implements Initializable {
     /**
      * Handle search customer button press
      *
-     * @param event - button click event
-     * @ - IO exception
+     * @param event button click event
      */
     public void handleSearchCustomerButtonPress(ActionEvent event) {
         this.searchCustomer();
@@ -268,7 +266,7 @@ public class CustomerSearchController implements Initializable {
     /**
      * Customer edit handler
      *
-     * @param event - edit event
+     * @param event edit event
      */
     @FXML
     private void handleCustomerEdit(ActionEvent event) {
@@ -303,7 +301,7 @@ public class CustomerSearchController implements Initializable {
     /**
      * Close current window
      *
-     * @param event - close event
+     * @param event close event
      */
     @FXML
     private void closeStage(ActionEvent event) {

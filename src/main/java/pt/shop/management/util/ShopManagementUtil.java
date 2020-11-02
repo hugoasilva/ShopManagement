@@ -28,11 +28,10 @@ import java.util.Date;
  * Shop Management Util Class
  *
  * @author Hugo Silva
- * @version 2020-10-28
+ * @version 2020-11-01
  */
 
 public class ShopManagementUtil {
-
 
     //Resources
     public static final String ICON_IMAGE_LOC = "/img/icon.png";
@@ -51,7 +50,7 @@ public class ShopManagementUtil {
     /**
      * Set stage icon
      *
-     * @param stage - window stage
+     * @param stage window stage
      */
     public static void setStageIcon(Stage stage) {
         stage.getIcons().add(new Image(ICON_IMAGE_LOC));
@@ -60,9 +59,9 @@ public class ShopManagementUtil {
     /**
      * Load FXML File
      *
-     * @param loc         - FXML file
-     * @param title       - window title
-     * @param parentStage - parent stage
+     * @param loc         FXML file
+     * @param title       window title
+     * @param parentStage parent stage
      */
     public static Object loadWindow(URL loc, String title, Stage parentStage) {
         Object controller = null;
@@ -101,7 +100,7 @@ public class ShopManagementUtil {
     /**
      * Open file with desktop app
      *
-     * @param path - file path
+     * @param path file path
      */
     public static void openFile(String path) {
         File file = new File(path);
@@ -144,8 +143,7 @@ public class ShopManagementUtil {
     /**
      * Setup SFTP server connection
      *
-     * @return - SFTPChannel object
-     * @ - JSch exception
+     * @return SFTPChannel object
      */
     private static ChannelSftp setupSFTP() {
         ChannelSftp channel = null;
@@ -165,7 +163,7 @@ public class ShopManagementUtil {
     /**
      * Log JSch exception
      *
-     * @param e - JSch exception
+     * @param e JSch exception
      */
     private static void printJSchException(JSchException e) {
         if (e != null) {
@@ -181,7 +179,7 @@ public class ShopManagementUtil {
     /**
      * Log SFTP exception
      *
-     * @param e - SFTP exception
+     * @param e SFTP exception
      */
     private static void printSFTPException(SftpException e) {
         if (e != null) {
@@ -197,8 +195,8 @@ public class ShopManagementUtil {
     /**
      * Download file from SFTP Server
      *
-     * @param path     - remote file path
-     * @param fileName - local file name
+     * @param path     remote file path
+     * @param fileName local file name
      */
     public static void downloadFile(String path, String fileName) {
         try {
@@ -218,8 +216,8 @@ public class ShopManagementUtil {
     /**
      * Upload file to SFTP Server
      *
-     * @param localPath  - local file path
-     * @param remotePath - remote file path
+     * @param localPath  local file path
+     * @param remotePath remote file path
      */
     public static void uploadFile(String localPath, String remotePath) {
         try {
@@ -251,6 +249,4 @@ public class ShopManagementUtil {
             LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
-
-
 }

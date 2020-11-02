@@ -34,7 +34,7 @@ import java.util.ResourceBundle;
  * Employee Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-29
+ * @version 2020-11-01
  */
 
 public class EmployeeDetailsController implements Initializable {
@@ -85,7 +85,7 @@ public class EmployeeDetailsController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -96,7 +96,7 @@ public class EmployeeDetailsController implements Initializable {
     /**
      * Populate interface
      *
-     * @param employee - employee object
+     * @param employee employee object
      */
     public void inflateUI(Employee employee) {
         this.employee = employee;
@@ -120,8 +120,6 @@ public class EmployeeDetailsController implements Initializable {
 
     /**
      * Show add note window
-     *
-     * @ - SQL exception
      */
     @FXML
     public void addNoteButtonAction() {
@@ -134,7 +132,7 @@ public class EmployeeDetailsController implements Initializable {
             NoteAddController controller = loader.getController();
 
             controller.setPersonId(this.employee.getId());
-            controller.setPersontype("employee");
+            controller.setPersonType("employee");
 
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Adicionar Nota");
@@ -150,7 +148,7 @@ public class EmployeeDetailsController implements Initializable {
     /**
      * Note delete handler
      *
-     * @param event - delete event
+     * @param event delete event
      */
     @FXML
     private void handleNoteDelete(ActionEvent event) {
@@ -181,7 +179,7 @@ public class EmployeeDetailsController implements Initializable {
     /**
      * Refresh handler
      *
-     * @param event - refresh event
+     * @param event refresh event
      */
     @FXML
     private void handleRefresh(ActionEvent event) {

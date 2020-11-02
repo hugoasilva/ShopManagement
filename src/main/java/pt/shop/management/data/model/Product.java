@@ -19,12 +19,12 @@ public class Product {
     /**
      * Product object constructor
      *
-     * @param id          - product's id
-     * @param name        - product's message
-     * @param price       - product's price
-     * @param supplier_id - product's supplier id
-     * @param quantity    - product's quantity
-     * @param image       - product's image file path
+     * @param id          product's id
+     * @param name        product's message
+     * @param price       product's price
+     * @param supplier_id product's supplier id
+     * @param quantity    product's quantity
+     * @param image       product's image file path
      */
     public Product(String id, String name, String price, String supplier_id, String quantity, String image) {
         this.id = id;
@@ -38,7 +38,7 @@ public class Product {
     /**
      * Get note id
      *
-     * @return - note id
+     * @return note id
      */
     public String getId() {
         return this.id;
@@ -47,7 +47,7 @@ public class Product {
     /**
      * Get product name
      *
-     * @return - product name
+     * @return product name
      */
     public String getName() {
         return this.name;
@@ -56,7 +56,7 @@ public class Product {
     /**
      * Set product name
      *
-     * @param name - product name
+     * @param name product name
      */
     public void setName(String name) {
         this.name = name;
@@ -65,7 +65,7 @@ public class Product {
     /**
      * Get product price
      *
-     * @return - product price
+     * @return product price
      */
     public String getPrice() {
         return this.price;
@@ -74,7 +74,7 @@ public class Product {
     /**
      * Set product price
      *
-     * @param price - product price
+     * @param price product price
      */
     public void setPrice(String price) {
         this.price = price;
@@ -83,7 +83,7 @@ public class Product {
     /**
      * Get product supplier id
      *
-     * @return - product supplier id
+     * @return product supplier id
      */
     public String getSupplierId() {
         return this.supplierId;
@@ -92,7 +92,7 @@ public class Product {
     /**
      * Set product supplier id
      *
-     * @param id - supplier id
+     * @param id supplier id
      */
     public void setSupplierId(String id) {
         this.supplierId = id;
@@ -101,7 +101,7 @@ public class Product {
     /**
      * Get product supplier name
      *
-     * @return - product supplier name
+     * @return product supplier name
      */
     public String getSupplierName() {
         return this.supplierName;
@@ -110,7 +110,7 @@ public class Product {
     /**
      * Set product supplier name
      *
-     * @param name - supplier name
+     * @param name supplier name
      */
     public void setSupplierName(String name) {
         this.supplierName = name;
@@ -119,7 +119,7 @@ public class Product {
     /**
      * Get product quantity
      *
-     * @return - product quantity
+     * @return product quantity
      */
     public String getQuantity() {
         return this.quantity;
@@ -128,7 +128,7 @@ public class Product {
     /**
      * Set product quantity
      *
-     * @param quantity - product quantity
+     * @param quantity product quantity
      */
     public void setQuantity(String quantity) {
         this.quantity = quantity;
@@ -137,7 +137,7 @@ public class Product {
     /**
      * Get product image
      *
-     * @return - product image
+     * @return product image
      */
     public String getImage() {
         return this.image;
@@ -146,7 +146,7 @@ public class Product {
     /**
      * Set product image
      *
-     * @param image - product image
+     * @param image product image
      */
     public void setImage(String image) {
         this.quantity = image;

@@ -76,7 +76,7 @@ public class InvoiceAddController implements Initializable {
     /**
      * Add invoice to table
      *
-     * @param event - add invoice event
+     * @param event add invoice event
      */
     @FXML
     public void addInvoice(ActionEvent event) {
@@ -114,7 +114,7 @@ public class InvoiceAddController implements Initializable {
     /**
      * Populate table
      *
-     * @param invoice - invoice object
+     * @param invoice invoice object
      */
     public void inflateUI(Invoice invoice) {
         this.customer.setText(invoice.getCustomerId());

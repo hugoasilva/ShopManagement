@@ -4,26 +4,26 @@ package pt.shop.management.data.model;
  * Employee Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-11-01
  */
 
 public class Employee {
-    String id;
-    String name;
-    String address;
-    String phone;
-    String email;
-    String nif;
+    private final String id;
+    private String name;
+    private String address;
+    private String phone;
+    private String email;
+    private String nif;
 
     /**
      * Employee object constructor
      *
-     * @param id      - employee's id
-     * @param name    - employee's name
-     * @param address - employee's address
-     * @param phone   - employee's phone
-     * @param email   - employee's email
-     * @param nif     - employee's nif
+     * @param id      employee's id
+     * @param name    employee's name
+     * @param address employee's address
+     * @param phone   employee's phone
+     * @param email   employee's email
+     * @param nif     employee's nif
      */
     public Employee(String id, String name, String address, String phone, String email, String nif) {
         this.id = id;
@@ -37,7 +37,7 @@ public class Employee {
     /**
      * Get employee id
      *
-     * @return - employee id
+     * @return employee id
      */
     public String getId() {
         return this.id;
@@ -46,7 +46,7 @@ public class Employee {
     /**
      * Get employee name
      *
-     * @return - employee name
+     * @return employee name
      */
     public String getName() {
         return this.name;
@@ -62,7 +62,7 @@ public class Employee {
     /**
      * Get employee address
      *
-     * @return - employee address
+     * @return employee address
      */
     public String getAddress() {
         return this.address;
@@ -78,7 +78,7 @@ public class Employee {
     /**
      * Get employee phone
      *
-     * @return - employee phone
+     * @return employee phone
      */
     public String getPhone() {
         return this.phone;
@@ -94,7 +94,7 @@ public class Employee {
     /**
      * Get employee email
      *
-     * @return - employee email
+     * @return employee email
      */
     public String getEmail() {
         return this.email;
@@ -110,7 +110,7 @@ public class Employee {
     /**
      * Get employee nif
      *
-     * @return - employee nif
+     * @return employee nif
      */
     public String getNif() {
         return this.nif;

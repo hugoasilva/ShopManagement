@@ -78,7 +78,7 @@ public class MaterialButton extends Button {
     /**
      * Create new material button skin
      *
-     * @return - material button skin
+     * @return material button skin
      */
     @Override
     protected Skin<?> createDefaultSkin() {
@@ -96,7 +96,7 @@ public class MaterialButton extends Button {
     /**
      * Get ripple color
      *
-     * @return - ripple color
+     * @return ripple color
      */
     public final ObjectProperty<Paint> ripplerFillProperty() {
         return this.ripplerFill;
@@ -105,7 +105,7 @@ public class MaterialButton extends Button {
     /**
      * Get ripple color
      *
-     * @return - ripple color
+     * @return ripple color
      */
     public final Paint getRipplerFill() {
         return this.ripplerFillProperty().get();
@@ -114,7 +114,7 @@ public class MaterialButton extends Button {
     /**
      * Set ripple color
      *
-     * @param ripplerFill - color of the ripple effect
+     * @param ripplerFill color of the ripple effect
      */
     public final void setRipplerFill(final Paint ripplerFill) {
         this.ripplerFillProperty().set(ripplerFill);
@@ -123,7 +123,7 @@ public class MaterialButton extends Button {
     /**
      * Get button type
      *
-     * @return - button type
+     * @return button type
      */
     public ButtonType getButtonType() {
         return buttonType == null ? ButtonType.FLAT : buttonType.get();
@@ -132,7 +132,7 @@ public class MaterialButton extends Button {
     /**
      * Set button type
      *
-     * @param type - button type
+     * @param type button type
      */
     public void setButtonType(ButtonType type) {
         this.buttonType.set(type);
@@ -141,7 +141,7 @@ public class MaterialButton extends Button {
     /**
      * Get button type
      *
-     * @return - button type
+     * @return button type
      */
     public StyleableObjectProperty<ButtonType> buttonTypeProperty() {
         return this.buttonType;
@@ -150,7 +150,7 @@ public class MaterialButton extends Button {
     /**
      * Disable button from showing keyboard focus
      *
-     * @return - property to disable focus
+     * @return property to disable focus
      */
     public final StyleableBooleanProperty disableVisualFocusProperty() {
         return this.disableVisualFocus;
@@ -168,7 +168,7 @@ public class MaterialButton extends Button {
     /**
      * Set keyboard focus for button
      *
-     * @param disabled - true if disabled, false otherwise
+     * @param disabled true if disabled, false otherwise
      */
     public final void setDisableVisualFocus(final Boolean disabled) {
         this.disableVisualFocusProperty().set(disabled);
@@ -222,6 +222,4 @@ public class MaterialButton extends Button {
             CHILD_STYLEABLES = Collections.unmodifiableList(styleables);
         }
     }
-
-
 }

@@ -15,7 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -65,8 +64,6 @@ public class SupplierSearchController implements Initializable {
     private TableColumn<Supplier, String> emailCol;
     @FXML
     private TableColumn<Supplier, String> nifCol;
-    @FXML
-    private StackPane rootPane;
     @FXML
     private AnchorPane mainContainer;
 
@@ -154,14 +151,17 @@ public class SupplierSearchController implements Initializable {
         }
     }
 
+    /**
+     * Get window stage
+     *
+     * @return window stage object
+     */
     private Stage getStage() {
         return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
      * Load supplier table data
-     *
-     * @ - database exception
      */
     public void loadData() {
         this.list = DatabaseHandler.getSupplierList();
@@ -171,7 +171,7 @@ public class SupplierSearchController implements Initializable {
     /**
      * Supplier delete handler
      *
-     * @param event - delete event
+     * @param event delete event
      */
     @FXML
     private void handleSupplierDelete(ActionEvent event) {
@@ -206,8 +206,7 @@ public class SupplierSearchController implements Initializable {
     /**
      * Refresh handler
      *
-     * @param event - refresh event
-     * @ - database exception
+     * @param event refresh event
      */
     @FXML
     private void handleRefresh(ActionEvent event) {
@@ -226,8 +225,6 @@ public class SupplierSearchController implements Initializable {
 
     /**
      * Search supplier operation
-     *
-     * @ - SQL exception
      */
     public void searchSupplier() {
         // Check if user input is present
@@ -245,8 +242,7 @@ public class SupplierSearchController implements Initializable {
     /**
      * Handle search supplier key press
      *
-     * @param event - key event
-     * @ - SQL exception
+     * @param event key event
      */
     public void handleSearchSupplierKeyPress(KeyEvent event) {
         this.searchSupplier();
@@ -255,8 +251,7 @@ public class SupplierSearchController implements Initializable {
     /**
      * Handle search supplier key press
      *
-     * @param event - key event
-     * @ - SQL exception
+     * @param event key event
      */
     public void handleSearchSupplierButtonPress(ActionEvent event) {
         this.searchSupplier();
@@ -264,8 +259,6 @@ public class SupplierSearchController implements Initializable {
 
     /**
      * Supplier edit handler
-     *
-     * @param event - edit event
      */
     @FXML
     private void handleSupplierEdit(ActionEvent event) {
@@ -300,7 +293,7 @@ public class SupplierSearchController implements Initializable {
     /**
      * Close current window
      *
-     * @param event - close event
+     * @param event close event
      */
     @FXML
     private void closeStage(ActionEvent event) {

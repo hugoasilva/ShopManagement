@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Product Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-30
+ * @version 2020-11-01
  */
 
 public class ProductDetailsController implements Initializable {
@@ -55,7 +55,7 @@ public class ProductDetailsController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -66,7 +66,7 @@ public class ProductDetailsController implements Initializable {
     /**
      * Populate interface
      *
-     * @param product - product object
+     * @param product product object
      */
     public void inflateUI(Product product) {
         this.product = product;
@@ -78,6 +78,9 @@ public class ProductDetailsController implements Initializable {
         this.setImage();
     }
 
+    /**
+     * Retrieve image and set it to imageView
+     */
     private void setImage() {
         // Download image
         String fileName = id + ".png";

@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Customer;
@@ -19,7 +18,7 @@ import java.util.ResourceBundle;
  * Customer Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-29
+ * @version 2020-11-01
  */
 
 public class CustomerAddController implements Initializable {
@@ -40,8 +39,6 @@ public class CustomerAddController implements Initializable {
     @FXML
     private JFXTextField nif;
     @FXML
-    private StackPane rootPane;
-    @FXML
     private AnchorPane mainContainer;
 
     @Override
@@ -51,7 +48,7 @@ public class CustomerAddController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -66,7 +63,7 @@ public class CustomerAddController implements Initializable {
     /**
      * Add customer to table
      *
-     * @param event - add customer event
+     * @param event add customer event
      */
     @FXML
     private void addCustomer(ActionEvent event) {
@@ -104,7 +101,7 @@ public class CustomerAddController implements Initializable {
     /**
      * Populate table
      *
-     * @param customer - customer object
+     * @param customer customer object
      */
     public void inflateUI(Customer customer) {
         this.name.setText(customer.getName());

@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Employee;
@@ -39,8 +38,6 @@ public class EmployeeAddController implements Initializable {
     @FXML
     private JFXTextField nif;
     @FXML
-    private StackPane rootPane;
-    @FXML
     private AnchorPane mainContainer;
 
     @Override
@@ -50,7 +47,7 @@ public class EmployeeAddController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -61,7 +58,7 @@ public class EmployeeAddController implements Initializable {
     /**
      * Add employee to table
      *
-     * @param event - add employee event
+     * @param event add employee event
      */
     @FXML
     private void addEmployee(ActionEvent event) {
@@ -99,7 +96,7 @@ public class EmployeeAddController implements Initializable {
     /**
      * Populate table
      *
-     * @param employee - employee object
+     * @param employee employee object
      */
     public void inflateUI(Employee employee) {
         this.name.setText(employee.getName());

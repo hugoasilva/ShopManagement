@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -27,7 +26,7 @@ import java.util.ResourceBundle;
  * Product Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-11-01
  */
 
 public class ProductAddController implements Initializable {
@@ -54,8 +53,6 @@ public class ProductAddController implements Initializable {
     @FXML
     private JFXButton image;
     @FXML
-    private StackPane rootPane;
-    @FXML
     private AnchorPane mainContainer;
 
     @Override
@@ -65,7 +62,7 @@ public class ProductAddController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -76,7 +73,7 @@ public class ProductAddController implements Initializable {
     /**
      * Add product to table
      *
-     * @param event - add product event
+     * @param event add product event
      */
     @FXML
     private void addProduct(ActionEvent event) {
@@ -115,7 +112,7 @@ public class ProductAddController implements Initializable {
     /**
      * Populate table
      *
-     * @param product - product object
+     * @param product product object
      */
     public void inflateUI(Product product) {
         this.product = product;
@@ -155,7 +152,7 @@ public class ProductAddController implements Initializable {
     /**
      * Choose product image
      *
-     * @param actionEvent - choose image event
+     * @param actionEvent choose image event
      */
     public void chooseImage(ActionEvent actionEvent) {
         // Open File Chooser

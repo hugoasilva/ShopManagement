@@ -45,7 +45,7 @@ public class DatabasePool {
     /**
      * Get data source instance
      *
-     * @return - data source instance
+     * @return data source instance
      */
     public static DataSource getDataSource() {
         return dataSource;

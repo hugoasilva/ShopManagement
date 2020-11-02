@@ -15,7 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -37,7 +36,7 @@ import java.util.ResourceBundle;
  * Employee Search Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-28
+ * @version 2020-11-01
  */
 
 public class EmployeeSearchController implements Initializable {
@@ -66,8 +65,6 @@ public class EmployeeSearchController implements Initializable {
     private TableColumn<Employee, String> emailCol;
     @FXML
     private TableColumn<Employee, String> nifCol;
-    @FXML
-    private StackPane rootPane;
     @FXML
     private AnchorPane mainContainer;
 
@@ -139,7 +136,7 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Show employee details window
      *
-     * @param employee - employee object
+     * @param employee employee object
      */
     private void showEmployeeDetails(Employee employee) {
         try {
@@ -161,14 +158,17 @@ public class EmployeeSearchController implements Initializable {
         }
     }
 
+    /**
+     * Get window stage
+     *
+     * @return window stage object
+     */
     private Stage getStage() {
         return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
      * Load employee table data
-     *
-     * @ - database exception
      */
     public void loadData() {
         this.list = DatabaseHandler.getEmployeeList();
@@ -178,7 +178,7 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Employee delete handler
      *
-     * @param event - delete event
+     * @param event delete event
      */
     @FXML
     private void handleEmployeeDelete(ActionEvent event) {
@@ -212,8 +212,7 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Refresh handler
      *
-     * @param event - refresh event
-     * @ - database exception
+     * @param event refresh event
      */
     @FXML
     private void handleRefresh(ActionEvent event) {
@@ -232,8 +231,6 @@ public class EmployeeSearchController implements Initializable {
 
     /**
      * Search employee operation
-     *
-     * @ - SQL exception
      */
     public void searchEmployee() {
         // Check if user input is present
@@ -251,8 +248,7 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Handle search employee key press
      *
-     * @param event - key event
-     * @ - SQL exception
+     * @param event key event
      */
     public void handleSearchEmployeeKeyPress(KeyEvent event) {
         this.searchEmployee();
@@ -261,8 +257,7 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Handle search employee button press
      *
-     * @param event - button click event
-     * @ - SQL exception
+     * @param event button click event
      */
     public void handleSearchEmployeeButtonPress(ActionEvent event) {
         this.searchEmployee();
@@ -271,7 +266,7 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Employee edit handler
      *
-     * @param event - edit event
+     * @param event edit event
      */
     @FXML
     private void handleEmployeeEdit(ActionEvent event) {
@@ -306,7 +301,7 @@ public class EmployeeSearchController implements Initializable {
     /**
      * Close current window
      *
-     * @param event - close event
+     * @param event close event
      */
     @FXML
     private void closeStage(ActionEvent event) {

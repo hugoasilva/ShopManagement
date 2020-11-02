@@ -83,6 +83,7 @@ public class MainController implements Initializable {
         this.initComponents();
     }
 
+
     private Stage getStage() {
         return (Stage) rootPane.getScene().getWindow();
     }

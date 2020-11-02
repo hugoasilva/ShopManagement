@@ -16,8 +16,8 @@ public class Note {
     /**
      * Note object constructor
      *
-     * @param id      - note's id
-     * @param message - note's message
+     * @param id      note's id
+     * @param message note's message
      */
     public Note(String id, String message) {
         this.id = id;
@@ -27,7 +27,7 @@ public class Note {
     /**
      * Get note id
      *
-     * @return - note id
+     * @return note id
      */
     public String getId() {
         return this.id;
@@ -36,7 +36,7 @@ public class Note {
     /**
      * Set note id
      *
-     * @param id - note message
+     * @param id note message
      */
     public void setId(String id) {
         this.id = id;
@@ -45,7 +45,7 @@ public class Note {
     /**
      * Get note message
      *
-     * @return - note message
+     * @return note message
      */
     public String getMessage() {
         return this.message;
@@ -54,7 +54,7 @@ public class Note {
     /**
      * Set note message
      *
-     * @param message - note message
+     * @param message note message
      */
     public void setMessage(String message) {
         this.message = message;
@@ -63,7 +63,7 @@ public class Note {
     /**
      * Get note person id
      *
-     * @return - note person id
+     * @return note person id
      */
     public String getPersonId() {
         return this.personId;
@@ -72,7 +72,7 @@ public class Note {
     /**
      * Set note person id
      *
-     * @param id - note person id
+     * @param id note person id
      */
     public void setPersonId(String id) {
         this.personId = id;
@@ -81,16 +81,19 @@ public class Note {
     /**
      * Get note person type
      *
-     * @return - note person type
+     * @return note person type
      */
     public String getPersonType() {
         return this.type;
     }
 
+
+    // TODO Remove following methods???
+
     /**
      * Set note person type
      *
-     * @param type - note person type
+     * @param type note person type
      */
     public void setPersonType(String type) {
         this.type = type;

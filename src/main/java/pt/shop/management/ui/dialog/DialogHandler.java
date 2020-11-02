@@ -13,7 +13,7 @@ import pt.shop.management.ui.dialog.layout.MaterialDialogLayout;
  * Dialog Handler Class
  *
  * @author Hugo Silva
- * @version 2020-10-28
+ * @version 2020-11-01
  */
 
 public class DialogHandler {
@@ -21,9 +21,9 @@ public class DialogHandler {
     /**
      * Show material confirmation dialog
      *
-     * @param nodeToBeBlurred - parent window to be blurred
-     * @param header          - dialog header text
-     * @param body            - dialog body text
+     * @param nodeToBeBlurred parent window to be blurred
+     * @param header          dialog header text
+     * @param body            dialog body text
      */
     public static boolean showMaterialConfirmationDialog(Node nodeToBeBlurred, String header, String body) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
@@ -63,9 +63,9 @@ public class DialogHandler {
     /**
      * Show material error dialog
      *
-     * @param nodeToBeBlurred - parent window to be blurred
-     * @param header          - dialog header text
-     * @param body            - dialog body text
+     * @param nodeToBeBlurred parent window to be blurred
+     * @param header          dialog header text
+     * @param body            dialog body text
      */
     public static void showMaterialErrorDialog(Node nodeToBeBlurred, String header, String body) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
@@ -93,10 +93,10 @@ public class DialogHandler {
     /**
      * Show material information dialog
      *
-     * @param nodeToBeBlurred - parent window to be blurred
-     * @param header          - dialog header text
-     * @param body            - dialog body text
-     * @param closeParent     - close parent window
+     * @param nodeToBeBlurred parent window to be blurred
+     * @param header          dialog header text
+     * @param body            dialog body text
+     * @param closeParent     close parent window
      */
     public static void showMaterialInformationDialog(
             Node nodeToBeBlurred, String header, String body, boolean closeParent) {

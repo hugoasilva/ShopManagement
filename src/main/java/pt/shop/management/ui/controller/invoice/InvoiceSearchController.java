@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
  * Invoice Search Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-11-01
  */
 
 public class InvoiceSearchController implements Initializable {
@@ -201,14 +201,17 @@ public class InvoiceSearchController implements Initializable {
         }
     }
 
+    /**
+     * Get window stage
+     *
+     * @return window stage object
+     */
     private Stage getStage() {
         return (Stage) this.tableView.getScene().getWindow();
     }
 
     /**
      * Load invoice search table data
-     *
-     * @ - database exception
      */
     public void loadData() {
         this.list = DatabaseHandler.getInvoiceList();
@@ -254,7 +257,6 @@ public class InvoiceSearchController implements Initializable {
      * Refresh handler
      *
      * @param event - refresh event
-     * @ - database exception
      */
     @FXML
     private void handleRefresh(ActionEvent event) {
@@ -273,8 +275,6 @@ public class InvoiceSearchController implements Initializable {
 
     /**
      * Search invoice operation
-     *
-     * @ - SQL exception
      */
     public void searchInvoice() {
         // Check if user input is present
@@ -301,8 +301,7 @@ public class InvoiceSearchController implements Initializable {
     /**
      * Handle search invoice key press
      *
-     * @param event - key event
-     * @ - SQL exception
+     * @param event key event
      */
     public void handleSearchInvoiceKeyPress(KeyEvent event) {
         this.searchInvoice();
@@ -311,8 +310,7 @@ public class InvoiceSearchController implements Initializable {
     /**
      * Handle search invoice key press
      *
-     * @param event - key event
-     * @ - SQL exception
+     * @param event key event
      */
     public void handleSearchInvoiceButtonPress(ActionEvent event) {
         this.searchInvoice();
@@ -321,7 +319,7 @@ public class InvoiceSearchController implements Initializable {
     /**
      * Invoice edit handler
      *
-     * @param event - edit event
+     * @param event edit event
      */
     @FXML
     private void handleInvoiceEdit(ActionEvent event) {
@@ -355,7 +353,7 @@ public class InvoiceSearchController implements Initializable {
     /**
      * Close current window
      *
-     * @param event - close event
+     * @param event close event
      */
     @FXML
     private void closeStage(ActionEvent event) {

@@ -20,11 +20,11 @@ public class Invoice {
     /**
      * Invoice object constructor
      *
-     * @param id         - invoice's id
-     * @param customerId - customer's id
-     * @param employeeId - employee's id
-     * @param date       - invoice date
-     * @param pdf        - invoice pdf file path
+     * @param id         invoice's id
+     * @param customerId customer's id
+     * @param employeeId employee's id
+     * @param date       invoice date
+     * @param pdf        invoice pdf file path
      */
     public Invoice(String id, String customerId, String employeeId, String date, String pdf) {
         this.id = id;
@@ -37,7 +37,7 @@ public class Invoice {
     /**
      * Get invoice id
      *
-     * @return - invoice id
+     * @return invoice id
      */
     public String getId() {
         return this.id;
@@ -46,7 +46,7 @@ public class Invoice {
     /**
      * Get customer id
      *
-     * @return - customer id
+     * @return customer id
      */
     public String getCustomerId() {
         return this.customerId;
@@ -55,7 +55,7 @@ public class Invoice {
     /**
      * Set customer id
      *
-     * @param customerId - customer id
+     * @param customerId customer id
      */
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
@@ -73,7 +73,7 @@ public class Invoice {
     /**
      * Set employee id
      *
-     * @param employeeId - employee id
+     * @param employeeId employee id
      */
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
@@ -82,7 +82,7 @@ public class Invoice {
     /**
      * Get invoice date
      *
-     * @return - invoice date
+     * @return invoice date
      */
     public String getDate() {
         return this.date;
@@ -91,7 +91,7 @@ public class Invoice {
     /**
      * Set invoice date
      *
-     * @param date - invoice date
+     * @param date invoice date
      */
     public void setDate(String date) {
         this.date = date;
@@ -100,7 +100,7 @@ public class Invoice {
     /**
      * Get invoice pdf
      *
-     * @return - invoice pdf
+     * @return invoice pdf
      */
     public String getPdf() {
         return this.pdf;
@@ -109,7 +109,7 @@ public class Invoice {
     /**
      * Set invoice pdf
      *
-     * @param pdf - invoice pdf
+     * @param pdf invoice pdf
      */
     public void setPdf(String pdf) {
         this.pdf = pdf;
@@ -127,7 +127,7 @@ public class Invoice {
     /**
      * Set invoice customer name
      *
-     * @param name - invoice customer name
+     * @param name invoice customer name
      */
     public void setCustomerName(String name) {
         this.customerName = name;
@@ -136,7 +136,7 @@ public class Invoice {
     /**
      * Get invoice employee name
      *
-     * @return - invoice employee name
+     * @return invoice employee name
      */
     public String getEmployeeName() {
         return this.employeeName;
@@ -145,7 +145,7 @@ public class Invoice {
     /**
      * Set invoice employee name
      *
-     * @param name - invoice employee name
+     * @param name invoice employee name
      */
     public void setEmployeeName(String name) {
         this.employeeName = name;
@@ -154,7 +154,7 @@ public class Invoice {
     /**
      * Get invoice products
      *
-     * @return - invoice products
+     * @return invoice products
      */
     public String getProducts() {
         return this.products;
@@ -163,7 +163,7 @@ public class Invoice {
     /**
      * Set invoice products
      *
-     * @param products - invoice products
+     * @param products invoice products
      */
     public void setProducts(String products) {
         this.products = products;

@@ -21,14 +21,14 @@ public class Task {
     /**
      * Task object constructor
      *
-     * @param id             - task's id
-     * @param date           - task's date
-     * @param employeeId     - task's employee id
-     * @param description    - task's description
-     * @param priority       - task's priority
-     * @param limitDate      - task's limit date
-     * @param resolutionDate - task's resolution date
-     * @param notes          - task's notes
+     * @param id             task's id
+     * @param date           task's date
+     * @param employeeId     task's employee id
+     * @param description    task's description
+     * @param priority       task's priority
+     * @param limitDate      task's limit date
+     * @param resolutionDate task's resolution date
+     * @param notes          task's notes
      */
     public Task(String id, String date, String employeeId, String description,
                 String priority, String limitDate, String resolutionDate, String notes) {
@@ -45,7 +45,7 @@ public class Task {
     /**
      * Get task id
      *
-     * @return - task id
+     * @return task id
      */
     public String getId() {
         return this.id;
@@ -54,7 +54,7 @@ public class Task {
     /**
      * Get task date
      *
-     * @return - task date
+     * @return task date
      */
     public String getDate() {
         return this.date;
@@ -63,7 +63,7 @@ public class Task {
     /**
      * Set task date
      *
-     * @param date - task date
+     * @param date task date
      */
     public void setDate(String date) {
         this.date = date;
@@ -72,7 +72,7 @@ public class Task {
     /**
      * Get employee id
      *
-     * @return - employee id
+     * @return employee id
      */
     public String getEmployeeId() {
         return this.employeeId;
@@ -81,7 +81,7 @@ public class Task {
     /**
      * Set employee id
      *
-     * @param employeeId - employee id
+     * @param employeeId employee id
      */
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
@@ -90,7 +90,7 @@ public class Task {
     /**
      * Get task description
      *
-     * @return - task description
+     * @return task description
      */
     public String getDescription() {
         return this.description;
@@ -99,7 +99,7 @@ public class Task {
     /**
      * Set task description
      *
-     * @param description - task description
+     * @param description task description
      */
     public void setDescription(String description) {
         this.description = description;
@@ -108,7 +108,7 @@ public class Task {
     /**
      * Get task priority
      *
-     * @return - task priority
+     * @return task priority
      */
     public String getPriority() {
         return this.priority;
@@ -117,7 +117,7 @@ public class Task {
     /**
      * Set task priority
      *
-     * @param priority - task priority
+     * @param priority task priority
      */
     public void setPriority(String priority) {
         this.priority = priority;
@@ -126,7 +126,7 @@ public class Task {
     /**
      * Get task limit date
      *
-     * @return - task limit date
+     * @return task limit date
      */
     public String getLimitDate() {
         return this.limitDate;
@@ -135,7 +135,7 @@ public class Task {
     /**
      * Set task limit date
      *
-     * @param limitDate - task limit date
+     * @param limitDate task limit date
      */
     public void setLimitDate(String limitDate) {
         this.limitDate = limitDate;
@@ -144,7 +144,7 @@ public class Task {
     /**
      * Get task resolution date
      *
-     * @return - task resolution date
+     * @return task resolution date
      */
     public String getResolutionDate() {
         return this.resolutionDate;
@@ -153,7 +153,7 @@ public class Task {
     /**
      * Set task resolution date
      *
-     * @param resolutionDate - task resolution date
+     * @param resolutionDate task resolution date
      */
     public void setResolutionDate(String resolutionDate) {
         this.resolutionDate = resolutionDate;
@@ -162,7 +162,7 @@ public class Task {
     /**
      * Get task notes
      *
-     * @return - task notes
+     * @return task notes
      */
     public String getNotes() {
         return this.notes;
@@ -171,7 +171,7 @@ public class Task {
     /**
      * Set task notes
      *
-     * @param notes - task notes
+     * @param notes task notes
      */
     public void setNotes(String notes) {
         this.notes = notes;
@@ -180,7 +180,7 @@ public class Task {
     /**
      * Get task employee name
      *
-     * @return - task employee name
+     * @return task employee name
      */
     public String getEmployeeName() {
         return this.employeeName;
@@ -189,7 +189,7 @@ public class Task {
     /**
      * Set task employee name
      *
-     * @param employeeName - task employee name
+     * @param employeeName task employee name
      */
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;

@@ -34,7 +34,7 @@ import java.util.ResourceBundle;
  * Supplier Details Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-28
+ * @version 2020-11-01
  */
 
 public class SupplierDetailsController implements Initializable {
@@ -87,7 +87,7 @@ public class SupplierDetailsController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -98,7 +98,7 @@ public class SupplierDetailsController implements Initializable {
     /**
      * Populate interface
      *
-     * @param supplier - supplier object
+     * @param supplier supplier object
      */
     public void inflateUI(Supplier supplier) {
         this.supplier = supplier;
@@ -122,8 +122,6 @@ public class SupplierDetailsController implements Initializable {
 
     /**
      * Show add note window
-     *
-     * @ - SQL exception
      */
     @FXML
     public void addNoteButtonAction() {
@@ -135,7 +133,7 @@ public class SupplierDetailsController implements Initializable {
 
             NoteAddController controller = loader.getController();
             controller.setPersonId(this.supplier.getId());
-            controller.setPersontype("supplier");
+            controller.setPersonType("supplier");
 
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Adicionar Nota");
@@ -151,7 +149,7 @@ public class SupplierDetailsController implements Initializable {
     /**
      * Note delete handler
      *
-     * @param event - delete event
+     * @param event delete event
      */
     @FXML
     private void handleNoteDelete(ActionEvent event) {
@@ -182,7 +180,7 @@ public class SupplierDetailsController implements Initializable {
     /**
      * Refresh handler
      *
-     * @param event - refresh event
+     * @param event refresh event
      */
     @FXML
     private void handleRefresh(ActionEvent event) {
@@ -192,7 +190,7 @@ public class SupplierDetailsController implements Initializable {
     /**
      * Note edit handler
      *
-     * @param event - edit event
+     * @param event edit event
      */
     @FXML
     public void handleNoteEdit(ActionEvent event) {

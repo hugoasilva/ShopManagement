@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * Note Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-11-01
  */
 
 public class NoteAddController implements Initializable {
@@ -39,7 +39,6 @@ public class NoteAddController implements Initializable {
     public NoteAddController() {
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
@@ -47,7 +46,7 @@ public class NoteAddController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -56,7 +55,7 @@ public class NoteAddController implements Initializable {
     }
 
     /**
-     * Close parent
+     * Close parent window
      */
     @FXML
     private void closeParent() {
@@ -64,18 +63,28 @@ public class NoteAddController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Set person id
+     *
+     * @param id person id
+     */
     public void setPersonId(String id) {
         this.personId = id;
     }
 
-    public void setPersontype(String type) {
+    /**
+     * Set person type
+     *
+     * @param type person type
+     */
+    public void setPersonType(String type) {
         this.personType = type;
     }
 
     /**
      * Add note
      *
-     * @param event - add note event
+     * @param event add note event
      */
     @FXML
     private void addNote(ActionEvent event) {
@@ -140,7 +149,7 @@ public class NoteAddController implements Initializable {
     /**
      * Populate table
      *
-     * @param note - customer object
+     * @param note note object
      */
     public void inflateUI(Note note) {
         this.message.setText(note.getMessage());

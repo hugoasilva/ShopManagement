@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
  * Main Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-11-01
  */
 
 public class Main extends Application {
@@ -29,7 +29,7 @@ public class Main extends Application {
     /**
      * Main app app main function
      *
-     * @param args - cmd arguments
+     * @param args cmd arguments
      */
     public static void main(String[] args) {
         ShopManagementUtil.createDownloadsUploadsFolder();
@@ -50,8 +50,7 @@ public class Main extends Application {
     /**
      * Show login window
      *
-     * @param stage - app's stage
-     * @ - exception
+     * @param stage app's stage
      */
     @Override
     public void start(Stage stage) {

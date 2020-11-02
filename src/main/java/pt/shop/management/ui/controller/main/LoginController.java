@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +28,7 @@ import java.util.ResourceBundle;
  * Login Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-23
+ * @version 2020-11-01
  */
 
 public class
@@ -54,7 +52,7 @@ LoginController implements Initializable {
     /**
      * Handle login event
      *
-     * @param event - login event
+     * @param event login event
      */
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
@@ -87,7 +85,7 @@ LoginController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void handleCancelButtonAction(ActionEvent event) {
@@ -112,16 +110,13 @@ LoginController implements Initializable {
             stage.setScene(new Scene(parent));
             stage.setMaximized(true);
             Platform.setImplicitExit(false);
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    event.consume();
-                    boolean close = DialogHandler.showMaterialConfirmationDialog(
-                            parent, "Sair", "Tem a certeza que pretende sair?");
-                    if (close) {
-                        Platform.exit();
-                        System.exit(0);
-                    }
+            stage.setOnCloseRequest(event -> {
+                event.consume();
+                boolean close = DialogHandler.showMaterialConfirmationDialog(
+                        parent, "Sair", "Tem a certeza que pretende sair?");
+                if (close) {
+                    Platform.exit();
+                    System.exit(0);
                 }
             });
             stage.show();

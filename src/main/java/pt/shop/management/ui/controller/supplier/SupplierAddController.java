@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.shop.management.data.database.DatabaseHandler;
 import pt.shop.management.data.model.Supplier;
@@ -19,7 +18,7 @@ import java.util.ResourceBundle;
  * Supplier Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-11-01
  */
 
 public class SupplierAddController implements Initializable {
@@ -40,8 +39,6 @@ public class SupplierAddController implements Initializable {
     @FXML
     private JFXTextField nif;
     @FXML
-    private StackPane rootPane;
-    @FXML
     private AnchorPane mainContainer;
 
     @Override
@@ -51,7 +48,7 @@ public class SupplierAddController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -62,7 +59,7 @@ public class SupplierAddController implements Initializable {
     /**
      * Add supplier to table
      *
-     * @param event - add supplier event
+     * @param event add supplier event
      */
     @FXML
     private void addSupplier(ActionEvent event) {
@@ -100,7 +97,7 @@ public class SupplierAddController implements Initializable {
     /**
      * Populate table
      *
-     * @param supplier - supplier object
+     * @param supplier supplier object
      */
     public void inflateUI(Supplier supplier) {
         this.name.setText(supplier.getName());

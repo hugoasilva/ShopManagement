@@ -85,7 +85,7 @@ public class CustomerDetailsController implements Initializable {
     /**
      * Cancel button handler
      *
-     * @param event - cancel event
+     * @param event cancel event
      */
     @FXML
     private void cancel(ActionEvent event) {
@@ -96,7 +96,7 @@ public class CustomerDetailsController implements Initializable {
     /**
      * Populate interface
      *
-     * @param customer - customer object
+     * @param customer customer object
      */
     public void inflateUI(Customer customer) {
         this.id.setText("Cliente nr: " + customer.getId());
@@ -120,8 +120,6 @@ public class CustomerDetailsController implements Initializable {
 
     /**
      * Show add note window
-     *
-     * @ - SQL exception
      */
     @FXML
     public void addNoteButtonAction() {
@@ -134,7 +132,7 @@ public class CustomerDetailsController implements Initializable {
             NoteAddController controller = loader.getController();
 
             controller.setPersonId(this.customer.getId());
-            controller.setPersontype("customer");
+            controller.setPersonType("customer");
 
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Adicionar Nota");
@@ -150,7 +148,7 @@ public class CustomerDetailsController implements Initializable {
     /**
      * Note delete handler
      *
-     * @param event - delete event
+     * @param event delete event
      */
     @FXML
     private void handleNoteDelete(ActionEvent event) {
@@ -181,7 +179,7 @@ public class CustomerDetailsController implements Initializable {
     /**
      * Refresh handler
      *
-     * @param event - refresh event
+     * @param event refresh event
      */
     @FXML
     private void handleRefresh(ActionEvent event) {
@@ -191,7 +189,7 @@ public class CustomerDetailsController implements Initializable {
     /**
      * Note edit handler
      *
-     * @param event - edit event
+     * @param event edit event
      */
     @FXML
     public void handleNoteEdit(ActionEvent event) {

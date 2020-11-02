@@ -4,26 +4,26 @@ package pt.shop.management.data.model;
  * Customer Class
  *
  * @author Hugo Silva
- * @version 2020-10-25
+ * @version 2020-11-01
  */
 
 public class Customer {
-    String id;
-    String name;
-    String address;
-    String phone;
-    String email;
-    String nif;
+    private final String id;
+    private String name;
+    private String address;
+    private String phone;
+    private String email;
+    private String nif;
 
     /**
      * Customer object constructor
      *
-     * @param id      - customer's id
-     * @param name    - customer's name
-     * @param address - customer's address
-     * @param phone   - customer's phone
-     * @param email   - customer's email
-     * @param nif     - customer's nif
+     * @param id      customer's id
+     * @param name    customer's name
+     * @param address customer's address
+     * @param phone   customer's phone
+     * @param email   customer's email
+     * @param nif     customer's nif
      */
     public Customer(String id, String name, String address, String phone, String email, String nif) {
         this.id = id;
@@ -37,7 +37,7 @@ public class Customer {
     /**
      * Get customer id
      *
-     * @return - customer id
+     * @return customer id
      */
     public String getId() {
         return this.id;
@@ -46,7 +46,7 @@ public class Customer {
     /**
      * Get customer name
      *
-     * @return - customer name
+     * @return customer name
      */
     public String getName() {
         return this.name;
@@ -62,7 +62,7 @@ public class Customer {
     /**
      * Get customer address
      *
-     * @return - customer address
+     * @return customer address
      */
     public String getAddress() {
         return this.address;
@@ -78,7 +78,7 @@ public class Customer {
     /**
      * Get customer phone
      *
-     * @return - customer phone
+     * @return customer phone
      */
     public String getPhone() {
         return this.phone;
@@ -94,7 +94,7 @@ public class Customer {
     /**
      * Get customer email
      *
-     * @return - customer email
+     * @return customer email
      */
     public String getEmail() {
         return this.email;
@@ -110,7 +110,7 @@ public class Customer {
     /**
      * Get customer nif
      *
-     * @return - customer nif
+     * @return customer nif
      */
     public String getNif() {
         return this.nif;
