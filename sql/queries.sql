@@ -1,57 +1,76 @@
 CREATE TABLE `users`
 (
-    `id`       int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `username` varchar(30)      NOT NULL,
+    `id`       int(10) unsigned NOT NULL UNIQUE AUTO_INCREMENT,
+    `username` varchar(30)      NOT NULL UNIQUE,
     `password` varchar(30)      NOT NULL,
+    `level`    varchar(10)      NOT NULL,
     PRIMARY KEY (`id`)
 );
 
-Tabela Moradas
+Tabela
+Moradas
 
 CREATE TABLE `addresses`
 (
-    `id`     int(11)      NOT NULL AUTO_INCREMENT,
-    `street` varchar(255) NOT NULL,
-    `city`   varchar(100) NOT NULL,
-    `zip`    varchar(9)   NOT NULL,
+    `id`       int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
+    `street`   varchar(255) NOT NULL,
+    `number`   int(11)      NOT NULL,
+    `town`     varchar(100) NOT NULL,
+    `city`     varchar(100) NOT NULL,
+    `district` varchar(100) NOT NULL,
+    `zip`      varchar(9)   NOT NULL,
     PRIMARY KEY (`id`)
 );
 
-Tabela Clientes
+Tabela 
+Marcas
+
+CREATE TABLE `brands`
+(
+    `id`   int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `type` varchar(20)  NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+Tabela
+Clientes
 
 CREATE TABLE `customers`
 (
-    `id`      int(11)        NOT NULL AUTO_INCREMENT,
-    `name`    varchar(255)   NOT NULL,
-    `address` varchar(255)   NOT NULL,
-    `phone`   decimal(10, 0) NOT NULL,
-    `email`   varchar(100)   NOT NULL,
-    `nif`     decimal(10, 0) NOT NULL,
+    `id`         int(11)        NOT NULL UNIQUE AUTO_INCREMENT,
+    `name`       varchar(255)   NOT NULL,
+    `address_id` int(11)        NOT NULL UNIQUE,
+    `phone`      decimal(10, 0) NOT NULL UNIQUE,
+    `email`      varchar(100)   NOT NULL UNIQUE,
+    `nif`        decimal(10, 0) NOT NULL UNIQUE,
     PRIMARY KEY (`id`)
 );
 
-Tabela Empregados
+Tabela
+Empregados
 
 CREATE TABLE `employees`
 (
-    `id`      int(11)        NOT NULL AUTO_INCREMENT,
-    `name`    varchar(255)   NOT NULL,
-    `address` varchar(255)   NOT NULL,
-    `phone`   decimal(10, 0) NOT NULL,
-    `email`   varchar(100)   NOT NULL,
-    `nif`     decimal(10, 0) NOT NULL,
+    `id`         int(11)        NOT NULL UNIQUE AUTO_INCREMENT,
+    `name`       varchar(255)   NOT NULL,
+    `address_id` int(11)        NOT NULL UNIQUE,
+    `phone`      decimal(10, 0) NOT NULL UNIQUE,
+    `email`      varchar(100)   NOT NULL UNIQUE,
+    `nif`        decimal(10, 0) NOT NULL UNIQUE,
     PRIMARY KEY (`id`)
 );
 
-Tabela Faturas
+Tabela
+Faturas
 
 CREATE TABLE `invoices`
 (
-    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `id`          int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
     `customer_id` int(11)      NOT NULL,
     `employee_id` int(11)      NOT NULL,
     `date`        date         NOT NULL,
-    `pdf`         varchar(255) NOT NULL,
+    `pdf`         varchar(255) NOT NULL UNIQUE,
     PRIMARY KEY (`id`),
     KEY `customer_id` (`customer_id`),
     KEY `employee_id` (`employee_id`),
@@ -60,11 +79,12 @@ CREATE TABLE `invoices`
         ON DELETE CASCADE
 );
 
-Tabela Produtos
+Tabela
+Produtos
 
 CREATE TABLE `products`
 (
-    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `id`          int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
     `name`        varchar(255) NOT NULL,
     `price`       int(11)      NOT NULL,
     `supplier_id` int(11)      NOT NULL,
@@ -74,11 +94,13 @@ CREATE TABLE `products`
     KEY `supplier_id` (`supplier_id`),
     CONSTRAINT `fk_products_suppliers` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`)
         ON DELETE CASCADE
-)
+) Tabela
+Notas
+Clientes
 
 CREATE TABLE `notes_customers`
 (
-    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `id`          int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
     `customer_id` int(11)      NOT NULL,
     `message`     varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
@@ -87,9 +109,13 @@ CREATE TABLE `notes_customers`
         ON DELETE CASCADE
 );
 
+Tabela
+Notas
+Empregados
+
 CREATE TABLE `notes_employees`
 (
-    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `id`          int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
     `employee_id` int(11)      NOT NULL,
     `message`     varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
@@ -98,9 +124,13 @@ CREATE TABLE `notes_employees`
         ON DELETE CASCADE
 );
 
+Tabela
+Notas
+Fornecedores
+
 CREATE TABLE `notes_suppliers`
 (
-    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `id`          int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
     `supplier_id` int(11)      NOT NULL,
     `message`     varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
@@ -109,24 +139,26 @@ CREATE TABLE `notes_suppliers`
         ON DELETE CASCADE
 );
 
-Tabela Fornecedores
+Tabela
+Fornecedores
 
 CREATE TABLE `suppliers`
 (
-    `id`      int(11)        NOT NULL AUTO_INCREMENT,
-    `name`    varchar(255)   NOT NULL,
-    `address` varchar(255)   NOT NULL,
-    `phone`   decimal(10, 0) NOT NULL,
-    `email`   varchar(100)   NOT NULL,
-    `nif`     decimal(10, 0) NOT NULL,
+    `id`         int(11)        NOT NULL UNIQUE AUTO_INCREMENT,
+    `name`       varchar(255)   NOT NULL,
+    `address_id` int(11)        NOT NULL UNIQUE,
+    `phone`      decimal(10, 0) NOT NULL UNIQUE,
+    `email`      varchar(100)   NOT NULL UNIQUE,
+    `nif`        decimal(10, 0) NOT NULL UNIQUE,
     PRIMARY KEY (`id`)
 );
 
-Tabela Produtos_Fatura
+Tabela
+Produtos_Fatura
 
 CREATE TABLE `products_invoices`
 (
-    `id`         int(11) NOT NULL AUTO_INCREMENT,
+    `id`         int(11) NOT NULL UNIQUE AUTO_INCREMENT,
     `invoice_id` int(11) NOT NULL,
     `product_id` int(11) NOT NULL,
     `quantity`   int(6)  NOT NULL,
@@ -138,11 +170,59 @@ CREATE TABLE `products_invoices`
         ON DELETE CASCADE
 );
 
+CREATE TABLE `products_quotes`
+(
+    `id`         int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+    `quote_id`   int(11) NOT NULL,
+    `product_id` int(11) NOT NULL,
+    `quantity`   int(6)  NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `quote_id` (`quote_id`),
+    KEY `product_id` (`product_id`),
+    CONSTRAINT `fk_products_quotes_quotes` FOREIGN KEY (`quote_id`) REFERENCES `quotes` (`id`),
+    CONSTRAINT `fk_products_quotes_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+        ON DELETE CASCADE
+);
+
+
+CREATE TABLE `requests`
+(
+    `id`                int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
+    `date`              date         NOT NULL,
+    `type`              varchar(100) NOT NULL,
+    `quote_id`          int(11)      NOT NULL UNIQUE,
+    `description`       varchar(100) NOT NULL,
+    `intervention_date` date         NOT NULL,
+    `invoice_id`        int(11)      NOT NULL UNIQUE,
+    `paid`              BOOLEAN      NOT NULL,
+    `payment_method`    varchar(100) NOT NULL,
+    `payment_proof`     varchar(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `quote_id` (`quote_id`),
+    KEY `invoice_id` (`invoice_id`),
+    CONSTRAINT `fk_requests_quotes` FOREIGN KEY (`quote_id`) REFERENCES `quotes` (`id`),
+    CONSTRAINT `fk_requests_invoices` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`)
+        ON DELETE CASCADE
+);
+
+
+CREATE TABLE `quotes`
+(
+    `id`          int(11)      NOT NULL UNIQUE AUTO_INCREMENT,
+    `customer_id` int(11)      NOT NULL,
+    `date`        date         NOT NULL,
+    `pdf`         varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (`id`),
+    KEY `customer_id` (`customer_id`),
+    CONSTRAINT `fk_quotes_customers` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+    ON DELETE CASCADE
+);
 
 insert into users (username, password)
 values ('admin', '123');
 
-Inserir Clientes
+Inserir
+Clientes
 
 INSERT INTO customers (name, address, phone, email, nif)
 VALUES ('Tiago Matias', 'Rua das Flores', 912354567, 'bla@bla.com', 123456789);
@@ -189,7 +269,8 @@ VALUES ('Tiago Manuel', 'Rua D Tiago', 923232521, 'tiago.manuel@gmail.com', 2123
 INSERT INTO customers (name, address, phone, email, nif)
 VALUES ('Manuel Torres', 'Rua D Manuel', 9123214232, 'manue.torres@gmail.com', 213235621);
 
-Inserir empregados
+Inserir
+empregados
 
 INSERT INTO employees (name, address, phone, email, nif)
 VALUES ('João Maria', 'Rua dos Abetos', 912345647, 'email@email.com', 123543276);
@@ -212,7 +293,8 @@ VALUES ('Pedro Manuel', 'Rua dos Abetos', 923124231, 'pedro.manuel@gmail.com', 2
 INSERT INTO employees (name, address, phone, email, nif)
 VALUES ('Pedro Manuel', 'Rua dos Abetos', 923125321, 'pedro.manuel@gmail.com', 263212352);
 
-Inserir faturas
+Inserir
+faturas
 
 INSERT INTO invoices (customer_id, employee_id, date, products, pdf)
 VALUES (1, 1, '2020-09-25', '1', '/home/pi/management/invoices/1.pdf');
@@ -223,7 +305,8 @@ VALUES (5, 2, '2020-10-09', '2', '/home/pi/management/invoices/3.pdf');
 INSERT INTO invoices (customer_id, employee_id, date, products, pdf)
 VALUES (4, 1, '2020-10-09', '3', '/home/pi/management/invoices/4.pdf');
 
-Inserir produtos
+Inserir
+produtos
 
 INSERT INTO products (name, price, supplier_id, quantity, image)
 values ('Peça 1', 50, 1, 10, 'home/pi/management/products/1.png');
@@ -238,7 +321,8 @@ VALUES ('Peça 5', 20, 3, 10, 'home/pi/management/products/5.png');
 INSERT INTO products (name, price, supplier_id, quantity, image)
 VALUES ('Peça 6', 100, 2, 5, 'home/pi/management/products/6.png');
 
-Inserir produtos em faturas
+Inserir
+produtos em faturas
 
 INSERT INTO products_invoices (invoice_id, product_id, quantity)
 VALUES (1, 1, 2);
@@ -253,14 +337,16 @@ VALUES (2, 2, 2);
 INSERT INTO products_invoices (invoice_id, product_id, quantity)
 VALUES (2, 3, 2);
 
-Insirer Notas Clientes
+Insirer
+Notas Clientes
 
 INSERT INTO notes_customers (customer_id, message)
 VALUES (1, 'Falta Pagamento');
 INSERT INTO notes_customers (customer_id, message)
 VALUES (2, 'Falta Pagamento');
 
-Inserir Fornecedores
+Inserir
+Fornecedores
 
 INSERT INTO suppliers (name, address, phone, email, nif)
 VALUES ('Fornecedor 1', 'Rua das Flores', 912354567, 'bla@bla.com', 123456789);
@@ -273,7 +359,8 @@ VALUES ('Fornecedor 4', 'Rua das Flores', 912354567, 'bla@bla.com', 123456789);
 INSERT INTO suppliers (name, address, phone, email, nif)
 VALUES ('Fornecedor 5', 'Rua das Flores', 912354567, 'bla@bla.com', 123456789);
 
-Seleccionar faturas por data
+Seleccionar
+faturas por data
 
 select *
 from invoices

@@ -87,9 +87,6 @@ public class Note {
         return this.type;
     }
 
-
-    // TODO Remove following methods???
-
     /**
      * Set note person type
      *
@@ -97,17 +94,5 @@ public class Note {
      */
     public void setPersonType(String type) {
         this.type = type;
-    }
-
-    public boolean isCustomer() {
-        return this.type.equals("customer");
-    }
-
-    public boolean isEmployee() {
-        return this.type.equals("employee");
-    }
-
-    public boolean isSupplier() {
-        return this.type.equals("supplier");
     }
 }

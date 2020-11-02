@@ -83,11 +83,16 @@ public class MainController implements Initializable {
         this.initComponents();
     }
 
-
+    /**
+     * Get window stage
+     *
+     * @return window stage object
+     */
     private Stage getStage() {
         return (Stage) rootPane.getScene().getWindow();
     }
 
+    // TODO Work and Task tabs content
     /**
      * Initialize tab panes
      */

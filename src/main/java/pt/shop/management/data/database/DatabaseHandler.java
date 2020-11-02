@@ -210,7 +210,6 @@ public final class DatabaseHandler {
             "INSERT INTO notes_customers (customer_id, message) VALUES (?, ?)";
     private final static String INSERT_EMPLOYEE_QUERY =
             "INSERT INTO employees (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
-    // TODO change invoice table structure (Remove products)
     private static final String INSERT_EMPLOYEE_NOTE_QUERY =
             "INSERT INTO notes_employees (employee_id, message) VALUES (?, ?)";
     private final static String INSERT_INVOICE_QUERY =
