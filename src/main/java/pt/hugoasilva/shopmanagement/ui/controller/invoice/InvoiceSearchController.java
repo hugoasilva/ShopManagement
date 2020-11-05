@@ -287,36 +287,40 @@ public class InvoiceSearchController implements Initializable {
      * Search invoice operation
      */
     public void searchInvoice() {
-        String id = null;
-        String customer = null;
-        String employee = null;
-        String product = null;
-        String initDate = null;
-        String finalDate = null;
-        if (!this.idSearchInput.getText().isEmpty()) {
-            id = this.idSearchInput.getText();
+        if (!this.idSearchInput.getText().isEmpty() || !this.customerSearchInput.getText().isEmpty()
+                || !this.employeeSearchInput.getText().isEmpty()
+                || !this.productSearchInput.getText().isEmpty()
+                || this.initDate.getValue() != null || this.finalDate.getValue() != null) {
+            String id = null;
+            String customer = null;
+            String employee = null;
+            String product = null;
+            String initDate = null;
+            String finalDate = null;
+            if (!this.idSearchInput.getText().isEmpty()) {
+                id = this.idSearchInput.getText();
+            }
+            if (!this.customerSearchInput.getText().isEmpty()) {
+                customer = this.customerSearchInput.getText();
+            }
+            if (!this.employeeSearchInput.getText().isEmpty()) {
+                employee = this.employeeSearchInput.getText();
+            }
+            if (!this.productSearchInput.getText().isEmpty()) {
+                product = this.productSearchInput.getText();
+            }
+            if (this.initDate.getValue() != null) {
+                initDate = this.initDate.getValue().toString();
+            }
+            if (this.finalDate.getValue() != null) {
+                finalDate = this.finalDate.getValue().toString();
+            }
+            this.list = DatabaseHandler.searchInvoice(id, customer, employee, product, initDate, finalDate);
+            this.tableView.setItems(this.list);
+        } else {
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
+                    "Insira dados para pesquisar.");
         }
-        if (!this.customerSearchInput.getText().isEmpty()) {
-            customer = this.customerSearchInput.getText();
-        }
-        if (!this.employeeSearchInput.getText().isEmpty()) {
-            employee = this.employeeSearchInput.getText();
-        }
-        if (!this.productSearchInput.getText().isEmpty()) {
-            product = this.productSearchInput.getText();
-        }
-        if (this.initDate.getValue() != null) {
-            initDate = this.initDate.getValue().toString();
-        }
-        if (this.finalDate.getValue() != null) {
-            finalDate = this.finalDate.getValue().toString();
-        }
-//        } else {
-//            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
-//                    "Insira dados em todos os campos.");
-//        }
-        this.list = DatabaseHandler.searchInvoice(id, customer, employee, product, initDate, finalDate);
-        this.tableView.setItems(this.list);
     }
 
     /**

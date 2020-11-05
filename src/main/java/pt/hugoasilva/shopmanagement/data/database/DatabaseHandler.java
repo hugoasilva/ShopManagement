@@ -79,75 +79,7 @@ public final class DatabaseHandler {
             "SELECT management.invoices.*" +
                     ", customers.name AS customer_name" +
                     ", employees.name AS employee_name " +
-                    "FROM invoices " +
-                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
-                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
-                    "WHERE ";
-
-    private static final String SEARCH_INVOICES_BY_ID_QUERY =
-            "SELECT management.invoices.*" +
-                    ", customers.name AS customer_name" +
-                    ", employees.name AS employee_name " +
-                    "FROM invoices " +
-                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
-                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
-                    "WHERE invoices.id LIKE ?";
-    private static final String SEARCH_INVOICES_BY_CUSTOMER_ID_QUERY =
-            "SELECT management.invoices.*" +
-                    ", customers.name AS customer_name" +
-                    ", employees.name AS employee_name " +
-                    "FROM invoices " +
-                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
-                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
-                    "WHERE invoices.customer_id LIKE ?";
-    private static final String SEARCH_INVOICES_BY_CUSTOMER_NAME_QUERY = null;
-    // TODO
-    private static final String SEARCH_INVOICES_BY_EMPLOYEE_ID_QUERY =
-            "SELECT management.invoices.*" +
-                    ", customers.name AS customer_name" +
-                    ", employees.name AS employee_name " +
-                    "FROM invoices " +
-                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
-                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
-                    "WHERE invoices.employee_id LIKE ?";
-    private static final String SEARCH_INVOICES_BY_EMPLOYEE_NAME_QUERY = null;
-    // TODO
-    private static final String SEARCH_INVOICES_BY_DATE_QUERY =
-            "SELECT management.invoices.*" +
-                    ", customers.name AS customer_name" +
-                    ", employees.name AS employee_name " +
-                    "FROM invoices " +
-                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
-                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
-                    "WHERE invoices.date=?";
-    private static final String SEARCH_INVOICES_BY_INIT_DATE_QUERY =
-            "SELECT management.invoices.*" +
-                    ", customers.name AS customer_name" +
-                    ", employees.name AS employee_name " +
-                    "from invoices " +
-                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
-                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
-                    "where date >= ? " +
-                    "and date <= CURDATE()";
-    private static final String SEARCH_INVOICES_BY_INIT_AND_FINAL_DATE_QUERY =
-            "SELECT management.invoices.*" +
-                    ", customers.name AS customer_name" +
-                    ", employees.name AS employee_name " +
-                    "from invoices " +
-                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
-                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
-                    "where date >= ? " +
-                    "and date <= ?";
-    // TODO Fix initial date
-    private static final String SEARCH_INVOICES_BY_FINAL_DATE_QUERY =
-            "SELECT management.invoices.*" +
-                    ", customers.name AS customer_name" +
-                    ", employees.name AS employee_name " +
-                    "from invoices " +
-                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
-                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
-                    "where date >= '2020-09-01' " +
-                    "and date <= ?";
+                    "FROM invoices ";
 
     // Note select queries
     private static final String GET_CUSTOMER_NOTE_ID_QUERY =
@@ -1036,44 +968,65 @@ public final class DatabaseHandler {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
         String query = SEARCH_INVOICES_QUERY;
         boolean and = false;
+        boolean customers = false;
+        boolean employees = false;
+        if (customer != null) {
+            if (customer.matches("[0-9]+")) {
+                query += "INNER JOIN customers ON invoices.customer_id = customers.id " +
+                        "AND customers.id LIKE '%" + customer + "%' ";
+            } else {
+                query += "INNER JOIN customers ON invoices.customer_id = customers.id " +
+                        "AND customers.name LIKE '%" + customer + "%' ";
+            }
+            customers = true;
+        }
+        if (employee != null) {
+            if (employee.matches("[0-9]+")) {
+                query += "INNER JOIN employees ON invoices.employee_id = employees.id " +
+                        "AND employees.id LIKE '%" + employee + "%' ";
+            } else {
+                query += "INNER JOIN employees ON invoices.employee_id = employees.id " +
+                        "AND employees.name LIKE '%" + employee + "%' ";
+            }
+            employees = true;
+        }
+        if (product != null) {
+            if (product.matches("[0-9]+")) {
+                // TODO Invoice product id search
+            } else {
+                // TODO Invoice product name search
+            }
+        }
+        if (!customers) {
+            query += "INNER JOIN customers ON invoices.customer_id = customers.id";
+        }
+        if (!employees) {
+            query += "INNER JOIN employees ON invoices.employee_id = employees.id";
+        }
+        if (id != null || initDate != null || finalDate != null) {
+            query += "WHERE ";
+        }
         if (id != null) {
             query += "invoices.id LIKE '" + id + "'";
             and = true;
         }
-        if (customer != null) {
-            if (and) {
-                query += " AND ";
-            }
-            query += "invoices.customer_id LIKE '" + customer + "'";
-            and = true;
-        }
-        if (employee != null) {
-            if (and) {
-                query += " AND ";
-            }
-            query += "invoices.employee_id LIKE '" + employee + "'";
-            and = true;
-        }
-        if (product != null) {
-            if (and) {
-                query = query + " AND ";
-            }
-            query += "product_id LIKE '" + product + "'";
-            and = true;
-        }
         if (initDate != null) {
             if (and) {
-                query += " AND ";
+                query += "AND invoices.date>='" + initDate + "'";
+            } else {
+                query += "invoices.date>='" + initDate + "'";
+                and = true;
             }
-            query += "invoices.date>='" + initDate + "'";
-            and = true;
         }
         if (finalDate != null) {
             if (and) {
-                query += " AND ";
+                query += "AND invoices.date<='" + finalDate + "'";
+            } else {
+                query += "invoices.date<='" + finalDate + "'";
             }
-            query += "invoices.date<='" + finalDate + "'";
         }
+
+        System.out.println(query);
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
