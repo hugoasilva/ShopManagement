@@ -6,7 +6,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
-group 'pt.shop.management'
+group 'pt.hugoasilva.shopmanagement'
 version '3.8'
 
 sourceCompatibility = JavaVersion.VERSION_14
@@ -17,7 +17,7 @@ repositories {
     jcenter()
 }
 
-mainClassName = 'pt.shop.management.ui.main.Start'
+mainClassName = 'pt.hugoasilva.shopmanagement.ui.main.Start'
 
 shadowJar {
     manifest {
@@ -36,7 +36,7 @@ createExe {
     language = "PORTUGUESE_PORTUGAL"
     productName = 'Sistema de Gestão de Loja'
     fileDescription = 'Sistema de Gestão de Loja'
-    mainClassName = 'pt.shop.management.ui.main.Start'
+    mainClassName = 'pt.hugoasilva.shopmanagement.ui.main.Start'
     icon = "${projectDir}/src/main/resources/img/icon.ico"
     jar = 'Management-' + project.version + '.jar'
     downloadUrl = 'https://drive.google.com/file/d/1X_-o8Sa1Cua5yJ-h7OfRoVSQxul6l8w2/view?usp=sharing'

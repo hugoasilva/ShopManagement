@@ -8,7 +8,7 @@
            minHeight="-Infinity"
            minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="main-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.controller.main.MainController">
+           fx:controller="pt.hugoasilva.shopmanagement.ui.controller.main.MainController">
     <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0">
         <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                     AnchorPane.topAnchor="25.0">
@@ -23,14 +23,14 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0">
                         <JFXTabPane fx:id="customerTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="customerAddTab" closable="false" styleClass="tab-main" text="Adicionar">
-                                <graphic>
-                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
-                                </graphic>
-                            </Tab>
                             <Tab fx:id="customerSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
                                 <graphic>
                                     <FontIcon iconLiteral="eli-search-alt" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="customerAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
                                 </graphic>
                             </Tab>
                         </JFXTabPane>
@@ -43,14 +43,14 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <JFXTabPane fx:id="employeeTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="employeeAddTab" closable="false" styleClass="tab-main" text="Adicionar">
-                                <graphic>
-                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
-                                </graphic>
-                            </Tab>
                             <Tab fx:id="employeeSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
                                 <graphic>
                                     <FontIcon iconLiteral="eli-search-alt" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="employeeAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
                                 </graphic>
                             </Tab>
                         </JFXTabPane>
@@ -63,14 +63,14 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <JFXTabPane fx:id="invoiceTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="invoiceAddTab" closable="false" styleClass="tab-main" text="Adicionar">
-                                <graphic>
-                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
-                                </graphic>
-                            </Tab>
                             <Tab fx:id="invoiceSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
                                 <graphic>
                                     <FontIcon iconLiteral="eli-search-alt" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="invoiceAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
                                 </graphic>
                             </Tab>
                         </JFXTabPane>
@@ -83,14 +83,14 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <JFXTabPane fx:id="supplierTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="supplierAddTab" closable="false" styleClass="tab-main" text="Adicionar">
-                                <graphic>
-                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
-                                </graphic>
-                            </Tab>
                             <Tab fx:id="supplierSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
                                 <graphic>
                                     <FontIcon iconLiteral="eli-search-alt" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="supplierAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
                                 </graphic>
                             </Tab>
                         </JFXTabPane>
@@ -103,14 +103,14 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <JFXTabPane fx:id="workTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="workAddTab" closable="false" styleClass="tab-main" text="Adicionar">
-                                <graphic>
-                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
-                                </graphic>
-                            </Tab>
                             <Tab fx:id="workSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
                                 <graphic>
                                     <FontIcon iconLiteral="eli-search-alt" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="workAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
                                 </graphic>
                             </Tab>
                         </JFXTabPane>
@@ -123,14 +123,14 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <JFXTabPane fx:id="productTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="productAddTab" closable="false" styleClass="tab-main" text="Adicionar">
-                                <graphic>
-                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
-                                </graphic>
-                            </Tab>
                             <Tab fx:id="productSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
                                 <graphic>
                                     <FontIcon iconLiteral="eli-search-alt" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="productAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
                                 </graphic>
                             </Tab>
                         </JFXTabPane>
@@ -143,14 +143,14 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <JFXTabPane fx:id="taskTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Tab fx:id="taskAddTab" closable="false" styleClass="tab-main" text="Adicionar">
-                                <graphic>
-                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
-                                </graphic>
-                            </Tab>
                             <Tab fx:id="taskSearchTab" closable="false" styleClass="tab-main" text="Pesquisar">
                                 <graphic>
                                     <FontIcon iconLiteral="eli-search-alt" iconSize="35" styleClass="font-icon"/>
+                                </graphic>
+                            </Tab>
+                            <Tab fx:id="taskAddTab" closable="false" styleClass="tab-main" text="Adicionar">
+                                <graphic>
+                                    <FontIcon iconLiteral="enty-circle-with-plus" iconSize="40" styleClass="font-icon"/>
                                 </graphic>
                             </Tab>
                         </JFXTabPane>
