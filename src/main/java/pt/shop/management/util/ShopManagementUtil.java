@@ -152,6 +152,7 @@ public class ShopManagementUtil {
             JSch.setConfig("StrictHostKeyChecking", "no");
             Session jschSession = jsch.getSession(SFTP_SERVER_USERNAME, SFTP_SERVER_URL);
             jschSession.setPassword(SFTP_SERVER_PASSWORD);
+            jschSession.setPort(4400);
             jschSession.connect();
             channel = (ChannelSftp) jschSession.openChannel("sftp");
         } catch (JSchException e) {

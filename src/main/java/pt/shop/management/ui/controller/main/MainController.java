@@ -86,6 +86,14 @@ public class MainController implements Initializable {
     @FXML
     private Tab taskSearchTab;
 
+    // Work tab
+    @FXML
+    private JFXTabPane workTabPane;
+    @FXML
+    private Tab workAddTab;
+    @FXML
+    private Tab workSearchTab;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.initComponents();
@@ -99,8 +107,6 @@ public class MainController implements Initializable {
     private Stage getStage() {
         return (Stage) rootPane.getScene().getWindow();
     }
-
-    // TODO Work and Task tabs content
 
     /**
      * Initialize tab panes
@@ -124,6 +130,12 @@ public class MainController implements Initializable {
         this.supplierTabPane.tabMinWidthProperty().bind(
                 this.rootAnchorPane.widthProperty().divide(
                         this.supplierTabPane.getTabs().size()).subtract(50));
+        this.taskTabPane.tabMinWidthProperty().bind(
+                this.rootAnchorPane.widthProperty().divide(
+                        this.taskTabPane.getTabs().size()).subtract(50));
+        this.workTabPane.tabMinWidthProperty().bind(
+                this.rootAnchorPane.widthProperty().divide(
+                        this.workTabPane.getTabs().size()).subtract(50));
         try {
             // Initialize customer tab content
             this.customerAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
@@ -150,6 +162,17 @@ public class MainController implements Initializable {
                     "/fxml/supplier/SupplierAdd.fxml")));
             this.supplierSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
                     "/fxml/supplier/SupplierSearch.fxml")));
+            // TODO Task and Work Tabs
+//            // Initialize task tab content
+//            this.taskAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+//                    "/fxml/task/TaskAdd.fxml")));
+//            this.taskSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+//                    "/fxml/task/TaskSearch.fxml")));
+//            // Initialize work tab content
+//            this.workAddTab.setContent(FXMLLoader.load(this.getClass().getResource(
+//                    "/fxml/work/WorkAdd.fxml")));
+//            this.workSearchTab.setContent(FXMLLoader.load(this.getClass().getResource(
+//                    "/fxml/work/WorkSearch.fxml")));
         } catch (IOException ex) {
             LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }

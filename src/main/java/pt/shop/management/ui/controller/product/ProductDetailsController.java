@@ -84,7 +84,6 @@ public class ProductDetailsController implements Initializable {
     private void setImage() {
         // Download image
         String fileName = id + ".png";
-        System.out.println(this.product.getImage());
         ShopManagementUtil.downloadFile(this.product.getImage(), fileName);
 
         // Set image

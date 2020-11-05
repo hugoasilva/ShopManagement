@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Product Add Controller Class
  *
  * @author Hugo Silva
- * @version 2020-11-01
+ * @version 2020-11-05
  */
 
 public class ProductAddController implements Initializable {
@@ -34,11 +34,11 @@ public class ProductAddController implements Initializable {
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(ProductAddController.class.getName());
     // Directory paths
-    private final static String LOCAL_UPLOAD_PATH = "uploads/";
     private final static String REMOTE_PRODUCT_PATH = "/home/pi/management/products/";
     // Product data
     private Product product;
     private String imagePath;
+    private boolean defaultImage = true;
     private Boolean isInEditMode = Boolean.FALSE;
     ;
     // UI Content
@@ -82,7 +82,12 @@ public class ProductAddController implements Initializable {
         String productPrice = price.getText();
         String productSupplierId = supplier.getText();
         String productQuantity = quantity.getText();
-        String productImage = REMOTE_PRODUCT_PATH + productId + ".png";
+        String productImage;
+        if (this.defaultImage) {
+            productImage = REMOTE_PRODUCT_PATH + "default.png";
+        } else {
+            productImage = REMOTE_PRODUCT_PATH + productId + ".png";
+        }
 
         if (productName.isEmpty() || productPrice.isEmpty() || productQuantity.isEmpty()) {
             DialogHandler.showMaterialErrorDialog(this.mainContainer, "Dados insuficientes",
@@ -95,11 +100,12 @@ public class ProductAddController implements Initializable {
             return;
         }
 
-        // TODO Set default image if no image was selected
         Product product = new Product(productId, productName,
                 productPrice, productSupplierId, productQuantity, productImage);
         if (DatabaseHandler.insertProduct(product)) {
-            ShopManagementUtil.uploadImage(this.imagePath, productImage);
+            if (!this.defaultImage) {
+                ShopManagementUtil.uploadImage(this.imagePath, productImage);
+            }
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Produto adicionado",
                     productName + " adicionado com sucesso!", false);
             clearEntries();
@@ -167,8 +173,10 @@ public class ProductAddController implements Initializable {
         File file = fileChooser.showOpenDialog(stage);
         if (file == null) {
             LOGGER.log(Level.INFO, "No image file was selected.");
+            this.defaultImage = true;
         } else {
             this.imagePath = file.getAbsolutePath();
+            this.defaultImage = false;
         }
     }
 }
