@@ -30,7 +30,6 @@ import pt.hugoasilva.shopmanagement.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -42,8 +41,6 @@ import java.util.ResourceBundle;
 
 public class InvoiceSearchController implements Initializable {
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(InvoiceSearchController.class.getName());
 
@@ -51,8 +48,6 @@ public class InvoiceSearchController implements Initializable {
     // Invoice list object
     ObservableList<Invoice> list = FXCollections.observableArrayList();
     // UI Content
-//    @FXML
-//    private JFXComboBox<Label> invoiceCombo;
     @FXML
     private TextField idSearchInput;
     @FXML
@@ -83,7 +78,6 @@ public class InvoiceSearchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
-//        this.initCombo();
         this.loadData();
     }
 
@@ -168,15 +162,6 @@ public class InvoiceSearchController implements Initializable {
         this.tableView.getColumns().add(pdfCol);
         this.tableView.getColumns().add(detailsCol);
     }
-
-//    /**
-//     * Initialize search combo box
-//     */
-//    private void initCombo() {
-//        this.invoiceCombo.getItems().addAll(new Label("ID"), new Label("ID Cliente"),
-//                new Label("ID Empregado"), new Label("Data"));
-//        this.invoiceCombo.setPromptText("Tipo de pesquisa...");
-//    }
 
     /**
      * Show Invoice PDF
@@ -274,23 +259,22 @@ public class InvoiceSearchController implements Initializable {
     }
 
     public void refreshTable() {
-//        if (this.invoiceCombo.getValue() == null && this.invoiceSearchInput.getText().isEmpty()) {
-//            this.list.clear();
+        this.list.clear();
         this.list = DatabaseHandler.getInvoiceList();
         this.tableView.setItems(list);
-//        } else {
-//            this.searchInvoice();
-//        }
     }
 
     /**
      * Search invoice operation
      */
     public void searchInvoice() {
-        if (!this.idSearchInput.getText().isEmpty() || !this.customerSearchInput.getText().isEmpty()
+        // Check if user input is present
+        if (!this.idSearchInput.getText().isEmpty()
+                || !this.customerSearchInput.getText().isEmpty()
                 || !this.employeeSearchInput.getText().isEmpty()
                 || !this.productSearchInput.getText().isEmpty()
-                || this.initDate.getValue() != null || this.finalDate.getValue() != null) {
+                || this.initDate.getValue() != null
+                || this.finalDate.getValue() != null) {
             String id = null;
             String customer = null;
             String employee = null;

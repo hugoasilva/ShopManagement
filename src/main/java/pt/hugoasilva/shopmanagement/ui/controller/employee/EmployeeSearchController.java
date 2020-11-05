@@ -48,9 +48,17 @@ public class EmployeeSearchController implements Initializable {
     ObservableList<Employee> list = FXCollections.observableArrayList();
     // UI Content
     @FXML
-    private JFXComboBox<Label> employeeCombo;
+    private TextField idSearchInput;
     @FXML
-    private TextField employeeSearchInput;
+    private TextField nameSearchInput;
+    @FXML
+    private TextField addressSearchInput;
+    @FXML
+    private TextField phoneSearchInput;
+    @FXML
+    private TextField emailSearchInput;
+    @FXML
+    private TextField nifSearchInput;
     @FXML
     private TableView<Employee> tableView;
     @FXML
@@ -71,7 +79,6 @@ public class EmployeeSearchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
-        this.initCombo();
         this.loadData();
     }
 
@@ -123,15 +130,6 @@ public class EmployeeSearchController implements Initializable {
         detailsCol.setStyle("-fx-alignment: CENTER;");
         detailsCol.setCellFactory(cellFactory);
         this.tableView.getColumns().add(detailsCol);
-    }
-
-    /**
-     * Assign table columns to employee properties
-     */
-    private void initCombo() {
-        this.employeeCombo.getItems().addAll(new Label("ID ou Nome"), new Label("NIF"),
-                new Label("Contacto"), new Label("E-mail"));
-        this.employeeCombo.setPromptText("Tipo de pesquisa...");
     }
 
     /**
@@ -221,13 +219,9 @@ public class EmployeeSearchController implements Initializable {
     }
 
     public void refreshTable() {
-        if (this.employeeCombo.getValue() == null && this.employeeSearchInput.getText().isEmpty()) {
             this.list.clear();
             this.list = DatabaseHandler.getEmployeeList();
             this.tableView.setItems(list);
-        } else {
-            this.searchEmployee();
-        }
     }
 
     /**
@@ -235,14 +229,41 @@ public class EmployeeSearchController implements Initializable {
      */
     public void searchEmployee() {
         // Check if user input is present
-        if (this.employeeCombo.getSelectionModel().isEmpty() || this.employeeSearchInput.getText().isEmpty()) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
-                    "Insira dados em todos os campos.");
+        if (!this.idSearchInput.getText().isEmpty()
+                || !this.nameSearchInput.getText().isEmpty()
+                || !this.addressSearchInput.getText().isEmpty()
+                || !this.phoneSearchInput.getText().isEmpty()
+                || !this.emailSearchInput.getText().isEmpty()
+                || !this.nifSearchInput.getText().isEmpty()) {
+            String id = null;
+            String name = null;
+            String address = null;
+            String phone = null;
+            String email = null;
+            String nif = null;
+            if (!this.idSearchInput.getText().isEmpty()) {
+                id = this.idSearchInput.getText();
+            }
+            if (!this.nameSearchInput.getText().isEmpty()) {
+                name = this.nameSearchInput.getText();
+            }
+            if (!this.addressSearchInput.getText().isEmpty()) {
+                address = this.addressSearchInput.getText();
+            }
+            if (!this.phoneSearchInput.getText().isEmpty()) {
+                phone = this.phoneSearchInput.getText();
+            }
+            if (!this.emailSearchInput.getText().isEmpty()) {
+                email = this.emailSearchInput.getText();
+            }
+            if (!this.nifSearchInput.getText().isEmpty()) {
+                nif = this.nifSearchInput.getText();
+            }
+            this.list = DatabaseHandler.searchEmployee(id, name, address, phone, email, nif);
+            this.tableView.setItems(this.list);
         } else {
-            String comboInput = this.employeeCombo.getSelectionModel().getSelectedItem().getText();
-            String searchInput = this.employeeSearchInput.getText();
-            this.list = DatabaseHandler.searchEmployee(comboInput, searchInput);
-            this.tableView.setItems(list);
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
+                    "Insira dados para pesquisar.");
         }
     }
 

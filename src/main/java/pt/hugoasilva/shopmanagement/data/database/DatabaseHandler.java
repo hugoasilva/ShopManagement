@@ -34,17 +34,7 @@ public final class DatabaseHandler {
     private static final String GET_CUSTOMER_INVOICE_COUNT =
             "SELECT COUNT(*) FROM invoices WHERE customer_id=?";
     private static final String GET_CUSTOMERS_QUERY =
-            "SELECT * FROM customers";
-    private static final String SEARCH_CUSTOMERS_BY_ID_QUERY =
-            "SELECT * FROM customers WHERE id LIKE ?";
-    private static final String SEARCH_CUSTOMERS_BY_NAME_QUERY =
-            "SELECT * FROM customers WHERE name LIKE ?";
-    private static final String SEARCH_CUSTOMERS_BY_NIF_QUERY =
-            "SELECT * FROM customers WHERE nif LIKE ?";
-    private static final String SEARCH_CUSTOMERS_BY_PHONE_QUERY =
-            "SELECT * FROM customers WHERE phone LIKE ?";
-    private static final String SEARCH_CUSTOMERS_BY_EMAIL_QUERY =
-            "SELECT * FROM customers WHERE email LIKE ?";
+            "SELECT * FROM customers ";
 
     // Employee select queries
     private static final String GET_EMPLOYEE_ID_QUERY =
@@ -52,17 +42,8 @@ public final class DatabaseHandler {
     private static final String GET_EMPLOYEE_INVOICE_COUNT =
             "SELECT COUNT(*) FROM invoices WHERE employee_id=?";
     private static final String GET_EMPLOYEES_QUERY =
-            "SELECT * FROM employees";
-    private static final String SEARCH_EMPLOYEES_BY_ID_QUERY =
-            "SELECT * FROM employees WHERE id LIKE ?";
-    private static final String SEARCH_EMPLOYEES_BY_NAME_QUERY =
-            "SELECT * FROM employees WHERE name LIKE ?";
-    private static final String SEARCH_EMPLOYEES_BY_NIF_QUERY =
-            "SELECT * FROM employees WHERE nif LIKE ?";
-    private static final String SEARCH_EMPLOYEES_BY_PHONE_QUERY =
-            "SELECT * FROM employees WHERE phone LIKE ?";
-    private static final String SEARCH_EMPLOYEES_BY_EMAIL_QUERY =
-            "SELECT * FROM employees WHERE email LIKE ?";
+            "SELECT * FROM employees ";
+
 
     // Invoice select queries
     private static final String GET_INVOICE_ID_QUERY =
@@ -114,46 +95,18 @@ public final class DatabaseHandler {
                     ", suppliers.name AS supplier_name " +
                     "FROM products " +
                     "INNER JOIN suppliers ON suppliers.id=products.supplier_id";
-    private static final String SEARCH_PRODUCTS_BY_ID_QUERY =
+    private static final String SEARCH_PRODUCTS_QUERY =
             "SELECT management.products.*" +
                     ", suppliers.name AS supplier_name " +
-                    "FROM products " +
-                    "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
-                    "WHERE products.id LIKE ?";
-    private static final String SEARCH_PRODUCTS_BY_NAME_QUERY =
-            "SELECT management.products.*" +
-                    ", suppliers.name AS supplier_name " +
-                    "FROM products " +
-                    "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
-                    "WHERE products.name LIKE ?";
-    private static final String SEARCH_PRODUCTS_BY_PRICE_QUERY =
-            "SELECT management.products.*" +
-                    ", suppliers.name AS supplier_name " +
-                    "FROM products " +
-                    "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
-                    "WHERE products.price=?";
-    private static final String SEARCH_PRODUCTS_BY_QUANTITY_QUERY =
-            "SELECT management.products.*" +
-                    ", suppliers.name AS supplier_name " +
-                    "FROM products " +
-                    "INNER JOIN suppliers ON suppliers.id=products.supplier_id " +
-                    "WHERE products.quantity=?";
+                    "FROM products ";
 
     // Supplier select queries
     private static final String GET_SUPPLIER_ID_QUERY =
             "SELECT COUNT(*) FROM suppliers";
     private static final String GET_SUPPLIERS_QUERY =
             "SELECT * FROM suppliers";
-    private static final String SEARCH_SUPPLIERS_BY_ID_QUERY =
-            "SELECT * FROM suppliers WHERE id LIKE ?";
-    private static final String SEARCH_SUPPLIERS_BY_NAME_QUERY =
-            "SELECT * FROM suppliers WHERE name LIKE ?";
-    private static final String SEARCH_SUPPLIERS_BY_NIF_QUERY =
-            "SELECT * FROM suppliers WHERE nif LIKE ?";
-    private static final String SEARCH_SUPPLIERS_BY_PHONE_QUERY =
-            "SELECT * FROM suppliers WHERE phone LIKE ?";
-    private static final String SEARCH_SUPPLIERS_BY_EMAIL_QUERY =
-            "SELECT * FROM suppliers WHERE email LIKE ?";
+    private static final String SEARCH_SUPPLIERS_QUERY =
+            "SELECT * FROM suppliers ";
 
     // Delete queries
     private static final String DELETE_CUSTOMER_QUERY =
@@ -470,32 +423,66 @@ public final class DatabaseHandler {
     /**
      * Search customer in database
      *
-     * @param combo  user selected input
-     * @param search user input
+     * @param id      search by id
+     * @param name    search by name
+     * @param address search by address
+     * @param phone   search by phone
+     * @param email   search by email
+     * @param nif     search by nif
      * @return customer search list
      */
-    public static ObservableList<Customer> searchCustomer(String combo, String search) {
+    public static ObservableList<Customer> searchCustomer(String id, String name,
+                                                          String address, String phone,
+                                                          String email, String nif) {
         ObservableList<Customer> list = FXCollections.observableArrayList();
-        String query = null;
-        switch (combo) {
-            case "ID ou Nome":
-                if (search.matches("[0-9]+")) {
-                    query = SEARCH_CUSTOMERS_BY_ID_QUERY;
-                } else {
-                    query = SEARCH_CUSTOMERS_BY_NAME_QUERY;
-                }
-                break;
-            case "NIF":
-                query = SEARCH_CUSTOMERS_BY_NIF_QUERY;
-                break;
-            case "Contacto":
-                query = SEARCH_CUSTOMERS_BY_PHONE_QUERY;
-                break;
-            case "E-mail":
-                query = SEARCH_CUSTOMERS_BY_EMAIL_QUERY;
-                break;
+        String query = GET_CUSTOMERS_QUERY + "WHERE ";
+        boolean and = false;
+        if (id != null) {
+            query += "id LIKE '" + id + "'";
+            and = true;
         }
-        search = "%" + search + "%";
+        if (name != null) {
+            if (and) {
+                query += "AND name LIKE '%" + name + "%'";
+            } else {
+                query += "name LIKE '%" + name + "%'";
+                and = true;
+            }
+        }
+        if (address != null) {
+            if (and) {
+                query += "AND address LIKE '%" + address + "%'";
+            } else {
+                query += "address LIKE '%" + address + "%'";
+                and = true;
+            }
+        }
+        if (phone != null) {
+            if (and) {
+                query += "AND phone LIKE '%" + phone + "%'";
+            } else {
+                query += "phone LIKE '%" + phone + "%'";
+                and = true;
+            }
+        }
+        if (email != null) {
+            if (and) {
+                query += "AND email LIKE '%" + email + "%'";
+            } else {
+                query += "email LIKE '%" + email + "%'";
+                and = true;
+            }
+        }
+        if (nif != null) {
+            if (and) {
+                query += "AND nif LIKE '%" + nif + "%'";
+            } else {
+                query += "nif LIKE '%" + nif + "%'";
+            }
+        }
+
+        System.out.println(query);
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -503,18 +490,19 @@ public final class DatabaseHandler {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, search);
             // Execute query
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String address = resultSet.getString("address");
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String nif = resultSet.getString("nif");
+                String customerId = resultSet.getString("id");
+                String customerName = resultSet.getString("name");
+                String customerAddress = resultSet.getString("address");
+                String customerPhone = resultSet.getString("phone");
+                String customerEmail = resultSet.getString("email");
+                String customerNif = resultSet.getString("nif");
 
-                list.add(new Customer(id, name, address, phone, email, nif));
+                Customer customer = new Customer(customerId, customerName,
+                        customerAddress, customerPhone, customerEmail, customerNif);
+                list.add(customer);
             }
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -731,35 +719,66 @@ public final class DatabaseHandler {
     /**
      * Search employee in database
      *
-     * @param combo  user selected input
-     * @param search user input
+     * @param id      search by id
+     * @param name    search by name
+     * @param address search by address
+     * @param phone   search by phone
+     * @param email   search by email
+     * @param nif     search by nif
      * @return employee search list
      */
-    public static ObservableList<Employee> searchEmployee(String combo, String search) {
+    public static ObservableList<Employee> searchEmployee(String id, String name,
+                                                          String address, String phone,
+                                                          String email, String nif) {
         ObservableList<Employee> list = FXCollections.observableArrayList();
-        String query = null;
-        switch (combo) {
-            case "ID ou Nome":
-                if (search.matches("[0-9]+")) {
-                    query = SEARCH_EMPLOYEES_BY_ID_QUERY;
-                } else {
-                    query = SEARCH_EMPLOYEES_BY_NAME_QUERY;
-                }
-                search = "%" + search + "%";
-                break;
-            case "NIF":
-                query = SEARCH_EMPLOYEES_BY_NIF_QUERY;
-                search = "%" + search + "%";
-                break;
-            case "Contacto":
-                query = SEARCH_EMPLOYEES_BY_PHONE_QUERY;
-                search = "%" + search + "%";
-                break;
-            case "E-mail":
-                query = SEARCH_EMPLOYEES_BY_EMAIL_QUERY;
-                search = "%" + search + "%";
-                break;
+        String query = GET_EMPLOYEES_QUERY + "WHERE ";
+        boolean and = false;
+        if (id != null) {
+            query += "id LIKE '" + id + "'";
+            and = true;
         }
+        if (name != null) {
+            if (and) {
+                query += "AND name LIKE '%" + name + "%'";
+            } else {
+                query += "name LIKE '%" + name + "%'";
+                and = true;
+            }
+        }
+        if (address != null) {
+            if (and) {
+                query += "AND address LIKE '%" + address + "%'";
+            } else {
+                query += "address LIKE '%" + address + "%'";
+                and = true;
+            }
+        }
+        if (phone != null) {
+            if (and) {
+                query += "AND phone LIKE '%" + phone + "%'";
+            } else {
+                query += "phone LIKE '%" + phone + "%'";
+                and = true;
+            }
+        }
+        if (email != null) {
+            if (and) {
+                query += "AND email LIKE '%" + email + "%'";
+            } else {
+                query += "email LIKE '%" + email + "%'";
+                and = true;
+            }
+        }
+        if (nif != null) {
+            if (and) {
+                query += "AND nif LIKE '%" + nif + "%'";
+            } else {
+                query += "nif LIKE '%" + nif + "%'";
+            }
+        }
+
+        System.out.println(query);
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -767,18 +786,19 @@ public final class DatabaseHandler {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, search);
             // Execute query
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String address = resultSet.getString("address");
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String nif = resultSet.getString("nif");
+                String employeeId = resultSet.getString("id");
+                String employeeName = resultSet.getString("name");
+                String employeeAddress = resultSet.getString("address");
+                String employeePhone = resultSet.getString("phone");
+                String employeeEmail = resultSet.getString("email");
+                String employeeNif = resultSet.getString("nif");
 
-                list.add(new Employee(id, name, address, phone, email, nif));
+                Employee employee = new Employee(employeeId, employeeName,
+                        employeeAddress, employeePhone, employeeEmail, employeeNif);
+                list.add(employee);
             }
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -1705,63 +1725,63 @@ public final class DatabaseHandler {
      */
     public static ObservableList<Product> searchProduct(String combo, String search) {
         ObservableList<Product> list = FXCollections.observableArrayList();
-        String query = null;
-        switch (combo) {
-            case "ID ou Nome":
-                if (search.matches("[0-9]+")) {
-                    query = SEARCH_PRODUCTS_BY_ID_QUERY;
-                } else {
-                    query = SEARCH_PRODUCTS_BY_NAME_QUERY;
-                }
-                search = "%" + search + "%";
-                break;
-            case "Preco":
-                query = SEARCH_PRODUCTS_BY_PRICE_QUERY;
-                break;
-            case "Quantidade":
-                query = SEARCH_PRODUCTS_BY_QUANTITY_QUERY;
-                break;
-        }
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, search);
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String price = resultSet.getString("price");
-                String supplierId = resultSet.getString("supplier_id");
-                String supplierName = resultSet.getString("supplier_name");
-                String quantity = resultSet.getString("quantity");
-                String image = resultSet.getString("image");
-
-                Product product = new Product(id, name, price, supplierId, quantity, image);
-                product.setSupplierName(supplierName);
-                list.add(product);
-            }
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
+//        String query = null;
+//        switch (combo) {
+//            case "ID ou Nome":
+//                if (search.matches("[0-9]+")) {
+//                    query = SEARCH_PRODUCTS_BY_ID_QUERY;
+//                } else {
+//                    query = SEARCH_PRODUCTS_BY_NAME_QUERY;
+//                }
+//                search = "%" + search + "%";
+//                break;
+//            case "Preco":
+//                query = SEARCH_PRODUCTS_BY_PRICE_QUERY;
+//                break;
+//            case "Quantidade":
+//                query = SEARCH_PRODUCTS_BY_QUANTITY_QUERY;
+//                break;
+//        }
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//        try {
+//            // Create connection
+//            connection = DatabasePool.getDataSource().getConnection();
+//            preparedStatement = connection.prepareStatement(query);
+//            preparedStatement.setString(1, search);
+//            // Execute query
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//                String id = resultSet.getString("id");
+//                String name = resultSet.getString("name");
+//                String price = resultSet.getString("price");
+//                String supplierId = resultSet.getString("supplier_id");
+//                String supplierName = resultSet.getString("supplier_name");
+//                String quantity = resultSet.getString("quantity");
+//                String image = resultSet.getString("image");
+//
+//                Product product = new Product(id, name, price, supplierId, quantity, image);
+//                product.setSupplierName(supplierName);
+//                list.add(product);
+//            }
+//        } catch (SQLException ex) {
+//            logSQLException(ex);
+//        } finally {
+//            try {
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+//                if (preparedStatement != null) {
+//                    preparedStatement.close();
+//                }
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException ex) {
+//                logSQLException(ex);
+//            }
+//        }
         return list;
     }
 
@@ -1915,64 +1935,64 @@ public final class DatabaseHandler {
 
     public static ObservableList<Supplier> searchSupplier(String combo, String search) {
         ObservableList<Supplier> list = FXCollections.observableArrayList();
-        String query = null;
-        switch (combo) {
-            case "ID ou Nome":
-                if (search.matches("[0-9]+")) {
-                    query = SEARCH_SUPPLIERS_BY_ID_QUERY;
-                } else {
-                    query = SEARCH_SUPPLIERS_BY_NAME_QUERY;
-                }
-                break;
-            case "Contacto":
-                query = SEARCH_SUPPLIERS_BY_PHONE_QUERY;
-                break;
-            case "E-mail":
-                query = SEARCH_SUPPLIERS_BY_EMAIL_QUERY;
-                break;
-            case "NIF":
-                query = SEARCH_SUPPLIERS_BY_NIF_QUERY;
-                break;
-        }
-        search = "%" + search + "%";
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, search);
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String name = resultSet.getString("name");
-                String address = resultSet.getString("address");
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String nif = resultSet.getString("nif");
-
-                list.add(new Supplier(id, name, address, phone, email, nif));
-            }
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
+//        String query = null;
+//        switch (combo) {
+//            case "ID ou Nome":
+//                if (search.matches("[0-9]+")) {
+//                    query = SEARCH_SUPPLIERS_BY_ID_QUERY;
+//                } else {
+//                    query = SEARCH_SUPPLIERS_BY_NAME_QUERY;
+//                }
+//                break;
+//            case "Contacto":
+//                query = SEARCH_SUPPLIERS_BY_PHONE_QUERY;
+//                break;
+//            case "E-mail":
+//                query = SEARCH_SUPPLIERS_BY_EMAIL_QUERY;
+//                break;
+//            case "NIF":
+//                query = SEARCH_SUPPLIERS_BY_NIF_QUERY;
+//                break;
+//        }
+//        search = "%" + search + "%";
+//
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//        try {
+//            // Create connection
+//            connection = DatabasePool.getDataSource().getConnection();
+//            preparedStatement = connection.prepareStatement(query);
+//            preparedStatement.setString(1, search);
+//            // Execute query
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//                String id = resultSet.getString("id");
+//                String name = resultSet.getString("name");
+//                String address = resultSet.getString("address");
+//                String phone = resultSet.getString("phone");
+//                String email = resultSet.getString("email");
+//                String nif = resultSet.getString("nif");
+//
+//                list.add(new Supplier(id, name, address, phone, email, nif));
+//            }
+//        } catch (SQLException ex) {
+//            logSQLException(ex);
+//        } finally {
+//            try {
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+//                if (preparedStatement != null) {
+//                    preparedStatement.close();
+//                }
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException ex) {
+//                logSQLException(ex);
+//            }
+//        }
         return list;
     }
 
