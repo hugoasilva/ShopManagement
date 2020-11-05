@@ -1012,30 +1012,59 @@ public final class DatabaseHandler {
     /**
      * Search invoice in database
      *
-     * @param combo  user selected input
-     * @param search user input
+     * @param id        search by id
+     * @param customer  search by customer
+     * @param employee  search by employee
+     * @param product   search by product
+     * @param initDate  search by init date
+     * @param finalDate search by final date
      * @return invoice search list
      */
-    public static ObservableList<Invoice> searchInvoice(String combo, String search) {
+    public static ObservableList<Invoice> searchInvoice(String id, String customer,
+                                                        String employee, String product,
+                                                        String initDate, String finalDate) {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
-        String query = null;
-        switch (combo) {
-            case "ID":
-                query = SEARCH_INVOICES_BY_ID_QUERY;
-                search = "%" + search + "%";
-                break;
-            case "ID Cliente":
-                query = SEARCH_INVOICES_BY_CUSTOMER_ID_QUERY;
-                search = "%" + search + "%";
-                break;
-            case "ID Empregado":
-                query = SEARCH_INVOICES_BY_EMPLOYEE_ID_QUERY;
-                search = "%" + search + "%";
-                break;
-            case "Data":
-                query = SEARCH_INVOICES_BY_DATE_QUERY;
-                break;
+        String query = "SELECT * FROM invoices WHERE ";
+        boolean and = false;
+        if (id != null) {
+            query += "id=" + id;
+            and = true;
         }
+        if (customer != null) {
+            if (and) {
+                query += " AND ";
+            }
+            query += "customer_id=" + customer;
+            and = true;
+        }
+        if (employee != null) {
+            if (and) {
+                query += " AND ";
+            }
+            query += "employee_id=" + employee;
+            and = true;
+        }
+        if (product != null) {
+            if (and) {
+                query = query + " AND ";
+            }
+            query += "product_id=" + product;
+            and = true;
+        }
+        if (initDate != null) {
+            if (and) {
+                query += " AND ";
+            }
+            query += "date>='" + initDate + "'";
+            and = true;
+        }
+        if (finalDate != null) {
+            if (and) {
+                query += " AND ";
+            }
+            query += "date<='" + finalDate + "'";
+        }
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -1043,21 +1072,20 @@ public final class DatabaseHandler {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, search);
             // Execute query
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String id = resultSet.getString("id");
+                String invoiceId = resultSet.getString("id");
                 String customerId = resultSet.getString("customer_id");
-                String customerName = resultSet.getString("customer_name");
+//                String customerName = resultSet.getString("customer_name");
                 String employeeId = resultSet.getString("employee_id");
-                String employeeName = resultSet.getString("employee_name");
+//                String employeeName = resultSet.getString("employee_name");
                 String date = resultSet.getString("date");
                 String pdf = resultSet.getString("pdf");
 
-                Invoice invoice = new Invoice(id, customerId, employeeId, date, pdf);
-                invoice.setCustomerName(customerName);
-                invoice.setEmployeeName(employeeName);
+                Invoice invoice = new Invoice(invoiceId, customerId, employeeId, date, pdf);
+//                invoice.setCustomerName(customerName);
+//                invoice.setEmployeeName(employeeName);
                 list.add(invoice);
             }
         } catch (SQLException ex) {
@@ -2160,145 +2188,6 @@ public final class DatabaseHandler {
                 String image = resultSet.getString("image");
 
                 list.add(new Product(id, name, price, supplier, quantity, image));
-            }
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return list;
-    }
-
-    public static ObservableList<Invoice> searchInvoiceByInitDate(String initDate) {
-        ObservableList<Invoice> list = FXCollections.observableArrayList();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(SEARCH_INVOICES_BY_INIT_DATE_QUERY);
-            preparedStatement.setString(1, initDate);
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String customerId = resultSet.getString("customer_id");
-                String customerName = resultSet.getString("customer_name");
-                String employeeId = resultSet.getString("employee_id");
-                String employeeName = resultSet.getString("employee_name");
-                String date = resultSet.getString("date");
-                String pdf = resultSet.getString("pdf");
-
-                Invoice invoice = new Invoice(id, customerId, employeeId, date, pdf);
-                invoice.setCustomerName(customerName);
-                invoice.setEmployeeName(employeeName);
-                list.add(invoice);
-            }
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return list;
-    }
-
-    public static ObservableList<Invoice> searchInvoiceByInitAndFinalDate(String initDate, String finalDate) {
-        ObservableList<Invoice> list = FXCollections.observableArrayList();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(SEARCH_INVOICES_BY_INIT_AND_FINAL_DATE_QUERY);
-            preparedStatement.setString(1, initDate);
-            preparedStatement.setString(1, finalDate);
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String customerId = resultSet.getString("customer_id");
-                String customerName = resultSet.getString("customer_name");
-                String employeeId = resultSet.getString("employee_id");
-                String employeeName = resultSet.getString("employee_name");
-                String date = resultSet.getString("date");
-                String pdf = resultSet.getString("pdf");
-
-                Invoice invoice = new Invoice(id, customerId, employeeId, date, pdf);
-                invoice.setCustomerName(customerName);
-                invoice.setEmployeeName(employeeName);
-                list.add(invoice);
-            }
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return list;
-    }
-
-    public static ObservableList<Invoice> searchInvoiceByFinalDate(String finalDate) {
-        ObservableList<Invoice> list = FXCollections.observableArrayList();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(SEARCH_INVOICES_BY_FINAL_DATE_QUERY);
-            preparedStatement.setString(1, finalDate);
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String customerId = resultSet.getString("customer_id");
-                String customerName = resultSet.getString("customer_name");
-                String employeeId = resultSet.getString("employee_id");
-                String employeeName = resultSet.getString("employee_name");
-                String date = resultSet.getString("date");
-                String pdf = resultSet.getString("pdf");
-
-                Invoice invoice = new Invoice(id, customerId, employeeId, date, pdf);
-                invoice.setCustomerName(customerName);
-                invoice.setEmployeeName(employeeName);
-                list.add(invoice);
             }
         } catch (SQLException ex) {
             logSQLException(ex);

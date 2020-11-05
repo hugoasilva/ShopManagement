@@ -1,7 +1,6 @@
 package pt.hugoasilva.shopmanagement.ui.controller.invoice;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +30,7 @@ import pt.hugoasilva.shopmanagement.util.ShopManagementUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -42,6 +42,8 @@ import java.util.ResourceBundle;
 
 public class InvoiceSearchController implements Initializable {
 
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(InvoiceSearchController.class.getName());
 
@@ -49,10 +51,16 @@ public class InvoiceSearchController implements Initializable {
     // Invoice list object
     ObservableList<Invoice> list = FXCollections.observableArrayList();
     // UI Content
+//    @FXML
+//    private JFXComboBox<Label> invoiceCombo;
     @FXML
-    private JFXComboBox<Label> invoiceCombo;
+    private TextField idSearchInput;
     @FXML
-    private TextField invoiceSearchInput;
+    private TextField customerSearchInput;
+    @FXML
+    private TextField employeeSearchInput;
+    @FXML
+    private TextField productSearchInput;
     @FXML
     private JFXDatePicker initDate;
     @FXML
@@ -75,7 +83,7 @@ public class InvoiceSearchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
-        this.initCombo();
+//        this.initCombo();
         this.loadData();
     }
 
@@ -161,14 +169,14 @@ public class InvoiceSearchController implements Initializable {
         this.tableView.getColumns().add(detailsCol);
     }
 
-    /**
-     * Initialize search combo box
-     */
-    private void initCombo() {
-        this.invoiceCombo.getItems().addAll(new Label("ID"), new Label("ID Cliente"),
-                new Label("ID Empregado"), new Label("Data"));
-        this.invoiceCombo.setPromptText("Tipo de pesquisa...");
-    }
+//    /**
+//     * Initialize search combo box
+//     */
+//    private void initCombo() {
+//        this.invoiceCombo.getItems().addAll(new Label("ID"), new Label("ID Cliente"),
+//                new Label("ID Empregado"), new Label("Data"));
+//        this.invoiceCombo.setPromptText("Tipo de pesquisa...");
+//    }
 
     /**
      * Show Invoice PDF
@@ -266,38 +274,50 @@ public class InvoiceSearchController implements Initializable {
     }
 
     public void refreshTable() {
-        if (this.invoiceCombo.getValue() == null && this.invoiceSearchInput.getText().isEmpty()) {
-            this.list.clear();
-            this.list = DatabaseHandler.getInvoiceList();
-            this.tableView.setItems(list);
-        } else {
-            this.searchInvoice();
-        }
+//        if (this.invoiceCombo.getValue() == null && this.invoiceSearchInput.getText().isEmpty()) {
+//            this.list.clear();
+        this.list = DatabaseHandler.getInvoiceList();
+        this.tableView.setItems(list);
+//        } else {
+//            this.searchInvoice();
+//        }
     }
 
     /**
      * Search invoice operation
      */
     public void searchInvoice() {
-        // TODO Check if user input is present
-        if (!(this.invoiceCombo.getSelectionModel().isEmpty()
-                && this.invoiceSearchInput.getText().isEmpty())) {
-            this.searchByText();
+        String id = null;
+        String customer = null;
+        String employee = null;
+        String product = null;
+        String initDate = null;
+        String finalDate = null;
+        if (!this.idSearchInput.getText().isEmpty()) {
+            id = this.idSearchInput.getText();
+        }
+        if (!this.customerSearchInput.getText().isEmpty()) {
+            customer = this.customerSearchInput.getText();
+        }
+        if (!this.employeeSearchInput.getText().isEmpty()) {
+            employee = this.employeeSearchInput.getText();
+        }
+        if (!this.productSearchInput.getText().isEmpty()) {
+            product = this.productSearchInput.getText();
+        }
+        if (this.initDate.getValue() != null) {
+            initDate = this.initDate.getValue().toString();
+        }
+        if (this.finalDate.getValue() != null) {
+            finalDate = this.finalDate.getValue().toString();
+        }
+//        } else {
 //            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
 //                    "Insira dados em todos os campos.");
-        } else if (this.initDate.getValue() != null) {
-            this.searchByInitDate();
-            if (this.finalDate.getValue() != null) {
-                this.searchByInitAndFinalDate();
-            }
-        } else if (this.finalDate.getValue() != null) {
-            this.searchByFinalDate();
-        } else {
-            // Do not search
-        }
+//        }
+        this.list = DatabaseHandler.searchInvoice(id, customer, employee, product, initDate, finalDate);
         this.tableView.setItems(this.list);
     }
-
 
     /**
      * Handle search invoice key press
@@ -359,51 +379,5 @@ public class InvoiceSearchController implements Initializable {
     @FXML
     private void closeStage(ActionEvent event) {
         getStage().close();
-    }
-
-    /**
-     * Search from initial date to current date
-     */
-    private void searchByInitDate() {
-        String initDate = this.initDate.getValue().toString();
-        this.list = DatabaseHandler.searchInvoiceByInitDate(initDate);
-    }
-
-    /**
-     * Search from initial date to final date
-     */
-    private void searchByInitAndFinalDate() {
-        String initDate = this.initDate.getValue().toString();
-        String finalDate = this.finalDate.getValue().toString();
-        this.list = DatabaseHandler.searchInvoiceByInitAndFinalDate(initDate, finalDate);
-    }
-
-    /**
-     * Search from first database record to selected final date
-     */
-    private void searchByFinalDate() {
-        String finalDate = this.finalDate.getValue().toString();
-        this.list = DatabaseHandler.searchInvoiceByFinalDate(finalDate);
-    }
-
-//    private void searchByInitDateAndText() {
-//        String initDate = this.initDate.getValue().toString();
-//        String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
-//        String searchInput = this.invoiceSearchInput.getText();
-//        this.list = DatabaseHandler.searchInvoiceByInitDateAndText(initDate, comboInput, searchInput);
-//    }
-
-//    private void searchByInitAndFinalDateAndText() {
-//
-//    }
-//
-//    private void searchByFinalDateAndText() {
-//
-//    }
-
-    private void searchByText() {
-        String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
-        String searchInput = this.invoiceSearchInput.getText();
-        this.list = DatabaseHandler.searchInvoice(comboInput, searchInput);
     }
 }
