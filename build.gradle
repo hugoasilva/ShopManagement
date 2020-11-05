@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'pt.hugoasilva.shopmanagement'
-version '3.8'
+version '3.9'
 
 sourceCompatibility = JavaVersion.VERSION_14
 targetCompatibility = JavaVersion.VERSION_14

@@ -156,7 +156,7 @@ public class CustomerDetailsController implements Initializable {
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma nota seleccionada",
-                    "Por favor seleccione uma nota para editar.");
+                    "Por favor seleccione uma nota para apagar.");
             return;
         }
         boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
@@ -212,7 +212,7 @@ public class CustomerDetailsController implements Initializable {
             controller.inflateUI(selectedForEdit);
 
             Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Adicionar Nota");
+            stage.setTitle("Editar Nota");
             stage.setScene(new Scene(parent));
             ShopManagementUtil.setStageIcon(stage);
             stage.showAndWait();

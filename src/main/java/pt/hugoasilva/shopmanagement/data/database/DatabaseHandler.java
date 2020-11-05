@@ -110,6 +110,34 @@ public final class DatabaseHandler {
                     "INNER JOIN customers ON customers.id=invoices.customer_id " +
                     "INNER JOIN employees ON employees.id=invoices.employee_id " +
                     "WHERE invoices.date=?";
+    private static final String SEARCH_INVOICES_BY_INIT_DATE_QUERY =
+            "SELECT management.invoices.*" +
+                    ", customers.name AS customer_name" +
+                    ", employees.name AS employee_name " +
+                    "from invoices " +
+                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
+                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
+                    "where date >= ? " +
+                    "and date <= CURDATE()";
+    private static final String SEARCH_INVOICES_BY_INIT_AND_FINAL_DATE_QUERY =
+            "SELECT management.invoices.*" +
+                    ", customers.name AS customer_name" +
+                    ", employees.name AS employee_name " +
+                    "from invoices " +
+                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
+                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
+                    "where date >= ? " +
+                    "and date <= ?";
+    // TODO Fix initial date
+    private static final String SEARCH_INVOICES_BY_FINAL_DATE_QUERY =
+            "SELECT management.invoices.*" +
+                    ", customers.name AS customer_name" +
+                    ", employees.name AS employee_name " +
+                    "from invoices " +
+                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
+                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
+                    "where date >= '2020-09-01' " +
+                    "and date <= ?";
 
     // Note select queries
     private static final String GET_CUSTOMER_NOTE_ID_QUERY =
@@ -196,6 +224,9 @@ public final class DatabaseHandler {
             "DELETE FROM notes_employees WHERE id = ?";
     private static final String DELETE_INVOICE_QUERY =
             "DELETE FROM invoices WHERE id = ?";
+    // TODO Fix product delete
+    private static final String DELETE_INVOICE_PRODUCT_QUERY =
+            "DELETE FROM products_invoices WHERE id = ?";
     private static final String DELETE_PRODUCT_QUERY =
             "DELETE FROM products WHERE id = ?";
     private static final String DELETE_SUPPLIER_QUERY =
@@ -2149,6 +2180,175 @@ public final class DatabaseHandler {
         }
         return list;
     }
+
+    public static ObservableList<Invoice> searchInvoiceByInitDate(String initDate) {
+        ObservableList<Invoice> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(SEARCH_INVOICES_BY_INIT_DATE_QUERY);
+            preparedStatement.setString(1, initDate);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String customerId = resultSet.getString("customer_id");
+                String customerName = resultSet.getString("customer_name");
+                String employeeId = resultSet.getString("employee_id");
+                String employeeName = resultSet.getString("employee_name");
+                String date = resultSet.getString("date");
+                String pdf = resultSet.getString("pdf");
+
+                Invoice invoice = new Invoice(id, customerId, employeeId, date, pdf);
+                invoice.setCustomerName(customerName);
+                invoice.setEmployeeName(employeeName);
+                list.add(invoice);
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return list;
+    }
+
+    public static ObservableList<Invoice> searchInvoiceByInitAndFinalDate(String initDate, String finalDate) {
+        ObservableList<Invoice> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(SEARCH_INVOICES_BY_INIT_AND_FINAL_DATE_QUERY);
+            preparedStatement.setString(1, initDate);
+            preparedStatement.setString(1, finalDate);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String customerId = resultSet.getString("customer_id");
+                String customerName = resultSet.getString("customer_name");
+                String employeeId = resultSet.getString("employee_id");
+                String employeeName = resultSet.getString("employee_name");
+                String date = resultSet.getString("date");
+                String pdf = resultSet.getString("pdf");
+
+                Invoice invoice = new Invoice(id, customerId, employeeId, date, pdf);
+                invoice.setCustomerName(customerName);
+                invoice.setEmployeeName(employeeName);
+                list.add(invoice);
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return list;
+    }
+
+    public static ObservableList<Invoice> searchInvoiceByFinalDate(String finalDate) {
+        ObservableList<Invoice> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(SEARCH_INVOICES_BY_FINAL_DATE_QUERY);
+            preparedStatement.setString(1, finalDate);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String customerId = resultSet.getString("customer_id");
+                String customerName = resultSet.getString("customer_name");
+                String employeeId = resultSet.getString("employee_id");
+                String employeeName = resultSet.getString("employee_name");
+                String date = resultSet.getString("date");
+                String pdf = resultSet.getString("pdf");
+
+                Invoice invoice = new Invoice(id, customerId, employeeId, date, pdf);
+                invoice.setCustomerName(customerName);
+                invoice.setEmployeeName(employeeName);
+                list.add(invoice);
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return list;
+    }
+
+    public static boolean deleteInvoiceProduct(Product product) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_INVOICE_PRODUCT_QUERY);
+            preparedStatement.setString(1, product.getId());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return false;
+    }
+
+//    public static ObservableList<Invoice> searchInvoiceByInitDateAndText(String initDate, String comboInput, String searchInput) {
+//    }
 
     /**
      * Get customer invoice count at database

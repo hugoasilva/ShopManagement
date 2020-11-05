@@ -279,31 +279,25 @@ public class InvoiceSearchController implements Initializable {
      * Search invoice operation
      */
     public void searchInvoice() {
-        // Check if user input is present
-        if ((this.invoiceCombo.getSelectionModel().isEmpty()
-                || this.invoiceSearchInput.getText().isEmpty())
-                && this.initDate.getValue() == null && this.finalDate.getValue() == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
-                    "Insira dados em todos os campos.");
-        } else {
-            // TODO Pesquisa por data
-            if (this.initDate.getValue() != null) {
-                // TODO Data selecionada até hoje
-                System.out.println(this.initDate.getValue().toString());
-                if (this.finalDate.getValue() != null) {
-                    // TODO Entre as datas seleccionadas
-                    System.out.println(this.finalDate.getValue().toString());
-                }
-            } else if (this.finalDate.getValue() != null) {
-                // TODO Início até à data selecionada
-                System.out.println(this.finalDate.getValue().toString());
+        // TODO Check if user input is present
+        if (!(this.invoiceCombo.getSelectionModel().isEmpty()
+                && this.invoiceSearchInput.getText().isEmpty())) {
+            this.searchByText();
+//            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
+//                    "Insira dados em todos os campos.");
+        } else if (this.initDate.getValue() != null) {
+            this.searchByInitDate();
+            if (this.finalDate.getValue() != null) {
+                this.searchByInitAndFinalDate();
             }
-            String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
-            String searchInput = this.invoiceSearchInput.getText();
-            this.list = DatabaseHandler.searchInvoice(comboInput, searchInput);
-            this.tableView.setItems(list);
+        } else if (this.finalDate.getValue() != null) {
+            this.searchByFinalDate();
+        } else {
+            // Do not search
         }
+        this.tableView.setItems(this.list);
     }
+
 
     /**
      * Handle search invoice key press
@@ -365,5 +359,51 @@ public class InvoiceSearchController implements Initializable {
     @FXML
     private void closeStage(ActionEvent event) {
         getStage().close();
+    }
+
+    /**
+     * Search from initial date to current date
+     */
+    private void searchByInitDate() {
+        String initDate = this.initDate.getValue().toString();
+        this.list = DatabaseHandler.searchInvoiceByInitDate(initDate);
+    }
+
+    /**
+     * Search from initial date to final date
+     */
+    private void searchByInitAndFinalDate() {
+        String initDate = this.initDate.getValue().toString();
+        String finalDate = this.finalDate.getValue().toString();
+        this.list = DatabaseHandler.searchInvoiceByInitAndFinalDate(initDate, finalDate);
+    }
+
+    /**
+     * Search from first database record to selected final date
+     */
+    private void searchByFinalDate() {
+        String finalDate = this.finalDate.getValue().toString();
+        this.list = DatabaseHandler.searchInvoiceByFinalDate(finalDate);
+    }
+
+//    private void searchByInitDateAndText() {
+//        String initDate = this.initDate.getValue().toString();
+//        String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
+//        String searchInput = this.invoiceSearchInput.getText();
+//        this.list = DatabaseHandler.searchInvoiceByInitDateAndText(initDate, comboInput, searchInput);
+//    }
+
+//    private void searchByInitAndFinalDateAndText() {
+//
+//    }
+//
+//    private void searchByFinalDateAndText() {
+//
+//    }
+
+    private void searchByText() {
+        String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
+        String searchInput = this.invoiceSearchInput.getText();
+        this.list = DatabaseHandler.searchInvoice(comboInput, searchInput);
     }
 }
