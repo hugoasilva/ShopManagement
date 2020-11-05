@@ -74,6 +74,16 @@ public final class DatabaseHandler {
                     "FROM invoices " +
                     "INNER JOIN customers ON customers.id=invoices.customer_id " +
                     "INNER JOIN employees ON employees.id=invoices.employee_id";
+
+    private static final String SEARCH_INVOICES_QUERY =
+            "SELECT management.invoices.*" +
+                    ", customers.name AS customer_name" +
+                    ", employees.name AS employee_name " +
+                    "FROM invoices " +
+                    "INNER JOIN customers ON customers.id=invoices.customer_id " +
+                    "INNER JOIN employees ON employees.id=invoices.employee_id " +
+                    "WHERE ";
+
     private static final String SEARCH_INVOICES_BY_ID_QUERY =
             "SELECT management.invoices.*" +
                     ", customers.name AS customer_name" +
@@ -1024,45 +1034,45 @@ public final class DatabaseHandler {
                                                         String employee, String product,
                                                         String initDate, String finalDate) {
         ObservableList<Invoice> list = FXCollections.observableArrayList();
-        String query = "SELECT * FROM invoices WHERE ";
+        String query = SEARCH_INVOICES_QUERY;
         boolean and = false;
         if (id != null) {
-            query += "id=" + id;
+            query += "invoices.id LIKE '" + id + "'";
             and = true;
         }
         if (customer != null) {
             if (and) {
                 query += " AND ";
             }
-            query += "customer_id=" + customer;
+            query += "invoices.customer_id LIKE '" + customer + "'";
             and = true;
         }
         if (employee != null) {
             if (and) {
                 query += " AND ";
             }
-            query += "employee_id=" + employee;
+            query += "invoices.employee_id LIKE '" + employee + "'";
             and = true;
         }
         if (product != null) {
             if (and) {
                 query = query + " AND ";
             }
-            query += "product_id=" + product;
+            query += "product_id LIKE '" + product + "'";
             and = true;
         }
         if (initDate != null) {
             if (and) {
                 query += " AND ";
             }
-            query += "date>='" + initDate + "'";
+            query += "invoices.date>='" + initDate + "'";
             and = true;
         }
         if (finalDate != null) {
             if (and) {
                 query += " AND ";
             }
-            query += "date<='" + finalDate + "'";
+            query += "invoices.date<='" + finalDate + "'";
         }
 
         Connection connection = null;
@@ -1077,15 +1087,15 @@ public final class DatabaseHandler {
             while (resultSet.next()) {
                 String invoiceId = resultSet.getString("id");
                 String customerId = resultSet.getString("customer_id");
-//                String customerName = resultSet.getString("customer_name");
+                String customerName = resultSet.getString("customer_name");
                 String employeeId = resultSet.getString("employee_id");
-//                String employeeName = resultSet.getString("employee_name");
+                String employeeName = resultSet.getString("employee_name");
                 String date = resultSet.getString("date");
                 String pdf = resultSet.getString("pdf");
 
                 Invoice invoice = new Invoice(invoiceId, customerId, employeeId, date, pdf);
-//                invoice.setCustomerName(customerName);
-//                invoice.setEmployeeName(employeeName);
+                invoice.setCustomerName(customerName);
+                invoice.setEmployeeName(employeeName);
                 list.add(invoice);
             }
         } catch (SQLException ex) {
