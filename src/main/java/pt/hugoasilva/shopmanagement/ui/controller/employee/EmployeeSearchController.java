@@ -79,6 +79,7 @@ public class EmployeeSearchController implements Initializable {
      * Assign table columns to employee properties
      */
     private void initCol() {
+        this.tableView.setPlaceholder(new Label("Nenhum empregado adicionado"));
         this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));

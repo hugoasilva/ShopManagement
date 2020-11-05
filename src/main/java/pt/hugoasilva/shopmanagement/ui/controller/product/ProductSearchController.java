@@ -78,6 +78,7 @@ public class ProductSearchController implements Initializable {
      * Assign table columns to product properties
      */
     private void initCol() {
+        this.tableView.setPlaceholder(new Label("Nenhum produto adicionado"));
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));

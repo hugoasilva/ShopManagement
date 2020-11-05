@@ -78,6 +78,7 @@ public class CustomerSearchController implements Initializable {
      * Assign table columns to customer properties
      */
     private void initCol() {
+        this.tableView.setPlaceholder(new Label("Nenhum cliente adicionado"));
         this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));

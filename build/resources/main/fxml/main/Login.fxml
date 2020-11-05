@@ -12,7 +12,7 @@
            minWidth="-Infinity"
            prefHeight="350.0" prefWidth="480.0" styleClass="main-pane"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="pt.shop.management.ui.controller.main.LoginController">
+           fx:controller="pt.hugoasilva.shopmanagement.ui.controller.main.LoginController">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           nodeOrientation="RIGHT_TO_LEFT" prefHeight="150.0" prefWidth="360.0" styleClass="main-back">
         <opaqueInsets>

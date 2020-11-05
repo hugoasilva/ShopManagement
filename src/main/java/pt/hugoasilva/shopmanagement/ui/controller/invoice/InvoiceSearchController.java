@@ -83,6 +83,7 @@ public class InvoiceSearchController implements Initializable {
      * Assign table columns to invoice properties
      */
     private void initCol() {
+        this.tableView.setPlaceholder(new Label("Nenhuma fatura adicionada"));
         this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         this.employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
@@ -279,7 +280,9 @@ public class InvoiceSearchController implements Initializable {
      */
     public void searchInvoice() {
         // Check if user input is present
-        if (this.invoiceCombo.getSelectionModel().isEmpty() || this.invoiceSearchInput.getText().isEmpty()) {
+        if ((this.invoiceCombo.getSelectionModel().isEmpty()
+                || this.invoiceSearchInput.getText().isEmpty())
+                && this.initDate.getValue() == null && this.finalDate.getValue() == null) {
             DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
                     "Insira dados em todos os campos.");
         } else {
@@ -291,6 +294,9 @@ public class InvoiceSearchController implements Initializable {
                     // TODO Entre as datas seleccionadas
                     System.out.println(this.finalDate.getValue().toString());
                 }
+            } else if (this.finalDate.getValue() != null) {
+                // TODO Início até à data selecionada
+                System.out.println(this.finalDate.getValue().toString());
             }
             String comboInput = this.invoiceCombo.getSelectionModel().getSelectedItem().getText();
             String searchInput = this.invoiceSearchInput.getText();
