@@ -1,11 +1,11 @@
 .gitignore
-.gradle/
-.idea/
+.gradle/*
+.idea/*
 build/classes/
 build/generated/
 build/launch4j/
 build/tmp/
 downloads
-gradle/
+gradle/*
 logs
 uploads

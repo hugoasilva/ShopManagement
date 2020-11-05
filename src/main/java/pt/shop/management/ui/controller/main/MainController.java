@@ -78,6 +78,14 @@ public class MainController implements Initializable {
     @FXML
     private Tab supplierSearchTab;
 
+    // Task tab
+    @FXML
+    private JFXTabPane taskTabPane;
+    @FXML
+    private Tab taskAddTab;
+    @FXML
+    private Tab taskSearchTab;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.initComponents();
