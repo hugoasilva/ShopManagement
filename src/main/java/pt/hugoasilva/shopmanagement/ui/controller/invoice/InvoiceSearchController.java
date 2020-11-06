@@ -90,7 +90,7 @@ public class InvoiceSearchController implements Initializable {
         this.customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         this.employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         this.dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-        this.productsCol.setText("Produtos???"); //setCellValueFactory(new PropertyValueFactory<>("products"));
+        this.productsCol.setCellValueFactory(new PropertyValueFactory<>("products"));
         TableColumn<Invoice, Void> pdfCol = new TableColumn<>("PDF");
         Callback<TableColumn<Invoice, Void>, TableCell<Invoice, Void>> cellFactoryPDF =
                 new Callback<>() {

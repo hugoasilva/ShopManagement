@@ -147,7 +147,7 @@ public class NoteAddController implements Initializable {
     }
 
     /**
-     * Populate table
+     * Populate form
      *
      * @param note note object
      */

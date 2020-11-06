@@ -6,12 +6,13 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import java.lang.String?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="650.0" prefWidth="1275.0"
            stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="pt.hugoasilva.shopmanagement.ui.controller.invoice.InvoiceSearchController">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-          nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="250.0" styleClass="main-back">
+          nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="330.0" styleClass="main-back">
         <StackPane.margin>
             <Insets bottom="500.0"/>
         </StackPane.margin>
@@ -22,7 +23,7 @@
         </StackPane.margin>
     </FontIcon>
     <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                prefHeight="500.0" prefWidth="1175.0" styleClass="custom-pane" stylesheets="@../../css/styles.css">
+                prefHeight="500.0" prefWidth="1225.0" styleClass="custom-pane" stylesheets="@../../css/styles.css">
         <VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0">
@@ -34,12 +35,6 @@
                 <HBox.margin>
                     <Insets bottom="20.0" left="20.0" right="20.0" top="200.0"/>
                 </HBox.margin>
-                <!--                <JFXComboBox fx:id="invoiceCombo" labelFloat="true" prefHeight="26.0" prefWidth="230.0"-->
-                <!--                             promptText="Tipo de Pesquisa:" styleClass="searchCombo">-->
-                <!--                    <HBox.margin>-->
-                <!--                        <Insets left="40.0"/>-->
-                <!--                    </HBox.margin>-->
-                <!--                </JFXComboBox>-->
                 <JFXTextField fx:id="idSearchInput" labelFloat="true" maxHeight="-Infinity" maxWidth="-Infinity"
                               minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0"
                               promptText="Pesquisar por id..." styleClass="searchInput">
@@ -115,7 +110,7 @@
                     </padding>
                 </HBox>
                 <VBox.margin>
-                    <Insets right="825.0" top="220.0"/>
+                    <Insets right="860.0" top="220.0"/>
                 </VBox.margin>
                 <padding>
                     <Insets top="15.0"/>
@@ -131,7 +126,7 @@
                     <TableColumn fx:id="idCol" maxWidth="120.0" prefWidth="50.0" text="ID"/>
                     <TableColumn fx:id="customerCol" prefWidth="175.0" text="Cliente"/>
                     <TableColumn fx:id="employeeCol" prefWidth="175.0" text="Empregado"/>
-                    <TableColumn fx:id="dateCol" prefWidth="100.0" text="Data"/>
+                    <TableColumn fx:id="dateCol" prefWidth="120.0" text="Data"/>
                     <TableColumn fx:id="productsCol" prefWidth="90.0" text="Produtos"/>
                 </columns>
                 <columnResizePolicy>
@@ -151,7 +146,7 @@
                     </ContextMenu>
                 </contextMenu>
                 <VBox.margin>
-                    <Insets left="350.0" top="-205.0"/>
+                    <Insets left="390.0" top="-205.0"/>
                 </VBox.margin>
                 <StackPane.margin>
                     <Insets left="375.0"/>

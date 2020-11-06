@@ -62,13 +62,19 @@
             <Insets bottom="420.0" right="740.0" top="220.0"/>
         </StackPane.margin>
     </AnchorPane>
+    <FontIcon iconLiteral="ri-circleadd" iconSize="35" onMouseClicked="#addProductButtonAction"
+              styleClass="notes-button">
+        <StackPane.margin>
+            <Insets bottom="520.0" left="1050.0"/>
+        </StackPane.margin>
+    </FontIcon>
     <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0"
-               prefHeight="200.0" prefWidth="700.0">
+               prefHeight="200.0" prefWidth="660.0">
         <columns>
             <TableColumn fx:id="productIdCol" minWidth="120.0" prefWidth="75.0" text="ID"/>
             <TableColumn fx:id="productNameCol" minWidth="175.0" prefWidth="300.0" text="Produto"/>
             <TableColumn fx:id="productPriceCol" minWidth="100.0" prefWidth="75.0" text="Preço"/>
-            <TableColumn fx:id="productQuantityCol" minWidth="100.0" prefWidth="75.0" text="Quantidade"/>
+            <TableColumn fx:id="productQuantityCol" minWidth="120.0" prefWidth="100.0" text="Quantidade"/>
         </columns>
         <contextMenu>
             <ContextMenu>

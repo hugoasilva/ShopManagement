@@ -22,6 +22,7 @@ import pt.hugoasilva.shopmanagement.data.database.DatabaseHandler;
 import pt.hugoasilva.shopmanagement.data.model.Invoice;
 import pt.hugoasilva.shopmanagement.data.model.Product;
 import pt.hugoasilva.shopmanagement.ui.controller.product.ProductAddController;
+import pt.hugoasilva.shopmanagement.ui.controller.product.ProductInvoiceAddController;
 import pt.hugoasilva.shopmanagement.ui.dialog.DialogHandler;
 import pt.hugoasilva.shopmanagement.util.ShopManagementUtil;
 
@@ -173,6 +174,28 @@ public class InvoiceDetailsController implements Initializable {
                         new String("Nenhuns dados serão apagados.".getBytes(), StandardCharsets.UTF_8),
                         false);
             }
+        }
+    }
+
+    public void addProductButtonAction() {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/fxml/product/ProductInvoiceAdd.fxml"));
+            Parent parent = loader.load();
+
+            ProductInvoiceAddController controller = loader.getController();
+
+            controller.setInvoiceId(this.invoice.getId());
+
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Adicionar Produto");
+            stage.setScene(new Scene(parent));
+            ShopManagementUtil.setStageIcon(stage);
+            stage.showAndWait();
+            this.getInvoiceProdutcs();
+        } catch (IOException ex) {
+            LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
     }
 }

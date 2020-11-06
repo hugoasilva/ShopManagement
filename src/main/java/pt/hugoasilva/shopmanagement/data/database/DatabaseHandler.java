@@ -76,9 +76,9 @@ public final class DatabaseHandler {
             "SELECT * FROM notes_suppliers WHERE supplier_id=?";
 
     // Product select queries
-    private static final String GET_INVOICE_PRODUCTS_ID_QUERY =
+    private static final String GET_PRODUCT_INVOICE_ID_QUERY =
             "SELECT COUNT(*) FROM products_invoices";
-    private static final String GET_INVOICE_PRODUCTS_QUERY =
+    private static final String GET_PRODUCT_INVOICE_QUERY =
             "SELECT management.products_invoices.* " +
                     ", products.name " +
                     ", products.supplier_id " +
@@ -139,6 +139,8 @@ public final class DatabaseHandler {
             "INSERT INTO invoices (customer_id, employee_id, date, pdf) VALUES (?, ?, ?, ?)";
     private final static String INSERT_PRODUCT_QUERY =
             "INSERT INTO products (name, price, supplier_id, quantity, image) VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_PRODUCT_INVOICE_QUERY =
+            "INSERT INTO products_invoices (invoice_id, product_id, quantity) VALUES (?, ?, ?)";
     private final static String INSERT_SUPPLIER_QUERY =
             "INSERT INTO suppliers (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
     private static final String INSERT_SUPPLIER_NOTE_QUERY =
@@ -157,6 +159,8 @@ public final class DatabaseHandler {
             "UPDATE invoices SET customer_id=?, employee_id=?, date=? WHERE id=?";
     private static final String UPDATE_PRODUCT_QUERY =
             "UPDATE products SET name=?, price=?, supplier_id=?, quantity=? WHERE id=?";
+    private static final String UPDATE_PRODUCT_INVOICE_QUERY =
+            "UPDATE products_invoices SET product_id=?, quantity=? WHERE id=?";
     private static final String UPDATE_SUPPLIER_QUERY =
             "UPDATE suppliers SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
     private static final String UPDATE_SUPPLIER_NOTE_QUERY =
@@ -1529,7 +1533,7 @@ public final class DatabaseHandler {
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE_NOTE_QUERY);
+            preparedStatement = connection.prepareStatement(UPDATE_SUPPLIER_NOTE_QUERY);
             preparedStatement.setString(1, note.getMessage());
             preparedStatement.setString(2, note.getId());
             // Execute query
@@ -1716,9 +1720,9 @@ public final class DatabaseHandler {
     /**
      * Search product in database
      *
-     * @param id search by id
-     * @param name search by name
-     * @param price search by price
+     * @param id       search by id
+     * @param name     search by name
+     * @param price    search by price
      * @param supplier search by supplier
      * @param quantity search by quantity
      * @return product search list
@@ -2233,7 +2237,7 @@ public final class DatabaseHandler {
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(GET_INVOICE_PRODUCTS_QUERY);
+            preparedStatement = connection.prepareStatement(GET_PRODUCT_INVOICE_QUERY);
             preparedStatement.setString(1, invoice.getId());
             // Execute query
             resultSet = preparedStatement.executeQuery();
@@ -2294,31 +2298,21 @@ public final class DatabaseHandler {
         return false;
     }
 
-//    public static ObservableList<Invoice> searchInvoiceByInitDateAndText(String initDate, String comboInput, String searchInput) {
-//    }
-
-    /**
-     * Get customer invoice count at database
-     *
-     * @param customer customer object
-     * @return invoice count
-     */
-    public int getCustomerInvoiceCount(Customer customer) {
+    public static int getProductInvoiceId() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(GET_CUSTOMER_INVOICE_COUNT);
-            preparedStatement.setString(1, customer.getId());
+            preparedStatement = connection.prepareStatement(GET_PRODUCT_INVOICE_ID_QUERY);
             // Execute query
             resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
+            resultSet.next();
+            return resultSet.getInt(1) + 1;
         } catch (SQLException ex) {
             logSQLException(ex);
+            return 0;
         } finally {
             try {
                 if (resultSet != null) {
@@ -2334,37 +2328,25 @@ public final class DatabaseHandler {
                 logSQLException(ex);
             }
         }
-        return 0;
     }
 
-    /**
-     * Get employee invoice count at database
-     *
-     * @param employee employee object
-     * @return invoice count
-     */
-    public int getEmployeeInvoiceCount(Employee employee) {
+    public static boolean insertProductInvoice(String invoiceId, String productId, String quantity) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(GET_EMPLOYEE_INVOICE_COUNT);
-            preparedStatement.setString(1, employee.getId());
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
+            preparedStatement = connection.prepareStatement(INSERT_PRODUCT_INVOICE_QUERY);
+            preparedStatement.setString(1, invoiceId);
+            preparedStatement.setString(2, productId);
+            preparedStatement.setString(3, quantity);
 
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             logSQLException(ex);
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
@@ -2375,6 +2357,35 @@ public final class DatabaseHandler {
                 logSQLException(ex);
             }
         }
-        return 0;
+        return false;
+    }
+
+    public static boolean updateProductInvoice(String productInvoiceId, String productId, String quantity) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_INVOICE_QUERY);
+            preparedStatement.setString(1, productId);
+            preparedStatement.setString(2, quantity);
+            preparedStatement.setString(3, productInvoiceId);
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return false;
     }
 }
