@@ -10,12 +10,12 @@
 <StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.hugoasilva.shopmanagement.ui.controller.invoice.InvoiceSearchController">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="250.0" styleClass="main-back">
         <StackPane.margin>
-            <Insets bottom="500.0" right="800.0" />
+            <Insets bottom="500.0" />
         </StackPane.margin>
     </HBox>
     <FontIcon iconLiteral="zondi-search" iconSize="80" styleClass="font-icon">
         <StackPane.margin>
-            <Insets bottom="600.0" right="800.0" />
+            <Insets bottom="600.0" />
         </StackPane.margin>
     </FontIcon>
     <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1175.0" styleClass="custom-pane" stylesheets="@../../css/styles.css">
@@ -77,9 +77,9 @@
                         <VBox.margin>
                             <Insets />
                         </VBox.margin>
-                  <HBox.margin>
-                     <Insets left="50.0" />
-                  </HBox.margin>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
                     </JFXButton>
                     <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleClearFilters" prefHeight="44.0" prefWidth="50.0">
                         <graphic>
@@ -88,9 +88,9 @@
                         <VBox.margin>
                             <Insets />
                         </VBox.margin>
-                  <HBox.margin>
-                     <Insets left="100.0" />
-                  </HBox.margin>
+                        <HBox.margin>
+                            <Insets left="100.0" />
+                        </HBox.margin>
                     </JFXButton>
                     <padding>
                         <Insets top="15.0" />
