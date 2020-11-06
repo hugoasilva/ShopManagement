@@ -1,5 +1,6 @@
-# Material Design Shop Management Software using JavaFX
+# Shop Management Software
 This is a shop management software developed using JavaFX programming language.   
+
 ### Last updated
 * 2020-11-06
 
