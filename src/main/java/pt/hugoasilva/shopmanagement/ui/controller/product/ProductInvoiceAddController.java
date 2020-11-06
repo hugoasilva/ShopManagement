@@ -138,6 +138,8 @@ public class ProductInvoiceAddController implements Initializable {
                             StandardCharsets.UTF_8), false);
             return;
         }
+        this.product.setProductId(id);
+        this.product.setQuantity(quantity);
         if (DatabaseHandler.updateProductInvoice(this.product)) {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo",
                     "Produto editado com sucesso!", true);
