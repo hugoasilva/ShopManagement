@@ -1,4 +1,4 @@
-package pt.hugoasilva.shopmanagement.util.exceptions;
+package pt.hugoasilva.shopmanagement.util.exception;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -13,9 +13,9 @@ import java.lang.Thread.UncaughtExceptionHandler;
  * @version 2020-11-01
  */
 
-public class DefaultExceptionHandler implements UncaughtExceptionHandler {
+public class ExceptionHandler implements UncaughtExceptionHandler {
 
-    private final static Logger LOGGER = LogManager.getLogger(DefaultExceptionHandler.class.getName());
+    private final static Logger LOGGER = LogManager.getLogger(ExceptionHandler.class.getName());
 
     /**
      * Log uncaught exception
@@ -25,6 +25,6 @@ public class DefaultExceptionHandler implements UncaughtExceptionHandler {
      */
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        LOGGER.log(Level.ERROR, "Exception occurred {}",  ex);
+        LOGGER.log(Level.ERROR, "Exception occurred {}", ex);
     }
 }

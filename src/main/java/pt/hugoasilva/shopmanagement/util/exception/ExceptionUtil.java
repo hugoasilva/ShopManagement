@@ -1,4 +1,4 @@
-package pt.hugoasilva.shopmanagement.util.exceptions;
+package pt.hugoasilva.shopmanagement.util.exception;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +20,7 @@ public class ExceptionUtil {
      * Initialize exception handler
      */
     public static void init() {
-        Thread.setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
         System.setOut(createLoggingProxy(System.out));
         System.setErr(createLoggingProxy(System.err));
     }

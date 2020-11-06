@@ -1,7 +1,6 @@
 package pt.hugoasilva.shopmanagement.ui.controller.employee;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -219,9 +218,9 @@ public class EmployeeSearchController implements Initializable {
     }
 
     public void refreshTable() {
-            this.list.clear();
-            this.list = DatabaseHandler.getEmployeeList();
-            this.tableView.setItems(list);
+        this.list.clear();
+        this.list = DatabaseHandler.getEmployeeList();
+        this.tableView.setItems(list);
     }
 
     /**

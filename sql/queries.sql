@@ -365,9 +365,7 @@ faturas por data
 select *
 from invoices
 where date >= '2020-10-09'
-  and date <= '2021-01-01'
-
-Seleccionar todas as faturas com nome de cliente e empregado
+  and date <= '2021-01-01' Seleccionar todas as faturas com nome de cliente e empregado
 
 SELECT management.invoices.*
      , customers.name AS customer_name

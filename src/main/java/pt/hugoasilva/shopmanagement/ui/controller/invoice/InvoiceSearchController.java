@@ -265,6 +265,20 @@ public class InvoiceSearchController implements Initializable {
     }
 
     /**
+     * Clear search filters handler
+     */
+    @FXML
+    private void handleClearFilters(ActionEvent event) {
+        this.loadData();
+        this.idSearchInput.clear();
+        this.customerSearchInput.clear();
+        this.employeeSearchInput.clear();
+        this.productSearchInput.clear();
+        this.initDate.setValue(null);
+        this.finalDate.setValue(null);
+    }
+
+    /**
      * Search invoice operation
      */
     public void searchInvoice() {

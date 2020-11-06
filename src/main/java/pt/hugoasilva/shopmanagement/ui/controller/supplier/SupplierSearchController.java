@@ -1,7 +1,6 @@
 package pt.hugoasilva.shopmanagement.ui.controller.supplier;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,9 +46,17 @@ public class SupplierSearchController implements Initializable {
     ObservableList<Supplier> list = FXCollections.observableArrayList();
     // UI Content
     @FXML
-    private JFXComboBox<Label> supplierCombo;
+    private TextField idSearchInput;
     @FXML
-    private TextField supplierSearchInput;
+    private TextField nameSearchInput;
+    @FXML
+    private TextField addressSearchInput;
+    @FXML
+    private TextField phoneSearchInput;
+    @FXML
+    private TextField emailSearchInput;
+    @FXML
+    private TextField nifSearchInput;
     @FXML
     private TableView<Supplier> tableView;
     @FXML
@@ -70,7 +77,6 @@ public class SupplierSearchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
-        this.initCombo();
         this.loadData();
     }
 
@@ -121,15 +127,6 @@ public class SupplierSearchController implements Initializable {
         detailsCol.setStyle("-fx-alignment: CENTER;");
         detailsCol.setCellFactory(cellFactoryDetails);
         this.tableView.getColumns().add(detailsCol);
-    }
-
-    /**
-     * Initialize search combo box
-     */
-    private void initCombo() {
-        this.supplierCombo.getItems().addAll(new Label("ID ou Nome"),
-                new Label("Contacto"), new Label("E-mail"), new Label("NIF"));
-        this.supplierCombo.setPromptText("Tipo de pesquisa...");
     }
 
     private void showSupplierDetails(Supplier supplier) {
@@ -215,13 +212,9 @@ public class SupplierSearchController implements Initializable {
     }
 
     public void refreshTable() {
-        if (this.supplierCombo.getValue() == null && this.supplierSearchInput.getText().isEmpty()) {
-            this.list.clear();
-            this.list = DatabaseHandler.getSupplierList();
-            this.tableView.setItems(list);
-        } else {
-            this.searchSupplier();
-        }
+        this.list.clear();
+        this.list = DatabaseHandler.getSupplierList();
+        this.tableView.setItems(list);
     }
 
     /**
@@ -229,14 +222,41 @@ public class SupplierSearchController implements Initializable {
      */
     public void searchSupplier() {
         // Check if user input is present
-        if (this.supplierCombo.getSelectionModel().isEmpty() || this.supplierSearchInput.getText().isEmpty()) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
-                    "Insira dados em todos os campos.");
+        if (!this.idSearchInput.getText().isEmpty()
+                || !this.nameSearchInput.getText().isEmpty()
+                || !this.addressSearchInput.getText().isEmpty()
+                || !this.phoneSearchInput.getText().isEmpty()
+                || !this.emailSearchInput.getText().isEmpty()
+                || !this.nifSearchInput.getText().isEmpty()) {
+            String id = null;
+            String name = null;
+            String address = null;
+            String phone = null;
+            String email = null;
+            String nif = null;
+            if (!this.idSearchInput.getText().isEmpty()) {
+                id = this.idSearchInput.getText();
+            }
+            if (!this.nameSearchInput.getText().isEmpty()) {
+                name = this.nameSearchInput.getText();
+            }
+            if (!this.addressSearchInput.getText().isEmpty()) {
+                address = this.addressSearchInput.getText();
+            }
+            if (!this.phoneSearchInput.getText().isEmpty()) {
+                phone = this.phoneSearchInput.getText();
+            }
+            if (!this.emailSearchInput.getText().isEmpty()) {
+                email = this.emailSearchInput.getText();
+            }
+            if (!this.nifSearchInput.getText().isEmpty()) {
+                nif = this.nifSearchInput.getText();
+            }
+            this.list = DatabaseHandler.searchSupplier(id, name, address, phone, email, nif);
+            this.tableView.setItems(this.list);
         } else {
-            String comboInput = this.supplierCombo.getSelectionModel().getSelectedItem().getText();
-            String searchInput = this.supplierSearchInput.getText();
-            this.list = DatabaseHandler.searchSupplier(comboInput, searchInput);
-            this.tableView.setItems(list);
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
+                    "Insira dados para pesquisar.");
         }
     }
 

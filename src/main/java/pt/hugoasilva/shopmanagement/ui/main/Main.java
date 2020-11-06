@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pt.hugoasilva.shopmanagement.util.ShopManagementUtil;
-import pt.hugoasilva.shopmanagement.util.exceptions.ExceptionUtil;
+import pt.hugoasilva.shopmanagement.util.exception.ExceptionUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
