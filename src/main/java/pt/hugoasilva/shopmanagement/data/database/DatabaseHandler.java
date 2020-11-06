@@ -103,8 +103,6 @@ public final class DatabaseHandler {
     private static final String GET_SUPPLIER_ID_QUERY =
             "SELECT COUNT(*) FROM suppliers";
     private static final String GET_SUPPLIERS_QUERY =
-            "SELECT * FROM suppliers";
-    private static final String SEARCH_SUPPLIERS_QUERY =
             "SELECT * FROM suppliers ";
 
     // Delete queries
@@ -1718,69 +1716,106 @@ public final class DatabaseHandler {
     /**
      * Search product in database
      *
-     * @param combo  user selected input
-     * @param search user input
+     * @param id search by id
+     * @param name search by name
+     * @param price search by price
+     * @param supplier search by supplier
+     * @param quantity search by quantity
      * @return product search list
      */
-    public static ObservableList<Product> searchProduct(String combo, String search) {
+    public static ObservableList<Product> searchProduct(String id, String name,
+                                                        String price, String supplier,
+                                                        String quantity) {
         ObservableList<Product> list = FXCollections.observableArrayList();
-//        String query = null;
-//        switch (combo) {
-//            case "ID ou Nome":
-//                if (search.matches("[0-9]+")) {
-//                    query = SEARCH_PRODUCTS_BY_ID_QUERY;
-//                } else {
-//                    query = SEARCH_PRODUCTS_BY_NAME_QUERY;
-//                }
-//                search = "%" + search + "%";
-//                break;
-//            case "Preco":
-//                query = SEARCH_PRODUCTS_BY_PRICE_QUERY;
-//                break;
-//            case "Quantidade":
-//                query = SEARCH_PRODUCTS_BY_QUANTITY_QUERY;
-//                break;
-//        }
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-//        try {
-//            // Create connection
-//            connection = DatabasePool.getDataSource().getConnection();
-//            preparedStatement = connection.prepareStatement(query);
-//            preparedStatement.setString(1, search);
-//            // Execute query
-//            resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                String id = resultSet.getString("id");
-//                String name = resultSet.getString("name");
-//                String price = resultSet.getString("price");
-//                String supplierId = resultSet.getString("supplier_id");
-//                String supplierName = resultSet.getString("supplier_name");
-//                String quantity = resultSet.getString("quantity");
-//                String image = resultSet.getString("image");
-//
-//                Product product = new Product(id, name, price, supplierId, quantity, image);
-//                product.setSupplierName(supplierName);
-//                list.add(product);
-//            }
-//        } catch (SQLException ex) {
-//            logSQLException(ex);
-//        } finally {
-//            try {
-//                if (resultSet != null) {
-//                    resultSet.close();
-//                }
-//                if (preparedStatement != null) {
-//                    preparedStatement.close();
-//                }
-//                if (connection != null) {
-//                    connection.close();
-//                }
-//            } catch (SQLException ex) {
-//                logSQLException(ex);
-//            }
-//        }
+        String query = SEARCH_PRODUCTS_QUERY;
+        boolean and = false;
+        boolean suppliers = false;
+        if (supplier != null) {
+            if (supplier.matches("[0-9]+")) {
+                query += "INNER JOIN suppliers ON products.supplier_id = suppliers.id " +
+                        "AND suppliers.id LIKE '%" + supplier + "%' ";
+            } else {
+                query += "INNER JOIN suppliers ON products.supplier_id = suppliers.id " +
+                        "AND suppliers.name LIKE '%" + supplier + "%' ";
+            }
+            suppliers = true;
+        }
+        if (!suppliers) {
+            query += "INNER JOIN suppliers ON products.supplier_id = suppliers.id ";
+        }
+        if (id != null || name != null || price != null || quantity != null) {
+            query += "WHERE ";
+        }
+        if (id != null) {
+            query += "products.id LIKE '%" + id + "%'";
+            and = true;
+        }
+        if (name != null) {
+            if (and) {
+                query += "AND products.name LIKE '%" + name + "%'";
+            } else {
+                query += "products.name LIKE '%" + name + "%'";
+                and = true;
+            }
+        }
+        if (price != null) {
+            if (and) {
+                query += "AND products.price LIKE '%" + price + "%'";
+            } else {
+                query += "products.price LIKE '%" + price + "%'";
+                and = true;
+            }
+        }
+        if (quantity != null) {
+            if (and) {
+                query += "AND products.quantity LIKE '%" + quantity + "%'";
+            } else {
+                query += "products.quantity LIKE '%" + quantity + "%'";
+            }
+        }
+
+        System.out.println(query);
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String productId = resultSet.getString("id");
+                String productName = resultSet.getString("name");
+                String productPrice = resultSet.getString("price");
+                String productSupplierId = resultSet.getString("supplier_id");
+                String productSupplierName = resultSet.getString("supplier_name");
+                String productQuantity = resultSet.getString("quantity");
+                String image = resultSet.getString("image");
+
+                Product product = new Product(productId, productName,
+                        productPrice, productSupplierId, productQuantity, image);
+                product.setSupplierName(productSupplierName);
+                list.add(product);
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
         return list;
     }
 

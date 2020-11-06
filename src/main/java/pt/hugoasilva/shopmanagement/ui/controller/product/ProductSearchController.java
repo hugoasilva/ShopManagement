@@ -1,7 +1,6 @@
 package pt.hugoasilva.shopmanagement.ui.controller.product;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -49,9 +48,15 @@ public class ProductSearchController implements Initializable {
     ObservableList<Product> list = FXCollections.observableArrayList();
     // UI Content
     @FXML
-    private JFXComboBox<Label> productCombo;
+    private TextField idSearchInput;
     @FXML
-    private TextField productSearchInput;
+    private TextField nameSearchInput;
+    @FXML
+    private TextField priceSearchInput;
+    @FXML
+    private TextField supplierSearchInput;
+    @FXML
+    private TextField quantitySearchInput;
     @FXML
     private TableView<Product> tableView;
     @FXML
@@ -65,12 +70,11 @@ public class ProductSearchController implements Initializable {
     @FXML
     private TableColumn<Product, String> quantityCol;
     @FXML
-    private AnchorPane mainContainer;
+    private StackPane mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.initCol();
-        this.initCombo();
         this.loadData();
     }
 
@@ -120,15 +124,6 @@ public class ProductSearchController implements Initializable {
         detailsCol.setStyle("-fx-alignment: CENTER;");
         detailsCol.setCellFactory(cellFactoryDetails);
         tableView.getColumns().add(detailsCol);
-    }
-
-    /**
-     * Initialize search combo box
-     */
-    private void initCombo() {
-        productCombo.getItems().addAll(new Label("ID ou Nome"),
-                new Label(new String("Preço".getBytes(), StandardCharsets.UTF_8)), new Label("Quantidade"));
-        productCombo.setPromptText("Tipo de pesquisa...");
     }
 
     private void showProductDetails(Product product) {
@@ -214,13 +209,22 @@ public class ProductSearchController implements Initializable {
     }
 
     public void refreshTable() {
-        if (this.productCombo.getValue() == null && this.productSearchInput.getText().isEmpty()) {
-            this.list.clear();
-            this.list = DatabaseHandler.getProductList();
-            this.tableView.setItems(list);
-        } else {
-            this.searchProduct();
-        }
+        this.list.clear();
+        this.list = DatabaseHandler.getProductList();
+        this.tableView.setItems(list);
+    }
+
+    /**
+     * Clear search filters handler
+     */
+    @FXML
+    private void handleClearFilters(ActionEvent event) {
+        this.loadData();
+        this.idSearchInput.clear();
+        this.nameSearchInput.clear();
+        this.priceSearchInput.clear();
+        this.supplierSearchInput.clear();
+        this.quantitySearchInput.clear();
     }
 
     /**
@@ -228,15 +232,36 @@ public class ProductSearchController implements Initializable {
      */
     public void searchProduct() {
         // Check if user input is present
-        if (this.productCombo.getSelectionModel().isEmpty() || this.productSearchInput.getText().isEmpty()) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
-                    "Insira dados em todos os campos.");
+        if (!this.idSearchInput.getText().isEmpty()
+                || !this.nameSearchInput.getText().isEmpty()
+                || !this.priceSearchInput.getText().isEmpty()
+                || !this.supplierSearchInput.getText().isEmpty()
+                || !this.quantitySearchInput.getText().isEmpty()) {
+            String id = null;
+            String name = null;
+            String price = null;
+            String supplier = null;
+            String quantity = null;
+            if (!this.idSearchInput.getText().isEmpty()) {
+                id = this.idSearchInput.getText();
+            }
+            if (!this.nameSearchInput.getText().isEmpty()) {
+                name = this.nameSearchInput.getText();
+            }
+            if (!this.priceSearchInput.getText().isEmpty()) {
+                price = this.priceSearchInput.getText();
+            }
+            if (!this.supplierSearchInput.getText().isEmpty()) {
+                supplier = this.supplierSearchInput.getText();
+            }
+            if (!this.quantitySearchInput.getText().isEmpty()) {
+                quantity = this.quantitySearchInput.getText();
+            }
+            this.list = DatabaseHandler.searchProduct(id, name, price, supplier, quantity);
+            this.tableView.setItems(this.list);
         } else {
-            String comboInput =
-                    StringUtils.stripAccents(this.productCombo.getSelectionModel().getSelectedItem().getText());
-            String searchInput = this.productSearchInput.getText();
-            this.list = DatabaseHandler.searchProduct(comboInput, searchInput);
-            this.tableView.setItems(list);
+            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
+                    "Insira dados para pesquisar.");
         }
     }
 
