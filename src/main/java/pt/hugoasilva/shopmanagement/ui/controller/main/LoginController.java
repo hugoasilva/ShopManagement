@@ -62,23 +62,20 @@ LoginController implements Initializable {
 
         // Validate login credentials
         String response = DatabaseHandler.login(username, password);
-
         switch (response) {
-            case "success":
+            case "success" -> {
                 closeStage();
                 loadMain();
                 LOGGER.log(Level.INFO, "Sessão iniciada com sucesso com o utilizador: {}", username);
-                break;
-            case "error":
-                DialogHandler.showMaterialErrorDialog(this.mainContainer,
-                        "Erro!", "Nome de utilizador ou palavra passe errados.");
-                break;
-            case "dberror":
+            }
+            case "error" -> DialogHandler.showMaterialErrorDialog(this.mainContainer,
+                    "Erro!", "Nome de utilizador ou palavra passe errados.");
+            case "dberror" -> {
                 DialogHandler.showMaterialErrorDialog(this.mainContainer,
                         "Erro de Base de Dados!",
                         new String("Não foi possível aceder à base de dados".getBytes(), StandardCharsets.UTF_8));
                 System.exit(0);
-                break;
+            }
         }
     }
 

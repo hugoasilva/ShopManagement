@@ -103,9 +103,10 @@ public class NoteAddController implements Initializable {
             return;
         }
         Note note = null;
+        String noteId = null;
         switch (this.personType) {
-            case "customer":
-                String noteId = String.valueOf(DatabaseHandler.getCustomerNotesId());
+            case "customer" -> {
+                noteId = String.valueOf(DatabaseHandler.getCustomerNotesId());
                 note = new Note(noteId, message);
                 note.setPersonId(this.personId);
                 note.setPersonType(this.personType);
@@ -116,8 +117,8 @@ public class NoteAddController implements Initializable {
                     DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                             "Verifique os dados e tente novamente.", false);
                 }
-                break;
-            case "employee":
+            }
+            case "employee" -> {
                 noteId = String.valueOf(DatabaseHandler.getEmployeeNotesId());
                 note = new Note(noteId, message);
                 note.setPersonId(this.personId);
@@ -129,8 +130,8 @@ public class NoteAddController implements Initializable {
                     DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                             "Verifique os dados e tente novamente.", false);
                 }
-                break;
-            case "supplier":
+            }
+            case "supplier" -> {
                 noteId = String.valueOf(DatabaseHandler.getSupplierNotesId());
                 note = new Note(noteId, message);
                 note.setPersonId(this.personId);
@@ -142,7 +143,7 @@ public class NoteAddController implements Initializable {
                     DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                             "Verifique os dados e tente novamente.", false);
                 }
-                break;
+            }
         }
     }
 
@@ -179,10 +180,11 @@ public class NoteAddController implements Initializable {
                             StandardCharsets.UTF_8), false);
             return;
         }
+        boolean result;
         switch (this.note.getPersonType()) {
-            case "customer":
+            case "customer" -> {
                 note = new Note(this.note.getId(), message);
-                boolean result = DatabaseHandler.updateCustomerNote(note);
+                result = DatabaseHandler.updateCustomerNote(note);
                 if (result) {
                     DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo",
                             "Nota editada com sucesso!", true);
@@ -190,8 +192,8 @@ public class NoteAddController implements Initializable {
                     DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                             "Não foi possível atualizar a nota.", false);
                 }
-                break;
-            case "employee":
+            }
+            case "employee" -> {
                 note = new Note(this.note.getId(), message);
                 result = DatabaseHandler.updateEmployeeNote(note);
                 if (result) {
@@ -201,8 +203,8 @@ public class NoteAddController implements Initializable {
                     DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                             "Não foi possível atualizar a nota.", false);
                 }
-                break;
-            case "supplier":
+            }
+            case "supplier" -> {
                 note = new Note(this.note.getId(), message);
                 result = DatabaseHandler.updateSupplierNote(note);
                 if (result) {
@@ -212,7 +214,7 @@ public class NoteAddController implements Initializable {
                     DialogHandler.showMaterialInformationDialog(this.mainContainer, "Ocorreu um erro",
                             "Não foi possível atualizar a nota.", false);
                 }
-                break;
+            }
         }
     }
 }

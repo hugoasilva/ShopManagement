@@ -142,19 +142,16 @@ public class MaterialButtonSkin extends ButtonSkin {
 
 
     private void updateButtonType(ButtonType type) {
-        switch (type) {
-            case RAISED:
-                JFXDepthManager.setDepth(getSkinnable(), 2);
-                clickedAnimation = new MaterialButtonSkin.ButtonClickTransition(getSkinnable(), (DropShadow) getSkinnable().getEffect());
-                /*
-                 * disable action when clicking on the button shadow
-                 */
-                getSkinnable().setPickOnBounds(false);
-                break;
-            default:
-                getSkinnable().setEffect(null);
-                getSkinnable().setPickOnBounds(true);
-                break;
+        if (type == ButtonType.RAISED) {
+            JFXDepthManager.setDepth(getSkinnable(), 2);
+            clickedAnimation = new ButtonClickTransition(getSkinnable(), (DropShadow) getSkinnable().getEffect());
+            /*
+             * disable action when clicking on the button shadow
+             */
+            getSkinnable().setPickOnBounds(false);
+        } else {
+            getSkinnable().setEffect(null);
+            getSkinnable().setPickOnBounds(true);
         }
     }
 

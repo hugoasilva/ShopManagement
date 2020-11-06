@@ -28,20 +28,21 @@ import java.util.Date;
  * Shop Management Util Class
  *
  * @author Hugo Silva
- * @version 2020-11-01
+ * @version 2020-11-06
  */
 
 public class ShopManagementUtil {
 
     //Resources
     public static final String ICON_IMAGE_LOC = "/img/icon.png";
-    private static String OS = System.getProperty("os.name").toLowerCase();
+    private static final String OS = System.getProperty("os.name").toLowerCase();
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(ShopManagementUtil.class.getName());
     // SFTP server details
     private static final String SFTP_SERVER_URL = "projecthub.hopto.org";
     private static final String SFTP_SERVER_USERNAME = "pi";
     private static final String SFTP_SERVER_PASSWORD = "server";
+    private static final int SFTP_SERVER_PORT = 4400;
     // Path constant
     private final static String LOCAL_DOWNLOAD_PATH = "downloads/";
     // Date and time formats
@@ -112,6 +113,8 @@ public class ShopManagementUtil {
             } else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
                 // Ubuntu
                 Runtime.getRuntime().exec(new String[]{"evince", file.getAbsolutePath()});
+            } else {
+                LOGGER.log(Level.INFO, "OS not supported!");
             }
         } catch (IOException ex) {
             LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
@@ -131,7 +134,7 @@ public class ShopManagementUtil {
             // Create downloads folder
             Files.createDirectories(path);
         } catch (IOException e) {
-            LOGGER.log(Level.INFO, "Não foi possível criar a pasta de transferências");
+            LOGGER.log(Level.INFO, "Unable to create downloads folder");
         }
         try {
             Path path = Paths.get("uploads/");
@@ -142,7 +145,7 @@ public class ShopManagementUtil {
             // Create uploads folder
             Files.createDirectories(path);
         } catch (IOException e) {
-            LOGGER.log(Level.INFO, "Não foi possível criar a pasta de carregamentos");
+            LOGGER.log(Level.INFO, "Unable to create uploads folder");
         }
     }
 
@@ -158,7 +161,7 @@ public class ShopManagementUtil {
             JSch.setConfig("StrictHostKeyChecking", "no");
             Session jschSession = jsch.getSession(SFTP_SERVER_USERNAME, SFTP_SERVER_URL);
             jschSession.setPassword(SFTP_SERVER_PASSWORD);
-            jschSession.setPort(4400);
+            jschSession.setPort(SFTP_SERVER_PORT);
             jschSession.connect();
             channel = (ChannelSftp) jschSession.openChannel("sftp");
         } catch (JSchException e) {
