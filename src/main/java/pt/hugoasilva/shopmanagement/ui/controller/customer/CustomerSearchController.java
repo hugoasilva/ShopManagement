@@ -182,7 +182,7 @@ public class CustomerSearchController implements Initializable {
         //Fetch the selected row
         Customer selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum cliente seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione um cliente para apagar.");
             return;
         }
@@ -274,7 +274,7 @@ public class CustomerSearchController implements Initializable {
             this.list = DatabaseHandler.searchCustomer(id, name, address, phone, email, nif);
             this.tableView.setItems(this.list);
         } else {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Insira dados para pesquisar.");
         }
     }
@@ -307,7 +307,7 @@ public class CustomerSearchController implements Initializable {
         //Fetch the selected row
         Customer selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum cliente seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione um cliente para editar.");
             return;
         }

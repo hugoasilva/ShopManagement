@@ -223,7 +223,7 @@ public class InvoiceSearchController implements Initializable {
         //Fetch the selected row
         Invoice selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma fatura seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione uma fatura para apagar.");
             return;
         }
@@ -316,7 +316,7 @@ public class InvoiceSearchController implements Initializable {
             this.list = DatabaseHandler.searchInvoice(id, customer, employee, product, initDate, finalDate);
             this.tableView.setItems(this.list);
         } else {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Insira dados para pesquisar.");
         }
     }
@@ -349,7 +349,7 @@ public class InvoiceSearchController implements Initializable {
         //Fetch the selected row
         Invoice selectedForEdit = tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma fatura seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione uma fatura para editar.");
             return;
         }

@@ -155,7 +155,7 @@ public class EmployeeDetailsController implements Initializable {
         //Fetch the selected row
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma nota seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione uma nota para editar.");
             return;
         }
@@ -196,7 +196,7 @@ public class EmployeeDetailsController implements Initializable {
         //Fetch the selected row
         Note selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma nota seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione uma nota para editar.");
             return;
         }

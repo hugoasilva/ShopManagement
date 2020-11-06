@@ -2298,38 +2298,6 @@ public final class DatabaseHandler {
         return false;
     }
 
-    public static int getProductInvoiceId() {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(GET_PRODUCT_INVOICE_ID_QUERY);
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt(1) + 1;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-            return 0;
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-    }
-
     public static boolean insertProductInvoice(String invoiceId, String productId, String quantity) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

@@ -40,7 +40,7 @@ public class ProductAddController implements Initializable {
     private String imagePath;
     private boolean defaultImage = true;
     private Boolean isInEditMode = Boolean.FALSE;
-    ;
+
     // UI Content
     @FXML
     private JFXTextField name;
@@ -90,7 +90,7 @@ public class ProductAddController implements Initializable {
         }
 
         if (productName.isEmpty() || productPrice.isEmpty() || productQuantity.isEmpty()) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Dados insuficientes",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor insira dados em todos os campos.");
             return;
         }

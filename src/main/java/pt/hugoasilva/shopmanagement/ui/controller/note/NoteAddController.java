@@ -92,7 +92,7 @@ public class NoteAddController implements Initializable {
         String message = this.message.getText();
 
         if (message.isEmpty()) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Dados insuficientes",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     new String("Por favor insira uma descrição para a nota.".getBytes(),
                             StandardCharsets.UTF_8));
             return;

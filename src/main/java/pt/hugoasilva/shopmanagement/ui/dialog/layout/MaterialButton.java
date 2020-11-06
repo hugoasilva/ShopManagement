@@ -186,7 +186,7 @@ public class MaterialButton extends Button {
      */
     private static class StyleableProperties {
         private static final CssMetaData<MaterialButton, ButtonType> BUTTON_TYPE =
-                new CssMetaData<MaterialButton, ButtonType>("-jfx-button-type",
+                new CssMetaData<>("-jfx-button-type",
                         MaterialButtonTypeConverter.getInstance(), ButtonType.FLAT) {
                     @Override
                     public boolean isSettable(MaterialButton control) {
@@ -200,7 +200,7 @@ public class MaterialButton extends Button {
                 };
 
         private static final CssMetaData<MaterialButton, Boolean> DISABLE_VISUAL_FOCUS =
-                new CssMetaData<MaterialButton, Boolean>("-jfx-disable-visual-focus",
+                new CssMetaData<>("-jfx-disable-visual-focus",
                         BooleanConverter.getInstance(), false) {
                     @Override
                     public boolean isSettable(MaterialButton control) {

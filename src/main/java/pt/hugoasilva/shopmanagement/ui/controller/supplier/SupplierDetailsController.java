@@ -41,7 +41,6 @@ public class SupplierDetailsController implements Initializable {
 
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(ProductSearchController.class.getName());
-    private static boolean option;
     // Notes list
     @FXML
     ObservableList<Note> list = FXCollections.observableArrayList();
@@ -64,7 +63,6 @@ public class SupplierDetailsController implements Initializable {
     private TableView<Note> tableView;
     @FXML
     private TableColumn<Note, String> messageCol;
-    ;
     @FXML
     private StackPane mainContainer;
 
@@ -156,11 +154,11 @@ public class SupplierDetailsController implements Initializable {
         //Fetch the selected row
         Note selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma nota seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione uma nota para editar.");
             return;
         }
-        option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
+        boolean option = DialogHandler.showMaterialConfirmationDialog(this.mainContainer,
                 "Apagar Nota",
                 "Tem a certeza que pretende apagar a nota?");
         if (option) {
@@ -197,7 +195,7 @@ public class SupplierDetailsController implements Initializable {
         //Fetch the selected row
         Note selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhuma nota seleccionada",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione uma nota para editar.");
             return;
         }

@@ -89,7 +89,7 @@ public class InvoiceAddController implements Initializable {
 
         if (customerId.isEmpty() || employeeId.isEmpty() || invoiceDate.isEmpty()
                 || invoiceProducts.isEmpty()) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Dados insuficientes",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor insira dados em todos os campos.");
             return;
         }

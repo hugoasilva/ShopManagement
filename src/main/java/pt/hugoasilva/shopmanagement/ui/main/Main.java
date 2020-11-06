@@ -34,17 +34,14 @@ public class Main extends Application {
     public static void main(String[] args) {
         ShopManagementUtil.createDownloadsUploadsFolder();
         Long startTime = System.currentTimeMillis();
-        LOGGER.log(Level.INFO, "Sistema de Gestão de Loja iniciado às {}",
+        LOGGER.log(Level.INFO, "Management System started at {}",
                 ShopManagementUtil.formatDateTimeString(startTime));
         launch(args);
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                Long exitTime = System.currentTimeMillis();
-                LOGGER.log(Level.INFO, "Sistema de Gestão de Loja fechado às {}. Usado por {} ms",
-                        ShopManagementUtil.formatDateTimeString(startTime), exitTime);
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            Long exitTime = System.currentTimeMillis();
+            LOGGER.log(Level.INFO, "Management System closed at {}. Used for {} ms",
+                    ShopManagementUtil.formatDateTimeString(startTime), exitTime);
+        }));
     }
 
     /**

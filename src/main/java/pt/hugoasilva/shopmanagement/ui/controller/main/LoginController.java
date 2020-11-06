@@ -56,7 +56,6 @@ LoginController implements Initializable {
      */
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
-
         String username = this.username.getText();
         String password = this.password.getText();
 
@@ -69,10 +68,9 @@ LoginController implements Initializable {
                 LOGGER.log(Level.INFO, "Sessão iniciada com sucesso com o utilizador: {}", username);
             }
             case "error" -> DialogHandler.showMaterialErrorDialog(this.mainContainer,
-                    "Erro!", "Nome de utilizador ou palavra passe errados.");
+                    "Nome de utilizador ou palavra passe errados.");
             case "dberror" -> {
                 DialogHandler.showMaterialErrorDialog(this.mainContainer,
-                        "Erro de Base de Dados!",
                         new String("Não foi possível aceder à base de dados".getBytes(), StandardCharsets.UTF_8));
                 System.exit(0);
             }

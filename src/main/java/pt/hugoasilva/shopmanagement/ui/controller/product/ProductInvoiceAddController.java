@@ -84,7 +84,7 @@ public class ProductInvoiceAddController implements Initializable {
         String quantity = this.quantity.getText();
 
         if (productId.isEmpty() || quantity.isEmpty()) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Dados insuficientes",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     new String("Por favor insira dados em todos os campos.".getBytes(),
                             StandardCharsets.UTF_8));
             return;

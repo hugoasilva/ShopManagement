@@ -18,13 +18,11 @@
         <opaqueInsets>
             <Insets/>
         </opaqueInsets>
-        <children>
-            <Label fx:id="id" minHeight="40" minWidth="120.0" styleClass="detailsLabel">
-                <HBox.margin>
-                    <Insets bottom="100.0" left="200.0"/>
-                </HBox.margin>
-            </Label>
-        </children>
+        <Label fx:id="id" minHeight="40" minWidth="120.0" styleClass="detailsLabel">
+            <HBox.margin>
+                <Insets bottom="100.0" left="200.0"/>
+            </HBox.margin>
+        </Label>
     </HBox>
     <FontIcon iconLiteral="fa-black-tie" iconSize="80" styleClass="font-icon">
         <StackPane.margin>

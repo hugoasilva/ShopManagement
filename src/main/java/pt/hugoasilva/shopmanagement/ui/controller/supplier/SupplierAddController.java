@@ -26,7 +26,7 @@ public class SupplierAddController implements Initializable {
     // Supplier data
     private Supplier supplier;
     private Boolean isInEditMode = Boolean.FALSE;
-    ;
+
     // UI Content
     @FXML
     private JFXTextField name;

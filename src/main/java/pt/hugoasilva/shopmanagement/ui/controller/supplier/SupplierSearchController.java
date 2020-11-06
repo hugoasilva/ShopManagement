@@ -176,7 +176,7 @@ public class SupplierSearchController implements Initializable {
         //Fetch the selected row
         Supplier selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum fornecedor seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione um fornecedor para apagar.");
             return;
         }
@@ -269,7 +269,7 @@ public class SupplierSearchController implements Initializable {
             this.list = DatabaseHandler.searchSupplier(id, name, address, phone, email, nif);
             this.tableView.setItems(this.list);
         } else {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Erro!",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Insira dados para pesquisar.");
         }
     }
@@ -300,7 +300,7 @@ public class SupplierSearchController implements Initializable {
         //Fetch the selected row
         Supplier selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum fornecedor seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione um fornecedor para editar.");
             return;
         }

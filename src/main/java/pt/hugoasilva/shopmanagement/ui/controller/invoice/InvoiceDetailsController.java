@@ -127,7 +127,7 @@ public class InvoiceDetailsController implements Initializable {
         //Fetch the selected row
         Product selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum produto seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione um produto para editar.");
             return;
         }
@@ -156,7 +156,7 @@ public class InvoiceDetailsController implements Initializable {
         //Fetch the selected row
         Product selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            DialogHandler.showMaterialErrorDialog(this.mainContainer, "Nenhum produto seleccionado",
+            DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione um produto para apagar.");
             return;
         }

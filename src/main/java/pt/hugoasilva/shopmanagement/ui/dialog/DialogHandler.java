@@ -64,10 +64,9 @@ public class DialogHandler {
      * Show material error dialog
      *
      * @param nodeToBeBlurred parent window to be blurred
-     * @param header          dialog header text
      * @param body            dialog body text
      */
-    public static void showMaterialErrorDialog(Node nodeToBeBlurred, String header, String body) {
+    public static void showMaterialErrorDialog(Node nodeToBeBlurred, String body) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
         MaterialDialogLayout dialogLayout = new MaterialDialogLayout(true);
         MaterialDialog<String> alert = new MaterialDialog<>(nodeToBeBlurred.getScene().getWindow());

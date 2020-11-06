@@ -55,7 +55,7 @@
             </JFXPasswordField>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="404.0" spacing="30.0">
                 <JFXButton contentDisplay="CENTER" layoutX="106.0" layoutY="278.0" onAction="#handleLoginButtonAction"
-                           prefHeight="40.0" prefWidth="120.0" styleClass="login-button">
+                           prefHeight="40.0" prefWidth="120.0">
                     <graphic>
                         <FontIcon iconLiteral="icm-checkmark" iconSize="30" styleClass="font-icon-button"/>
                     </graphic>
@@ -64,7 +64,7 @@
                     </HBox.margin>
                 </JFXButton>
                 <JFXButton contentDisplay="CENTER" layoutX="239.0" layoutY="278.0" onAction="#handleCancelButtonAction"
-                           prefHeight="40.0" prefWidth="120.0" styleClass="login-button">
+                           prefHeight="40.0" prefWidth="120.0">
                     <graphic>
                         <FontIcon iconLiteral="ri-circledelete" iconSize="30" styleClass="font-icon-button"/>
                     </graphic>
