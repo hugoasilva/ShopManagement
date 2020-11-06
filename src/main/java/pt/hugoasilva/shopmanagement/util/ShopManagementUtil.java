@@ -35,6 +35,7 @@ public class ShopManagementUtil {
 
     //Resources
     public static final String ICON_IMAGE_LOC = "/img/icon.png";
+    private static String OS = System.getProperty("os.name").toLowerCase();
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(ShopManagementUtil.class.getName());
     // SFTP server details
@@ -105,8 +106,13 @@ public class ShopManagementUtil {
     public static void openFile(String path) {
         File file = new File(path);
         try {
-            Desktop desktop = Desktop.getDesktop();
-            desktop.open(file);
+            if (OS.contains("Win")) {
+                // Windows
+                Desktop.getDesktop().open(file);
+            } else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
+                // Ubuntu
+                Runtime.getRuntime().exec(new String[]{"evince", file.getAbsolutePath()});
+            }
         } catch (IOException ex) {
             LOGGER.log(Level.ERROR, "{}", "IO Exception: " + ex.getMessage());
         }
