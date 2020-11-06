@@ -80,7 +80,7 @@ public class SupplierDetailsController implements Initializable {
      * Init notes table columns
      */
     private void initCol() {
-        this.tableView.setPlaceholder(new Label("Nenhuma nota adicionada"));
+        this.tableView.setPlaceholder(new Label("Nenhuma nota encontrada"));
         this.messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
     }
 

@@ -80,7 +80,7 @@ public class InvoiceDetailsController implements Initializable {
      * Init invoice products table columns
      */
     private void initCol() {
-        this.tableView.setPlaceholder(new Label("Nenhum produto adicionado"));
+        this.tableView.setPlaceholder(new Label("Nenhum produto encontrado"));
         this.productIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));

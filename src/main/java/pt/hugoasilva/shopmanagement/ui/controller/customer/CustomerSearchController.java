@@ -84,7 +84,7 @@ public class CustomerSearchController implements Initializable {
      * Assign table columns to customer properties
      */
     private void initCol() {
-        this.tableView.setPlaceholder(new Label("Nenhum cliente adicionado"));
+        this.tableView.setPlaceholder(new Label("Nenhum cliente encontrado"));
         this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -220,6 +220,20 @@ public class CustomerSearchController implements Initializable {
         this.list.clear();
         this.list = DatabaseHandler.getCustomerList();
         this.tableView.setItems(list);
+    }
+
+    /**
+     * Clear search filters handler
+     */
+    @FXML
+    private void handleClearFilters(ActionEvent event) {
+        this.loadData();
+        this.idSearchInput.clear();
+        this.nameSearchInput.clear();
+        this.addressSearchInput.clear();
+        this.phoneSearchInput.clear();
+        this.emailSearchInput.clear();
+        this.nifSearchInput.clear();
     }
 
     /**

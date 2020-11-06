@@ -437,7 +437,7 @@ public final class DatabaseHandler {
         String query = GET_CUSTOMERS_QUERY + "WHERE ";
         boolean and = false;
         if (id != null) {
-            query += "id LIKE '" + id + "'";
+            query += "id LIKE '%" + id + "%'";
             and = true;
         }
         if (name != null) {
@@ -733,7 +733,7 @@ public final class DatabaseHandler {
         String query = GET_EMPLOYEES_QUERY + "WHERE ";
         boolean and = false;
         if (id != null) {
-            query += "id LIKE '" + id + "'";
+            query += "id LIKE '%" + id + "%'";
             and = true;
         }
         if (name != null) {
@@ -1026,7 +1026,7 @@ public final class DatabaseHandler {
             query += "WHERE ";
         }
         if (id != null) {
-            query += "invoices.id LIKE '" + id + "'";
+            query += "invoices.id LIKE '%" + id + "%'";
             and = true;
         }
         if (initDate != null) {

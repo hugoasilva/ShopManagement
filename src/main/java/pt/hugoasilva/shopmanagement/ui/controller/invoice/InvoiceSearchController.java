@@ -85,7 +85,7 @@ public class InvoiceSearchController implements Initializable {
      * Assign table columns to invoice properties
      */
     private void initCol() {
-        this.tableView.setPlaceholder(new Label("Nenhuma fatura adicionada"));
+        this.tableView.setPlaceholder(new Label("Nenhuma fatura encontrada"));
         this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         this.employeeCol.setCellValueFactory(new PropertyValueFactory<>("employeeName"));

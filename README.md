@@ -1,7 +1,7 @@
 # Material Design Shop Management Software using JavaFX
 This is a shop management software developed using JavaFX programming language.   
 ### Last updated
-* 2020-11-01
+* 2020-11-06
 
 ### Software Used
   * [C3P0 v0.9.0.4](https://github.com/swaldman/c3p0) - Database Connection Pooling Library

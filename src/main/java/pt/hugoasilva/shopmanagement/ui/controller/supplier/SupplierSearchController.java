@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -72,7 +73,7 @@ public class SupplierSearchController implements Initializable {
     @FXML
     private TableColumn<Supplier, String> nifCol;
     @FXML
-    private AnchorPane mainContainer;
+    private StackPane mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -84,7 +85,7 @@ public class SupplierSearchController implements Initializable {
      * Assign table columns to supplier properties
      */
     private void initCol() {
-        this.tableView.setPlaceholder(new Label("Nenhum fornecedor adicionado"));
+        this.tableView.setPlaceholder(new Label("Nenhum fornecedor encontrado"));
         this.idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -215,6 +216,20 @@ public class SupplierSearchController implements Initializable {
         this.list.clear();
         this.list = DatabaseHandler.getSupplierList();
         this.tableView.setItems(list);
+    }
+
+    /**
+     * Clear search filters handler
+     */
+    @FXML
+    private void handleClearFilters(ActionEvent event) {
+        this.loadData();
+        this.idSearchInput.clear();
+        this.nameSearchInput.clear();
+        this.addressSearchInput.clear();
+        this.phoneSearchInput.clear();
+        this.emailSearchInput.clear();
+        this.nifSearchInput.clear();
     }
 
     /**
