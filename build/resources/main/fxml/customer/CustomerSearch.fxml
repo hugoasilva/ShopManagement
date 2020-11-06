@@ -1,143 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.*?>
-
-<StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1450.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.hugoasilva.shopmanagement.ui.controller.customer.CustomerSearchController">
-    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="350.0" styleClass="main-back">
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.lang.String?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="700.0" prefWidth="1450.0"
+           stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="pt.hugoasilva.shopmanagement.ui.controller.customer.CustomerSearchController">
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="350.0" styleClass="main-back">
         <StackPane.margin>
-            <Insets bottom="400.0" />
+            <Insets bottom="400.0"/>
         </StackPane.margin>
     </HBox>
     <FontIcon iconLiteral="zondi-search" iconSize="80" styleClass="font-icon">
         <StackPane.margin>
-            <Insets bottom="500.0" />
+            <Insets bottom="500.0"/>
         </StackPane.margin>
     </FontIcon>
-    <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="1400.0" styleClass="custom-pane" stylesheets="@../../css/styles.css">
-        <VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                prefHeight="450.0" prefWidth="1400.0" styleClass="custom-pane" stylesheets="@../../css/styles.css">
+        <VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
             <VBox.margin>
-                <Insets bottom="20.0" left="180.0" top="40.0" />
+                <Insets bottom="20.0" left="180.0" top="40.0"/>
             </VBox.margin>
             <VBox prefHeight="92.0" prefWidth="600.0" spacing="20.0">
                 <VBox.margin>
-                    <Insets left="-75.0" top="20.0" />
+                    <Insets left="-75.0" top="20.0"/>
                 </VBox.margin>
-                <JFXTextField fx:id="idSearchInput" labelFloat="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="250.0" promptText="Pesquisar por id..." styleClass="searchInput">
+                <JFXTextField fx:id="idSearchInput" labelFloat="true" maxHeight="-Infinity" maxWidth="-Infinity"
+                              minHeight="-Infinity" minWidth="-Infinity" prefWidth="250.0"
+                              promptText="Pesquisar por id..." styleClass="searchInput">
                     <HBox.margin>
-                        <Insets right="40.0" />
+                        <Insets right="40.0"/>
                     </HBox.margin>
                     <StackPane.margin>
-                        <Insets />
+                        <Insets/>
                     </StackPane.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="nameSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" promptText="Pesquisar por nome..." styleClass="searchInput">
+                <JFXTextField fx:id="nameSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity"
+                              prefWidth="250.0" promptText="Pesquisar por nome..." styleClass="searchInput">
                     <HBox.margin>
-                        <Insets right="40.0" />
+                        <Insets right="40.0"/>
                     </HBox.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="addressSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" promptText="Pesquisar por morada..." styleClass="searchInput">
+                <JFXTextField fx:id="addressSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity"
+                              prefWidth="250.0" promptText="Pesquisar por morada..." styleClass="searchInput">
                     <HBox.margin>
-                        <Insets right="40.0" />
+                        <Insets right="40.0"/>
                     </HBox.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="phoneSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" promptText="Pesquisar por contacto..." styleClass="searchInput">
+                <JFXTextField fx:id="phoneSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity"
+                              prefWidth="250.0" promptText="Pesquisar por contacto..." styleClass="searchInput">
                     <HBox.margin>
-                        <Insets right="40.0" />
+                        <Insets right="40.0"/>
                     </HBox.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="emailSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" promptText="Pesquisar por e-mail..." styleClass="searchInput">
+                <JFXTextField fx:id="emailSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity"
+                              prefWidth="250.0" promptText="Pesquisar por e-mail..." styleClass="searchInput">
                     <HBox.margin>
-                        <Insets right="40.0" />
+                        <Insets right="40.0"/>
                     </HBox.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="nifSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" promptText="Pesquisar por nif..." styleClass="searchInput">
+                <JFXTextField fx:id="nifSearchInput" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity"
+                              prefWidth="250.0" promptText="Pesquisar por nif..." styleClass="searchInput">
                     <HBox.margin>
-                        <Insets right="40.0" />
+                        <Insets right="40.0"/>
                     </HBox.margin>
                 </JFXTextField>
                 <HBox>
-                    <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleSearchCustomerButtonPress" onKeyPressed="#handleSearchCustomerKeyPress" prefHeight="44.0" prefWidth="50.0">
+                    <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleSearchCustomerButtonPress"
+                               onKeyPressed="#handleSearchCustomerKeyPress" prefHeight="44.0" prefWidth="50.0">
                         <graphic>
-                            <FontIcon iconLiteral="gmi-search" iconSize="35" styleClass="font-icon-button" />
+                            <FontIcon iconLiteral="gmi-search" iconSize="35" styleClass="font-icon-button"/>
                         </graphic>
                         <VBox.margin>
-                            <Insets />
+                            <Insets/>
                         </VBox.margin>
                         <HBox.margin>
-                            <Insets left="15.0" />
+                            <Insets left="15.0"/>
                         </HBox.margin>
                     </JFXButton>
-                    <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleClearFilters" prefHeight="44.0" prefWidth="50.0">
+                    <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleClearFilters"
+                               prefHeight="44.0" prefWidth="50.0">
                         <graphic>
-                            <FontIcon iconLiteral="mdi-filter-remove" iconSize="35" styleClass="font-icon-button" />
+                            <FontIcon iconLiteral="mdi-filter-remove" iconSize="35" styleClass="font-icon-button"/>
                         </graphic>
                         <VBox.margin>
-                            <Insets />
+                            <Insets/>
                         </VBox.margin>
                         <HBox.margin>
-                            <Insets left="75.0" />
+                            <Insets left="75.0"/>
                         </HBox.margin>
                     </JFXButton>
                     <StackPane.margin>
-                        <Insets />
+                        <Insets/>
                     </StackPane.margin>
                 </HBox>
             </VBox>
             <padding>
-                <Insets left="110.0" top="10.0" />
+                <Insets left="110.0" top="10.0"/>
             </padding>
             <StackPane.margin>
-                <Insets />
+                <Insets/>
             </StackPane.margin>
         </VBox>
         <StackPane.margin>
-            <Insets top="50.0" />
+            <Insets top="50.0"/>
         </StackPane.margin>
     </AnchorPane>
-    <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+    <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+               prefHeight="370.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
         <columns>
-            <TableColumn fx:id="idCol" maxWidth="120.0" prefWidth="50.0" text="ID" />
-            <TableColumn fx:id="nameCol" prefWidth="175.0" text="Nome" />
-            <TableColumn fx:id="addressCol" prefWidth="290.0" text="Morada" />
-            <TableColumn fx:id="phoneCol" text="Contacto" />
-            <TableColumn fx:id="emailCol" prefWidth="250.0" text="Email" />
-            <TableColumn fx:id="nifCol" text="NIF" />
+            <TableColumn fx:id="idCol" maxWidth="120.0" prefWidth="50.0" text="ID"/>
+            <TableColumn fx:id="nameCol" prefWidth="175.0" text="Nome"/>
+            <TableColumn fx:id="addressCol" prefWidth="290.0" text="Morada"/>
+            <TableColumn fx:id="phoneCol" text="Contacto"/>
+            <TableColumn fx:id="emailCol" prefWidth="250.0" text="Email"/>
+            <TableColumn fx:id="nifCol" text="NIF"/>
         </columns>
         <columnResizePolicy>
-            <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY" />
+            <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/>
         </columnResizePolicy>
         <contextMenu>
             <ContextMenu>
                 <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar" />
-                    <MenuItem mnemonicParsing="false" onAction="#handleCustomerEdit" text="Editar" />
-                    <MenuItem mnemonicParsing="false" onAction="#handleCustomerDelete" text="Apagar" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Atualizar"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleCustomerEdit" text="Editar"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleCustomerDelete" text="Apagar"/>
                 </items>
                 <styleClass>
-                    <String fx:value="table-context" />
-                    <String fx:value="colored-context-menu" />
+                    <String fx:value="table-context"/>
+                    <String fx:value="colored-context-menu"/>
                 </styleClass>
             </ContextMenu>
         </contextMenu>
         <VBox.margin>
-            <Insets left="45.0" right="50.0" />
+            <Insets left="45.0" right="50.0"/>
         </VBox.margin>
         <StackPane.margin>
-            <Insets left="285.0" top="50.0" />
+            <Insets left="285.0" top="50.0"/>
         </StackPane.margin>
     </TableView>
     <padding>
-        <Insets bottom="10.0" />
+        <Insets bottom="10.0"/>
     </padding>
     <StackPane.margin>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
     </StackPane.margin>
     <padding>
-        <Insets top="100.0" />
+        <Insets top="100.0"/>
     </padding>
 </StackPane>
