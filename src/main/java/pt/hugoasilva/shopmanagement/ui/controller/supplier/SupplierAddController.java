@@ -64,11 +64,11 @@ public class SupplierAddController implements Initializable {
     @FXML
     private void addSupplier(ActionEvent event) {
         String supplierId = String.valueOf(DatabaseHandler.getSupplierId());
-        String supplierName = name.getText();
-        String supplierAddress = address.getText();
-        String supplierPhone = phone.getText();
-        String supplierEmail = email.getText();
-        String supplierNif = nif.getText();
+        String supplierName = this.name.getText();
+        String supplierAddress = this.address.getText();
+        String supplierPhone = this.phone.getText();
+        String supplierEmail = this.email.getText();
+        String supplierNif = this.nif.getText();
 
         if (supplierName.isEmpty() || supplierAddress.isEmpty() || supplierPhone.isEmpty()
                 || supplierEmail.isEmpty() || supplierNif.isEmpty()) {

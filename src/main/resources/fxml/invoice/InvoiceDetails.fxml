@@ -73,7 +73,6 @@
         <columns>
             <TableColumn fx:id="productIdCol" minWidth="120.0" prefWidth="75.0" text="ID"/>
             <TableColumn fx:id="productNameCol" minWidth="175.0" prefWidth="300.0" text="Produto"/>
-            <TableColumn fx:id="productPriceCol" minWidth="100.0" prefWidth="75.0" text="Preço"/>
             <TableColumn fx:id="productQuantityCol" minWidth="120.0" prefWidth="100.0" text="Quantidade"/>
         </columns>
         <contextMenu>

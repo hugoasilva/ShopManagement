@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 import pt.hugoasilva.shopmanagement.data.database.DatabaseHandler;
 import pt.hugoasilva.shopmanagement.data.model.Invoice;
 import pt.hugoasilva.shopmanagement.data.model.Product;
-import pt.hugoasilva.shopmanagement.ui.controller.product.ProductAddController;
+import pt.hugoasilva.shopmanagement.data.model.ProductInvoice;
 import pt.hugoasilva.shopmanagement.ui.controller.product.ProductInvoiceAddController;
 import pt.hugoasilva.shopmanagement.ui.dialog.DialogHandler;
 import pt.hugoasilva.shopmanagement.util.ShopManagementUtil;
@@ -44,7 +44,7 @@ public class InvoiceDetailsController implements Initializable {
     private static final Logger LOGGER = LogManager.getLogger(InvoiceDetailsController.class.getName());
     // Products list
     @FXML
-    ObservableList<Product> list = FXCollections.observableArrayList();
+    ObservableList<ProductInvoice> list = FXCollections.observableArrayList();
     // Invoice data
     private Invoice invoice;
     // UI Content
@@ -57,13 +57,11 @@ public class InvoiceDetailsController implements Initializable {
     @FXML
     private Label date;
     @FXML
-    private TableView<Product> tableView;
+    private TableView<ProductInvoice> tableView;
     @FXML
     private TableColumn<Product, String> productIdCol;
     @FXML
     private TableColumn<Product, String> productNameCol;
-    @FXML
-    private TableColumn<Product, String> productPriceCol;
     @FXML
     private TableColumn<Product, String> productQuantityCol;
     @FXML
@@ -82,9 +80,8 @@ public class InvoiceDetailsController implements Initializable {
      */
     private void initCol() {
         this.tableView.setPlaceholder(new Label("Nenhum produto encontrado"));
-        this.productIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        this.productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        this.productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        this.productIdCol.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        this.productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
         this.productQuantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     }
 
@@ -125,7 +122,7 @@ public class InvoiceDetailsController implements Initializable {
 
     public void handleProductEdit(ActionEvent event) {
         //Fetch the selected row
-        Product selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
+        ProductInvoice selectedForEdit = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
             DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione um produto para editar.");
@@ -134,10 +131,10 @@ public class InvoiceDetailsController implements Initializable {
         try {
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource(
-                            "/fxml/product/ProductAdd.fxml"));
+                            "/fxml/product/ProductInvoiceAdd.fxml"));
             Parent parent = loader.load();
 
-            ProductAddController controller = loader.getController();
+            ProductInvoiceAddController controller = loader.getController();
 
             controller.inflateUI(selectedForEdit);
 
@@ -154,7 +151,7 @@ public class InvoiceDetailsController implements Initializable {
 
     public void handleProductDelete(ActionEvent event) {
         //Fetch the selected row
-        Product selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
+        ProductInvoice selectedForDeletion = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
             DialogHandler.showMaterialErrorDialog(this.mainContainer,
                     "Por favor seleccione um produto para apagar.");

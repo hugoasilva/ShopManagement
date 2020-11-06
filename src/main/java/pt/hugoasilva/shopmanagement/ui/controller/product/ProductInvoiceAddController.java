@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.hugoasilva.shopmanagement.data.database.DatabaseHandler;
+import pt.hugoasilva.shopmanagement.data.model.ProductInvoice;
 import pt.hugoasilva.shopmanagement.ui.dialog.DialogHandler;
 
 import java.net.URL;
@@ -23,8 +24,8 @@ import java.util.ResourceBundle;
 public class ProductInvoiceAddController implements Initializable {
 
     // Product data
+    private ProductInvoice product;
     private String invoiceId;
-    private String invoiceProductId;
     private Boolean isInEditMode = false;
     // UI Content
     @FXML
@@ -94,7 +95,7 @@ public class ProductInvoiceAddController implements Initializable {
             this.handleUpdateProduct();
             return;
         }
-        if (DatabaseHandler.insertProductInvoice(invoiceId, productId, quantity)) {
+        if (DatabaseHandler.insertProductInvoice(this.invoiceId, productId, quantity)) {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Produto adicionado",
                     "Produto adicionado com sucesso!", true);
         } else {
@@ -106,13 +107,12 @@ public class ProductInvoiceAddController implements Initializable {
     /**
      * Populate form
      *
-     * @param id       product id
-     * @param quantity product quantity
+     * @param product product object
      */
-    public void inflateUI(String invoiceProductId, String id, String quantity) {
-        this.id.setText(id);
-        this.quantity.setText(quantity);
-        this.invoiceProductId = invoiceProductId;
+    public void inflateUI(ProductInvoice product) {
+        this.product = product;
+        this.id.setText(product.getId());
+        this.quantity.setText(product.getQuantity());
 
         this.isInEditMode = Boolean.TRUE;
     }
@@ -129,18 +129,16 @@ public class ProductInvoiceAddController implements Initializable {
      * Handle product update
      */
     private void handleUpdateProduct() {
-
-        String productId = this.id.getText();
+        String id = this.id.getText();
         String quantity = this.quantity.getText();
-
-        // Check if note is empty
-        if (productId.isEmpty() || quantity.isEmpty()) {
+        // Check if input is empty
+        if (id.isEmpty() || quantity.isEmpty()) {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Dados insuficientes",
                     new String("Por favor insira dados em todos os campos.".getBytes(),
                             StandardCharsets.UTF_8), false);
             return;
         }
-        if (DatabaseHandler.updateProductInvoice(this.invoiceProductId, productId, quantity)) {
+        if (DatabaseHandler.updateProductInvoice(this.product)) {
             DialogHandler.showMaterialInformationDialog(this.mainContainer, "Successo",
                     "Produto editado com sucesso!", true);
         } else {

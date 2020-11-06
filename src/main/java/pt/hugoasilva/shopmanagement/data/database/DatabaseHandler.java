@@ -16,34 +16,26 @@ import java.sql.SQLException;
  * Database Handler Class
  *
  * @author Hugo Silva
- * @version 2020-11-05
+ * @version 2020-11-06
  */
 
 public final class DatabaseHandler {
 
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class.getName());
-
     // Login query
     private static final String LOGIN_QUERY =
             "SELECT * FROM users WHERE username = ? and password = ?";
-
     // Customer select queries
     private static final String GET_CUSTOMER_ID_QUERY =
             "SELECT COUNT(*) FROM customers";
-    private static final String GET_CUSTOMER_INVOICE_COUNT =
-            "SELECT COUNT(*) FROM invoices WHERE customer_id=?";
     private static final String GET_CUSTOMERS_QUERY =
             "SELECT * FROM customers ";
-
     // Employee select queries
     private static final String GET_EMPLOYEE_ID_QUERY =
             "SELECT COUNT(*) FROM employees";
-    private static final String GET_EMPLOYEE_INVOICE_COUNT =
-            "SELECT COUNT(*) FROM invoices WHERE employee_id=?";
     private static final String GET_EMPLOYEES_QUERY =
             "SELECT * FROM employees ";
-
     // Invoice select queries
     private static final String GET_INVOICE_ID_QUERY =
             "SELECT COUNT(*) FROM invoices";
@@ -54,13 +46,11 @@ public final class DatabaseHandler {
                     "FROM invoices " +
                     "INNER JOIN customers ON customers.id=invoices.customer_id " +
                     "INNER JOIN employees ON employees.id=invoices.employee_id";
-
     private static final String SEARCH_INVOICES_QUERY =
             "SELECT management.invoices.*" +
                     ", customers.name AS customer_name" +
                     ", employees.name AS employee_name " +
                     "FROM invoices ";
-
     // Note select queries
     private static final String GET_CUSTOMER_NOTE_ID_QUERY =
             "SELECT COUNT(*) FROM notes_customers";
@@ -74,16 +64,10 @@ public final class DatabaseHandler {
             "SELECT COUNT(*) FROM notes_suppliers";
     private static final String GET_SUPPLIER_NOTES_QUERY =
             "SELECT * FROM notes_suppliers WHERE supplier_id=?";
-
     // Product select queries
-    private static final String GET_PRODUCT_INVOICE_ID_QUERY =
-            "SELECT COUNT(*) FROM products_invoices";
     private static final String GET_PRODUCT_INVOICE_QUERY =
             "SELECT management.products_invoices.* " +
-                    ", products.name " +
-                    ", products.supplier_id " +
-                    ", products.price " +
-                    ", products.image " +
+                    ", products.name AS name " +
                     "FROM products_invoices " +
                     "INNER JOIN products ON products.id = products_invoices.product_id " +
                     "WHERE invoice_id=?";
@@ -98,13 +82,11 @@ public final class DatabaseHandler {
             "SELECT management.products.*" +
                     ", suppliers.name AS supplier_name " +
                     "FROM products ";
-
     // Supplier select queries
     private static final String GET_SUPPLIER_ID_QUERY =
             "SELECT COUNT(*) FROM suppliers";
     private static final String GET_SUPPLIERS_QUERY =
             "SELECT * FROM suppliers ";
-
     // Delete queries
     private static final String DELETE_CUSTOMER_QUERY =
             "DELETE FROM customers WHERE id = ?";
@@ -116,8 +98,7 @@ public final class DatabaseHandler {
             "DELETE FROM notes_employees WHERE id = ?";
     private static final String DELETE_INVOICE_QUERY =
             "DELETE FROM invoices WHERE id = ?";
-    // TODO Fix product delete
-    private static final String DELETE_INVOICE_PRODUCT_QUERY =
+    private static final String DELETE_PRODUCT_INVOICE_QUERY =
             "DELETE FROM products_invoices WHERE id = ?";
     private static final String DELETE_PRODUCT_QUERY =
             "DELETE FROM products WHERE id = ?";
@@ -125,7 +106,6 @@ public final class DatabaseHandler {
             "DELETE FROM suppliers WHERE id = ?";
     private static final String DELETE_SUPPLIER_NOTE_QUERY =
             "DELETE FROM notes_customers WHERE id = ?";
-
     // Insert queries
     private final static String INSERT_CUSTOMER_QUERY =
             "INSERT INTO customers (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
@@ -145,7 +125,6 @@ public final class DatabaseHandler {
             "INSERT INTO suppliers (name, address, phone, email, nif) VALUES (?, ?, ?, ?, ?)";
     private static final String INSERT_SUPPLIER_NOTE_QUERY =
             "INSERT INTO notes_suppliers (supplier_id, message) VALUES (?, ?)";
-
     // Update queries
     private static final String UPDATE_CUSTOMER_QUERY =
             "UPDATE customers SET name=?, address=?, phone=?, email=?, nif=? WHERE id=?";
@@ -2229,8 +2208,8 @@ public final class DatabaseHandler {
         }
     }
 
-    public static ObservableList<Product> getInvoiceProductList(Invoice invoice) {
-        ObservableList<Product> list = FXCollections.observableArrayList();
+    public static ObservableList<ProductInvoice> getInvoiceProductList(Invoice invoice) {
+        ObservableList<ProductInvoice> list = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -2242,14 +2221,14 @@ public final class DatabaseHandler {
             // Execute query
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String id = resultSet.getString("product_id");
-                String name = resultSet.getString("name");
-                String price = resultSet.getString("price");
-                String supplier = resultSet.getString("supplier_id");
+                String id = resultSet.getString("id");
+                String invoiceId = resultSet.getString("invoice_id");
+                String productId = resultSet.getString("product_id");
+                String productName = resultSet.getString("name");
                 String quantity = resultSet.getString("quantity");
-                String image = resultSet.getString("image");
 
-                list.add(new Product(id, name, price, supplier, quantity, image));
+                ProductInvoice product = new ProductInvoice(id, invoiceId, productId, productName, quantity);
+                list.add(product);
             }
         } catch (SQLException ex) {
             logSQLException(ex);
@@ -2271,13 +2250,19 @@ public final class DatabaseHandler {
         return list;
     }
 
-    public static boolean deleteInvoiceProduct(Product product) {
+    /**
+     * Delete product from invoice
+     *
+     * @param product - product_invoice object
+     * @return true if successful, false otherwise
+     */
+    public static boolean deleteInvoiceProduct(ProductInvoice product) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(DELETE_INVOICE_PRODUCT_QUERY);
+            preparedStatement = connection.prepareStatement(DELETE_PRODUCT_INVOICE_QUERY);
             preparedStatement.setString(1, product.getId());
             // Execute query
             return preparedStatement.executeUpdate() > 0;
@@ -2298,6 +2283,14 @@ public final class DatabaseHandler {
         return false;
     }
 
+    /**
+     * Add product to invoice
+     *
+     * @param invoiceId - invoice id
+     * @param productId - product id
+     * @param quantity  - product quantity
+     * @return true if successful, false otherwise
+     */
     public static boolean insertProductInvoice(String invoiceId, String productId, String quantity) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -2328,16 +2321,22 @@ public final class DatabaseHandler {
         return false;
     }
 
-    public static boolean updateProductInvoice(String productInvoiceId, String productId, String quantity) {
+    /**
+     * Update invoice product
+     *
+     * @param product - product_invoice object
+     * @return true if successful, false otherwise
+     */
+    public static boolean updateProductInvoice(ProductInvoice product) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_INVOICE_QUERY);
-            preparedStatement.setString(1, productId);
-            preparedStatement.setString(2, quantity);
-            preparedStatement.setString(3, productInvoiceId);
+            preparedStatement.setString(1, product.getProductId());
+            preparedStatement.setString(2, product.getQuantity());
+            preparedStatement.setString(3, product.getId());
             // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
