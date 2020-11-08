@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'pt.hugoasilva.shopmanagement'
-version '4.0.1'
+version '4.0.2'
 
 sourceCompatibility = JavaVersion.VERSION_14
 targetCompatibility = JavaVersion.VERSION_14
@@ -49,9 +49,8 @@ javafx {
 
 dependencies {
     implementation 'c3p0:c3p0:0.9.0.4'
-    implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'com.github.mwiede:jsch:0.1.61'
     implementation 'commons-io:commons-io:2.6'
-    implementation 'com.calendarfx:view:11.8.3'
     implementation 'com.jfoenix:jfoenix:9.0.10'
     implementation 'mysql:mysql-connector-java:8.0.22'
     implementation 'org.apache.commons:commons-lang3:3.11'
