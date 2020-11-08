@@ -907,6 +907,42 @@ public final class DatabaseHandler {
     }
 
     /**
+     * Update invoice data at database
+     *
+     * @param invoice invoice object
+     * @return true if success, false otherwise
+     */
+    public static boolean updateInvoice(Invoice invoice) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_INVOICE_QUERY);
+            preparedStatement.setString(1, invoice.getCustomerId());
+            preparedStatement.setString(2, invoice.getEmployeeId());
+            preparedStatement.setString(3, invoice.getDate());
+            preparedStatement.setString(4, invoice.getId());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return false;
+    }
+
+    /**
      * Get invoice list from database
      *
      * @return invoice list
@@ -1434,6 +1470,43 @@ public final class DatabaseHandler {
     }
 
     /**
+     * Get supplier note new id
+     *
+     * @return new supplier note's id
+     */
+    public static int getSupplierNotesId() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(GET_SUPPLIER_NOTE_ID_QUERY);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1) + 1;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+            return 0;
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+    }
+
+    /**
      * Insert new supplier note
      *
      * @param note note object
@@ -1534,6 +1607,12 @@ public final class DatabaseHandler {
         return false;
     }
 
+    /**
+     * Get supplier notes list from database
+     *
+     * @param supplier supplier object
+     * @return supplier notes list
+     */
     public static ObservableList<Note> getSupplierNotesList(Supplier supplier) {
         ObservableList<Note> list = FXCollections.observableArrayList();
         Connection connection = null;
@@ -1571,7 +1650,6 @@ public final class DatabaseHandler {
         }
         return list;
     }
-
 
     /**
      * Get new product id
@@ -1628,6 +1706,76 @@ public final class DatabaseHandler {
             preparedStatement.setString(3, product.getSupplierId());
             preparedStatement.setString(4, product.getQuantity());
             preparedStatement.setString(5, product.getImage());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Delete product from database
+     *
+     * @param product product object
+     * @return true if success, false otherwise
+     */
+    public static boolean deleteProduct(Product product) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_PRODUCT_QUERY);
+            preparedStatement.setString(1, product.getId());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Update product data at database
+     *
+     * @param product product object
+     * @return true if success, false otherwise
+     */
+    public static boolean updateProduct(Product product) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_QUERY);
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setString(2, product.getPrice());
+            preparedStatement.setString(3, product.getSupplierId());
+            preparedStatement.setString(4, product.getQuantity());
+            preparedStatement.setString(5, product.getId());
             // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -1803,18 +1951,56 @@ public final class DatabaseHandler {
     }
 
     /**
-     * Delete product from database
+     * Add product to invoice
      *
-     * @param product product object
-     * @return true if success, false otherwise
+     * @param invoiceId - invoice id
+     * @param productId - product id
+     * @param quantity  - product quantity
+     * @return true if successful, false otherwise
      */
-    public static boolean deleteProduct(Product product) {
+    public static boolean insertProductInvoice(String invoiceId, String productId, String quantity) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(DELETE_PRODUCT_QUERY);
+            preparedStatement = connection.prepareStatement(INSERT_PRODUCT_INVOICE_QUERY);
+            preparedStatement.setString(1, invoiceId);
+            preparedStatement.setString(2, productId);
+            preparedStatement.setString(3, quantity);
+
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Delete product from invoice
+     *
+     * @param product - product_invoice object
+     * @return true if successful, false otherwise
+     */
+    public static boolean deleteInvoiceProduct(ProductInvoice product) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_PRODUCT_INVOICE_QUERY);
             preparedStatement.setString(1, product.getId());
             // Execute query
             return preparedStatement.executeUpdate() > 0;
@@ -1836,23 +2022,21 @@ public final class DatabaseHandler {
     }
 
     /**
-     * Update product data at database
+     * Update invoice product
      *
-     * @param product product object
-     * @return true if success, false otherwise
+     * @param product - product_invoice object
+     * @return true if successful, false otherwise
      */
-    public static boolean updateProduct(Product product) {
+    public static boolean updateProductInvoice(ProductInvoice product) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_QUERY);
-            preparedStatement.setString(1, product.getName());
-            preparedStatement.setString(2, product.getPrice());
-            preparedStatement.setString(3, product.getSupplierId());
-            preparedStatement.setString(4, product.getQuantity());
-            preparedStatement.setString(5, product.getId());
+            preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_INVOICE_QUERY);
+            preparedStatement.setString(1, product.getProductId());
+            preparedStatement.setString(2, product.getQuantity());
+            preparedStatement.setString(3, product.getId());
             // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -1873,22 +2057,108 @@ public final class DatabaseHandler {
     }
 
     /**
-     * Update invoice data at database
+     * Get invoice product list from database
      *
      * @param invoice invoice object
+     * @return invoice product list
+     */
+    public static ObservableList<ProductInvoice> getInvoiceProductList(Invoice invoice) {
+        ObservableList<ProductInvoice> list = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(GET_PRODUCT_INVOICE_QUERY);
+            preparedStatement.setString(1, invoice.getId());
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String invoiceId = resultSet.getString("invoice_id");
+                String productId = resultSet.getString("product_id");
+                String productName = resultSet.getString("name");
+                String quantity = resultSet.getString("quantity");
+
+                ProductInvoice product = new ProductInvoice(id, invoiceId, productId, productName, quantity);
+                list.add(product);
+            }
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Get new supplier id
+     *
+     * @return new supplier's id
+     */
+    public static int getSupplierId() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(GET_SUPPLIER_ID_QUERY);
+            // Execute query
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1) + 1;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+            return 0;
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+    }
+
+    /**
+     * Insert new supplier
+     *
+     * @param supplier supplier object
      * @return true if success, false otherwise
      */
-    public static boolean updateInvoice(Invoice invoice) {
+    public static boolean insertSupplier(Supplier supplier) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             // Create connection
             connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_INVOICE_QUERY);
-            preparedStatement.setString(1, invoice.getCustomerId());
-            preparedStatement.setString(2, invoice.getEmployeeId());
-            preparedStatement.setString(3, invoice.getDate());
-            preparedStatement.setString(4, invoice.getId());
+            preparedStatement = connection.prepareStatement(INSERT_SUPPLIER_QUERY);
+            preparedStatement.setString(1, supplier.getName());
+            preparedStatement.setString(2, supplier.getAddress());
+            preparedStatement.setString(3, supplier.getPhone());
+            preparedStatement.setString(4, supplier.getEmail());
+            preparedStatement.setString(5, supplier.getNif());
             // Execute query
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -1908,7 +2178,82 @@ public final class DatabaseHandler {
         return false;
     }
 
-    // TODO Comment following methods and organize class
+    /**
+     * Delete supplier from database
+     *
+     * @param supplier supplier object
+     * @return true if success, false otherwise
+     */
+    public static boolean deleteSupplier(Supplier supplier) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_SUPPLIER_QUERY);
+            preparedStatement.setString(1, supplier.getId());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Update supplier data at database
+     *
+     * @param supplier supplier object
+     * @return true if success, false otherwise
+     */
+    public static boolean updateSupplier(Supplier supplier) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Create connection
+            connection = DatabasePool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_SUPPLIER_QUERY);
+            preparedStatement.setString(1, supplier.getName());
+            preparedStatement.setString(2, supplier.getAddress());
+            preparedStatement.setString(3, supplier.getPhone());
+            preparedStatement.setString(4, supplier.getEmail());
+            preparedStatement.setString(5, supplier.getNif());
+            preparedStatement.setString(6, supplier.getId());
+            // Execute query
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            logSQLException(ex);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                logSQLException(ex);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get supplier list from database
+     *
+     * @return supplier list
+     */
     public static ObservableList<Supplier> getSupplierList() {
         ObservableList<Supplier> list = FXCollections.observableArrayList();
         Connection connection = null;
@@ -2052,307 +2397,5 @@ public final class DatabaseHandler {
             }
         }
         return list;
-    }
-
-    public static boolean deleteSupplier(Supplier supplier) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(DELETE_SUPPLIER_QUERY);
-            preparedStatement.setString(1, supplier.getId());
-            // Execute query
-            return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return false;
-    }
-
-    public static boolean insertSupplier(Supplier supplier) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(INSERT_SUPPLIER_QUERY);
-            preparedStatement.setString(1, supplier.getName());
-            preparedStatement.setString(2, supplier.getAddress());
-            preparedStatement.setString(3, supplier.getPhone());
-            preparedStatement.setString(4, supplier.getEmail());
-            preparedStatement.setString(5, supplier.getNif());
-            // Execute query
-            return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return false;
-    }
-
-    public static boolean updateSupplier(Supplier supplier) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_SUPPLIER_QUERY);
-            preparedStatement.setString(1, supplier.getName());
-            preparedStatement.setString(2, supplier.getAddress());
-            preparedStatement.setString(3, supplier.getPhone());
-            preparedStatement.setString(4, supplier.getEmail());
-            preparedStatement.setString(5, supplier.getNif());
-            preparedStatement.setString(6, supplier.getId());
-            // Execute query
-            return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return false;
-    }
-
-    public static int getSupplierId() {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(GET_SUPPLIER_ID_QUERY);
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt(1) + 1;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-            return 0;
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-    }
-
-    public static int getSupplierNotesId() {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(GET_SUPPLIER_NOTE_ID_QUERY);
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt(1) + 1;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-            return 0;
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-    }
-
-    public static ObservableList<ProductInvoice> getInvoiceProductList(Invoice invoice) {
-        ObservableList<ProductInvoice> list = FXCollections.observableArrayList();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(GET_PRODUCT_INVOICE_QUERY);
-            preparedStatement.setString(1, invoice.getId());
-            // Execute query
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String invoiceId = resultSet.getString("invoice_id");
-                String productId = resultSet.getString("product_id");
-                String productName = resultSet.getString("name");
-                String quantity = resultSet.getString("quantity");
-
-                ProductInvoice product = new ProductInvoice(id, invoiceId, productId, productName, quantity);
-                list.add(product);
-            }
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return list;
-    }
-
-    /**
-     * Delete product from invoice
-     *
-     * @param product - product_invoice object
-     * @return true if successful, false otherwise
-     */
-    public static boolean deleteInvoiceProduct(ProductInvoice product) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(DELETE_PRODUCT_INVOICE_QUERY);
-            preparedStatement.setString(1, product.getId());
-            // Execute query
-            return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Add product to invoice
-     *
-     * @param invoiceId - invoice id
-     * @param productId - product id
-     * @param quantity  - product quantity
-     * @return true if successful, false otherwise
-     */
-    public static boolean insertProductInvoice(String invoiceId, String productId, String quantity) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(INSERT_PRODUCT_INVOICE_QUERY);
-            preparedStatement.setString(1, invoiceId);
-            preparedStatement.setString(2, productId);
-            preparedStatement.setString(3, quantity);
-
-            // Execute query
-            return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Update invoice product
-     *
-     * @param product - product_invoice object
-     * @return true if successful, false otherwise
-     */
-    public static boolean updateProductInvoice(ProductInvoice product) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            // Create connection
-            connection = DatabasePool.getDataSource().getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_INVOICE_QUERY);
-            preparedStatement.setString(1, product.getProductId());
-            preparedStatement.setString(2, product.getQuantity());
-            preparedStatement.setString(3, product.getId());
-            // Execute query
-            return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            logSQLException(ex);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                logSQLException(ex);
-            }
-        }
-        return false;
     }
 }
