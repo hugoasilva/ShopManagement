@@ -107,7 +107,7 @@ public class ShopManagementUtil {
     public static void openFile(String path) {
         File file = new File(path);
         try {
-            if (OS.contains("Win")) {
+            if (OS.contains("win")) {
                 // Windows
                 Desktop.getDesktop().open(file);
             } else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
