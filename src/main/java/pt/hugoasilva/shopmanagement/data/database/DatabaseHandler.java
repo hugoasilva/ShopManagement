@@ -153,8 +153,10 @@ public final class DatabaseHandler {
     public static void logSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
-                LOGGER.log(Level.ERROR, "{}", "SQLState: " + ((SQLException) e).getSQLState());
-                LOGGER.log(Level.ERROR, "{}", "Error Code: " + ((SQLException) e).getErrorCode());
+                LOGGER.log(Level.ERROR, "{}",
+                        "SQLState: " + ((SQLException) e).getSQLState());
+                LOGGER.log(Level.ERROR, "{}", "" +
+                        "Error Code: " + ((SQLException) e).getErrorCode());
                 LOGGER.log(Level.ERROR, "{}", "Message: " + e.getMessage());
                 Throwable t = ex.getCause();
                 while (t != null) {
