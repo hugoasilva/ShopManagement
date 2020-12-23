@@ -39,7 +39,7 @@ public class ShopManagementUtil {
     // Logger
     private static final Logger LOGGER = LogManager.getLogger(ShopManagementUtil.class.getName());
     // SFTP server details
-    private static final String SFTP_SERVER_URL = "projecthub.hopto.org";
+    private static final String SFTP_SERVER_URL = "projecthub.gotdns.ch";
     private static final String SFTP_SERVER_USERNAME = "pi";
     private static final String SFTP_SERVER_PASSWORD = "server";
     private static final int SFTP_SERVER_PORT = 4400;

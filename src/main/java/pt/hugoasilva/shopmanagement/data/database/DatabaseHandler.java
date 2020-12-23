@@ -40,14 +40,14 @@ public final class DatabaseHandler {
     private static final String GET_INVOICE_ID_QUERY =
             "SELECT COUNT(*) FROM invoices";
     private static final String GET_INVOICES_QUERY =
-            "SELECT management.invoices.*" +
+            "SELECT shopmanagement.invoices.*" +
                     ", customers.name AS customer_name" +
                     ", employees.name AS employee_name " +
                     "FROM invoices " +
                     "INNER JOIN customers ON customers.id=invoices.customer_id " +
                     "INNER JOIN employees ON employees.id=invoices.employee_id";
     private static final String SEARCH_INVOICES_QUERY =
-            "SELECT management.invoices.*" +
+            "SELECT shopmanagement.invoices.*" +
                     ", customers.name AS customer_name" +
                     ", employees.name AS employee_name " +
                     "FROM invoices ";
@@ -66,7 +66,7 @@ public final class DatabaseHandler {
             "SELECT * FROM notes_suppliers WHERE supplier_id=?";
     // Product select queries
     private static final String GET_PRODUCT_INVOICE_QUERY =
-            "SELECT management.products_invoices.* " +
+            "SELECT shopmanagement.products_invoices.* " +
                     ", products.name AS name " +
                     "FROM products_invoices " +
                     "INNER JOIN products ON products.id = products_invoices.product_id " +
@@ -74,12 +74,12 @@ public final class DatabaseHandler {
     private static final String GET_PRODUCT_ID_QUERY =
             "SELECT COUNT(*) FROM products";
     private static final String GET_PRODUCTS_QUERY =
-            "SELECT management.products.*" +
+            "SELECT shopmanagement.products.*" +
                     ", suppliers.name AS supplier_name " +
                     "FROM products " +
                     "INNER JOIN suppliers ON suppliers.id=products.supplier_id";
     private static final String SEARCH_PRODUCTS_QUERY =
-            "SELECT management.products.*" +
+            "SELECT shopmanagement.products.*" +
                     ", suppliers.name AS supplier_name " +
                     "FROM products ";
     // Supplier select queries
